@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467A60D250FAED400E36BEE /* AppDelegate.swift */; };
-		8467A610250FAED400E36BEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467A60F250FAED400E36BEE /* SceneDelegate.swift */; };
 		8467A612250FAED400E36BEE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467A611250FAED400E36BEE /* ViewController.swift */; };
 		8467A615250FAED400E36BEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8467A613250FAED400E36BEE /* Main.storyboard */; };
 		8467A617250FAED500E36BEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467A616250FAED500E36BEE /* Assets.xcassets */; };
@@ -18,7 +17,6 @@
 /* Begin PBXFileReference section */
 		8467A60A250FAED400E36BEE /* fintech_chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fintech_chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8467A60D250FAED400E36BEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8467A60F250FAED400E36BEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8467A611250FAED400E36BEE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8467A614250FAED400E36BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8467A616250FAED500E36BEE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,7 +55,6 @@
 			isa = PBXGroup;
 			children = (
 				8467A60D250FAED400E36BEE /* AppDelegate.swift */,
-				8467A60F250FAED400E36BEE /* SceneDelegate.swift */,
 				8467A611250FAED400E36BEE /* ViewController.swift */,
 				8467A613250FAED400E36BEE /* Main.storyboard */,
 				8467A616250FAED500E36BEE /* Assets.xcassets */,
@@ -140,7 +137,6 @@
 			files = (
 				8467A612250FAED400E36BEE /* ViewController.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
-				8467A610250FAED400E36BEE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +288,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				NEED_LOG = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Dmitriy.fintech-chat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -311,6 +308,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				NEED_LOG = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Dmitriy.fintech-chat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
