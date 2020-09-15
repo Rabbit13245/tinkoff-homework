@@ -8,14 +8,29 @@
 
 import UIKit
 
+enum vcState{
+    case disappearing
+    case appearing
+    case appeared
+    case disappeared
+}
+
 class ViewController: UIViewController {
 
     let needLog = Bundle.main.object(forInfoDictionaryKey: "NeedLog") as! String
     
+    var currentState = vcState.disappeared
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if (needLog == "YES"){
-            print(#function)
+            if (currentState == .disappearing){
+                print("VC moved from 'Disappearing' to 'Appearing': \(#function)")
+            }
+            else{
+                print("VC moved from 'Disappeared' to 'Appearing': \(#function)")
+            }
+            currentState = .appearing
         }
         
     }
@@ -23,21 +38,29 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if (needLog == "YES"){
-            print("VC moved from 'Disappeared' to 'Appeared': \(#function)")
+            print("VC moved from 'Appearing' to 'Appeared': \(#function)")
+            currentState = .appeared
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if (needLog == "YES"){
-            print(#function)
+            if (currentState == .appearing){
+                print("VC moved from 'Appearing' to 'Disappearing': \(#function)")
+            }
+            else{
+                print("VC moved from 'Appeared' to 'Disappearing': \(#function)")
+            }
+            currentState = .disappearing
         }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if (needLog == "YES"){
-            print("VC moved from 'Appeared' to 'Disappeared': \(#function)")
+            print("VC moved from 'Disappearing' to 'Disappeared': \(#function)")
+            currentState = .disappeared
         }
     }
     
@@ -61,7 +84,5 @@ class ViewController: UIViewController {
        
         view.backgroundColor = .red
     }
-
-
 }
 
