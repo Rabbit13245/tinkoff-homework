@@ -15,7 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8467A60A250FAED400E36BEE /* fintech_chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fintech_chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8467A60A250FAED400E36BEE /* Финтех чат.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Финтех чат.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8467A60D250FAED400E36BEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8467A611250FAED400E36BEE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8467A614250FAED400E36BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -46,7 +46,7 @@
 		8467A60B250FAED400E36BEE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8467A60A250FAED400E36BEE /* fintech_chat.app */,
+				8467A60A250FAED400E36BEE /* Финтех чат.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -81,7 +81,7 @@
 			);
 			name = fintech_chat;
 			productName = fintech_chat;
-			productReference = 8467A60A250FAED400E36BEE /* fintech_chat.app */;
+			productReference = 8467A60A250FAED400E36BEE /* Финтех чат.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -290,7 +290,7 @@
 				);
 				NEED_LOG = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Dmitriy.fintech-chat";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Финтех чат";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -310,7 +310,7 @@
 				);
 				NEED_LOG = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Dmitriy.fintech-chat";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Финтех чат";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

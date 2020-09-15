@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if (needLog == "YES"){
-            print(#function)
+            print("VC moved from 'Disappeared' to 'Appeared': \(#function)")
         }
     }
     
@@ -37,7 +37,7 @@ class ViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if (needLog == "YES"){
-            print(#function)
+            print("VC moved from 'Appeared' to 'Disappeared': \(#function)")
         }
     }
     
