@@ -13,6 +13,10 @@ class Helper{
         return Helper()
     }()
     
+    private init() {}
+    
+    let needLog = Bundle.main.object(forInfoDictionaryKey: "NeedLog") as! String
+    
     func convertAppStateToString(_ state: UIApplication.State) -> String{
         switch(state){
         case .active:
@@ -25,4 +29,11 @@ class Helper{
             return "Unknown"
         }
     }
+    
+    func logMessage(_ message: String){
+        if (needLog == "YES"){
+            print(message)
+        }
+    }
 }
+

@@ -17,71 +17,62 @@ enum vcState{
 
 class ViewController: UIViewController {
 
-    let needLog = Bundle.main.object(forInfoDictionaryKey: "NeedLog") as! String
-    
     var currentState = vcState.disappeared
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if (needLog == "YES"){
-            if (currentState == .disappearing){
-                print("VC moved from 'Disappearing' to 'Appearing': \(#function)")
-            }
-            else{
-                print("VC moved from 'Disappeared' to 'Appearing': \(#function)")
-            }
-            currentState = .appearing
-        }
         
+        if (currentState == .disappearing){
+            Helper.app.logMessage("VC moved from 'Disappearing' to 'Appearing': \(#function)")
+        }
+        else{
+            Helper.app.logMessage("VC moved from 'Disappeared' to 'Appearing': \(#function)")
+        }
+        currentState = .appearing
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (needLog == "YES"){
-            print("VC moved from 'Appearing' to 'Appeared': \(#function)")
-            currentState = .appeared
-        }
+        
+        Helper.app.logMessage("VC moved from 'Appearing' to 'Appeared': \(#function)")
+        currentState = .appeared
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if (needLog == "YES"){
-            if (currentState == .appearing){
-                print("VC moved from 'Appearing' to 'Disappearing': \(#function)")
-            }
-            else{
-                print("VC moved from 'Appeared' to 'Disappearing': \(#function)")
-            }
-            currentState = .disappearing
+       
+        if (currentState == .appearing){
+            Helper.app.logMessage("VC moved from 'Appearing' to 'Disappearing': \(#function)")
         }
+        else{
+            Helper.app.logMessage("VC moved from 'Appeared' to 'Disappearing': \(#function)")
+        }
+        currentState = .disappearing
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (needLog == "YES"){
-            print("VC moved from 'Disappearing' to 'Disappeared': \(#function)")
-            currentState = .disappeared
-        }
+        
+        Helper.app.logMessage("VC moved from 'Disappearing' to 'Disappeared': \(#function)")
+        currentState = .disappeared
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        if (needLog == "YES"){
-            print(#function)
-        }
+        
+        Helper.app.logMessage(#function)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if (needLog == "YES"){
-            print(#function)
-        }
+        
+        Helper.app.logMessage(#function)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-       
+        
         view.backgroundColor = .red
     }
 }
