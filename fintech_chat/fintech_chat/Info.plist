@@ -41,7 +41,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NeedLog</key>
-	<string>$(NEED_LOG)</string>
+	<key>LogLevel</key>
+	<string>$(LOG_LEVEL)</string>
 </dict>
 </plist>

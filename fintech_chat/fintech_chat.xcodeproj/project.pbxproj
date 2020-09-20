@@ -292,7 +292,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				NEED_LOG = YES;
+				LOG_LEVEL = INFO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Dmitriy.fintech-chat";
 				PRODUCT_NAME = "Финтех чат";
 				SWIFT_VERSION = 5.0;
@@ -312,7 +312,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				NEED_LOG = YES;
+				LOG_LEVEL = INFO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Dmitriy.fintech-chat";
 				PRODUCT_NAME = "Финтех чат";
 				SWIFT_VERSION = 5.0;

@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  fintech_chat
-//
-//  Created by Admin on 9/14/20.
-//  Copyright © 2020 Admin. All rights reserved.
-//
-
 import UIKit
 
 enum vcState{
@@ -15,7 +7,7 @@ enum vcState{
     case disappeared
 }
 
-class ViewController: UIViewController {
+class BaseViewController: UIViewController {
 
     var currentState = vcState.disappeared
     
@@ -23,18 +15,18 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         
         if (currentState == .disappearing){
-            Logger.app.logMessage("VC moved from 'Disappearing' to 'Appearing': \(#function)")
+            Logger.app.logMessage("VC moved from 'Disappearing' to 'Appearing': \(#function)", logLevel: .Debug)
         }
         else{
-            Logger.app.logMessage("VC moved from 'Disappeared' to 'Appearing': \(#function)")
+            Logger.app.logMessage("VC moved from 'Disappeared' to 'Appearing': \(#function)", logLevel: .Debug)
         }
         currentState = .appearing
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        Logger.app.logMessage("VC moved from 'Appearing' to 'Appeared': \(#function)")
+    
+        Logger.app.logMessage("VC moved from 'Appearing' to 'Appeared': \(#function)", logLevel: .Debug)
         currentState = .appeared
     }
     
@@ -42,10 +34,10 @@ class ViewController: UIViewController {
         super.viewWillDisappear(animated)
        
         if (currentState == .appearing){
-            Logger.app.logMessage("VC moved from 'Appearing' to 'Disappearing': \(#function)")
+            Logger.app.logMessage("VC moved from 'Appearing' to 'Disappearing': \(#function)", logLevel: .Debug)
         }
         else{
-            Logger.app.logMessage("VC moved from 'Appeared' to 'Disappearing': \(#function)")
+            Logger.app.logMessage("VC moved from 'Appeared' to 'Disappearing': \(#function)", logLevel: .Debug)
         }
         currentState = .disappearing
     }
@@ -53,26 +45,23 @@ class ViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Logger.app.logMessage("VC moved from 'Disappearing' to 'Disappeared': \(#function)")
+        Logger.app.logMessage("VC moved from 'Disappearing' to 'Disappeared': \(#function)", logLevel: .Debug)
         currentState = .disappeared
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        Logger.app.logMessage(#function)
+        Logger.app.logMessage(#function, logLevel: .Debug)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        Logger.app.logMessage(#function)
+        Logger.app.logMessage(#function, logLevel: .Debug)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .red
     }
 }
-
