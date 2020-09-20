@@ -8,14 +8,14 @@
 
 import UIKit
 
-class Helper{
-    static var app: Helper = {
-        return Helper()
+class Logger{
+    static var app: Logger = {
+        return Logger()
     }()
     
     private init() {}
     
-    let needLog = Bundle.main.object(forInfoDictionaryKey: "NeedLog") as! String
+    var needLog = Bundle.main.object(forInfoDictionaryKey: "NeedLog") as? String
     
     func convertAppStateToString(_ state: UIApplication.State) -> String{
         switch(state){
@@ -36,4 +36,3 @@ class Helper{
         }
     }
 }
-

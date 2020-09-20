@@ -23,10 +23,10 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         
         if (currentState == .disappearing){
-            Helper.app.logMessage("VC moved from 'Disappearing' to 'Appearing': \(#function)")
+            Logger.app.logMessage("VC moved from 'Disappearing' to 'Appearing': \(#function)")
         }
         else{
-            Helper.app.logMessage("VC moved from 'Disappeared' to 'Appearing': \(#function)")
+            Logger.app.logMessage("VC moved from 'Disappeared' to 'Appearing': \(#function)")
         }
         currentState = .appearing
     }
@@ -34,7 +34,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Helper.app.logMessage("VC moved from 'Appearing' to 'Appeared': \(#function)")
+        Logger.app.logMessage("VC moved from 'Appearing' to 'Appeared': \(#function)")
         currentState = .appeared
     }
     
@@ -42,10 +42,10 @@ class ViewController: UIViewController {
         super.viewWillDisappear(animated)
        
         if (currentState == .appearing){
-            Helper.app.logMessage("VC moved from 'Appearing' to 'Disappearing': \(#function)")
+            Logger.app.logMessage("VC moved from 'Appearing' to 'Disappearing': \(#function)")
         }
         else{
-            Helper.app.logMessage("VC moved from 'Appeared' to 'Disappearing': \(#function)")
+            Logger.app.logMessage("VC moved from 'Appeared' to 'Disappearing': \(#function)")
         }
         currentState = .disappearing
     }
@@ -53,25 +53,24 @@ class ViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Helper.app.logMessage("VC moved from 'Disappearing' to 'Disappeared': \(#function)")
+        Logger.app.logMessage("VC moved from 'Disappearing' to 'Disappeared': \(#function)")
         currentState = .disappeared
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        Helper.app.logMessage(#function)
+        Logger.app.logMessage(#function)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        Helper.app.logMessage(#function)
+        Logger.app.logMessage(#function)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         view.backgroundColor = .red
     }

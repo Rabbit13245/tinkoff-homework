@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		844EB08D2510DF5600AF0216 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EB08C2510DF5600AF0216 /* Helper.swift */; };
+		844EB08D2510DF5600AF0216 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EB08C2510DF5600AF0216 /* Logger.swift */; };
 		8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467A60D250FAED400E36BEE /* AppDelegate.swift */; };
 		8467A612250FAED400E36BEE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467A611250FAED400E36BEE /* ViewController.swift */; };
 		8467A615250FAED400E36BEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8467A613250FAED400E36BEE /* Main.storyboard */; };
@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		844EB08C2510DF5600AF0216 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		844EB08C2510DF5600AF0216 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		8467A60A250FAED400E36BEE /* Финтех чат.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Финтех чат.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8467A60D250FAED400E36BEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8467A611250FAED400E36BEE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,7 +62,7 @@
 				8467A616250FAED500E36BEE /* Assets.xcassets */,
 				8467A618250FAED500E36BEE /* LaunchScreen.storyboard */,
 				8467A61B250FAED500E36BEE /* Info.plist */,
-				844EB08C2510DF5600AF0216 /* Helper.swift */,
+				844EB08C2510DF5600AF0216 /* Logger.swift */,
 			);
 			path = fintech_chat;
 			sourceTree = "<group>";
@@ -139,7 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8467A612250FAED400E36BEE /* ViewController.swift in Sources */,
-				844EB08D2510DF5600AF0216 /* Helper.swift in Sources */,
+				844EB08D2510DF5600AF0216 /* Logger.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
