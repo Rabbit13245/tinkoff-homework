@@ -25,6 +25,9 @@
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="oTE-Fn-wsr"/>
                                         </constraints>
                                         <state key="normal" title="Edit"/>
+                                        <connections>
+                                            <action selector="editTouch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8eS-FH-JgE"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.89411764705882346" green="0.90980392156862744" blue="0.16862745098039217" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
