@@ -43,5 +43,9 @@
 	</array>
 	<key>LogLevel</key>
 	<string>$(LOG_LEVEL)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) uses the camera to take photos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) wants to use your photo</string>
 </dict>
 </plist>
