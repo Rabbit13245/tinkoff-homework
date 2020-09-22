@@ -17,7 +17,7 @@ class ProfileViewController: BaseViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
         // Logger.app.logMessage("\(editButton.frame)", logLevel: .Info)
-        // Кнопка, как и вся view еще не начали загружаться и, следовательно, не существуют. А мы
+        // Кнопка, как и вся view еще не начали загружаться и, следовательно свойство editButton nil. А мы
         // пытаемся обратиться к ней. editButton nil
     }
     
@@ -25,7 +25,7 @@ class ProfileViewController: BaseViewController {
         super.init(coder: coder)
      
         // Logger.app.logMessage("\(editButton.frame)", logLevel: .Info)
-        // Кнопка, как и вся view еще не начали загружаться и, следовательно, не существуют. А мы
+        // Кнопка, как и вся view еще не начали загружаться и, следовательно свойство editButton nil. А мы
         // пытаемся обратиться к ней. editButton nil
     }
     
