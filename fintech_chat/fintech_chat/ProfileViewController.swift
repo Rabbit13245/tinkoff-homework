@@ -56,43 +56,21 @@ class ProfileViewController: BaseViewController {
         
         defaultPhotoView.layer.cornerRadius = defaultPhotoView.bounds.width / 2
         
-//        let label = UILabel()
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.text = fillInitials()
-//        label.textAlignment = .center
-//        label.font = UIFont.systemFont(ofSize: 120)
-//        defaultPhotoView.addSubview(label)
-//
-//        NSLayoutConstraint.activate([
-//            label.widthAnchor.constraint(equalTo: defaultPhotoView.widthAnchor),
-//            label.heightAnchor.constraint(equalTo: defaultPhotoView.heightAnchor),
-//            label.centerXAnchor.constraint(equalTo: defaultPhotoView.centerXAnchor),
-//            label.centerYAnchor.constraint(equalTo: defaultPhotoView.centerYAnchor)
-//        ])
-//        initialsLabel = label
-        
-        let label1 = UILabel()
-        let label2 = UILabel()
-        label1.translatesAutoresizingMaskIntoConstraints = false
-        label2.translatesAutoresizingMaskIntoConstraints = false
-        label1.text = "M"
-        label2.text = "D"
-        label1.textAlignment = .center
-        label2.textAlignment = .center
-        label1.font = UIFont.systemFont(ofSize: 120)
-        label2.font = UIFont.systemFont(ofSize: 120)
-        defaultPhotoView.addSubview(label1)
-        defaultPhotoView.addSubview(label2)
-        
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = fillInitials()
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 120)
+        defaultPhotoView.addSubview(label)
+
         NSLayoutConstraint.activate([
-            label1.trailingAnchor.constraint(equalTo: defaultPhotoView.centerXAnchor),
-            label1.centerYAnchor.constraint(equalTo: defaultPhotoView.centerYAnchor),
-            label1.heightAnchor.constraint(equalTo: defaultPhotoView.heightAnchor),
-            
-            label2.leadingAnchor.constraint(equalTo: defaultPhotoView.centerXAnchor),
-            label2.centerYAnchor.constraint(equalTo: defaultPhotoView.centerYAnchor),
-            label2.heightAnchor.constraint(equalTo: defaultPhotoView.heightAnchor),
+            label.widthAnchor.constraint(equalTo: defaultPhotoView.widthAnchor),
+            label.heightAnchor.constraint(equalTo: defaultPhotoView.heightAnchor),
+            label.centerXAnchor.constraint(equalTo: defaultPhotoView.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: defaultPhotoView.centerYAnchor)
         ])
+        initialsLabel = label
+        
     }
     
     private func fillInitials() -> String{
