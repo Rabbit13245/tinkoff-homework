@@ -50,6 +50,9 @@ class ProfileViewController: BaseViewController {
     
     private func setupUI(){
         profilePhotoView.layer.cornerRadius = profilePhotoView.bounds.width / 2
+        profilePhotoView.contentMode = .scaleAspectFill
+        profilePhotoView.clipsToBounds = true
+        
         saveButton.layer.cornerRadius = saveButton.bounds.height / 3
         
         guard profilePhotoView.image == nil else { return }
@@ -61,6 +64,7 @@ class ProfileViewController: BaseViewController {
         label.text = fillInitials()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 120)
+        label.textColor = UIColor.black
         defaultPhotoView.addSubview(label)
 
         NSLayoutConstraint.activate([
@@ -101,7 +105,7 @@ class ProfileViewController: BaseViewController {
                     self.chooseImagePicker(source: .camera)
                 }
                 else{
-                    self.presentMessage("You don`t allow")
+                    self.presentMessage("Camera access is denied")
                 }
             }
         default:
@@ -121,21 +125,29 @@ class ProfileViewController: BaseViewController {
     }
     
     private func presentMessage(_ message: String){
-        let alertController = UIAlertController(title: "information", message: "message", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "information", message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(alertController, animated: true)
     }
     
-    
+    // MARK: - IBActions
     @IBAction func editTouch(_ sender: UIButton) {
-        let actionSheet = UIAlertController(title: "Choose source for avatar", message: "",  preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: "Choose the source for your avatar", message: nil,  preferredStyle: .actionSheet)
         
-        let galery = UIAlertAction(title: "Galery", style: .default){(_) in
+        let cameraIcon = #imageLiteral(resourceName: "camera")
+        let photoIcon = #imageLiteral(resourceName: "photo")
+        
+        let galery = UIAlertAction(title: "Photo Library", style: .default){(_) in
             self.chooseImagePicker(source: .photoLibrary)
         }
+        galery.setValue(photoIcon, forKey: "image")
+        galery.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
         let camera = UIAlertAction(title: "Camera", style: .default){(_) in
             self.checkCameraPermission()
         }
+        camera.setValue(cameraIcon, forKey: "image")
+        camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+        
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         actionSheet.addAction(galery)
@@ -161,7 +173,6 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
             
             present(imagePicker, animated: true)
         }
-        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -169,8 +180,6 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         guard let image = info[.editedImage] as? UIImage else {return}
         
         profilePhotoView.image = image
-        profilePhotoView.contentMode = .scaleAspectFill
-        profilePhotoView.clipsToBounds = true
         
         defaultPhotoView.backgroundColor = .none
         initialsLabel?.isHidden = true

@@ -27,10 +27,11 @@
                                 <rect key="frame" x="67.5" y="45" width="240" height="240"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AvU-LR-dsQ">
-                                        <rect key="frame" x="210" y="210" width="30" height="30"/>
+                                        <rect key="frame" x="210" y="216" width="30" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="oTE-Fn-wsr"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <state key="normal" title="Edit"/>
                                         <connections>
                                             <action selector="editTouch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8eS-FH-JgE"/>
@@ -42,7 +43,7 @@
                                     <constraint firstItem="AvU-LR-dsQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zcl-wE-uK0" secondAttribute="leading" constant="20" symbolic="YES" id="FKm-R6-pko"/>
                                     <constraint firstAttribute="height" constant="240" id="aB1-el-dtc"/>
                                     <constraint firstAttribute="width" constant="240" id="eIH-XW-rJy"/>
-                                    <constraint firstAttribute="bottom" secondItem="AvU-LR-dsQ" secondAttribute="bottom" id="mDF-Yf-LXn"/>
+                                    <constraint firstAttribute="bottom" secondItem="AvU-LR-dsQ" secondAttribute="bottom" constant="-8" id="mDF-Yf-LXn"/>
                                     <constraint firstAttribute="trailing" secondItem="AvU-LR-dsQ" secondAttribute="trailing" id="wiW-57-Rzm"/>
                                 </constraints>
                             </view>
@@ -65,7 +66,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="263" id="bIF-rg-e0R"/>
                                     <constraint firstAttribute="height" constant="40" id="vzY-ws-Uoh"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <state key="normal" title="Save"/>
                             </button>
                         </subviews>
