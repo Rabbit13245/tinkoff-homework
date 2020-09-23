@@ -3,7 +3,6 @@ import AVFoundation
 
 class ProfileViewController: BaseViewController {
     
-    
     @IBOutlet weak var defaultPhotoView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -23,7 +22,7 @@ class ProfileViewController: BaseViewController {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-     
+        
         // Logger.app.logMessage("\(editButton.frame)", logLevel: .Info)
         // Кнопка, как и вся view еще не начали загружаться и, следовательно свойство editButton nil. А мы
         // пытаемся обратиться к ней. editButton nil
@@ -66,7 +65,7 @@ class ProfileViewController: BaseViewController {
         label.font = UIFont.systemFont(ofSize: 120)
         label.textColor = UIColor.black
         defaultPhotoView.addSubview(label)
-
+        
         NSLayoutConstraint.activate([
             label.widthAnchor.constraint(equalTo: defaultPhotoView.widthAnchor),
             label.heightAnchor.constraint(equalTo: defaultPhotoView.heightAnchor),
@@ -74,7 +73,6 @@ class ProfileViewController: BaseViewController {
             label.centerYAnchor.constraint(equalTo: defaultPhotoView.centerYAnchor)
         ])
         initialsLabel = label
-        
     }
     
     private func fillInitials() -> String{
@@ -89,27 +87,32 @@ class ProfileViewController: BaseViewController {
     }
     
     private func checkCameraPermission(){
-        let cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
-        switch cameraStatus {
-        case .denied:
-            self.presentCameraSettings()
-            break
-        case .restricted:
-            self.presentMessage("You don`t allow")
-            break
-        case .authorized:
-            self.chooseImagePicker(source: .camera)
-        case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video){(success) in
-                if (success){
-                    self.chooseImagePicker(source: .camera)
+        if (UIImagePickerController.isCameraDeviceAvailable(.rear) || UIImagePickerController.isCameraDeviceAvailable(.front)) {
+            let cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
+            switch cameraStatus {
+            case .denied:
+                self.presentCameraSettings()
+                break
+            case .restricted:
+                self.presentMessage("You don`t allow")
+                break
+            case .authorized:
+                self.chooseImagePicker(source: .camera)
+            case .notDetermined:
+                AVCaptureDevice.requestAccess(for: .video){(success) in
+                    if (success){
+                        self.chooseImagePicker(source: .camera)
+                    }
+                    else{
+                        self.presentMessage("Camera access is denied")
+                    }
                 }
-                else{
-                    self.presentMessage("Camera access is denied")
-                }
+            default:
+                break
             }
-        default:
-            break
+        }
+        else{
+            self.presentMessage("Your camera is not available")
         }
     }
     
@@ -125,7 +128,7 @@ class ProfileViewController: BaseViewController {
     }
     
     private func presentMessage(_ message: String){
-        let alertController = UIAlertController(title: "information", message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(alertController, animated: true)
     }
@@ -155,7 +158,6 @@ class ProfileViewController: BaseViewController {
         actionSheet.addAction(cancel)
         
         present(actionSheet, animated: true)
-        
     }
 }
 
@@ -187,4 +189,3 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         dismiss(animated: true)
     }
 }
-
