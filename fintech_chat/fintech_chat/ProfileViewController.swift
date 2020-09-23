@@ -1,6 +1,19 @@
 import UIKit
 import AVFoundation
 
+extension UILabel {
+    func setLineHeight(lineHeight: CGFloat) {
+        let text = self.text
+        if let text = text {
+            let attributeString = NSMutableAttributedString(string: text)
+            let style = NSMutableParagraphStyle()
+            style.lineSpacing = lineHeight
+            attributeString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSMakeRange(0, text.count))
+            self.attributedText = attributeString
+        }
+    }
+}
+
 class ProfileViewController: BaseViewController {
     
     @IBOutlet weak var defaultPhotoView: UIView!
@@ -17,7 +30,7 @@ class ProfileViewController: BaseViewController {
         
         // Logger.app.logMessage("\(editButton.frame)", logLevel: .Info)
         // Кнопка, как и вся view еще не начали загружаться и, следовательно свойство editButton nil. А мы
-        // пытаемся обратиться к ней. editButton nil
+        // пытаемся обратиться к ней.
     }
     
     required init?(coder: NSCoder) {
@@ -25,7 +38,7 @@ class ProfileViewController: BaseViewController {
         
         // Logger.app.logMessage("\(editButton.frame)", logLevel: .Info)
         // Кнопка, как и вся view еще не начали загружаться и, следовательно свойство editButton nil. А мы
-        // пытаемся обратиться к ней. editButton nil
+        // пытаемся обратиться к ней.
     }
     
     override func viewDidLoad() {
@@ -45,12 +58,14 @@ class ProfileViewController: BaseViewController {
         // посчиталась safeArea и уже исходя из нее посчитались констрэинты кнопки
     }
     
-    // MARK: - Private methods
+// MARK: - Private methods
     
     private func setupUI(){
         profilePhotoView.layer.cornerRadius = profilePhotoView.bounds.width / 2
         profilePhotoView.contentMode = .scaleAspectFill
         profilePhotoView.clipsToBounds = true
+        
+        descriptionLabel.setLineHeight(lineHeight: 6)
         
         saveButton.layer.cornerRadius = saveButton.bounds.height / 3
         
@@ -63,7 +78,7 @@ class ProfileViewController: BaseViewController {
         label.text = fillInitials()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 120)
-        label.textColor = UIColor.black
+        label.textColor = UIColor.init(red: 54/255, green: 55/255, blue: 56/255, alpha: 1.0)
         defaultPhotoView.addSubview(label)
         
         NSLayoutConstraint.activate([
@@ -79,10 +94,14 @@ class ProfileViewController: BaseViewController {
         guard let fullName = nameLabel.text else {return ""}
         let names = fullName.components(separatedBy: " ")
         switch(names.count){
-        case 0: return ""
-        case 1: return "\(names[0].prefix(1))".uppercased()
-        case 2: return "\(names[0].prefix(1))\(names[1].prefix(1))".uppercased()
-        default: return ""
+            case 0:
+                return ""
+            case 1:
+                return "\(names[0].prefix(1))".uppercased()
+            case 2:
+                return "\(names[0].prefix(1))\(names[1].prefix(1))".uppercased()
+            default:
+                return ""
         }
     }
     
@@ -133,7 +152,8 @@ class ProfileViewController: BaseViewController {
         present(alertController, animated: true)
     }
     
-    // MARK: - IBActions
+// MARK: - IBActions
+    
     @IBAction func editTouch(_ sender: UIButton) {
         let actionSheet = UIAlertController(title: "Choose the source for your avatar", message: nil,  preferredStyle: .actionSheet)
         

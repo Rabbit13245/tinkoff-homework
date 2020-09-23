@@ -31,7 +31,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="oTE-Fn-wsr"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                         <state key="normal" title="Edit"/>
                                         <connections>
                                             <action selector="editTouch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8eS-FH-JgE"/>
@@ -66,7 +66,7 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="263" id="bIF-rg-e0R"/>
                                     <constraint firstAttribute="height" constant="40" id="vzY-ws-Uoh"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                 <state key="normal" title="Save"/>
                             </button>
                         </subviews>
