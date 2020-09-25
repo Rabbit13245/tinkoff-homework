@@ -14,6 +14,10 @@
 		8467A615250FAED400E36BEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8467A613250FAED400E36BEE /* Main.storyboard */; };
 		8467A617250FAED500E36BEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467A616250FAED500E36BEE /* Assets.xcassets */; };
 		8467A61A250FAED500E36BEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8467A618250FAED500E36BEE /* LaunchScreen.storyboard */; };
+		849444E0251DE86000946D9F /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444DF251DE86000946D9F /* ConversationsListViewController.swift */; };
+		849444E3251DF3C800946D9F /* DialogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E1251DF3C800946D9F /* DialogTableViewCell.swift */; };
+		849444E4251DF3C800946D9F /* DialogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849444E2251DF3C800946D9F /* DialogTableViewCell.xib */; };
+		849444E6251E21AF00946D9F /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E5251E21AF00946D9F /* ConversationViewController.swift */; };
 		F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF942517EDE400F0818C /* ProfileViewController.swift */; };
 		F136EF992517F10400F0818C /* LogLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF982517F10400F0818C /* LogLevels.swift */; };
 /* End PBXBuildFile section */
@@ -28,6 +32,10 @@
 		8467A616250FAED500E36BEE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8467A619250FAED500E36BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8467A61B250FAED500E36BEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		849444DF251DE86000946D9F /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
+		849444E1251DF3C800946D9F /* DialogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogTableViewCell.swift; sourceTree = "<group>"; };
+		849444E2251DF3C800946D9F /* DialogTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DialogTableViewCell.xib; sourceTree = "<group>"; };
+		849444E5251E21AF00946D9F /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		F136EF942517EDE400F0818C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F136EF982517F10400F0818C /* LogLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogLevels.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,18 +78,54 @@
 		8467A60C250FAED400E36BEE /* fintech_chat */ = {
 			isa = PBXGroup;
 			children = (
+				849444DE251DE81300946D9F /* Helpers */,
+				849444DB251DE7DB00946D9F /* Model */,
+				849444DD251DE7E900946D9F /* Controller */,
+				849444DC251DE7E500946D9F /* View */,
 				8442D3CB251B434D00F01A1C /* Extensions */,
 				8467A60D250FAED400E36BEE /* AppDelegate.swift */,
-				8467A611250FAED400E36BEE /* BaseViewController.swift */,
-				F136EF942517EDE400F0818C /* ProfileViewController.swift */,
-				8467A613250FAED400E36BEE /* Main.storyboard */,
 				8467A616250FAED500E36BEE /* Assets.xcassets */,
 				8467A618250FAED500E36BEE /* LaunchScreen.storyboard */,
 				8467A61B250FAED500E36BEE /* Info.plist */,
+			);
+			path = fintech_chat;
+			sourceTree = "<group>";
+		};
+		849444DB251DE7DB00946D9F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		849444DC251DE7E500946D9F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8467A613250FAED400E36BEE /* Main.storyboard */,
+				849444E1251DF3C800946D9F /* DialogTableViewCell.swift */,
+				849444E2251DF3C800946D9F /* DialogTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		849444DD251DE7E900946D9F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8467A611250FAED400E36BEE /* BaseViewController.swift */,
+				F136EF942517EDE400F0818C /* ProfileViewController.swift */,
+				849444DF251DE86000946D9F /* ConversationsListViewController.swift */,
+				849444E5251E21AF00946D9F /* ConversationViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		849444DE251DE81300946D9F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
 				844EB08C2510DF5600AF0216 /* Logger.swift */,
 				F136EF982517F10400F0818C /* LogLevels.swift */,
 			);
-			path = fintech_chat;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +189,7 @@
 				8467A61A250FAED500E36BEE /* LaunchScreen.storyboard in Resources */,
 				8467A617250FAED500E36BEE /* Assets.xcassets in Resources */,
 				8467A615250FAED400E36BEE /* Main.storyboard in Resources */,
+				849444E4251DF3C800946D9F /* DialogTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,10 +202,13 @@
 			files = (
 				8467A612250FAED400E36BEE /* BaseViewController.swift in Sources */,
 				844EB08D2510DF5600AF0216 /* Logger.swift in Sources */,
+				849444E6251E21AF00946D9F /* ConversationViewController.swift in Sources */,
 				F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */,
 				F136EF992517F10400F0818C /* LogLevels.swift in Sources */,
 				8442D3CA251B434600F01A1C /* UILabel.swift in Sources */,
+				849444E0251DE86000946D9F /* ConversationsListViewController.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
+				849444E3251DF3C800946D9F /* DialogTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
