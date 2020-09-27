@@ -10,7 +10,7 @@ import UIKit
 
 class MessageTableViewCell: UITableViewCell {
 
-    //@IBOutlet weak var messageLabel: UILabel!
+    
     
     lazy var messageTextLabel: UILabel = {
         let label = UILabel()
@@ -20,18 +20,7 @@ class MessageTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-    
-    }
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-            print("FF")
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        print("DD")
-     
+        
         configureUI()
     }
     
@@ -47,15 +36,21 @@ class MessageTableViewCell: UITableViewCell {
         view.backgroundColor = .red
         
         self.contentView.addSubview(view)
-        
+        self.contentView.addSubview(messageTextLabel)
         //view.addSubview(messageTextLabel)
         
         view.translatesAutoresizingMaskIntoConstraints = false
+        messageTextLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            view.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8),
-            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            view.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            view.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -50),
+            view.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            view.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            
+            messageTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            messageTextLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            messageTextLabel.topAnchor.constraint(equalTo: view.topAnchor),
+            messageTextLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             //view.widthAnchor.constraint(equalTo: contentView.widthAnchor)
         ])
         //self.backgroundColor = UIColor.lightGray
