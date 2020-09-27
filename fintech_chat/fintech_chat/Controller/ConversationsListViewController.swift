@@ -8,61 +8,47 @@
 
 import UIKit
 
-struct Friend{
-    let Name: String
-}
-
 class ConversationsListViewController: UITableViewController {
 
-    var friends = [
-        [
-            Friend(Name: "Steve Jobs"),
-            Friend(Name: "William Gates"),
-            Friend(Name: "Stephen Wozniak"),
-            Friend(Name: "Barack Obama"),
-            Friend(Name: "Donald Trump"),
-            Friend(Name: "Mark Zuckerberg"),
-            Friend(Name: "Angela Merkel"),
-            Friend(Name: "Elon Musk"),
-            Friend(Name: "Timothy Cook"),
-            Friend(Name: "Ronald Wayne"),
-        ],
-        [
-            Friend(Name: "Hermann Gräf"),
-            Friend(Name: "Oleg Tinkov"),
-            Friend(Name: "Vladimir Putin"),
-            Friend(Name: "Dmitry Medvedev"),
-            Friend(Name: "Mikhail Mishustin"),
-            Friend(Name: "Boris Yeltsin"),
-            Friend(Name: "Mikhail Gorbachev"),
-            Friend(Name: "Yevgeny Kaspersky"),
-            Friend(Name: "David Yang"),
-            Friend(Name: "Andrey Akinshin"),
-        ],
-    ]
+    lazy var dataGenerator: FakeDataGenerator = {
+        let fakeDataGenerator = FakeDataGenerator()
+        return fakeDataGenerator
+    }()
+    
+    var conversations : [[ConversationCellModel]]?
+    
+    let chatName = "Tinkoff Chat"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(UINib(nibName: String(describing: ConversationTableViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: ConversationTableViewCell.self))
+        
+        conversations = dataGenerator.getFriends()
+        
         setupUI()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        tableView.register(UINib(nibName: String(describing: DialogTableViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: DialogTableViewCell.self))
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.title = ""
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+       
+        super.viewWillAppear(animated)
+        self.navigationItem.title = chatName
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return friends.count
+        return conversations?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friends[section].count
+        return conversations?[section].count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -78,11 +64,11 @@ class ConversationsListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: DialogTableViewCell.self), for: indexPath) as? DialogTableViewCell else {return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ConversationTableViewCell.self), for: indexPath) as? ConversationTableViewCell else {return UITableViewCell()}
         
-        let cellData = DialogCellData(friendName: friends[indexPath.section][indexPath.row].Name, lastMessageDate: "2020-09-25", lastMessage: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum. An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.", friendImage: nil)
+        let cellData = conversations?[indexPath.section][indexPath.row] ?? dataGenerator.getDefaulModel()
         
-        cell.configureSell(withData: cellData)
+        cell.configure(with: cellData)
         
         return cell
     }
@@ -91,13 +77,22 @@ class ConversationsListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let controller = ConversationViewController()
-        controller.friendName = friends[indexPath.section][indexPath.row].Name
+        
+        controller.friendName = conversations?[indexPath.section][indexPath.row].name ?? dataGenerator.getDefaulModel().name
+        
+        controller.messages = dataGenerator.getMessages()
+        
         navigationController?.pushViewController(controller, animated: true)
     }
     
     // MARK: - Private functions
     
     private func setupUI(){
-        self.navigationItem.title = "Tinkoff Chat"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.title = chatName
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: nil)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: nil)
     }
 }

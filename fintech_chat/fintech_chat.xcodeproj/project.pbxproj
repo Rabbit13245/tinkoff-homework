@@ -15,11 +15,18 @@
 		8467A617250FAED500E36BEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467A616250FAED500E36BEE /* Assets.xcassets */; };
 		8467A61A250FAED500E36BEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8467A618250FAED500E36BEE /* LaunchScreen.storyboard */; };
 		849444E0251DE86000946D9F /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444DF251DE86000946D9F /* ConversationsListViewController.swift */; };
-		849444E3251DF3C800946D9F /* DialogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E1251DF3C800946D9F /* DialogTableViewCell.swift */; };
-		849444E4251DF3C800946D9F /* DialogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849444E2251DF3C800946D9F /* DialogTableViewCell.xib */; };
+		849444E3251DF3C800946D9F /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E1251DF3C800946D9F /* ConversationTableViewCell.swift */; };
+		849444E4251DF3C800946D9F /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849444E2251DF3C800946D9F /* ConversationTableViewCell.xib */; };
 		849444E6251E21AF00946D9F /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E5251E21AF00946D9F /* ConversationViewController.swift */; };
+		F10D4E022520F03E00B8CDD0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E012520F03E00B8CDD0 /* Date.swift */; };
+		F10D4E04252111A900B8CDD0 /* ConversationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */; };
+		F10D4E062521123D00B8CDD0 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */; };
+		F10D4E092521165B00B8CDD0 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E072521165B00B8CDD0 /* MessageTableViewCell.swift */; };
+		F10D4E0C252118D400B8CDD0 /* FakeDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E0B252118D400B8CDD0 /* FakeDataGenerator.swift */; };
+		F10D4E14252132B800B8CDD0 /* MessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F10D4E12252132B800B8CDD0 /* MessageTableViewCell.xib */; };
 		F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF942517EDE400F0818C /* ProfileViewController.swift */; };
 		F136EF992517F10400F0818C /* LogLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF982517F10400F0818C /* LogLevels.swift */; };
+		F1D84D4C251E9804000A69AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D84D4B251E9804000A69AF /* UIColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,11 +40,18 @@
 		8467A619250FAED500E36BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8467A61B250FAED500E36BEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		849444DF251DE86000946D9F /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
-		849444E1251DF3C800946D9F /* DialogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogTableViewCell.swift; sourceTree = "<group>"; };
-		849444E2251DF3C800946D9F /* DialogTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DialogTableViewCell.xib; sourceTree = "<group>"; };
+		849444E1251DF3C800946D9F /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
+		849444E2251DF3C800946D9F /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
 		849444E5251E21AF00946D9F /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
+		F10D4E012520F03E00B8CDD0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConversationCellModel.swift; path = fintech_chat/Extensions/ConversationCellModel.swift; sourceTree = SOURCE_ROOT; };
+		F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessageCellModel.swift; path = fintech_chat/Extensions/MessageCellModel.swift; sourceTree = SOURCE_ROOT; };
+		F10D4E072521165B00B8CDD0 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
+		F10D4E0B252118D400B8CDD0 /* FakeDataGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FakeDataGenerator.swift; path = fintech_chat/View/FakeDataGenerator.swift; sourceTree = SOURCE_ROOT; };
+		F10D4E12252132B800B8CDD0 /* MessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageTableViewCell.xib; sourceTree = "<group>"; };
 		F136EF942517EDE400F0818C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F136EF982517F10400F0818C /* LogLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogLevels.swift; sourceTree = "<group>"; };
+		F1D84D4B251E9804000A69AF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +69,8 @@
 			isa = PBXGroup;
 			children = (
 				8442D3C9251B434600F01A1C /* UILabel.swift */,
+				F1D84D4B251E9804000A69AF /* UIColor.swift */,
+				F10D4E012520F03E00B8CDD0 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -94,6 +110,9 @@
 		849444DB251DE7DB00946D9F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */,
+				F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */,
+				F10D4E0B252118D400B8CDD0 /* FakeDataGenerator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -102,8 +121,10 @@
 			isa = PBXGroup;
 			children = (
 				8467A613250FAED400E36BEE /* Main.storyboard */,
-				849444E1251DF3C800946D9F /* DialogTableViewCell.swift */,
-				849444E2251DF3C800946D9F /* DialogTableViewCell.xib */,
+				849444E1251DF3C800946D9F /* ConversationTableViewCell.swift */,
+				849444E2251DF3C800946D9F /* ConversationTableViewCell.xib */,
+				F10D4E072521165B00B8CDD0 /* MessageTableViewCell.swift */,
+				F10D4E12252132B800B8CDD0 /* MessageTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -189,7 +210,8 @@
 				8467A61A250FAED500E36BEE /* LaunchScreen.storyboard in Resources */,
 				8467A617250FAED500E36BEE /* Assets.xcassets in Resources */,
 				8467A615250FAED400E36BEE /* Main.storyboard in Resources */,
-				849444E4251DF3C800946D9F /* DialogTableViewCell.xib in Resources */,
+				F10D4E14252132B800B8CDD0 /* MessageTableViewCell.xib in Resources */,
+				849444E4251DF3C800946D9F /* ConversationTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,13 +224,19 @@
 			files = (
 				8467A612250FAED400E36BEE /* BaseViewController.swift in Sources */,
 				844EB08D2510DF5600AF0216 /* Logger.swift in Sources */,
+				F10D4E04252111A900B8CDD0 /* ConversationCellModel.swift in Sources */,
 				849444E6251E21AF00946D9F /* ConversationViewController.swift in Sources */,
 				F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */,
 				F136EF992517F10400F0818C /* LogLevels.swift in Sources */,
 				8442D3CA251B434600F01A1C /* UILabel.swift in Sources */,
+				F10D4E092521165B00B8CDD0 /* MessageTableViewCell.swift in Sources */,
 				849444E0251DE86000946D9F /* ConversationsListViewController.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
-				849444E3251DF3C800946D9F /* DialogTableViewCell.swift in Sources */,
+				F10D4E062521123D00B8CDD0 /* MessageCellModel.swift in Sources */,
+				F10D4E022520F03E00B8CDD0 /* Date.swift in Sources */,
+				849444E3251DF3C800946D9F /* ConversationTableViewCell.swift in Sources */,
+				F10D4E0C252118D400B8CDD0 /* FakeDataGenerator.swift in Sources */,
+				F1D84D4C251E9804000A69AF /* UIColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
