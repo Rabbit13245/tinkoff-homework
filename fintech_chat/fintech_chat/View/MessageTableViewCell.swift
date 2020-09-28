@@ -10,16 +10,26 @@ import UIKit
 
 class MessageTableViewCell: UITableViewCell {
 
-    
+    lazy var bubbleView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 15
+        return view
+    }()
     
     lazy var messageTextLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         return label
-    } ()
+    }()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         
         configureUI()
     }
@@ -31,29 +41,21 @@ class MessageTableViewCell: UITableViewCell {
     // MARK: - Private functions
     
     private func configureUI(){
-//        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.contentView.frame.width , height: self.contentView.bounds.height))
-        let view = UIView()
-        view.backgroundColor = .red
-        
-        self.contentView.addSubview(view)
+        self.contentView.addSubview(bubbleView)
         self.contentView.addSubview(messageTextLabel)
-        //view.addSubview(messageTextLabel)
         
-        view.translatesAutoresizingMaskIntoConstraints = false
+        bubbleView.translatesAutoresizingMaskIntoConstraints = false
         messageTextLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
-            view.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -50),
-            view.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            view.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            bubbleView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            bubbleView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -20),
             
-            messageTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            messageTextLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            messageTextLabel.topAnchor.constraint(equalTo: view.topAnchor),
-            messageTextLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            //view.widthAnchor.constraint(equalTo: contentView.widthAnchor)
+            messageTextLabel.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 8),
+            messageTextLabel.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: -8),
+            messageTextLabel.topAnchor.constraint(equalTo: bubbleView.topAnchor),
+            messageTextLabel.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor),
         ])
-        //self.backgroundColor = UIColor.lightGray
     }
 }
 
@@ -64,5 +66,21 @@ extension MessageTableViewCell: ConfigurableView{
     
     func configure(with model: MessageCellModel) {
         messageTextLabel.text = model.text
+        switch (model.direction){
+        case .input:
+            NSLayoutConstraint.activate([
+                bubbleView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+                bubbleView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -self.contentView.frame.width / 4),
+            ])
+            bubbleView.backgroundColor = UIColor(red: 223/255, green: 223/255, blue: 223/255, alpha: 1)
+            break
+        case .output:
+            NSLayoutConstraint.activate([
+                bubbleView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: self.contentView.frame.width / 4),
+                bubbleView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            ])
+            bubbleView.backgroundColor = UIColor(red: 220/255, green: 247/255, blue: 197/255, alpha: 1)
+            break
+        }
     }
 }

@@ -37,7 +37,7 @@ class FakeDataGenerator{
     ]
     
     let messages = [
-           MessageCellModel(text: "Hello! How are you? What is the most popular meal in Japan?", direction: .input),
+           MessageCellModel(text: "Hello! How are you? What is the most popular meal in Japan? Hello! How are you? What is the most popular meal in Japan?", direction: .input),
            MessageCellModel(text: "Do you like it?", direction: .input),
            MessageCellModel(text: "Hi! Im fine. How are you? Yep, i like it!!!!", direction: .output)
        ]

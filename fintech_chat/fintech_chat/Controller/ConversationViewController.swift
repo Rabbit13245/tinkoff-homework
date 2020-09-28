@@ -25,10 +25,10 @@ class ConversationViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+                
+        tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: String(describing: MessageTableViewCell.self))
         
-         tableView.register(UINib(nibName: String(describing: MessageTableViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: MessageTableViewCell.self))
-        
-         setupUI()
+        setupUI()
     }
 
     // MARK: - Table view data source
@@ -46,11 +46,10 @@ class ConversationViewController: UITableViewController {
         
         let message = messages?[indexPath.row] ?? dataGenerator.getDefaultMessage()
         
-        let size = CGSize(width: self.view.frame.width, height: 1000)
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
-            
-        cell.frame = CGRect(x: 0, y: 0, width: 100, height: estimatedFrame.height + 20)
+//        let size = CGSize(width: self.view.frame.width, height: 1000)
+//        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+//        let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
+//        cell.frame = CGRect(x: 0, y: 0, width: 0, height: estimatedFrame.height + 50)
         
         cell.configure(with: message)
         
@@ -61,14 +60,13 @@ class ConversationViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if let message = messages?[indexPath.row]{
-            let size = CGSize(width: self.view.frame.width, height: 1000)
+            let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
             let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
                 
-            return estimatedFrame.height + 20
+            return estimatedFrame.height + 20 + 20
         }
-        
-        return 100
+        return 44
     }
     
     
@@ -78,5 +76,7 @@ class ConversationViewController: UITableViewController {
         self.navigationItem.largeTitleDisplayMode = .never
         
         self.tableView.tableFooterView = UIView()
+        
+        self.tableView.separatorStyle = .none
     }
 }
