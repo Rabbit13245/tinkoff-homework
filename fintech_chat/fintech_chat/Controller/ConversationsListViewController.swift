@@ -15,24 +15,27 @@ class ConversationsListViewController: UITableViewController {
         return fakeDataGenerator
     }()
     
+    lazy var mainStoryboard: UIStoryboard = {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        return storyboard
+    }()
+    
     lazy var settingsBarButton: UIBarButtonItem = {
-        let button = UIButton(type: .custom)
-        button.setImage(#imageLiteral(resourceName: "settings"), for: .normal)
-        let barButton = UIBarButtonItem(customView: button)
+        let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: nil)
+        barButton.tintColor = UIColor.AppColors.GrayBarButton
         return barButton
     }()
     
     lazy var profileBarButton: UIBarButtonItem = {
-        let someView = UIView()
-        someView.backgroundColor = UIColor.AppColors.YellowLight
-        someView.sizeToFit()
-        someView.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
+        let button = UIButton()
+        button.backgroundColor = UIColor.AppColors.YellowLogo
+        button.setTitle("MD", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
+        button.layer.cornerRadius = button.frame.width / 2
+        button.addTarget(self, action: #selector(profileButtonPressed), for: .touchUpInside)
         
-        let text = UILabel()
-        text.text = "MD"
-        someView.addSubview(text)
-        
-        let barButtom = UIBarButtonItem(customView: someView)
+        let barButtom = UIBarButtonItem(customView: button)
         return barButtom
     }()
     
@@ -115,6 +118,10 @@ class ConversationsListViewController: UITableViewController {
         
         self.navigationItem.leftBarButtonItem = settingsBarButton
         self.navigationItem.rightBarButtonItem = profileBarButton
-        
+    }
+    
+    @objc private func profileButtonPressed(){
+        let vvv = mainStoryboard.instantiateViewController(withIdentifier: "ProfileVC")
+        self.present(vvv, animated: true, completion: nil)
     }
 }

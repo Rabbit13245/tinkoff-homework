@@ -11,5 +11,8 @@ import UIKit
 extension UIColor {
     struct AppColors {
         static let YellowLight = UIColor.init(red: 228/255, green: 232/255, blue: 43/255, alpha: 0.1)
+        static let YellowLogo = UIColor.init(red: 228/255, green: 232/255, blue: 43/255, alpha: 1)
+        static let GrayBarButton = UIColor.init(red: 84/255, green: 84/255, blue: 88/255, alpha: 0.65)
     }
+    
 }
