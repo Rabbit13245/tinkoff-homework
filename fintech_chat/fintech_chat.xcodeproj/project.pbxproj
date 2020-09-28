@@ -7,23 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8442D3CA251B434600F01A1C /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442D3C9251B434600F01A1C /* UILabel.swift */; };
 		844EB08D2510DF5600AF0216 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EB08C2510DF5600AF0216 /* Logger.swift */; };
 		8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467A60D250FAED400E36BEE /* AppDelegate.swift */; };
-		8467A612250FAED400E36BEE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467A611250FAED400E36BEE /* ViewController.swift */; };
+		8467A612250FAED400E36BEE /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467A611250FAED400E36BEE /* BaseViewController.swift */; };
 		8467A615250FAED400E36BEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8467A613250FAED400E36BEE /* Main.storyboard */; };
 		8467A617250FAED500E36BEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467A616250FAED500E36BEE /* Assets.xcassets */; };
 		8467A61A250FAED500E36BEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8467A618250FAED500E36BEE /* LaunchScreen.storyboard */; };
+		F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF942517EDE400F0818C /* ProfileViewController.swift */; };
+		F136EF992517F10400F0818C /* LogLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF982517F10400F0818C /* LogLevels.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8442D3C9251B434600F01A1C /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		844EB08C2510DF5600AF0216 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		8467A60A250FAED400E36BEE /* Финтех чат.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Финтех чат.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8467A60D250FAED400E36BEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8467A611250FAED400E36BEE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8467A611250FAED400E36BEE /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		8467A614250FAED400E36BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8467A616250FAED500E36BEE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8467A619250FAED500E36BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8467A61B250FAED500E36BEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F136EF942517EDE400F0818C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		F136EF982517F10400F0818C /* LogLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogLevels.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8442D3CB251B434D00F01A1C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8442D3C9251B434600F01A1C /* UILabel.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		8467A601250FAED300E36BEE = {
 			isa = PBXGroup;
 			children = (
@@ -56,13 +70,16 @@
 		8467A60C250FAED400E36BEE /* fintech_chat */ = {
 			isa = PBXGroup;
 			children = (
+				8442D3CB251B434D00F01A1C /* Extensions */,
 				8467A60D250FAED400E36BEE /* AppDelegate.swift */,
-				8467A611250FAED400E36BEE /* ViewController.swift */,
+				8467A611250FAED400E36BEE /* BaseViewController.swift */,
+				F136EF942517EDE400F0818C /* ProfileViewController.swift */,
 				8467A613250FAED400E36BEE /* Main.storyboard */,
 				8467A616250FAED500E36BEE /* Assets.xcassets */,
 				8467A618250FAED500E36BEE /* LaunchScreen.storyboard */,
 				8467A61B250FAED500E36BEE /* Info.plist */,
 				844EB08C2510DF5600AF0216 /* Logger.swift */,
+				F136EF982517F10400F0818C /* LogLevels.swift */,
 			);
 			path = fintech_chat;
 			sourceTree = "<group>";
@@ -138,8 +155,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8467A612250FAED400E36BEE /* ViewController.swift in Sources */,
+				8467A612250FAED400E36BEE /* BaseViewController.swift in Sources */,
 				844EB08D2510DF5600AF0216 /* Logger.swift in Sources */,
+				F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */,
+				F136EF992517F10400F0818C /* LogLevels.swift in Sources */,
+				8442D3CA251B434600F01A1C /* UILabel.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,7 +236,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +290,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
