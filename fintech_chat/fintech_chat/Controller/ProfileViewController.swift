@@ -25,37 +25,10 @@ class ProfileViewController: BaseViewController {
     
     weak var initialsLabel: UILabel?
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        
-        // Logger.app.logMessage("\(editButton.frame)", logLevel: .Info)
-        // Кнопка, как и вся view еще не начали загружаться и, следовательно свойство editButton nil. А мы
-        // пытаемся обратиться к ней.
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        
-        // Logger.app.logMessage("\(editButton.frame)", logLevel: .Info)
-        // Кнопка, как и вся view еще не начали загружаться и, следовательно свойство editButton nil. А мы
-        // пытаемся обратиться к ней.
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-        
-        Logger.app.logMessage("\(saveButton.frame)", logLevel: .Info)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        Logger.app.logMessage("\(saveButton.frame)", logLevel: .Info)
-        // Frame отличаются, потому что сначала кнопка появилась, когда safeArea еще не была просчитана автоЛейаутом. Вообще в момент
-        // вызова viewDidLoad вью этого вьюКонтроллера не была добавлена в иерархию приложения. Потом вью добавилась,
-        // посчиталась safeArea и уже исходя из нее посчитались констрэинты кнопки
     }
     
 // MARK: - Private methods
@@ -179,6 +152,11 @@ class ProfileViewController: BaseViewController {
         
         present(actionSheet, animated: true)
     }
+    
+    @IBAction func closeTouch(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: - UIImagePickerControllerDelegate
