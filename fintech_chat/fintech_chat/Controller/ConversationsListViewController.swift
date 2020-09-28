@@ -15,8 +15,8 @@ class ConversationsListViewController: UITableViewController {
         return fakeDataGenerator
     }()
     
-    lazy var mainStoryboard: UIStoryboard = {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    lazy var mainStoryboard: UIStoryboard? = {
+        let storyboard = self.navigationController?.storyboard
         return storyboard
     }()
     
@@ -115,13 +115,19 @@ class ConversationsListViewController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = chatName
         
-        
         self.navigationItem.leftBarButtonItem = settingsBarButton
         self.navigationItem.rightBarButtonItem = profileBarButton
+        
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "Search friends"
+        searchController.obscuresBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        self.navigationItem.searchController = searchController
     }
     
     @objc private func profileButtonPressed(){
-        let vvv = mainStoryboard.instantiateViewController(withIdentifier: "ProfileVC")
-        self.present(vvv, animated: true, completion: nil)
+        guard let storyboard = storyboard else {return}
+        let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
+        self.present(profileVC, animated: true, completion: nil)
     }
 }

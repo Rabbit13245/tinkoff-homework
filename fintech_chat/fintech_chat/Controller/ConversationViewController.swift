@@ -46,11 +46,6 @@ class ConversationViewController: UITableViewController {
         
         let message = messages?[indexPath.row] ?? dataGenerator.getDefaultMessage()
         
-//        let size = CGSize(width: self.view.frame.width, height: 1000)
-//        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-//        let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
-//        cell.frame = CGRect(x: 0, y: 0, width: 0, height: estimatedFrame.height + 50)
-        
         cell.configure(with: message)
         
         return cell

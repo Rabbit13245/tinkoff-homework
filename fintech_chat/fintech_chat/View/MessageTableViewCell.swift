@@ -68,18 +68,27 @@ extension MessageTableViewCell: ConfigurableView{
         messageTextLabel.text = model.text
         switch (model.direction){
         case .input:
+            bubbleView.removeConstraints([
+                bubbleView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: self.contentView.frame.width / 4),
+            bubbleView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            ])
+            
             NSLayoutConstraint.activate([
                 bubbleView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
                 bubbleView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -self.contentView.frame.width / 4),
             ])
-            bubbleView.backgroundColor = UIColor(red: 223/255, green: 223/255, blue: 223/255, alpha: 1)
+            bubbleView.backgroundColor = UIColor.AppColors.InputMessageBackground
             break
         case .output:
+            bubbleView.removeConstraints([
+                bubbleView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+                bubbleView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -self.contentView.frame.width / 4),
+            ])
             NSLayoutConstraint.activate([
                 bubbleView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: self.contentView.frame.width / 4),
                 bubbleView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             ])
-            bubbleView.backgroundColor = UIColor(red: 220/255, green: 247/255, blue: 197/255, alpha: 1)
+            bubbleView.backgroundColor = UIColor.AppColors.OutputMessageBackground
             break
         }
     }
