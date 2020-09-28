@@ -13,6 +13,7 @@ struct MessageCellModel{
     let direction: MessageDirection
 }
 
+
 enum MessageDirection{
     case input
     case output

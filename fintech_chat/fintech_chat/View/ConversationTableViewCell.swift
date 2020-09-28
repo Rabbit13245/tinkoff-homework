@@ -33,6 +33,11 @@ class ConversationTableViewCell: UITableViewCell {
         configureUI()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.backgroundColor = UIColor.clear
+    }
+    
     // MARK: - Private functions
     
     private func configureUI(){
@@ -84,9 +89,6 @@ extension ConversationTableViewCell: ConfigurableView {
         
         if (data.isOnline){
             self.backgroundColor = UIColor.AppColors.YellowLight
-        }
-        else{
-            self.backgroundColor = UIColor.clear
         }
     }
 }

@@ -15,6 +15,27 @@ class ConversationsListViewController: UITableViewController {
         return fakeDataGenerator
     }()
     
+    lazy var settingsBarButton: UIBarButtonItem = {
+        let button = UIButton(type: .custom)
+        button.setImage(#imageLiteral(resourceName: "settings"), for: .normal)
+        let barButton = UIBarButtonItem(customView: button)
+        return barButton
+    }()
+    
+    lazy var profileBarButton: UIBarButtonItem = {
+        let someView = UIView()
+        someView.backgroundColor = UIColor.AppColors.YellowLight
+        someView.sizeToFit()
+        someView.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
+        
+        let text = UILabel()
+        text.text = "MD"
+        someView.addSubview(text)
+        
+        let barButtom = UIBarButtonItem(customView: someView)
+        return barButtom
+    }()
+    
     var conversations : [[ConversationCellModel]]?
     
     let chatName = "Tinkoff Chat"
@@ -91,8 +112,9 @@ class ConversationsListViewController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = chatName
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: nil)
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .rewind, target: self, action: nil)
+        self.navigationItem.leftBarButtonItem = settingsBarButton
+        self.navigationItem.rightBarButtonItem = profileBarButton
+        
     }
 }
