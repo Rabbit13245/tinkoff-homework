@@ -82,7 +82,6 @@ extension ConversationTableViewCell: ConfigurableView {
             let font = UIFont(name: "Apple SD Gothic Neo", size: 13)
             let attributes = [NSAttributedString.Key.font: font]
             lastMessage.attributedText = NSAttributedString(string: text, attributes: attributes as [NSAttributedString.Key : Any])
-            
         }
 
         lastMessageDate.text = getString(from: data.date)

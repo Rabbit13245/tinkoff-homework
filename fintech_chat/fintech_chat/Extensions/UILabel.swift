@@ -1,7 +1,7 @@
 import UIKit
  
 extension UILabel {
-    func setLineHeight1(lineHeight: CGFloat) {
+    func setLineHeight(lineHeight: CGFloat) {
         let text = self.text
         if let text = text {
             let attributeString = NSMutableAttributedString(string: text)

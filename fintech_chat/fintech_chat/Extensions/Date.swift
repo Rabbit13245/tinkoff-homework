@@ -20,6 +20,4 @@ extension Date{
     func day() -> Int{
         return Calendar.current.dateComponents([.day], from: self).day ?? 0
     }
-    
-    
 }

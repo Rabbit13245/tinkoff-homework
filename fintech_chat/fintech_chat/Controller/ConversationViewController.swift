@@ -52,6 +52,7 @@ class ConversationViewController: UITableViewController {
     }
     
     // MARK: - Table view delegate
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if let message = messages?[indexPath.row]{
@@ -63,7 +64,6 @@ class ConversationViewController: UITableViewController {
         }
         return 44
     }
-    
     
     // MARK: - Private functions
     

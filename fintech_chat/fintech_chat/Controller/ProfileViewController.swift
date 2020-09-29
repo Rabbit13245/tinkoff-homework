@@ -1,19 +1,6 @@
 import UIKit
 import AVFoundation
 
-extension UILabel {
-    func setLineHeight(lineHeight: CGFloat) {
-        let text = self.text
-        if let text = text {
-            let attributeString = NSMutableAttributedString(string: text)
-            let style = NSMutableParagraphStyle()
-            style.lineSpacing = lineHeight
-            attributeString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSMakeRange(0, text.count))
-            self.attributedText = attributeString
-        }
-    }
-}
-
 class ProfileViewController: BaseViewController {
     
     @IBOutlet weak var defaultPhotoView: UIView!
@@ -31,7 +18,7 @@ class ProfileViewController: BaseViewController {
         setupUI()
     }
     
-// MARK: - Private methods
+    // MARK: - Private methods
     
     private func setupUI(){
         profilePhotoView.layer.cornerRadius = profilePhotoView.bounds.width / 2
@@ -125,7 +112,7 @@ class ProfileViewController: BaseViewController {
         present(alertController, animated: true)
     }
     
-// MARK: - IBActions
+    // MARK: - IBActions
     
     @IBAction func editTouch(_ sender: UIButton) {
         let actionSheet = UIAlertController(title: "Choose the source for your avatar", message: nil,  preferredStyle: .actionSheet)
@@ -156,7 +143,6 @@ class ProfileViewController: BaseViewController {
     @IBAction func closeTouch(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    
 }
 
 // MARK: - UIImagePickerControllerDelegate
