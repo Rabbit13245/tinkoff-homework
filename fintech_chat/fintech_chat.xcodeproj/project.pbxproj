@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8442D3CA251B434600F01A1C /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442D3C9251B434600F01A1C /* UILabel.swift */; };
 		844EB08D2510DF5600AF0216 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EB08C2510DF5600AF0216 /* Logger.swift */; };
+		8463B54E252369B800D1D358 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463B54D252369B800D1D358 /* Helper.swift */; };
 		8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467A60D250FAED400E36BEE /* AppDelegate.swift */; };
 		8467A612250FAED400E36BEE /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467A611250FAED400E36BEE /* BaseViewController.swift */; };
 		8467A615250FAED400E36BEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8467A613250FAED400E36BEE /* Main.storyboard */; };
@@ -32,6 +33,7 @@
 /* Begin PBXFileReference section */
 		8442D3C9251B434600F01A1C /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		844EB08C2510DF5600AF0216 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		8463B54D252369B800D1D358 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		8467A60A250FAED400E36BEE /* Финтех чат.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Финтех чат.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8467A60D250FAED400E36BEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8467A611250FAED400E36BEE /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			children = (
 				844EB08C2510DF5600AF0216 /* Logger.swift */,
 				F136EF982517F10400F0818C /* LogLevels.swift */,
+				8463B54D252369B800D1D358 /* Helper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				F136EF992517F10400F0818C /* LogLevels.swift in Sources */,
 				8442D3CA251B434600F01A1C /* UILabel.swift in Sources */,
 				F10D4E092521165B00B8CDD0 /* MessageTableViewCell.swift in Sources */,
+				8463B54E252369B800D1D358 /* Helper.swift in Sources */,
 				849444E0251DE86000946D9F /* ConversationsListViewController.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
 				F10D4E062521123D00B8CDD0 /* MessageCellModel.swift in Sources */,

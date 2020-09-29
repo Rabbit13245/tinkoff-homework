@@ -15,11 +15,9 @@ class ConversationViewController: UITableViewController {
         return fakeDataGenerator
     }()
     
-    var friendName: String?{
-        didSet{
-            self.navigationItem.title = friendName
-        }
-    }
+    var friendName: String?
+    
+    var friendAvatar: UIImage?
     
     var messages : [MessageCellModel]?
 
@@ -68,10 +66,53 @@ class ConversationViewController: UITableViewController {
     // MARK: - Private functions
     
     private func setupUI(){
+        self.tableView.tableFooterView = UIView()
+        self.tableView.separatorStyle = .none
+        
+        setupNavTitle()
+    }
+    
+    private func setupNavTitle(){
         self.navigationItem.largeTitleDisplayMode = .never
         
-        self.tableView.tableFooterView = UIView()
+        let label = UILabel()
+        label.text = friendName
+        label.textAlignment = .center
         
-        self.tableView.separatorStyle = .none
+        var avatarView :UIView = UIView()
+        
+        let miniAvatarSize: CGFloat = 36
+        
+        if (friendAvatar != nil){
+            let navImage = UIImageView()
+            
+            navImage.image = friendAvatar
+            navImage.contentMode = .scaleAspectFit
+            navImage.clipsToBounds = true
+            navImage.contentMode = .scaleAspectFit
+            navImage.layer.cornerRadius = miniAvatarSize / 2
+            
+            avatarView = navImage
+        }
+        else {
+            let someView = Helper.app.generateDefaultAvatar(name: friendName ?? "", width: miniAvatarSize)
+                        
+            avatarView = someView
+        }
+        
+        avatarView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            avatarView.widthAnchor.constraint(equalToConstant: miniAvatarSize),
+            avatarView.heightAnchor.constraint(equalToConstant: miniAvatarSize),
+        ])
+        
+        let stackView = UIStackView(arrangedSubviews: [avatarView, label])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        
+        self.navigationItem.titleView = stackView
     }
 }

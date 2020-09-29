@@ -18,7 +18,7 @@ class FakeDataGenerator{
             ConversationCellModel(name: "Donald Trump", message: "Voluptate irure aliquip consectetur commodo ex ex.", date: Date().addingTimeInterval(-60*60), isOnline: true, hasUnreadMessages: true),
             ConversationCellModel(name: "Mark Zuckerberg", message: "Dolore veniam Lorem occaecat veniam irure laborum est amet.", date: Date().addingTimeInterval(-60*60*2), isOnline: true, hasUnreadMessages: false),
             ConversationCellModel(name: "Angela Merkel", message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.", date: Date().addingTimeInterval(-86400), isOnline: true, hasUnreadMessages: true),
-            ConversationCellModel(name: "Elon Musk", message: "Voluptate irure aliquip consectetur commodo ex ex.", date: Date().addingTimeInterval(-86400*2), isOnline: true, hasUnreadMessages: false),
+            ConversationCellModel(name: "Elon Musk", message: "Voluptate irure aliquip consectetur commodo ex ex.", date: Date().addingTimeInterval(-86400*2), isOnline: true, hasUnreadMessages: false,),
             ConversationCellModel(name: "Timothy Cook", message: "", date: Date().addingTimeInterval(-86400*3), isOnline: true, hasUnreadMessages: false),
             ConversationCellModel(name: "Ronald Wayne", message: "", date: Date().addingTimeInterval(-86400*3), isOnline: true, hasUnreadMessages: false),
         ],

@@ -93,6 +93,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="defaultAvatarView" destination="1bk-E7-MzW" id="Ehd-7m-qjD"/>
                 <outlet property="friendImage" destination="pMo-2e-TlB" id="g9p-Uu-0aC"/>
                 <outlet property="friendName" destination="hFG-Oh-o1g" id="aBY-TW-Y0g"/>
                 <outlet property="lastMessage" destination="9mf-l3-WgW" id="iMS-UU-h0u"/>

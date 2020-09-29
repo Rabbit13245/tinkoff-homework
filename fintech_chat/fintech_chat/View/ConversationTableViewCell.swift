@@ -15,6 +15,7 @@ class ConversationTableViewCell: UITableViewCell {
     @IBOutlet private weak var lastMessage: UILabel!
     @IBOutlet private  weak var friendImage: UIImageView!
     @IBOutlet weak var onlineCircle: UIView!
+    @IBOutlet weak var defaultAvatarView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,10 +29,13 @@ class ConversationTableViewCell: UITableViewCell {
         configureUI()
     }
     
+    var defaultAvatar: UIView?
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         self.backgroundColor = UIColor.clear
         self.onlineCircle.isHidden = true
+        defaultAvatar?.removeFromSuperview()
     }
     
     // MARK: - Private functions
@@ -98,7 +102,10 @@ extension ConversationTableViewCell: ConfigurableView {
             friendImage.image = avatar
         }
         else{
-            friendImage.image = #imageLiteral(resourceName: "default-avatar")
+            friendImage.image = nil
+            defaultAvatar = Helper.app.generateDefaultAvatar(name: data.name, width: friendImage.frame.width)
+            guard let defaultAvatar = defaultAvatar else {return}
+            defaultAvatarView.insertSubview(defaultAvatar, belowSubview: onlineCircle)
         }
     }
 }

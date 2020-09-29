@@ -103,6 +103,7 @@ class ConversationsListViewController: UITableViewController {
         let controller = ConversationViewController()
         
         controller.friendName = conversations?[indexPath.section][indexPath.row].name ?? dataGenerator.getDefaulModel().name
+        controller.friendAvatar = conversations?[indexPath.section][indexPath.row].avatar ?? dataGenerator.getDefaulModel().avatar
         
         controller.messages = dataGenerator.getMessages()
         
