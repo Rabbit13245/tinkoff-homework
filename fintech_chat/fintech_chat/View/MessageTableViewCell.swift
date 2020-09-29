@@ -10,15 +10,18 @@ import UIKit
 
 class MessageTableViewCell: UITableViewCell {
 
-    lazy var bubbleView: UIView = {
+    let bubbleView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 15
+        view.layer.masksToBounds = true 
         return view
     }()
     
-    lazy var messageTextLabel: UILabel = {
+    let messageTextLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.backgroundColor = UIColor.clear
         return label
     }()
     
@@ -43,19 +46,6 @@ class MessageTableViewCell: UITableViewCell {
     private func configureUI(){
         self.contentView.addSubview(bubbleView)
         self.contentView.addSubview(messageTextLabel)
-        
-        bubbleView.translatesAutoresizingMaskIntoConstraints = false
-        messageTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            bubbleView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            bubbleView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -20),
-            
-            messageTextLabel.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 8),
-            messageTextLabel.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: -8),
-            messageTextLabel.topAnchor.constraint(equalTo: bubbleView.topAnchor),
-            messageTextLabel.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor),
-        ])
     }
 }
 
@@ -68,26 +58,9 @@ extension MessageTableViewCell: ConfigurableView{
         messageTextLabel.text = model.text
         switch (model.direction){
         case .input:
-            bubbleView.removeConstraints([
-                bubbleView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: self.contentView.frame.width / 4),
-            bubbleView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            ])
-            
-            NSLayoutConstraint.activate([
-                bubbleView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-                bubbleView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -self.contentView.frame.width / 4),
-            ])
             bubbleView.backgroundColor = UIColor.AppColors.InputMessageBackground
             break
         case .output:
-            bubbleView.removeConstraints([
-                bubbleView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-                bubbleView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -self.contentView.frame.width / 4),
-            ])
-            NSLayoutConstraint.activate([
-                bubbleView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: self.contentView.frame.width / 4),
-                bubbleView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            ])
             bubbleView.backgroundColor = UIColor.AppColors.OutputMessageBackground
             break
         }

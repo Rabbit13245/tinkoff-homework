@@ -9,7 +9,7 @@
 import UIKit
 
 class ConversationsListViewController: UITableViewController {
-
+    
     lazy var dataGenerator: FakeDataGenerator = {
         let fakeDataGenerator = FakeDataGenerator()
         return fakeDataGenerator
@@ -29,12 +29,12 @@ class ConversationsListViewController: UITableViewController {
     lazy var profileBarButton: UIBarButtonItem = {
         let button = UIButton()
         button.backgroundColor = UIColor.AppColors.YellowLogo
-        button.setTitle("MD", for: .normal)
+        button.setTitle(Helper.app.getInitials(from: "Marina Dudarenko"), for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
         button.layer.cornerRadius = button.frame.width / 2
         button.addTarget(self, action: #selector(profileButtonPressed), for: .touchUpInside)
-        
+    
         let barButtom = UIBarButtonItem(customView: button)
         return barButtom
     }()
@@ -90,11 +90,18 @@ class ConversationsListViewController: UITableViewController {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ConversationTableViewCell.self), for: indexPath) as? ConversationTableViewCell else {return UITableViewCell()}
         
+        //cell.backgroundColor = UIColor.clear
+        
         let cellData = conversations?[indexPath.section][indexPath.row] ?? dataGenerator.getDefaulModel()
         
         cell.configure(with: cellData)
         
         return cell
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.clear
     }
     
     // MARK: - Table view delegate

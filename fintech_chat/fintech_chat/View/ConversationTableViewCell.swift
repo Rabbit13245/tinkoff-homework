@@ -83,15 +83,19 @@ extension ConversationTableViewCell: ConfigurableView {
             }
             
             lastMessage.attributedText = NSAttributedString(string: data.message, attributes: [NSAttributedString.Key.font: font])
+            
+            lastMessageDate.text = getString(from: data.date)
         }
         else {
             let text = "No messages yet"
             let font = UIFont(name: "Apple SD Gothic Neo", size: 13)
             let attributes = [NSAttributedString.Key.font: font]
             lastMessage.attributedText = NSAttributedString(string: text, attributes: attributes as [NSAttributedString.Key : Any])
+            
+            lastMessageDate.text = ""
         }
 
-        lastMessageDate.text = getString(from: data.date)
+        
         
         if (data.isOnline){
             self.backgroundColor = UIColor.AppColors.YellowLight

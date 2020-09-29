@@ -35,7 +35,7 @@ class ProfileViewController: BaseViewController {
         
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = fillInitials()
+        label.text = Helper.app.getInitials(from: nameLabel.text ?? "")
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 120)
         label.textColor = UIColor.init(red: 54/255, green: 55/255, blue: 56/255, alpha: 1.0)
@@ -48,21 +48,6 @@ class ProfileViewController: BaseViewController {
             label.centerYAnchor.constraint(equalTo: defaultPhotoView.centerYAnchor)
         ])
         initialsLabel = label
-    }
-    
-    private func fillInitials() -> String{
-        guard let fullName = nameLabel.text else {return ""}
-        let names = fullName.components(separatedBy: " ")
-        switch(names.count){
-            case 0:
-                return ""
-            case 1:
-                return "\(names[0].prefix(1))".uppercased()
-            case 2:
-                return "\(names[0].prefix(1))\(names[1].prefix(1))".uppercased()
-            default:
-                return ""
-        }
     }
     
     private func checkCameraPermission(){

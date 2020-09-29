@@ -46,6 +46,21 @@ class ConversationViewController: UITableViewController {
         
         cell.configure(with: message)
         
+        let size = CGSize(width: self.view.frame.width * 0.75, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
+        
+        if (message.direction == .input){
+            cell.messageTextLabel.frame = CGRect(x: 8, y: 0, width: estimatedFrame.width, height: estimatedFrame.height + 20)
+            
+            cell.bubbleView.frame = CGRect(x: 0, y: 0, width: estimatedFrame.width + 8 + 8, height: estimatedFrame.height + 20)
+        }
+        else{
+            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - estimatedFrame.width, y: 0, width: estimatedFrame.width - 8, height: estimatedFrame.height + 20)
+            
+            cell.bubbleView.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 8, y: 0, width: estimatedFrame.width + 8, height: estimatedFrame.height + 20)
+        }
+        
         return cell
     }
     
@@ -54,7 +69,7 @@ class ConversationViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if let message = messages?[indexPath.row]{
-            let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
+            let size = CGSize(width: self.view.frame.width * 0.75, height: 1000)
             let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
             let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
                 
@@ -68,7 +83,7 @@ class ConversationViewController: UITableViewController {
     private func setupUI(){
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorStyle = .none
-        
+        self.tableView.allowsSelection = false
         setupNavTitle()
     }
     
