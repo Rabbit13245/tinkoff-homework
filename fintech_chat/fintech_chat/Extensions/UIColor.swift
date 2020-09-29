@@ -15,6 +15,7 @@ extension UIColor {
         static let GrayBarButton = UIColor.init(red: 84/255, green: 84/255, blue: 88/255, alpha: 0.65)
         static let InputMessageBackground = UIColor(red: 223/255, green: 223/255, blue: 223/255, alpha: 1)
         static let OutputMessageBackground = UIColor(red: 220/255, green: 247/255, blue: 197/255, alpha: 1)
+        static let OnlineGreen = UIColor(red: 90/255, green: 212/255, blue: 57/255, alpha: 1)
     }
     
 }

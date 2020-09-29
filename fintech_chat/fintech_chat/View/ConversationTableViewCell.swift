@@ -8,18 +8,13 @@
 
 import UIKit
 
-protocol ConfigurableView{
-    associatedtype ConfigurationModel
-    
-    func configure(with model: ConfigurationModel)
-}
-
 class ConversationTableViewCell: UITableViewCell {
 
     @IBOutlet private weak var friendName: UILabel!
     @IBOutlet private weak var lastMessageDate: UILabel!
     @IBOutlet private weak var lastMessage: UILabel!
     @IBOutlet private  weak var friendImage: UIImageView!
+    @IBOutlet weak var onlineCircle: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,13 +31,21 @@ class ConversationTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.backgroundColor = UIColor.clear
+        self.onlineCircle.isHidden = true
     }
     
     // MARK: - Private functions
     
     private func configureUI(){
         friendImage.layer.cornerRadius = friendImage.bounds.width / 2
+        
+        onlineCircle.layer.cornerRadius = onlineCircle.bounds.width / 2
+        onlineCircle.backgroundColor = UIColor.AppColors.OnlineGreen
+        onlineCircle.layer.borderWidth = 2
+        onlineCircle.layer.borderColor = UIColor.white.cgColor
+        
         self.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+        
     }
     
     private func getString(from date: Date) -> String{
@@ -72,7 +75,7 @@ extension ConversationTableViewCell: ConfigurableView {
             var font = UIFont.systemFont(ofSize: 13)
 
             if (data.hasUnreadMessages){
-                font = UIFont.boldSystemFont(ofSize: 13)
+                font = UIFont.systemFont(ofSize: 13, weight: .heavy)
             }
             
             lastMessage.attributedText = NSAttributedString(string: data.message, attributes: [NSAttributedString.Key.font: font])
@@ -88,6 +91,14 @@ extension ConversationTableViewCell: ConfigurableView {
         
         if (data.isOnline){
             self.backgroundColor = UIColor.AppColors.YellowLight
+            self.onlineCircle.isHidden = false
+        }
+        
+        if let avatar = data.avatar{
+            friendImage.image = avatar
+        }
+        else{
+            friendImage.image = #imageLiteral(resourceName: "default-avatar")
         }
     }
 }

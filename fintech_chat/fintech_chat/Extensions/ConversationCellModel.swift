@@ -6,7 +6,7 @@
 //  Copyright © 2020 Admin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct ConversationCellModel {
     let name: String
@@ -14,4 +14,6 @@ struct ConversationCellModel {
     let date: Date
     let isOnline: Bool
     let hasUnreadMessages: Bool
+    
+    var avatar: UIImage?
 }

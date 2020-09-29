@@ -11,9 +11,9 @@ import Foundation
 class FakeDataGenerator{
     let conversations = [
         [
-            ConversationCellModel(name: "Steve Jobs", message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.", date: Date().addingTimeInterval(-60), isOnline: true, hasUnreadMessages: true),
-            ConversationCellModel(name: "William Gates", message: "Reprehenderit mollit excepteur labore deserunt officia laboris eiusmod cillum eu duis", date: Date().addingTimeInterval(-60*2), isOnline: true, hasUnreadMessages: false),
-            ConversationCellModel(name: "Stephen Wozniak", message: "Aliqua mollit nisi incididunt id eu consequat eu cupidatat.", date: Date().addingTimeInterval(-60*15), isOnline: true, hasUnreadMessages: false),
+            ConversationCellModel(name: "Steve Jobs", message: "An suas viderer pro. Vis cu magna altera, ex his vivendo atomorum.", date: Date().addingTimeInterval(-60), isOnline: true, hasUnreadMessages: true, avatar: #imageLiteral(resourceName: "steve-jobs")),
+            ConversationCellModel(name: "William Gates", message: "Reprehenderit mollit excepteur labore deserunt officia laboris eiusmod cillum eu duis", date: Date().addingTimeInterval(-60*2), isOnline: true, hasUnreadMessages: false, avatar: #imageLiteral(resourceName: "william_gates")),
+            ConversationCellModel(name: "Stephen Wozniak", message: "Aliqua mollit nisi incididunt id eu consequat eu cupidatat.", date: Date().addingTimeInterval(-60*15), isOnline: true, hasUnreadMessages: false, avatar: #imageLiteral(resourceName: "stephen_wozniak")),
             ConversationCellModel(name: "Barack Obama", message: "Voluptate irure aliquip consectetur commodo ex ex.", date: Date().addingTimeInterval(-60*35), isOnline: true, hasUnreadMessages: false),
             ConversationCellModel(name: "Donald Trump", message: "Voluptate irure aliquip consectetur commodo ex ex.", date: Date().addingTimeInterval(-60*60), isOnline: true, hasUnreadMessages: true),
             ConversationCellModel(name: "Mark Zuckerberg", message: "Dolore veniam Lorem occaecat veniam irure laborum est amet.", date: Date().addingTimeInterval(-60*60*2), isOnline: true, hasUnreadMessages: false),
