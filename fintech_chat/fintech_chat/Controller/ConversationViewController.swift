@@ -77,6 +77,7 @@ class ConversationViewController: UITableViewController {
         
         let label = UILabel()
         label.text = friendName
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textAlignment = .center
         
         var avatarView :UIView = UIView()
