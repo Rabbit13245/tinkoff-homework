@@ -21,6 +21,18 @@ class ConversationViewController: UITableViewController {
     
     var messages : [MessageCellModel]?
 
+    let inputTextField : UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Your message here..."
+        return textField
+    }()
+    
+    let messageInputView: UIView = {
+       let view = UIView()
+        view.backgroundColor = .yellow
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -84,7 +96,18 @@ class ConversationViewController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorStyle = .none
         self.tableView.allowsSelection = false
+        
         setupNavTitle()
+        
+        self.view.addSubview(messageInputView)
+        messageInputView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            messageInputView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            messageInputView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            messageInputView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            messageInputView.heightAnchor.constraint(equalToConstant: 48)
+        ])
     }
     
     private func setupNavTitle(){
