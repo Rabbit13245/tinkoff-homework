@@ -122,17 +122,6 @@ class ConversationViewController: UIViewController {
             
             inputTextView.heightAnchor.constraint(equalToConstant: 40)
         ])
-        
-//        messageInputView.addSubview(inputTextView)
-//
-//        inputTextView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        NSLayoutConstraint.activate([
-//            inputTextView.leadingAnchor.constraint(equalTo: messageInputView.leadingAnchor, constant: 16),
-//            inputTextView.trailingAnchor.constraint(equalTo: messageInputView.trailingAnchor, constant: -16),
-//            inputTextView.topAnchor.constraint(equalTo: messageInputView.topAnchor, constant: 16),
-//            inputTextView.heightAnchor.constraint(lessThanOrEqualTo: messageInputView.heightAnchor, multiplier: 0.5)
-//        ])
     }
     
     private func setupNavTitle(){
@@ -200,6 +189,11 @@ class ConversationViewController: UIViewController {
         
         let keyboardHiding = notification.name == UIResponder.keyboardWillHideNotification
         
+        var lastPath : IndexPath?
+        if let paths = self.tableView.indexPathsForVisibleRows{
+            lastPath = paths.last
+        }
+        
         if (keyboardHiding){
             bottomConstraint.constant = 0
         }
@@ -211,9 +205,8 @@ class ConversationViewController: UIViewController {
             self.view.layoutIfNeeded()
         }, completion: {(completed) in
             if (!keyboardHiding){
-                if let messages = self.messages {
-                    let indexPath = IndexPath(item: messages.count - 1, section: 0)
-                    self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                if let lastPath = lastPath{
+                    self.tableView.scrollToRow(at: lastPath, at: .bottom, animated: true)
                 }
             }
         })
@@ -237,19 +230,19 @@ extension ConversationViewController: UITableViewDataSource{
         
         cell.configure(with: message)
         
-        let size = CGSize(width: self.view.frame.width * 0.75 - 8, height: 1000)
+        let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
         
         if (message.direction == .input){
-            cell.messageTextLabel.frame = CGRect(x: 8, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
+            cell.messageTextLabel.frame = CGRect(x: 16, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
             
-            cell.bubbleView.frame = CGRect(x: 0, y: 0, width: estimatedFrame.width + 8 + 8, height: estimatedFrame.height + 20)
+            cell.bubbleView.frame = CGRect(x: 8, y: 0, width: estimatedFrame.width + 8 + 8, height: estimatedFrame.height + 20)
         }
         else{
-            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 8, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
+            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 16, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
             
-            cell.bubbleView.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 16, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
+            cell.bubbleView.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 24, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
         }
         
         return cell
