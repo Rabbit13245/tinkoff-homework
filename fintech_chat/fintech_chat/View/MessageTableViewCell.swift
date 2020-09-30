@@ -37,10 +37,6 @@ class MessageTableViewCell: UITableViewCell {
         configureUI()
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
     // MARK: - Private functions
     
     private func configureUI(){

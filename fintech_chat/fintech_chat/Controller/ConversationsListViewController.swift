@@ -89,19 +89,12 @@ class ConversationsListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ConversationTableViewCell.self), for: indexPath) as? ConversationTableViewCell else {return UITableViewCell()}
-        
-        //cell.backgroundColor = UIColor.clear
-        
+                
         let cellData = conversations?[indexPath.section][indexPath.row] ?? dataGenerator.getDefaulModel()
         
         cell.configure(with: cellData)
         
         return cell
-    }
-    
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.clear
     }
     
     // MARK: - Table view delegate

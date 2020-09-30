@@ -17,6 +17,8 @@ class ConversationTableViewCell: UITableViewCell {
     @IBOutlet weak var onlineCircle: UIView!
     @IBOutlet weak var defaultAvatarView: UIView!
     
+    var defaultAvatar: UIView?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -28,8 +30,6 @@ class ConversationTableViewCell: UITableViewCell {
 
         configureUI()
     }
-    
-    var defaultAvatar: UIView?
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -95,8 +95,6 @@ extension ConversationTableViewCell: ConfigurableView {
             lastMessageDate.text = ""
         }
 
-        
-        
         if (data.isOnline){
             self.backgroundColor = UIColor.AppColors.YellowLight
             self.onlineCircle.isHidden = false
