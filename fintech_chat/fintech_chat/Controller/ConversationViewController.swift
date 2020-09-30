@@ -31,15 +31,18 @@ class ConversationViewController: UIViewController {
         return tableView
     }()
     
-    private lazy var inputTextField : UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Your message here..."
-        textField.layer.cornerRadius = 16
-        textField.backgroundColor = UIColor.white
+    private lazy var inputTextView : UITextView = {
+        let textView = UITextView()
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.text = "Your message here..."
+        textView.textColor = UIColor.lightGray
         
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
-        textField.leftViewMode = .always
-        return textField
+        textView.delegate = self
+        
+        textView.layer.cornerRadius = 16
+        textView.backgroundColor = UIColor.white
+        
+        return textView
     }()
     
     private lazy var bottomConstraint: NSLayoutConstraint = {
@@ -91,11 +94,8 @@ class ConversationViewController: UIViewController {
     private func setupInputView(){
         self.view.addSubview(messageInputView)
         
-        messageInputView.addSubview(inputTextField)
-        
-        inputTextField.translatesAutoresizingMaskIntoConstraints = false
         messageInputView.translatesAutoresizingMaskIntoConstraints = false
-                
+        
         NSLayoutConstraint.activate([
             messageInputView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             messageInputView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -103,12 +103,36 @@ class ConversationViewController: UIViewController {
             messageInputView.heightAnchor.constraint(equalToConstant: 80)
         ])
         
+        let buttonAdd = UIButton(type: .contactAdd)
+        let buttonSend = UIButton(type: .roundedRect)
+        buttonSend.setTitle("Send", for: .normal)
+        
+        let stackView = UIStackView(arrangedSubviews: [buttonAdd, inputTextView, buttonSend])
+        stackView.axis = .horizontal
+        stackView.spacing = 10
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        messageInputView.addSubview(stackView)
+        
         NSLayoutConstraint.activate([
-            inputTextField.leadingAnchor.constraint(equalTo: messageInputView.leadingAnchor, constant: 16),
-            inputTextField.trailingAnchor.constraint(equalTo: messageInputView.trailingAnchor, constant: -16),
-            inputTextField.heightAnchor.constraint(equalToConstant: 32),
-            inputTextField.topAnchor.constraint(equalTo: messageInputView.topAnchor, constant: 16)
+            stackView.leadingAnchor.constraint(equalTo: messageInputView.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: messageInputView.trailingAnchor, constant: -16),
+            stackView.topAnchor.constraint(equalTo: messageInputView.topAnchor, constant: 16),
+            stackView.heightAnchor.constraint(lessThanOrEqualTo: messageInputView.heightAnchor, multiplier: 0.5),
+            
+            inputTextView.heightAnchor.constraint(equalToConstant: 40)
         ])
+        
+//        messageInputView.addSubview(inputTextView)
+//
+//        inputTextView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        NSLayoutConstraint.activate([
+//            inputTextView.leadingAnchor.constraint(equalTo: messageInputView.leadingAnchor, constant: 16),
+//            inputTextView.trailingAnchor.constraint(equalTo: messageInputView.trailingAnchor, constant: -16),
+//            inputTextView.topAnchor.constraint(equalTo: messageInputView.topAnchor, constant: 16),
+//            inputTextView.heightAnchor.constraint(lessThanOrEqualTo: messageInputView.heightAnchor, multiplier: 0.5)
+//        ])
     }
     
     private func setupNavTitle(){
@@ -213,19 +237,19 @@ extension ConversationViewController: UITableViewDataSource{
         
         cell.configure(with: message)
         
-        let size = CGSize(width: self.view.frame.width * 0.75, height: 1000)
+        let size = CGSize(width: self.view.frame.width * 0.75 - 8, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
         
         if (message.direction == .input){
-            cell.messageTextLabel.frame = CGRect(x: 8, y: 0, width: estimatedFrame.width, height: estimatedFrame.height + 20)
+            cell.messageTextLabel.frame = CGRect(x: 8, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
             
             cell.bubbleView.frame = CGRect(x: 0, y: 0, width: estimatedFrame.width + 8 + 8, height: estimatedFrame.height + 20)
         }
         else{
-            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - estimatedFrame.width, y: 0, width: estimatedFrame.width - 8, height: estimatedFrame.height + 20)
+            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 8, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
             
-            cell.bubbleView.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 8, y: 0, width: estimatedFrame.width + 8, height: estimatedFrame.height + 20)
+            cell.bubbleView.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 16, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
         }
         
         return cell
@@ -247,6 +271,23 @@ extension ConversationViewController: UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        inputTextField.endEditing(true)
+        inputTextView.endEditing(true)
+    }
+}
+
+// MARK: - Text view delegate
+extension ConversationViewController : UITextViewDelegate{
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Your message here..."
+            textView.textColor = UIColor.lightGray
+        }
     }
 }
