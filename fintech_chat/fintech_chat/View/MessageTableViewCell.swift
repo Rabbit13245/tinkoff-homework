@@ -46,6 +46,8 @@ class MessageTableViewCell: UITableViewCell {
     private func configureUI(){
         self.contentView.addSubview(bubbleView)
         self.contentView.addSubview(messageTextLabel)
+        
+        self.selectionStyle = .none
     }
 }
 
