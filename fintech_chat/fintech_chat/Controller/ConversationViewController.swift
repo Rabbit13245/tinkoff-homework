@@ -44,7 +44,7 @@ class ConversationViewController: UIViewController {
     
     let messageInputView: UIView = {
        let view = UIView()
-        view.backgroundColor = UIColor.AppColors.InputTextContainerGray
+        view.backgroundColor = UIColor.AppColors.inputTextContainerGray
         return view
     }()
     

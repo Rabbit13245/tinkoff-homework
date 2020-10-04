@@ -10,7 +10,7 @@ class Helper{
     func generateDefaultAvatar(name: String, width: CGFloat) -> UIView{
         let resultView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: width))
         resultView.layer.cornerRadius = resultView.frame.width / 2
-        resultView.backgroundColor = UIColor.AppColors.YellowLogo
+        resultView.backgroundColor = UIColor.AppColors.yellowLogo
         
         let label = UILabel()
         label.text = getInitials(from: name)

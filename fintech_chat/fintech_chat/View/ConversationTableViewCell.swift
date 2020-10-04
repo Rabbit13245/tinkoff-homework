@@ -36,7 +36,7 @@ class ConversationTableViewCell: UITableViewCell {
         friendImage.layer.cornerRadius = friendImage.bounds.width / 2
         
         onlineCircle.layer.cornerRadius = onlineCircle.bounds.width / 2
-        onlineCircle.backgroundColor = UIColor.AppColors.OnlineGreen
+        onlineCircle.backgroundColor = UIColor.AppColors.onlineGreen
         onlineCircle.layer.borderWidth = 2
         onlineCircle.layer.borderColor = UIColor.white.cgColor
         
@@ -88,7 +88,7 @@ extension ConversationTableViewCell: ConfigurableView {
         }
 
         if (data.isOnline){
-            self.backgroundColor = UIColor.AppColors.YellowLight
+            self.backgroundColor = UIColor.AppColors.yellowLight
             self.onlineCircle.isHidden = false
         }
         

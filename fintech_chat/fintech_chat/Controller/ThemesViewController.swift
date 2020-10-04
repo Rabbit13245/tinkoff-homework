@@ -9,24 +9,39 @@ class ThemesViewController: UIViewController {
     }()
     
     lazy var classicButton : UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton(type: .custom)
         button.setTitle("Classic theme select", for: .normal)
         button.backgroundColor = .white
         button.layer.cornerRadius = 15
+        button.layer.borderWidth = 2
+        button.layer.borderColor = UIColor.clear.cgColor
+        button.setTitleColor(.black, for: .normal)
+        
+        button.addTarget(self, action: #selector(selectClassicTheme), for: .touchUpInside)
         return button
     }()
     lazy var dayButton : UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton(type: .custom)
         button.setTitle("Day theme select", for: .normal)
         button.backgroundColor = .green
         button.layer.cornerRadius = 15
+        button.layer.borderWidth = 2
+        button.layer.borderColor = UIColor.clear.cgColor
+        button.setTitleColor(.black, for: .normal)
+        
+        button.addTarget(self, action: #selector(selectDayTheme), for: .touchUpInside)
         return button
     }()
     lazy var nightButton : UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton(type: .custom)
         button.setTitle("Night theme select", for: .normal)
         button.backgroundColor = .black
         button.layer.cornerRadius = 15
+        button.layer.borderWidth = 2
+        button.layer.borderColor = UIColor.clear.cgColor
+        button.setTitleColor(.white, for: .normal)
+        
+        button.addTarget(self, action: #selector(selectNightTheme), for: .touchUpInside)
         return button
     }()
     
@@ -126,5 +141,32 @@ class ThemesViewController: UIViewController {
     
     @objc private func cancelButtonPressed(){
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func selectClassicTheme(sender: UIButton){
+        configButtons(sender)
+        
+        self.view.backgroundColor = UIColor.AppColors.themeClassicBackgroundColor
+    }
+    @objc private func selectDayTheme(sender: UIButton){
+        configButtons(sender)
+        self.view.backgroundColor = UIColor.AppColors.themeDayBackgroundColor
+    }
+    @objc private func selectNightTheme(sender: UIButton){
+        configButtons(sender)
+        
+        self.view.backgroundColor = UIColor.AppColors.themeNightBackgroundColor
+    }
+    @objc private func configButtons(_ sender: UIButton){
+        classicButton.isSelected = false
+        dayButton.isSelected = false
+        nightButton.isSelected = false
+        
+        classicButton.layer.borderColor = UIColor.clear.cgColor
+        dayButton.layer.borderColor = UIColor.clear.cgColor
+        nightButton.layer.borderColor = UIColor.clear.cgColor
+        
+        sender.isSelected = true
+        sender.layer.borderColor = UIColor.red.cgColor
     }
 }

@@ -48,10 +48,10 @@ extension MessageTableViewCell: ConfigurableView{
         messageTextLabel.text = model.text
         switch (model.direction){
         case .input:
-            bubbleView.backgroundColor = UIColor.AppColors.InputMessageBackground
+            bubbleView.backgroundColor = UIColor.AppColors.inputMessageBackground
             break
         case .output:
-            bubbleView.backgroundColor = UIColor.AppColors.OutputMessageBackground
+            bubbleView.backgroundColor = UIColor.AppColors.outputMessageBackground
             break
         }
     }

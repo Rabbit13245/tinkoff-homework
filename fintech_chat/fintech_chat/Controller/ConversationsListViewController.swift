@@ -14,13 +14,13 @@ class ConversationsListViewController: UITableViewController {
     
     lazy var settingsBarButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(settingsButtonPressed))
-        barButton.tintColor = UIColor.AppColors.GrayBarButton
+        barButton.tintColor = UIColor.AppColors.grayBarButton
         return barButton
     }()
     
     lazy var profileBarButton: UIBarButtonItem = {
         let button = UIButton()
-        button.backgroundColor = UIColor.AppColors.YellowLogo
+        button.backgroundColor = UIColor.AppColors.yellowLogo
         button.setTitle(Helper.app.getInitials(from: "Marina Dudarenko"), for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
