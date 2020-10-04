@@ -1,11 +1,3 @@
-//
-//  DialogTableViewCell.swift
-//  fintech_chat
-//
-//  Created by Admin on 9/25/20.
-//  Copyright © 2020 Admin. All rights reserved.
-//
-
 import UIKit
 
 class ConversationTableViewCell: UITableViewCell {

@@ -1,11 +1,3 @@
-//
-//  UIColor.swift
-//  fintech_chat
-//
-//  Created by Макбук on 26.09.2020.
-//  Copyright © 2020 Admin. All rights reserved.
-//
-
 import UIKit
 
 extension UIColor {
@@ -17,6 +9,7 @@ extension UIColor {
         static let OutputMessageBackground = UIColor(red: 220/255, green: 247/255, blue: 197/255, alpha: 1)
         static let OnlineGreen = UIColor(red: 90/255, green: 212/255, blue: 57/255, alpha: 1)
         static let InputTextContainerGray = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        static let themeClassicBackgroundColor = UIColor(red: 25/255, green: 54/255, blue: 97/255, alpha: 1)
     }
     
 }

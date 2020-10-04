@@ -27,6 +27,7 @@
 		F10D4E0C252118D400B8CDD0 /* FakeDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E0B252118D400B8CDD0 /* FakeDataGenerator.swift */; };
 		F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF942517EDE400F0818C /* ProfileViewController.swift */; };
 		F136EF992517F10400F0818C /* LogLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF982517F10400F0818C /* LogLevels.swift */; };
+		F1391DA025290D17007FC97D /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1391D9F25290D17007FC97D /* ThemesViewController.swift */; };
 		F1D84D4C251E9804000A69AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D84D4B251E9804000A69AF /* UIColor.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 		F10D4E0B252118D400B8CDD0 /* FakeDataGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FakeDataGenerator.swift; path = fintech_chat/View/FakeDataGenerator.swift; sourceTree = SOURCE_ROOT; };
 		F136EF942517EDE400F0818C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F136EF982517F10400F0818C /* LogLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogLevels.swift; sourceTree = "<group>"; };
+		F1391D9F25290D17007FC97D /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		F1D84D4B251E9804000A69AF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,6 +140,7 @@
 				F136EF942517EDE400F0818C /* ProfileViewController.swift */,
 				849444DF251DE86000946D9F /* ConversationsListViewController.swift */,
 				849444E5251E21AF00946D9F /* ConversationViewController.swift */,
+				F1391D9F25290D17007FC97D /* ThemesViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				844EB08D2510DF5600AF0216 /* Logger.swift in Sources */,
 				F10D4E04252111A900B8CDD0 /* ConversationCellModel.swift in Sources */,
 				849444E6251E21AF00946D9F /* ConversationViewController.swift in Sources */,
+				F1391DA025290D17007FC97D /* ThemesViewController.swift in Sources */,
 				F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */,
 				F136EF992517F10400F0818C /* LogLevels.swift in Sources */,
 				8442D3CA251B434600F01A1C /* UILabel.swift in Sources */,

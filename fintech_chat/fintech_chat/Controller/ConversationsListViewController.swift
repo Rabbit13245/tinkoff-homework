@@ -1,11 +1,3 @@
-//
-//  ConversationsListViewController.swift
-//  fintech_chat
-//
-//  Created by Admin on 9/25/20.
-//  Copyright © 2020 Admin. All rights reserved.
-//
-
 import UIKit
 
 class ConversationsListViewController: UITableViewController {
@@ -21,7 +13,7 @@ class ConversationsListViewController: UITableViewController {
     }()
     
     lazy var settingsBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: nil)
+        let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(settingsButtonPressed))
         barButton.tintColor = UIColor.AppColors.GrayBarButton
         return barButton
     }()
@@ -107,7 +99,7 @@ class ConversationsListViewController: UITableViewController {
         
         controller.messages = dataGenerator.getMessages()
         
-        navigationController?.pushViewController(controller, animated: true)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     // MARK: - Private functions
@@ -130,5 +122,10 @@ class ConversationsListViewController: UITableViewController {
         guard let storyboard = storyboard else {return}
         let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
         self.present(profileVC, animated: true, completion: nil)
+    }
+    
+    @objc private func settingsButtonPressed(){
+        let themesVC = ThemesViewController()
+        self.navigationController?.pushViewController(themesVC, animated: true)
     }
 }
