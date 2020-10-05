@@ -20,6 +20,7 @@ class ConversationViewController: UIViewController {
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
+        //tableView.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
         return tableView
     }()
     

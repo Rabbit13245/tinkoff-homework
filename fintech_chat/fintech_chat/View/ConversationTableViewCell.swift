@@ -42,6 +42,7 @@ class ConversationTableViewCell: UITableViewCell {
         
         self.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         
+        configureColors()
     }
     
     private func getString(from date: Date) -> String{
@@ -56,6 +57,12 @@ class ConversationTableViewCell: UITableViewCell {
         }
         dateFormatter.dateFormat = "HH:mm"
         return dateFormatter.string(from: date)
+    }
+    
+    private func configureColors(){
+        friendName.textColor = ThemeManager.shared.theme.settings.labelColor
+        lastMessage.textColor = ThemeManager.shared.theme.settings.labelColor
+        lastMessageDate.textColor = ThemeManager.shared.theme.settings.labelColor
     }
 }
 
@@ -74,7 +81,8 @@ extension ConversationTableViewCell: ConfigurableView {
                 font = UIFont.systemFont(ofSize: 13, weight: .heavy)
             }
             
-            lastMessage.attributedText = NSAttributedString(string: data.message, attributes: [NSAttributedString.Key.font: font])
+            lastMessage.attributedText = NSAttributedString(string: data.message, attributes: [NSAttributedString.Key.font: font,
+            ])
             
             lastMessageDate.text = getString(from: data.date)
         }

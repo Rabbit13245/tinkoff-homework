@@ -15,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.overrideUserInterfaceStyle = .light
         }
         
+        ThemeManager.shared.apply(for: application)
+        
         return true
     }
     

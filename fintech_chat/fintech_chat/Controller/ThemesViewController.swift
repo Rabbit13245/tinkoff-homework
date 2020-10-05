@@ -31,7 +31,7 @@ class ThemesViewController: UIViewController {
         
         button.addTarget(self, action: #selector(selectDayTheme), for: .touchUpInside)
         return button
-    }()
+    }()	
     lazy var nightButton : UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Night theme select", for: .normal)

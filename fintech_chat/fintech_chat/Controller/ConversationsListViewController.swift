@@ -67,16 +67,16 @@ class ConversationsListViewController: UITableViewController {
         return conversations?[section].count ?? 0
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "Online"
-        case 1:
-            return "History"
-        default:
-            return ""
-        }
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        switch section {
+//        case 0:
+//            return "Online"
+//        case 1:
+//            return "History"
+//        default:
+//            return ""
+//        }
+//    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -100,6 +100,22 @@ class ConversationsListViewController: UITableViewController {
         controller.messages = dataGenerator.getMessages()
         
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 28)
+        label.textColor = ThemeManager.shared.theme.settings.labelColor
+        switch section {
+        case 0:
+            label.text =  "Online"
+        case 1:
+            label.text =  "History"
+        default:
+            label.text =  ""
+        }
+        label.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
+        return label
     }
     
     // MARK: - Private functions

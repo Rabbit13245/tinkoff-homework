@@ -14,6 +14,7 @@ class MessageTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 16)
         label.backgroundColor = UIColor.clear
+        label.textColor = ThemeManager.shared.theme.settings.labelColor
         return label
     }()
     
@@ -35,6 +36,8 @@ class MessageTableViewCell: UITableViewCell {
         self.contentView.addSubview(bubbleView)
         self.contentView.addSubview(messageTextLabel)
         
+        self.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
+        
         self.selectionStyle = .none
     }
 }
@@ -48,10 +51,10 @@ extension MessageTableViewCell: ConfigurableView{
         messageTextLabel.text = model.text
         switch (model.direction){
         case .input:
-            bubbleView.backgroundColor = UIColor.AppColors.inputMessageBackground
+            bubbleView.backgroundColor = ThemeManager.shared.theme.settings.inputMessageBackgroundColor
             break
         case .output:
-            bubbleView.backgroundColor = UIColor.AppColors.outputMessageBackground
+            bubbleView.backgroundColor = ThemeManager.shared.theme.settings.outputMessageBackgroundColor
             break
         }
     }
