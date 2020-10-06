@@ -2,18 +2,22 @@ import UIKit
 
 class ThemeManager{
     
+    private let SelectedThemeKey = "SelectedTheme"
+    
+    private static var instance: ThemeManager?
+    
     var theme: AppTheme {
         didSet{
             guard theme != oldValue else {return}
+            UserDefaults.standard.setValue(theme.rawValue, forKey: SelectedThemeKey)
             apply(for: UIApplication.shared)
         }
     }
     
-    private static var instance: ThemeManager?
-    
     static var shared: ThemeManager{
         guard let instance = self.instance else {
-            let newInstance = ThemeManager(defaultTheme: .classic)
+            let themeForApply = AppTheme(rawValue: UserDefaults.standard.integer(forKey: "SelectedTheme")) ?? .classic
+            let newInstance = ThemeManager(defaultTheme: themeForApply)
             self.instance = newInstance
             return newInstance
         }
@@ -71,7 +75,7 @@ class ThemeManager{
     }
 }
 
-extension ThemeManager: ThemeChangeDelegate{
+extension ThemeManager: ThemesPickerDelegate{
     func changeTheme(_ theme: AppTheme) {
         self.theme = theme
     }

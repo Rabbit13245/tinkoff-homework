@@ -11,7 +11,7 @@ protocol Theme {
     var labelColor: UIColor { get }
 }
 
-enum AppTheme{
+enum AppTheme: Int{
     case classic
     case day
     case night
@@ -27,6 +27,6 @@ enum AppTheme{
     }
 }
 
-protocol ThemeChangeDelegate{
+protocol ThemesPickerDelegate{
     func changeTheme(_ theme: AppTheme)
 }

@@ -74,7 +74,7 @@ class ThemesViewController: UIViewController {
     
     var changeThemeClosure: ((_ theme: AppTheme) -> Void)?
     
-    var delegate: ThemeChangeDelegate?
+    var delegate: ThemesPickerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

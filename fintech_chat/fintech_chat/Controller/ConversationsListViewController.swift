@@ -111,11 +111,11 @@ class ConversationsListViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = settingsBarButton
         self.navigationItem.rightBarButtonItem = profileBarButton
         
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.placeholder = "Search friends"
-        searchController.obscuresBackgroundDuringPresentation = false
-        definesPresentationContext = true
-        self.navigationItem.searchController = searchController
+//        let searchController = UISearchController(searchResultsController: nil)
+//        searchController.searchBar.placeholder = "Search friends"
+//        searchController.obscuresBackgroundDuringPresentation = false
+//        definesPresentationContext = true
+//        self.navigationItem.searchController = searchController
     }
     
     @objc private func profileButtonPressed(){
