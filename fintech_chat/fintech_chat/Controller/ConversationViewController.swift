@@ -37,15 +37,14 @@ class ConversationViewController: UIViewController {
         return textView
     }()
     
+    private lazy var messageInputView: AppSeparator = {
+        let view = AppSeparator()
+        return view
+    }()
+    
     private lazy var bottomConstraint: NSLayoutConstraint = {
         let constraint = NSLayoutConstraint(item: messageInputView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 0)
         return constraint
-    }()
-    
-    let messageInputView: AppView = {
-       let view = AppView()
-        
-        return view
     }()
     
     override func viewDidLoad() {

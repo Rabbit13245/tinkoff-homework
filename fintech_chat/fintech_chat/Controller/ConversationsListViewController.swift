@@ -30,7 +30,7 @@ class ConversationsListViewController: UITableViewController {
     var conversations : [[ConversationCellModel]]?
     
     let chatName = "Tinkoff Chat"
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,9 +48,10 @@ class ConversationsListViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-       
         super.viewWillAppear(animated)
+        
         self.navigationItem.title = chatName
+        settingsBarButton.tintColor = ThemeManager.shared.theme.settings.labelColor
     }
 
     // MARK: - Table view data source
@@ -88,7 +89,7 @@ class ConversationsListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = HeaderLabel()
+        let label = AppLabel()
         label.font = UIFont.systemFont(ofSize: 28)
         switch section {
         case 0:
@@ -125,11 +126,11 @@ class ConversationsListViewController: UITableViewController {
     
     @objc private func settingsButtonPressed(){
         let themesVC = ThemesViewController()
-        themesVC.delegate = ThemeManager.shared
-        self.navigationController?.pushViewController(themesVC, animated: true)
-    }
-    
-    private func updateView(){
+        themesVC.currentTheme = ThemeManager.shared.theme
         
+        themesVC.delegate = ThemeManager.shared
+        //themesVC.changeThemeClosure = ThemeManager.shared.applyTheme
+        
+        self.navigationController?.pushViewController(themesVC, animated: true)
     }
 }

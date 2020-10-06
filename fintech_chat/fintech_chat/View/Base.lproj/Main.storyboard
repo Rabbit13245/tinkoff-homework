@@ -91,9 +91,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="ProfileVC" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHf-Cc-eei">
+                            <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="ProfileVC" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHf-Cc-eei" customClass="AppBackgroundButton" customModule="Финтех_чат" customModuleProvider="target">
                                 <rect key="frame" x="56" y="597" width="263" height="40"/>
-                                <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="263" id="bIF-rg-e0R"/>
                                     <constraint firstAttribute="height" constant="40" id="vzY-ws-Uoh"/>

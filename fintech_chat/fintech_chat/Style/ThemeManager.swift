@@ -47,19 +47,27 @@ class ThemeManager{
         
         UITableViewCell.appearance().backgroundColor =  theme.settings.backgroundColor
         
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: theme.settings.labelColor]
+//        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: theme.settings.labelColor]
+        
+        UITextField.appearance().defaultTextAttributes = [NSAttributedString.Key.foregroundColor: theme.settings.labelColor]
         
         UILabel.appearance().textColor = theme.settings.labelColor
         
         AppView.appearance().backgroundColor = theme.settings.backgroundColor
         AppSeparator.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
-        HeaderLabel.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
+        AppThemesView.appearance().backgroundColor = theme.settings.outputMessageBackgroundColor
+        
+        AppLabel.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
         
         AppImageBarButton.appearance().tintColor = UIColor.green
         
-        //AppImageBarButton.appearance().foregroundColor  = UIColor.green
-        
+        AppBackgroundButton.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
+
         application.windows.reload()
+    }
+    
+    func applyTheme(_ theme: AppTheme){
+        self.theme = theme
     }
 }
 

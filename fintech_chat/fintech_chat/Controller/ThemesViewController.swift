@@ -15,7 +15,6 @@ class ThemesViewController: UIViewController {
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor.clear.cgColor
-        button.setTitleColor(.black, for: .normal)
         
         button.addTarget(self, action: #selector(selectClassicTheme), for: .touchUpInside)
         return button
@@ -27,7 +26,6 @@ class ThemesViewController: UIViewController {
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor.clear.cgColor
-        button.setTitleColor(.black, for: .normal)
         
         button.addTarget(self, action: #selector(selectDayTheme), for: .touchUpInside)
         return button
@@ -39,7 +37,6 @@ class ThemesViewController: UIViewController {
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor.clear.cgColor
-        button.setTitleColor(.white, for: .normal)
         
         button.addTarget(self, action: #selector(selectNightTheme), for: .touchUpInside)
         return button
@@ -48,27 +45,36 @@ class ThemesViewController: UIViewController {
     lazy var classicLabel: UILabel = {
         let label = UILabel()
         label.text = "Classic"
-        label.textColor = .white
         return label
     }()
     lazy var dayLabel: UILabel = {
         let label = UILabel()
         label.text = "Day"
-        label.textColor = .white
         return label
     }()
     lazy var nightLabel: UILabel = {
         let label = UILabel()
         label.text = "Night"
-        label.textColor = .white
         return label
     }()
     
+    var currentTheme: AppTheme?{
+        didSet{
+            guard let curTheme = currentTheme else { return }
+            switch curTheme{
+            case .classic:
+                configButtons(classicButton)
+            case .day:
+                configButtons(dayButton)
+            case .night:
+                configButtons(nightButton)
+            }
+        }
+    }
+    
+    var changeThemeClosure: ((_ theme: AppTheme) -> Void)?
+    
     var delegate: ThemeChangeDelegate?
-    
-    var currentTheme: AppTheme?
-    
-    var someClosure: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,13 +83,14 @@ class ThemesViewController: UIViewController {
     }
     
     private func setupUI(){
-        self.view = AppView()
+        self.view = AppThemesView()
         
         setupNavTitle()
         setupThemesElements()
     }
     
     // MARK: - Private functions
+    
     private func setupNavTitle(){
         self.navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = "Settings"
@@ -154,6 +161,9 @@ class ThemesViewController: UIViewController {
         
         currentTheme = .classic
         delegate?.changeTheme(.classic)
+        if let changeTheme = changeThemeClosure{
+            changeTheme(.classic)
+        }
     }
     @objc private func selectDayTheme(sender: UIButton){
         configButtons(sender)
@@ -161,6 +171,9 @@ class ThemesViewController: UIViewController {
         
         currentTheme = .day
         delegate?.changeTheme(.day)
+        if let changeTheme = changeThemeClosure{
+            changeTheme(.day)
+        }
     }
     @objc private func selectNightTheme(sender: UIButton){
         configButtons(sender)
@@ -168,6 +181,9 @@ class ThemesViewController: UIViewController {
         
         currentTheme = .night
         delegate?.changeTheme(.night)
+        if let changeTheme = changeThemeClosure{
+            changeTheme(.night)
+        }
     }
     @objc private func configButtons(_ sender: UIButton){
         classicButton.isSelected = false
