@@ -41,8 +41,6 @@ class ConversationTableViewCell: UITableViewCell {
         onlineCircle.layer.borderColor = UIColor.white.cgColor
         
         self.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-        
-        configureColors()
     }
     
     private func getString(from date: Date) -> String{
@@ -57,13 +55,6 @@ class ConversationTableViewCell: UITableViewCell {
         }
         dateFormatter.dateFormat = "HH:mm"
         return dateFormatter.string(from: date)
-    }
-    
-    private func configureColors(){
-//        friendName.textColor = ThemeManager.shared.theme.settings.labelColor
-//        lastMessage.textColor = ThemeManager.shared.theme.settings.labelColor
-//        lastMessageDate.textColor = ThemeManager.shared.theme.settings.labelColor
-//        self.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
     }
 }
 
