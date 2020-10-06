@@ -13,11 +13,11 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="ProfileVC" id="BYZ-38-t0r" customClass="ProfileViewController" customModule="Финтех_чат" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="AppView" customModule="Финтех_чат" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZnZ-Yt-kxo">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZnZ-Yt-kxo" customClass="AppSeparator" customModule="Финтех_чат" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="v49-4Y-5up">
@@ -79,7 +79,7 @@
                                     <constraint firstAttribute="trailing" secondItem="AvU-LR-dsQ" secondAttribute="trailing" id="wiW-57-Rzm"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Marina Dudarenko" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="BoV-d1-M8Z">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dmitry Zaytcev" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="BoV-d1-M8Z">
                                 <rect key="frame" x="67.5" y="375" width="240" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
@@ -126,6 +126,8 @@
                         <outlet property="defaultPhotoView" destination="zcl-wE-uK0" id="tdZ-aQ-feB"/>
                         <outlet property="descriptionLabel" destination="TEY-Gu-CnZ" id="DBk-Te-jzX"/>
                         <outlet property="editButton" destination="AvU-LR-dsQ" id="vxe-WR-7mq"/>
+                        <outlet property="headerLabel" destination="2KK-0v-zVb" id="Zvk-iv-r62"/>
+                        <outlet property="headerView" destination="ZnZ-Yt-kxo" id="8db-iX-28B"/>
                         <outlet property="nameLabel" destination="BoV-d1-M8Z" id="rbF-so-i2f"/>
                         <outlet property="profilePhotoView" destination="1Rr-UM-bDg" id="gFz-vZ-SPo"/>
                         <outlet property="saveButton" destination="lHf-Cc-eei" id="Wmw-1k-XQF"/>

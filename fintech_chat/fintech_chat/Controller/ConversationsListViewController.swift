@@ -12,22 +12,18 @@ class ConversationsListViewController: UITableViewController {
         return storyboard
     }()
     
-    lazy var settingsBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(settingsButtonPressed))
-        barButton.tintColor = UIColor.AppColors.grayBarButton
+    lazy var settingsBarButton: AppImageBarButton = {
+        let barButton = AppImageBarButton(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(settingsButtonPressed))
         return barButton
     }()
     
     lazy var profileBarButton: UIBarButtonItem = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.AppColors.yellowLogo
-        button.setTitle(Helper.app.getInitials(from: "Marina Dudarenko"), for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
-        button.layer.cornerRadius = button.frame.width / 2
-        button.addTarget(self, action: #selector(profileButtonPressed), for: .touchUpInside)
-    
-        let barButtom = UIBarButtonItem(customView: button)
+        let customView = Helper.app.generateDefaultAvatar(name: "Dmitry Zaytcev", width: 34)
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
+        view.addSubview(customView)
+        
+        let barButtom = UIBarButtonItem(customView: view)
+        barButtom.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileButtonPressed)))
         return barButtom
     }()
     
@@ -67,17 +63,6 @@ class ConversationsListViewController: UITableViewController {
         return conversations?[section].count ?? 0
     }
     
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        switch section {
-//        case 0:
-//            return "Online"
-//        case 1:
-//            return "History"
-//        default:
-//            return ""
-//        }
-//    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ConversationTableViewCell.self), for: indexPath) as? ConversationTableViewCell else {return UITableViewCell()}
@@ -103,9 +88,8 @@ class ConversationsListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = UILabel()
+        let label = HeaderLabel()
         label.font = UIFont.systemFont(ofSize: 28)
-        label.textColor = ThemeManager.shared.theme.settings.labelColor
         switch section {
         case 0:
             label.text =  "Online"
@@ -114,7 +98,6 @@ class ConversationsListViewController: UITableViewController {
         default:
             label.text =  ""
         }
-        label.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
         return label
     }
     
@@ -142,6 +125,11 @@ class ConversationsListViewController: UITableViewController {
     
     @objc private func settingsButtonPressed(){
         let themesVC = ThemesViewController()
+        themesVC.delegate = ThemeManager.shared
         self.navigationController?.pushViewController(themesVC, animated: true)
+    }
+    
+    private func updateView(){
+        
     }
 }

@@ -64,6 +64,11 @@ class ThemesViewController: UIViewController {
         return label
     }()
     
+    var delegate: ThemeChangeDelegate?
+    
+    var currentTheme: AppTheme?
+    
+    var someClosure: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +77,7 @@ class ThemesViewController: UIViewController {
     }
     
     private func setupUI(){
-        self.view.backgroundColor = UIColor.AppColors.themeClassicBackgroundColor
+        self.view = AppView()
         
         setupNavTitle()
         setupThemesElements()
@@ -145,17 +150,24 @@ class ThemesViewController: UIViewController {
     
     @objc private func selectClassicTheme(sender: UIButton){
         configButtons(sender)
+        //self.view.backgroundColor = UIColor.AppColors.themeClassicBackgroundColor
         
-        self.view.backgroundColor = UIColor.AppColors.themeClassicBackgroundColor
+        currentTheme = .classic
+        delegate?.changeTheme(.classic)
     }
     @objc private func selectDayTheme(sender: UIButton){
         configButtons(sender)
-        self.view.backgroundColor = UIColor.AppColors.themeDayBackgroundColor
+        //self.view.backgroundColor = UIColor.AppColors.themeDayBackgroundColor
+        
+        currentTheme = .day
+        delegate?.changeTheme(.day)
     }
     @objc private func selectNightTheme(sender: UIButton){
         configButtons(sender)
+        //self.view.backgroundColor = UIColor.AppColors.themeNightBackgroundColor
         
-        self.view.backgroundColor = UIColor.AppColors.themeNightBackgroundColor
+        currentTheme = .night
+        delegate?.changeTheme(.night)
     }
     @objc private func configButtons(_ sender: UIButton){
         classicButton.isSelected = false
@@ -168,5 +180,9 @@ class ThemesViewController: UIViewController {
         
         sender.isSelected = true
         sender.layer.borderColor = UIColor.red.cgColor
+    }
+    
+    deinit {
+        Logger.app.logMessage("Deinit themes", logLevel: .Info)
     }
 }

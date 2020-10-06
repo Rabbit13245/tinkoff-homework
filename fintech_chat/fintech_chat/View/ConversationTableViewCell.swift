@@ -17,11 +17,11 @@ class ConversationTableViewCell: UITableViewCell {
         configureUI()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        configureUI()
-    }
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//
+//        configureUI()
+//    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -60,9 +60,10 @@ class ConversationTableViewCell: UITableViewCell {
     }
     
     private func configureColors(){
-        friendName.textColor = ThemeManager.shared.theme.settings.labelColor
-        lastMessage.textColor = ThemeManager.shared.theme.settings.labelColor
-        lastMessageDate.textColor = ThemeManager.shared.theme.settings.labelColor
+//        friendName.textColor = ThemeManager.shared.theme.settings.labelColor
+//        lastMessage.textColor = ThemeManager.shared.theme.settings.labelColor
+//        lastMessageDate.textColor = ThemeManager.shared.theme.settings.labelColor
+//        self.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
     }
 }
 
@@ -96,7 +97,6 @@ extension ConversationTableViewCell: ConfigurableView {
         }
 
         if (data.isOnline){
-            self.backgroundColor = UIColor.AppColors.yellowLight
             self.onlineCircle.isHidden = false
         }
         

@@ -20,7 +20,7 @@ class ConversationViewController: UIViewController {
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
-        //tableView.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
+        
         return tableView
     }()
     
@@ -28,12 +28,13 @@ class ConversationViewController: UIViewController {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.text = "Your message here..."
-        textView.textColor = UIColor.lightGray
         
         textView.delegate = self
         
         textView.layer.cornerRadius = 16
-        textView.backgroundColor = UIColor.white
+        
+        textView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
+        textView.textColor = ThemeManager.shared.theme.settings.labelColor
         
         return textView
     }()
@@ -45,7 +46,9 @@ class ConversationViewController: UIViewController {
     
     let messageInputView: UIView = {
        let view = UIView()
-        view.backgroundColor = UIColor.AppColors.inputTextContainerGray
+        
+        view.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
+        
         return view
     }()
     
@@ -88,7 +91,6 @@ class ConversationViewController: UIViewController {
         self.view.addSubview(messageInputView)
         
         messageInputView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             messageInputView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             messageInputView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -123,6 +125,7 @@ class ConversationViewController: UIViewController {
         let label = UILabel()
         label.text = friendName
         label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textColor = ThemeManager.shared.theme.settings.labelColor
         label.textAlignment = .center
         
         var avatarView :UIView = UIView()

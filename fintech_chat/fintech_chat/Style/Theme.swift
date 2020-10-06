@@ -3,17 +3,15 @@ import UIKit
 protocol Theme {
     var backgroundColor: UIColor { get }
     var secondaryBackgroundColor: UIColor {get}
-    
     var separatorColor: UIColor { get }
+    
     var inputMessageBackgroundColor: UIColor { get }
     var outputMessageBackgroundColor: UIColor { get }
     
     var labelColor: UIColor { get }
-    
-    var barStyle: UIBarStyle { get }
 }
 
-enum MyTheme{
+enum AppTheme{
     case classic
     case day
     case night
@@ -27,4 +25,8 @@ enum MyTheme{
             return NightTheme()
         }
     }
+}
+
+protocol ThemeChangeDelegate{
+    func changeTheme(_ theme: AppTheme)
 }

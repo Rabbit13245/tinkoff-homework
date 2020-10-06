@@ -9,6 +9,8 @@ class ProfileViewController: BaseViewController {
     @IBOutlet weak var profilePhotoView: UIImageView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerLabel: UILabel!
     
     weak var initialsLabel: UILabel?
     
@@ -38,7 +40,8 @@ class ProfileViewController: BaseViewController {
         label.text = Helper.app.getInitials(from: nameLabel.text ?? "")
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 120)
-        label.textColor = UIColor.init(red: 54/255, green: 55/255, blue: 56/255, alpha: 1.0)
+        label.textColor = UIColor.AppColors.initialsColor
+        label.backgroundColor = .clear
         defaultPhotoView.addSubview(label)
         
         NSLayoutConstraint.activate([
@@ -82,6 +85,10 @@ class ProfileViewController: BaseViewController {
     
     private func presentCameraSettings(){
         let alertController = UIAlertController(title: "Error", message: "Camera access is denied", preferredStyle: .alert)
+        alertController.setBackground(color: ThemeManager.shared.theme.settings.secondaryBackgroundColor)
+        alertController.setTitle(color: ThemeManager.shared.theme.settings.labelColor)
+        alertController.setMessage(color: ThemeManager.shared.theme.settings.labelColor)
+        
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "Settings", style: .default){(_) in
             if let url = URL(string: UIApplication.openSettingsURLString){
@@ -93,6 +100,10 @@ class ProfileViewController: BaseViewController {
     
     private func presentMessage(_ message: String){
         let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+        alertController.setBackground(color: ThemeManager.shared.theme.settings.secondaryBackgroundColor)
+        alertController.setTitle(color: ThemeManager.shared.theme.settings.labelColor)
+        alertController.setMessage(color: ThemeManager.shared.theme.settings.labelColor)
+        
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(alertController, animated: true)
     }
@@ -100,7 +111,9 @@ class ProfileViewController: BaseViewController {
     // MARK: - IBActions
     
     @IBAction func editTouch(_ sender: UIButton) {
-        let actionSheet = UIAlertController(title: "Choose the source for your avatar", message: nil,  preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: nil, message: nil,  preferredStyle: .actionSheet)
+        actionSheet.setBackground(color: ThemeManager.shared.theme.settings.secondaryBackgroundColor)
+        actionSheet.setTint(color: ThemeManager.shared.theme.settings.labelColor)
         
         let cameraIcon = #imageLiteral(resourceName: "camera")
         let photoIcon = #imageLiteral(resourceName: "photo")
@@ -116,8 +129,7 @@ class ProfileViewController: BaseViewController {
         camera.setValue(cameraIcon, forKey: "image")
         camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
         
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         actionSheet.addAction(galery)
         actionSheet.addAction(camera)
         actionSheet.addAction(cancel)

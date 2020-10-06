@@ -14,7 +14,6 @@ class MessageTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 16)
         label.backgroundColor = UIColor.clear
-        label.textColor = ThemeManager.shared.theme.settings.labelColor
         return label
     }()
     
@@ -35,9 +34,7 @@ class MessageTableViewCell: UITableViewCell {
     private func configureUI(){
         self.contentView.addSubview(bubbleView)
         self.contentView.addSubview(messageTextLabel)
-        
-        self.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
-        
+                
         self.selectionStyle = .none
     }
 }

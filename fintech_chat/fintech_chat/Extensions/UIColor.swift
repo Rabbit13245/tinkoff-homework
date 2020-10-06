@@ -4,6 +4,8 @@ extension UIColor {
     struct AppColors {
         static let yellowLight = UIColor.init(red: 228/255, green: 232/255, blue: 43/255, alpha: 0.1)
         static let yellowLogo = UIColor.init(red: 228/255, green: 232/255, blue: 43/255, alpha: 1)
+        static let initialsColor = UIColor.init(red: 54/255, green: 55/255, blue: 56/255, alpha: 1.0)
+        
         static let grayBarButton = UIColor.init(red: 84/255, green: 84/255, blue: 88/255, alpha: 0.65)
         static let inputMessageBackground = UIColor(red: 223/255, green: 223/255, blue: 223/255, alpha: 1)
         static let outputMessageBackground = UIColor(red: 220/255, green: 247/255, blue: 197/255, alpha: 1)

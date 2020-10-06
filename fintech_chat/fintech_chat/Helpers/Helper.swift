@@ -15,20 +15,17 @@ class Helper{
         let label = UILabel()
         label.text = getInitials(from: name)
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = UIColor.AppColors.initialsColor
         
         label.translatesAutoresizingMaskIntoConstraints = false
         
         resultView.addSubview(label)
-        
+
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: resultView.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: resultView.trailingAnchor),
+            label.centerXAnchor.constraint(equalTo: resultView.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: resultView.centerYAnchor)
         ])
         
-        
-
         return resultView
     }
     
