@@ -28,14 +28,12 @@ class ConversationViewController: UIViewController {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.text = "Your message here..."
+        textView.textColor = UIColor.lightGray
         
         textView.delegate = self
         
         textView.layer.cornerRadius = 16
-        
-        textView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
-        textView.textColor = ThemeManager.shared.theme.settings.labelColor
-        
+
         return textView
     }()
     
@@ -44,10 +42,8 @@ class ConversationViewController: UIViewController {
         return constraint
     }()
     
-    let messageInputView: UIView = {
-       let view = UIView()
-        
-        view.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
+    let messageInputView: AppView = {
+       let view = AppView()
         
         return view
     }()
@@ -125,7 +121,6 @@ class ConversationViewController: UIViewController {
         let label = UILabel()
         label.text = friendName
         label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.textColor = ThemeManager.shared.theme.settings.labelColor
         label.textAlignment = .center
         
         var avatarView :UIView = UIView()

@@ -53,7 +53,7 @@ class ThemeManager{
         
         AppView.appearance().backgroundColor = theme.settings.backgroundColor
         AppSeparator.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
-        HeaderLabel.appearance().backgroundColor = theme.settings.backgroundColor
+        HeaderLabel.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
         
         AppImageBarButton.appearance().tintColor = UIColor.green
         

@@ -113,7 +113,7 @@ class ProfileViewController: BaseViewController {
     @IBAction func editTouch(_ sender: UIButton) {
         let actionSheet = UIAlertController(title: nil, message: nil,  preferredStyle: .actionSheet)
         actionSheet.setBackground(color: ThemeManager.shared.theme.settings.secondaryBackgroundColor)
-        actionSheet.setTint(color: ThemeManager.shared.theme.settings.labelColor)
+        //actionSheet.setTint(color: ThemeManager.shared.theme.settings.labelColor)
         
         let cameraIcon = #imageLiteral(resourceName: "camera")
         let photoIcon = #imageLiteral(resourceName: "photo")
