@@ -73,6 +73,25 @@ class ThemesViewController: UIViewController {
         }
     }
     
+//    ---------- Когда может возникнуть retainCycle ----------
+    
+//    Допустим, в классе ConversationsListViewController будет такое поле
+//    с themesViewController
+//    lazy var themesVC: ThemesViewController = {
+//        let theVC = ThemesViewController()
+//        return theVC
+//    }()
+//    а также в классе ConversationsListViewController будет некий метод
+//    private func updateTheme(theme: AppTheme){
+//        self.view.backgroundColor = theme.settings.backgroundColor
+//    }
+//    И при вызове метода settingsButtonPressed
+//    сделали бы такое присваивание кложура
+//    self.themesVC.changeThemeClosure = self.updateTheme
+//    тогда возник бы такой цикл
+//    ConversationsListViewController -> themesVC -> changeThemeClosure -> ConversationsListViewController(через захваченный self)
+    
+    
     var changeThemeClosure: ((_ theme: AppTheme) -> Void)?
     
     var delegate: ThemesPickerDelegate?
@@ -203,9 +222,5 @@ class ThemesViewController: UIViewController {
         
         sender.isSelected = true
         sender.layer.borderColor = UIColor.AppColors.borderSelectedThemeColor.cgColor
-    }
-    
-    deinit {
-        Logger.app.logMessage("Deinit themes", logLevel: .Info)
     }
 }
