@@ -12,8 +12,8 @@ class ConversationsListViewController: UITableViewController {
         return storyboard
     }()
     
-    lazy var settingsBarButton: AppImageBarButton = {
-        let barButton = AppImageBarButton(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(settingsButtonPressed))
+    lazy var settingsBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(settingsButtonPressed))
         return barButton
     }()
     

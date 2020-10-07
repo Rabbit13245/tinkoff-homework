@@ -63,8 +63,6 @@ class ThemeManager{
         
         AppLabel.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
         
-        AppImageBarButton.appearance().tintColor = UIColor.green
-        
         AppBackgroundButton.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
 
         application.windows.reload()
