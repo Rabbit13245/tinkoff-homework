@@ -2,12 +2,6 @@ import UIKit
 
 class ThemesViewController: UIViewController {
 
-    lazy var cancelBarButtonItem: UIBarButtonItem = {
-        let barButtomItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonPressed))
-        
-        return barButtomItem
-    }()
-    
     lazy var classicButton : UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Classic theme select", for: .normal)
@@ -95,8 +89,6 @@ class ThemesViewController: UIViewController {
         self.navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = "Settings"
         self.navigationItem.backBarButtonItem?.title = "Chat"
-        
-        self.navigationItem.rightBarButtonItem = cancelBarButtonItem
     }
     
     private func setupThemesElements(){
@@ -149,10 +141,6 @@ class ThemesViewController: UIViewController {
     private func alignThemeElements(button: UIButton, label: UILabel){
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 25)])
-    }
-    
-    @objc private func cancelButtonPressed(){
-        self.navigationController?.popViewController(animated: true)
     }
     
     @objc private func selectClassicTheme(sender: UIButton){
