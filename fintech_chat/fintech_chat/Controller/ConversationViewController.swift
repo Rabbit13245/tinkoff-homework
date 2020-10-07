@@ -33,12 +33,12 @@ class ConversationViewController: UIViewController {
         textView.delegate = self
         
         textView.layer.cornerRadius = 16
-
+        
         return textView
     }()
     
-    private lazy var messageInputView: AppSeparator = {
-        let view = AppSeparator()
+    private lazy var messageInputView: AppTextWrapperView = {
+        let view = AppTextWrapperView()
         return view
     }()
     
@@ -263,7 +263,7 @@ extension ConversationViewController : UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
-            textView.textColor = UIColor.black
+            textView.textColor = ThemeManager.shared.theme.settings.labelColor
         }
     }
     

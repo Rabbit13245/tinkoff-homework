@@ -3,7 +3,9 @@ import UIKit
 protocol Theme {
     var backgroundColor: UIColor { get }
     var secondaryBackgroundColor: UIColor {get}
+    var textWrapperBackgroundColor: UIColor {get}
     var separatorColor: UIColor { get }
+    var textFieldBackgroundColor: UIColor { get }
     
     var inputMessageBackgroundColor: UIColor { get }
     var outputMessageBackgroundColor: UIColor { get }

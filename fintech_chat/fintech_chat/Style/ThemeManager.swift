@@ -54,12 +54,17 @@ class ThemeManager{
         
 //        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: theme.settings.labelColor]
         
+        UITextView.appearance().backgroundColor = theme.settings.textFieldBackgroundColor
+        UITextView.appearance().textColor = theme.settings.labelColor
+        
         UITextField.appearance().defaultTextAttributes = [NSAttributedString.Key.foregroundColor: theme.settings.labelColor]
         
         UILabel.appearance().textColor = theme.settings.labelColor
         
         AppView.appearance().backgroundColor = theme.settings.backgroundColor
         AppSeparator.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
+        AppTextWrapperView.appearance().backgroundColor = theme.settings.textWrapperBackgroundColor
+        
         AppThemesView.appearance().backgroundColor = theme.settings.outputMessageBackgroundColor
         
         AppLabel.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
