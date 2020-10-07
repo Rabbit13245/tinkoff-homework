@@ -49,9 +49,11 @@ extension MessageTableViewCell: ConfigurableView{
         switch (model.direction){
         case .input:
             bubbleView.backgroundColor = ThemeManager.shared.theme.settings.inputMessageBackgroundColor
+            messageTextLabel.textColor = ThemeManager.shared.theme.settings.inputMessageTextColor
             break
         case .output:
             bubbleView.backgroundColor = ThemeManager.shared.theme.settings.outputMessageBackgroundColor
+            messageTextLabel.textColor = ThemeManager.shared.theme.settings.outputMessageTextColor
             break
         }
     }

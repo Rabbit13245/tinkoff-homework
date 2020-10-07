@@ -10,6 +10,9 @@ protocol Theme {
     var inputMessageBackgroundColor: UIColor { get }
     var outputMessageBackgroundColor: UIColor { get }
     
+    var inputMessageTextColor: UIColor { get }
+    var outputMessageTextColor: UIColor { get }
+    
     var labelColor: UIColor { get }
     
     var indicatorStyle: UIScrollView.IndicatorStyle { get }
