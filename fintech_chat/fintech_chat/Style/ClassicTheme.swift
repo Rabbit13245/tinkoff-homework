@@ -9,4 +9,6 @@ struct ClassicTheme: Theme{
     var outputMessageBackgroundColor: UIColor = UIColor(red: 220/255, green: 247/255, blue: 197/255, alpha: 1)
     
     var labelColor: UIColor = .black
+    
+    var indicatorStyle: UIScrollView.IndicatorStyle = .black
 }

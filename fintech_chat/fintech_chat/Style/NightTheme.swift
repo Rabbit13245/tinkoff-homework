@@ -9,4 +9,6 @@ struct NightTheme: Theme{
     var outputMessageBackgroundColor: UIColor = UIColor(red: 46/255, green: 46/255, blue: 46/255, alpha: 1)
     
     var labelColor: UIColor = .white
+    
+    var indicatorStyle: UIScrollView.IndicatorStyle = .white
 }

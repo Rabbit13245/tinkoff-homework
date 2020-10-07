@@ -9,6 +9,8 @@ protocol Theme {
     var outputMessageBackgroundColor: UIColor { get }
     
     var labelColor: UIColor { get }
+    
+    var indicatorStyle: UIScrollView.IndicatorStyle { get }
 }
 
 enum AppTheme: Int{

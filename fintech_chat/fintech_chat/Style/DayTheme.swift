@@ -9,4 +9,6 @@ struct DayTheme: Theme{
     var outputMessageBackgroundColor: UIColor = UIColor(red: 67/255, green: 137/255, blue: 249/255, alpha: 1)
     
     var labelColor: UIColor = .black
+    
+    var indicatorStyle: UIScrollView.IndicatorStyle = .black
 }

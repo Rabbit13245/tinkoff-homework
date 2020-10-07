@@ -48,6 +48,7 @@ class ThemeManager{
         
         UITableView.appearance().backgroundColor = theme.settings.backgroundColor
         UITableView.appearance().separatorColor = theme.settings.separatorColor
+        UITableView.appearance().indicatorStyle = theme.settings.indicatorStyle
         
         UITableViewCell.appearance().backgroundColor =  theme.settings.backgroundColor
         
