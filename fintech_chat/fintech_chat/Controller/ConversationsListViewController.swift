@@ -51,16 +51,14 @@ class ConversationsListViewController: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.navigationItem.title = ""
         super.viewWillDisappear(animated)
+        self.navigationItem.title = ""
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        self.navigationItem.title = chatName
-        super.viewDidDisappear(animated)
-    }
+   
     override func viewWillAppear(_ animated: Bool) {
         settingsBarButton.tintColor = ThemeManager.shared.theme.settings.labelColor
+        self.navigationItem.title = chatName
         
         super.viewWillAppear(animated)
     }
