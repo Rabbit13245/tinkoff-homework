@@ -12,9 +12,7 @@ extension UIColor {
         static let onlineGreen = UIColor(red: 90/255, green: 212/255, blue: 57/255, alpha: 1)
         static let inputTextContainerGray = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         
-        static let themeClassicBackgroundColor = UIColor(red: 25/255, green: 54/255, blue: 97/255, alpha: 1)
-        static let themeDayBackgroundColor = UIColor(red: 67/255, green: 137/255, blue: 249/255, alpha: 1)
-        static let themeNightBackgroundColor = UIColor(red: 92/255, green: 92/255, blue: 92/255, alpha: 1)
+        static let borderSelectedThemeColor = UIColor(red: 250/255, green: 105/255, blue: 0/255, alpha: 1)
     }
     
 }

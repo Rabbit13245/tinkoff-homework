@@ -4,9 +4,9 @@ class ThemesViewController: UIViewController {
 
     lazy var classicButton : UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Classic theme select", for: .normal)
-        button.backgroundColor = .white
+        button.setImage(UIImage(named: "Classic"), for: .normal)
         button.layer.cornerRadius = 15
+        button.imageView?.layer.cornerRadius = 15
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor.clear.cgColor
         
@@ -15,9 +15,9 @@ class ThemesViewController: UIViewController {
     }()
     lazy var dayButton : UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Day theme select", for: .normal)
-        button.backgroundColor = .green
+        button.setImage(UIImage(named: "Day"), for: .normal)
         button.layer.cornerRadius = 15
+        button.imageView?.layer.cornerRadius = 15
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor.clear.cgColor
         
@@ -26,9 +26,9 @@ class ThemesViewController: UIViewController {
     }()	
     lazy var nightButton : UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Night theme select", for: .normal)
-        button.backgroundColor = .black
+        button.setImage(UIImage(named: "Night"), for: .normal)
         button.layer.cornerRadius = 15
+        button.imageView?.layer.cornerRadius = 15
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor.clear.cgColor
         
@@ -39,16 +39,22 @@ class ThemesViewController: UIViewController {
     lazy var classicLabel: UILabel = {
         let label = UILabel()
         label.text = "Classic"
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectClassicTheme)))
         return label
     }()
     lazy var dayLabel: UILabel = {
         let label = UILabel()
         label.text = "Day"
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectDayTheme)))
         return label
     }()
     lazy var nightLabel: UILabel = {
         let label = UILabel()
         label.text = "Night"
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectNightTheme)))
         return label
     }()
     
@@ -143,9 +149,13 @@ class ThemesViewController: UIViewController {
             label.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 25)])
     }
     
-    @objc private func selectClassicTheme(sender: UIButton){
-        configButtons(sender)
-        //self.view.backgroundColor = UIColor.AppColors.themeClassicBackgroundColor
+    @objc private func selectClassicTheme(sender: AnyObject){
+        if let button = sender as? UIButton{
+            configButtons(button)
+        }
+        else{
+            configButtons(classicButton)
+        }
         
         currentTheme = .classic
         delegate?.changeTheme(.classic)
@@ -153,9 +163,13 @@ class ThemesViewController: UIViewController {
             changeTheme(.classic)
         }
     }
-    @objc private func selectDayTheme(sender: UIButton){
-        configButtons(sender)
-        //self.view.backgroundColor = UIColor.AppColors.themeDayBackgroundColor
+    @objc private func selectDayTheme(sender: AnyObject){
+       if let button = sender as? UIButton{
+            configButtons(button)
+        }
+        else{
+            configButtons(dayButton)
+        }
         
         currentTheme = .day
         delegate?.changeTheme(.day)
@@ -163,9 +177,13 @@ class ThemesViewController: UIViewController {
             changeTheme(.day)
         }
     }
-    @objc private func selectNightTheme(sender: UIButton){
-        configButtons(sender)
-        //self.view.backgroundColor = UIColor.AppColors.themeNightBackgroundColor
+    @objc private func selectNightTheme(sender: AnyObject){
+        if let button = sender as? UIButton{
+            configButtons(button)
+        }
+        else{
+            configButtons(nightButton)
+        }
         
         currentTheme = .night
         delegate?.changeTheme(.night)
@@ -183,7 +201,7 @@ class ThemesViewController: UIViewController {
         nightButton.layer.borderColor = UIColor.clear.cgColor
         
         sender.isSelected = true
-        sender.layer.borderColor = UIColor.red.cgColor
+        sender.layer.borderColor = UIColor.AppColors.borderSelectedThemeColor.cgColor
     }
     
     deinit {
