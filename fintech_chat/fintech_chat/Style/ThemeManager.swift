@@ -42,6 +42,8 @@ class ThemeManager{
         else{
             UINavigationBar.appearance().barTintColor = theme.settings.secondaryBackgroundColor
             UINavigationBar.appearance().isTranslucent = false
+            UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: theme.settings.labelColor]
+            UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: theme.settings.labelColor]
         }
         
         UITableView.appearance().backgroundColor = theme.settings.backgroundColor
@@ -55,15 +57,13 @@ class ThemeManager{
         
         UITextField.appearance().defaultTextAttributes = [NSAttributedString.Key.foregroundColor: theme.settings.labelColor]
         
-        UILabel.appearance().textColor = theme.settings.labelColor
-        
         AppView.appearance().backgroundColor = theme.settings.backgroundColor
         AppSeparator.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
         AppTextWrapperView.appearance().backgroundColor = theme.settings.textWrapperBackgroundColor
         
         AppThemesView.appearance().backgroundColor = theme.settings.outputMessageBackgroundColor
         
-        AppLabel.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
+        AppLabel.appearance().configurableTextColor = theme.settings.labelColor
         
         AppBackgroundButton.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
 

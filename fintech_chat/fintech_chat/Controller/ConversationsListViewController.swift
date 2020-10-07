@@ -18,13 +18,22 @@ class ConversationsListViewController: UITableViewController {
     }()
     
     lazy var profileBarButton: UIBarButtonItem = {
-        let customView = Helper.app.generateDefaultAvatar(name: "Dmitry Zaytcev", width: 34)
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
-        view.addSubview(customView)
+//        let customView = Helper.app.generateDefaultAvatar(name: "Dmitry Zaytcev", width: 34)
+//        let view = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
+//        view.addSubview(customView)
+//       let barButtom = UIBarButtonItem(customView: view)
         
-        let barButtom = UIBarButtonItem(customView: view)
-        barButtom.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileButtonPressed)))
-        return barButtom
+        // Для ios 12 получается только так
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor.AppColors.yellowLogo;
+        button.setTitle(Helper.app.getInitials(from: "Dmitry Zaytcev"), for: .normal)
+        button.setTitleColor(UIColor.AppColors.initialsColor, for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
+        button.layer.cornerRadius = button.frame.height / 2
+        
+        let barButton = UIBarButtonItem(customView: button)
+        barButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileButtonPressed)))
+        return barButton
     }()
     
     var conversations : [[ConversationCellModel]]?
@@ -42,16 +51,18 @@ class ConversationsListViewController: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
         self.navigationItem.title = ""
+        super.viewWillDisappear(animated)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+    override func viewDidDisappear(_ animated: Bool) {
         self.navigationItem.title = chatName
+        super.viewDidDisappear(animated)
+    }
+    override func viewWillAppear(_ animated: Bool) {
         settingsBarButton.tintColor = ThemeManager.shared.theme.settings.labelColor
+        
+        super.viewWillAppear(animated)
     }
 
     // MARK: - Table view data source
@@ -89,6 +100,7 @@ class ConversationsListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = AppSeparator()
         let label = AppLabel()
         label.font = UIFont.systemFont(ofSize: 28)
         switch section {
@@ -99,7 +111,17 @@ class ConversationsListViewController: UITableViewController {
         default:
             label.text =  ""
         }
-        return label
+        view.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+        return view
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35
     }
     
     // MARK: - Private functions

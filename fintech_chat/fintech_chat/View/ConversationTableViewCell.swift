@@ -16,12 +16,6 @@ class ConversationTableViewCell: UITableViewCell {
         
         configureUI()
     }
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        configureUI()
-//    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -33,6 +27,7 @@ class ConversationTableViewCell: UITableViewCell {
     // MARK: - Private functions
     
     private func configureUI(){
+        
         friendImage.layer.cornerRadius = friendImage.bounds.width / 2
         
         onlineCircle.layer.cornerRadius = onlineCircle.bounds.width / 2

@@ -117,7 +117,7 @@ class ConversationViewController: UIViewController {
     private func setupNavTitle(){
         self.navigationItem.largeTitleDisplayMode = .never
         
-        let label = UILabel()
+        let label = AppLabel()
         label.text = friendName
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textAlignment = .center

@@ -36,22 +36,23 @@ class ThemesViewController: UIViewController {
         return button
     }()
     
-    lazy var classicLabel: UILabel = {
-        let label = UILabel()
+    lazy var classicLabel: AppLabel = {
+        let label = AppLabel()
         label.text = "Classic"
         label.isUserInteractionEnabled = true
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectClassicTheme)))
+        
         return label
     }()
-    lazy var dayLabel: UILabel = {
-        let label = UILabel()
+    lazy var dayLabel: AppLabel = {
+        let label = AppLabel()
         label.text = "Day"
         label.isUserInteractionEnabled = true
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectDayTheme)))
         return label
     }()
-    lazy var nightLabel: UILabel = {
-        let label = UILabel()
+    lazy var nightLabel: AppLabel = {
+        let label = AppLabel()
         label.text = "Night"
         label.isUserInteractionEnabled = true
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectNightTheme)))
