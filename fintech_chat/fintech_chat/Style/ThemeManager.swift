@@ -35,13 +35,11 @@ class ThemeManager{
             appearance.titleTextAttributes = [.foregroundColor: theme.settings.labelColor]
             appearance.largeTitleTextAttributes = [.foregroundColor: theme.settings.labelColor]
             
-            //UINavigationBar.appearance().tintColor = theme.settings.labelColor
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().compactAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
         else{
-            //UINavigationBar.appearance().tintColor = theme.settings.labelColor
             UINavigationBar.appearance().barTintColor = theme.settings.secondaryBackgroundColor
             UINavigationBar.appearance().isTranslucent = false
         }
@@ -51,8 +49,6 @@ class ThemeManager{
         UITableView.appearance().indicatorStyle = theme.settings.indicatorStyle
         
         UITableViewCell.appearance().backgroundColor =  theme.settings.backgroundColor
-        
-//        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: theme.settings.labelColor]
         
         UITextView.appearance().backgroundColor = theme.settings.textFieldBackgroundColor
         UITextView.appearance().textColor = theme.settings.labelColor
