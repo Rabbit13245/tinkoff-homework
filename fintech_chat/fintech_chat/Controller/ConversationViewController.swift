@@ -15,6 +15,8 @@ class ConversationViewController: UIViewController {
 
     private let cellIdentifier = String(describing: MessageTableViewCell.self)
     
+    private var keyboardHeight: CGFloat = 0
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
@@ -65,8 +67,9 @@ class ConversationViewController: UIViewController {
         self.tableView.separatorStyle = .none
         
         setupNavTitle()
-        setupInputView()
         setupTableView()
+        setupInputView()
+        
         subscribeKeyboardNotifications()
     }
     
@@ -78,7 +81,7 @@ class ConversationViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.messageInputView.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -80),
         ])
     }
     
@@ -179,32 +182,38 @@ class ConversationViewController: UIViewController {
         
         let keyboardHiding = notification.name == UIResponder.keyboardWillHideNotification
         
-        var lastPath : IndexPath?
-        if let paths = self.tableView.indexPathsForVisibleRows{
-            lastPath = paths.last
-        }
-        
         if (keyboardHiding){
-            bottomConstraint.constant = 0
+            self.bottomConstraint.constant = 0
+            
         }
         else{
-            bottomConstraint.constant = -keyboardViewFrame.height
+            self.keyboardHeight = keyboardViewFrame.height
+            self.bottomConstraint.constant = -self.keyboardHeight
         }
         
         UIView.animate(withDuration: 0, delay: 0, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
-        }, completion: {(completed) in
-            if (!keyboardHiding){
-                if let lastPath = lastPath{
-                    self.tableView.scrollToRow(at: lastPath, at: .bottom, animated: true)
-                }
+            
+            if (keyboardHiding){
+                self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentOffset.y - self.keyboardHeight), animated: false)
+                // именно в таком порядке, иначе таблица перескакивает
+                self.tableView.scrollIndicatorInsets = .zero
+                self.tableView.contentInset = .zero
             }
-        })
+            else{
+                self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentOffset.y + self.keyboardHeight), animated: false)
+                self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.keyboardHeight, right: 0)
+                self.tableView.scrollIndicatorInsets = self.tableView.contentInset
+            }
+        }, completion: nil
+        )
+        
     }
 }
 
 // MARK: - Table view data source
 extension ConversationViewController: UITableViewDataSource{
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
