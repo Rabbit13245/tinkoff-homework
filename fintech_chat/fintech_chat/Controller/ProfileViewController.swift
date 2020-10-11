@@ -7,10 +7,11 @@ class ProfileViewController: BaseViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var profilePhotoView: UIImageView!
-    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var editBarButton: UIBarButtonItem!
+    
+    @IBOutlet weak var gcdSaveButton: AppBackgroundButton!
+    @IBOutlet weak var operationSaveButton: AppBackgroundButton!
     
     weak var initialsLabel: UILabel?
     
@@ -29,7 +30,8 @@ class ProfileViewController: BaseViewController {
         
         descriptionLabel.setLineHeight(lineHeight: 6)
         
-        saveButton.layer.cornerRadius = saveButton.bounds.height / 3
+        gcdSaveButton.layer.cornerRadius = gcdSaveButton.bounds.height / 3
+        operationSaveButton.layer.cornerRadius = gcdSaveButton.bounds.height / 3
         
         guard profilePhotoView.image == nil else { return }
         
@@ -137,9 +139,24 @@ class ProfileViewController: BaseViewController {
         present(actionSheet, animated: true)
     }
     
-    @IBAction func closeTouch(_ sender: UIButton) {
+    @IBAction func closeButtonPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func editBarButtonPressed(_ sender: UIBarButtonItem) {
+        print("Edit")
+        
+    }
+    
+    @IBAction func gcdSaveButtonPessed(_ sender: AppBackgroundButton) {
+        print("GCD")
+    }
+    
+    
+    @IBAction func operationSaveButtonPressed(_ sender: Any) {
+        print("Operaion")
+    }
+    
 }
 
 // MARK: - UIImagePickerControllerDelegate
