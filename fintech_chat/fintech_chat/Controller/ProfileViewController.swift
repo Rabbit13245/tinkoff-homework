@@ -1,19 +1,6 @@
 import UIKit
 import AVFoundation
 
-extension UILabel {
-    func setLineHeight(lineHeight: CGFloat) {
-        let text = self.text
-        if let text = text {
-            let attributeString = NSMutableAttributedString(string: text)
-            let style = NSMutableParagraphStyle()
-            style.lineSpacing = lineHeight
-            attributeString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSMakeRange(0, text.count))
-            self.attributedText = attributeString
-        }
-    }
-}
-
 class ProfileViewController: BaseViewController {
     
     @IBOutlet weak var defaultPhotoView: UIView!
@@ -25,40 +12,13 @@ class ProfileViewController: BaseViewController {
     
     weak var initialsLabel: UILabel?
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        
-        // Logger.app.logMessage("\(editButton.frame)", logLevel: .Info)
-        // Кнопка, как и вся view еще не начали загружаться и, следовательно свойство editButton nil. А мы
-        // пытаемся обратиться к ней.
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        
-        // Logger.app.logMessage("\(editButton.frame)", logLevel: .Info)
-        // Кнопка, как и вся view еще не начали загружаться и, следовательно свойство editButton nil. А мы
-        // пытаемся обратиться к ней.
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-        
-        Logger.app.logMessage("\(saveButton.frame)", logLevel: .Info)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        Logger.app.logMessage("\(saveButton.frame)", logLevel: .Info)
-        // Frame отличаются, потому что сначала кнопка появилась, когда safeArea еще не была просчитана автоЛейаутом. Вообще в момент
-        // вызова viewDidLoad вью этого вьюКонтроллера не была добавлена в иерархию приложения. Потом вью добавилась,
-        // посчиталась safeArea и уже исходя из нее посчитались констрэинты кнопки
-    }
-    
-// MARK: - Private methods
+    // MARK: - Private methods
     
     private func setupUI(){
         profilePhotoView.layer.cornerRadius = profilePhotoView.bounds.width / 2
@@ -75,7 +35,7 @@ class ProfileViewController: BaseViewController {
         
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = fillInitials()
+        label.text = Helper.app.getInitials(from: nameLabel.text ?? "")
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 120)
         label.textColor = UIColor.init(red: 54/255, green: 55/255, blue: 56/255, alpha: 1.0)
@@ -88,21 +48,6 @@ class ProfileViewController: BaseViewController {
             label.centerYAnchor.constraint(equalTo: defaultPhotoView.centerYAnchor)
         ])
         initialsLabel = label
-    }
-    
-    private func fillInitials() -> String{
-        guard let fullName = nameLabel.text else {return ""}
-        let names = fullName.components(separatedBy: " ")
-        switch(names.count){
-            case 0:
-                return ""
-            case 1:
-                return "\(names[0].prefix(1))".uppercased()
-            case 2:
-                return "\(names[0].prefix(1))\(names[1].prefix(1))".uppercased()
-            default:
-                return ""
-        }
     }
     
     private func checkCameraPermission(){
@@ -152,7 +97,7 @@ class ProfileViewController: BaseViewController {
         present(alertController, animated: true)
     }
     
-// MARK: - IBActions
+    // MARK: - IBActions
     
     @IBAction func editTouch(_ sender: UIButton) {
         let actionSheet = UIAlertController(title: "Choose the source for your avatar", message: nil,  preferredStyle: .actionSheet)
@@ -178,6 +123,10 @@ class ProfileViewController: BaseViewController {
         actionSheet.addAction(cancel)
         
         present(actionSheet, animated: true)
+    }
+    
+    @IBAction func closeTouch(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
 }
 
