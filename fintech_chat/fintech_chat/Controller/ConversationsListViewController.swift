@@ -23,13 +23,29 @@ class ConversationsListViewController: UITableViewController {
 //        view.addSubview(customView)
 //       let barButtom = UIBarButtonItem(customView: view)
         
+        let manager = GCDDataManager()
+        manager.loadName{(name, error) in
+            if (error){
+                print("Error")
+            }
+            else{
+                print(name)
+            }
+        }
+        
         // Для ios 12 получается только так
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.AppColors.yellowLogo;
-        button.setTitle(Helper.app.getInitials(from: "Dmitry Zaytcev"), for: .normal)
+        button.setTitle(Helper.app.getInitials(from: ""), for: .normal)
         button.setTitleColor(UIColor.AppColors.initialsColor, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
         button.layer.cornerRadius = button.frame.height / 2
+        
+        manager.loadName{(name, error) in
+            if (!error){
+                button.setTitle(Helper.app.getInitials(from: name), for: .normal)
+            }
+        }
         
         let barButton = UIBarButtonItem(customView: button)
         barButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileButtonPressed)))

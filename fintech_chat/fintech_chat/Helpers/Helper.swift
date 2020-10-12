@@ -8,6 +8,9 @@ class Helper{
     private init() {}
     
     func generateDefaultAvatar(name: String, width: CGFloat) -> UIView{
+        
+        
+        
         let resultView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: width))
         resultView.layer.cornerRadius = resultView.frame.width / 2
         resultView.backgroundColor = UIColor.AppColors.yellowLogo
@@ -25,7 +28,6 @@ class Helper{
             label.centerXAnchor.constraint(equalTo: resultView.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: resultView.centerYAnchor)
         ])
-        
         return resultView
     }
     

@@ -4,34 +4,71 @@ import AVFoundation
 class ProfileViewController: BaseViewController {
     
     @IBOutlet weak var defaultPhotoView: UIView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var nameLabel: AppLabel!
+    @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var profilePhotoView: UIImageView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var editBarButton: UIBarButtonItem!
-    
     @IBOutlet weak var gcdSaveButton: AppBackgroundButton!
     @IBOutlet weak var operationSaveButton: AppBackgroundButton!
     
+    
+    @IBOutlet weak var safeAreaButtonsConstraint: NSLayoutConstraint!
+    @IBOutlet weak var descriptionTextConstraint: NSLayoutConstraint!
+    @IBOutlet weak var defaultPhotoConstraint: NSLayoutConstraint!
+    @IBOutlet weak var profilePhotoConstant: NSLayoutConstraint!
+    
+    
     weak var initialsLabel: UILabel?
+    
+    var editingMode = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
+        
+        subscribeKeyboardNotifications()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        unsubscribeKeyboardNotifications()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.nameTextField.endEditing(true)
+        self.descriptionTextView.endEditing(true)
     }
     
     // MARK: - Private methods
     
     private func setupUI(){
+        safeAreaButtonsConstraint.constant = 30
+        defaultPhotoConstraint.constant = 8
+        profilePhotoConstant.constant = 8
+        
         profilePhotoView.layer.cornerRadius = profilePhotoView.bounds.width / 2
         profilePhotoView.contentMode = .scaleAspectFill
         profilePhotoView.clipsToBounds = true
         
-        descriptionLabel.setLineHeight(lineHeight: 6)
-        
         gcdSaveButton.layer.cornerRadius = gcdSaveButton.bounds.height / 3
         operationSaveButton.layer.cornerRadius = gcdSaveButton.bounds.height / 3
+        
+        nameTextField.textAlignment = .center
+        nameTextField.contentHorizontalAlignment = .center
+        nameTextField.backgroundColor = .red
+        nameTextField.isHidden = !self.editingMode
+        
+        nameLabel.isHidden = self.editingMode
+        
+        descriptionTextView.isEditable = self.editingMode
+        descriptionTextView.setLineHeight(lineHeight: 6)
+        descriptionTextView.font = UIFont.systemFont(ofSize: 16)
+        
+        editButton.isEnabled = self.editingMode
         
         guard profilePhotoView.image == nil else { return }
         
@@ -54,6 +91,42 @@ class ProfileViewController: BaseViewController {
         ])
         initialsLabel = label
     }
+    
+    private func subscribeKeyboardNotifications(){
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func unsubscribeKeyboardNotifications(){
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func adjustKeyboard(notification: Notification){
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        if (notification.name == UIResponder.keyboardWillHideNotification){
+//            descriptionTextConstraint.constant = 32
+            safeAreaButtonsConstraint.constant = 30
+            defaultPhotoConstraint.constant = 8
+            profilePhotoConstant.constant = 8
+        }
+        else{
+//            descriptionTextConstraint.constant = 32 + keyboardViewEndFrame.height * 2 / 3
+            safeAreaButtonsConstraint.constant = 30 + keyboardViewEndFrame.height * 2 / 3
+            defaultPhotoConstraint.constant = 8 - keyboardViewEndFrame.height * 2 / 3
+            profilePhotoConstant.constant = 8 - keyboardViewEndFrame.height * 2 / 3
+        }
+        
+        UIView.animate(withDuration: 0, delay: 0, options: .curveEaseInOut, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
     
     private func checkCameraPermission(){
         if (UIImagePickerController.isCameraDeviceAvailable(.rear) || UIImagePickerController.isCameraDeviceAvailable(.front)) {
@@ -145,11 +218,30 @@ class ProfileViewController: BaseViewController {
     
     @IBAction func editBarButtonPressed(_ sender: UIBarButtonItem) {
         print("Edit")
+        self.editingMode = !self.editingMode
+        self.editButton.isEnabled = self.editingMode
         
+        nameTextField.isHidden = !self.editingMode
+        nameLabel.isHidden = self.editingMode
+        descriptionTextView.isEditable = self.editingMode
+        
+        if (self.editingMode){
+            sender.title = "Done"
+            nameTextField.text = nameLabel.text
+        }
+        else{
+            sender.title = "Edit profile"
+            self.nameTextField.endEditing(true)
+            self.descriptionTextView.endEditing(true)
+        }
     }
     
     @IBAction func gcdSaveButtonPessed(_ sender: AppBackgroundButton) {
         print("GCD")
+        let gcdDataManager = GCDDataManager()
+        gcdDataManager.saveUserName("tanya zaytceva"){ error in
+            print(error)
+        }
     }
     
     
