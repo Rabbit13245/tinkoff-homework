@@ -2,6 +2,13 @@ import UIKit
 
 class ConversationsListViewController: UITableViewController {
     
+    var userName = "Dmitry Zaytcev"
+    
+    lazy var dataManagerFactory: DataManagerFactory = {
+        let dataManagerFactory = DataManagerFactory()
+        return dataManagerFactory
+    }()
+    
     lazy var dataGenerator: FakeDataGenerator = {
         let fakeDataGenerator = FakeDataGenerator()
         return fakeDataGenerator
@@ -23,28 +30,20 @@ class ConversationsListViewController: UITableViewController {
 //        view.addSubview(customView)
 //       let barButtom = UIBarButtonItem(customView: view)
         
-        let manager = GCDDataManager()
-        manager.loadName{(name, error) in
-            if (error){
-                print("Error")
-            }
-            else{
-                print(name)
-            }
-        }
+        let manager = dataManagerFactory.createDataManager(.GCD)
         
         // Для ios 12 получается только так
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.AppColors.yellowLogo;
-        button.setTitle(Helper.app.getInitials(from: ""), for: .normal)
         button.setTitleColor(UIColor.AppColors.initialsColor, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
         button.layer.cornerRadius = button.frame.height / 2
         
         manager.loadName{(name, error) in
             if (!error){
-                button.setTitle(Helper.app.getInitials(from: name), for: .normal)
+                self.userName = name
             }
+            button.setTitle(Helper.app.getInitials(from: self.userName), for: .normal)
         }
         
         let barButton = UIBarButtonItem(customView: button)

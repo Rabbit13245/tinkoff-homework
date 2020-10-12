@@ -41,6 +41,8 @@
 		F1391DA9252BA956007FC97D /* DayTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1391DA8252BA956007FC97D /* DayTheme.swift */; };
 		F1391DAB252BA9B3007FC97D /* NightTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1391DAA252BA9B3007FC97D /* NightTheme.swift */; };
 		F1391DAD252BB387007FC97D /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1391DAC252BB387007FC97D /* UIWindow.swift */; };
+		F13AC6C62534CC2600693985 /* DataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AC6C52534CC2600693985 /* DataManagerFactory.swift */; };
+		F13AC6C82534CCD400693985 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AC6C72534CCD400693985 /* OperationDataManager.swift */; };
 		F1D84D4C251E9804000A69AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D84D4B251E9804000A69AF /* UIColor.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +83,8 @@
 		F1391DA8252BA956007FC97D /* DayTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTheme.swift; sourceTree = "<group>"; };
 		F1391DAA252BA9B3007FC97D /* NightTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightTheme.swift; sourceTree = "<group>"; };
 		F1391DAC252BB387007FC97D /* UIWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindow.swift; sourceTree = "<group>"; };
+		F13AC6C52534CC2600693985 /* DataManagerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerFactory.swift; sourceTree = "<group>"; };
+		F13AC6C72534CCD400693985 /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
 		F1D84D4B251E9804000A69AF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +104,8 @@
 			children = (
 				8428027C25347D9B0078723A /* DataManagerProtocol.swift */,
 				8428027E25347F2E0078723A /* GCDDataManager.swift */,
+				F13AC6C52534CC2600693985 /* DataManagerFactory.swift */,
+				F13AC6C72534CCD400693985 /* OperationDataManager.swift */,
 			);
 			path = DataManager;
 			sourceTree = "<group>";
@@ -290,6 +296,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F13AC6C62534CC2600693985 /* DataManagerFactory.swift in Sources */,
 				8448DF7F252C9EFE00314A95 /* AppView.swift in Sources */,
 				8467A612250FAED400E36BEE /* BaseViewController.swift in Sources */,
 				844EB08D2510DF5600AF0216 /* Logger.swift in Sources */,
@@ -303,6 +310,7 @@
 				F136EF992517F10400F0818C /* LogLevels.swift in Sources */,
 				8442D3CA251B434600F01A1C /* UILabel.swift in Sources */,
 				84569933252DB45A001C10B1 /* AppLabel.swift in Sources */,
+				F13AC6C82534CCD400693985 /* OperationDataManager.swift in Sources */,
 				F10D4E092521165B00B8CDD0 /* MessageTableViewCell.swift in Sources */,
 				8463B54E252369B800D1D358 /* Helper.swift in Sources */,
 				849444E0251DE86000946D9F /* ConversationsListViewController.swift in Sources */,

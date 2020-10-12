@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="e97-WE-kJP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="e97-WE-kJP">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -48,19 +48,8 @@
                                     <constraint firstAttribute="trailing" secondItem="AvU-LR-dsQ" secondAttribute="trailing" id="zv7-4L-gWn"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dmitry Zaytcev" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="BoV-d1-M8Z" customClass="AppLabel" customModule="Финтех_чат" customModuleProvider="target">
-                                <rect key="frame" x="67.5" y="376" width="240" height="30.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="prY-Os-p6c">
-                                <rect key="frame" x="67.5" y="376" width="240" height="30.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Nn-Ph-yEC">
-                                <rect key="frame" x="67.5" y="422.5" width="240" height="142.5"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Nn-Ph-yEC">
+                                <rect key="frame" x="67.5" y="446" width="240" height="119"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -94,26 +83,35 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="rk1-HD-3Rq">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3t5-3i-OcL">
+                                <rect key="frame" x="68" y="360" width="240" height="69"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="prY-Os-p6c" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="1RU-Vo-tO2"/>
+                            <constraint firstItem="3t5-3i-OcL" firstAttribute="width" secondItem="zcl-wE-uK0" secondAttribute="width" id="0hl-br-Qen"/>
                             <constraint firstItem="1Rr-UM-bDg" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="4aa-Sj-jvW"/>
-                            <constraint firstItem="BoV-d1-M8Z" firstAttribute="width" secondItem="zcl-wE-uK0" secondAttribute="width" id="CAz-4J-NXr"/>
-                            <constraint firstItem="prY-Os-p6c" firstAttribute="height" secondItem="BoV-d1-M8Z" secondAttribute="height" id="MJA-JQ-1eD"/>
-                            <constraint firstItem="prY-Os-p6c" firstAttribute="width" secondItem="BoV-d1-M8Z" secondAttribute="width" id="Och-HU-g0Q"/>
+                            <constraint firstItem="rk1-HD-3Rq" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ApM-zN-Rdb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="bTw-gg-P5G" secondAttribute="bottom" constant="30" id="Pal-mr-Tet"/>
                             <constraint firstItem="zcl-wE-uK0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="Pon-F3-LsY"/>
                             <constraint firstItem="1Rr-UM-bDg" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="QQg-CM-Zu1"/>
                             <constraint firstItem="bTw-gg-P5G" firstAttribute="top" secondItem="3Nn-Ph-yEC" secondAttribute="bottom" constant="32" id="RgV-mg-Az7"/>
-                            <constraint firstItem="BoV-d1-M8Z" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ukl-HC-Qq2"/>
+                            <constraint firstItem="3Nn-Ph-yEC" firstAttribute="width" secondItem="3t5-3i-OcL" secondAttribute="width" id="T2f-51-9Yb"/>
+                            <constraint firstItem="3Nn-Ph-yEC" firstAttribute="top" secondItem="3t5-3i-OcL" secondAttribute="bottom" constant="18" id="YQI-SG-r7y"/>
+                            <constraint firstItem="3t5-3i-OcL" firstAttribute="top" secondItem="zcl-wE-uK0" secondAttribute="bottom" constant="16" id="Yqc-HH-DaH"/>
+                            <constraint firstItem="3t5-3i-OcL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZCb-Aw-9oP"/>
                             <constraint firstItem="3Nn-Ph-yEC" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ZHR-Hc-jKB"/>
-                            <constraint firstItem="3Nn-Ph-yEC" firstAttribute="width" secondItem="BoV-d1-M8Z" secondAttribute="width" id="Zgc-zG-FT5"/>
-                            <constraint firstItem="3Nn-Ph-yEC" firstAttribute="top" secondItem="BoV-d1-M8Z" secondAttribute="bottom" constant="16" id="a63-BC-JKu"/>
+                            <constraint firstItem="rk1-HD-3Rq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dwJ-Em-a0m"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bTw-gg-P5G" secondAttribute="trailing" constant="16" id="e3e-pb-LaG"/>
                             <constraint firstItem="bTw-gg-P5G" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="fQZ-2t-7ZO"/>
-                            <constraint firstItem="prY-Os-p6c" firstAttribute="top" secondItem="zcl-wE-uK0" secondAttribute="bottom" constant="32" id="lF6-eb-TX5"/>
-                            <constraint firstItem="BoV-d1-M8Z" firstAttribute="top" secondItem="zcl-wE-uK0" secondAttribute="bottom" constant="32" id="sDX-l4-AOY"/>
                             <constraint firstItem="zcl-wE-uK0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="us9-bz-16j"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -131,6 +129,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="rk1-HD-3Rq" id="xii-we-mUF"/>
                         <outlet property="defaultPhotoConstraint" destination="Pon-F3-LsY" id="hMo-kj-Vc2"/>
                         <outlet property="defaultPhotoView" destination="zcl-wE-uK0" id="tdZ-aQ-feB"/>
                         <outlet property="descriptionTextConstraint" destination="RgV-mg-Az7" id="M4o-uV-Y4C"/>
@@ -138,8 +137,7 @@
                         <outlet property="editBarButton" destination="6AV-dY-5QV" id="ISw-r8-8EL"/>
                         <outlet property="editButton" destination="AvU-LR-dsQ" id="tuW-zD-brG"/>
                         <outlet property="gcdSaveButton" destination="lHf-Cc-eei" id="Wmw-1k-XQF"/>
-                        <outlet property="nameLabel" destination="BoV-d1-M8Z" id="OVY-pU-Jb9"/>
-                        <outlet property="nameTextField" destination="prY-Os-p6c" id="YSx-dj-way"/>
+                        <outlet property="nameTextView" destination="3t5-3i-OcL" id="g8k-Mo-zvT"/>
                         <outlet property="operationSaveButton" destination="3pM-d9-url" id="f12-QX-rv2"/>
                         <outlet property="profilePhotoConstant" destination="4aa-Sj-jvW" id="fQo-dY-BjF"/>
                         <outlet property="profilePhotoView" destination="1Rr-UM-bDg" id="gFz-vZ-SPo"/>
