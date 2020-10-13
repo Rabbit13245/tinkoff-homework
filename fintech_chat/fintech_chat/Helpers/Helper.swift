@@ -39,7 +39,7 @@ class Helper{
                 return ""
             case 1:
                 return "\(names[0].prefix(1))".uppercased()
-            case 2:
+            case 2..<Int.max:
                 return "\(names[0].prefix(1))\(names[1].prefix(1))".uppercased()
             default:
                 return ""

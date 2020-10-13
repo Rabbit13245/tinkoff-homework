@@ -12,8 +12,8 @@ class ProfileViewController: BaseViewController {
     @IBOutlet weak var gcdSaveButton: AppBackgroundButton!
     @IBOutlet weak var operationSaveButton: AppBackgroundButton!
     
+    @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var safeAreaButtonsConstraint: NSLayoutConstraint!
-    @IBOutlet weak var descriptionTextConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var defaultPhotoConstraint: NSLayoutConstraint!
@@ -22,9 +22,12 @@ class ProfileViewController: BaseViewController {
     weak var initialsLabel: UILabel?
     
     var editingMode = false
+    var imageChanged = false
     
     var userName = "Dmitry Zaytcev"
     var userDescription = "iOS developer"
+    var userImage: UIImage? = nil
+    
     var wasChange = false
     
     lazy var dataManagerFactory: DataManagerFactory = {
@@ -53,11 +56,12 @@ class ProfileViewController: BaseViewController {
     // MARK: - Private methods
     
     private func setupUI(){
-        self.descriptionTextView.delegate = self
+        descriptionTextView.delegate = self
+        nameTextView.delegate = self
         
-        self.activityIndicator.isHidden = false
-        self.activityIndicator.startAnimating()
-        let dataManager = self.dataManagerFactory.createDataManager(.GCD)
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        activityIndicator.color = ThemeManager.shared.theme.settings.labelColor
         
         safeAreaButtonsConstraint.constant = 30
         defaultPhotoConstraint.constant = 8
@@ -101,6 +105,8 @@ class ProfileViewController: BaseViewController {
             label.centerYAnchor.constraint(equalTo: defaultPhotoView.centerYAnchor)
         ])
         
+        let dataManager = self.dataManagerFactory.createDataManager(.GCD)
+        
         dataManager.loadName { (name, error) in
             if(!error){
                 self.userName = name
@@ -110,12 +116,25 @@ class ProfileViewController: BaseViewController {
                 if (!error){
                     self.userDescription = description
                 }
-                self.descriptionTextView.text = self.userDescription
-                label.text = Helper.app.getInitials(from: self.userName)
-                self.initialsLabel = label
-                
-                self.activityIndicator.isHidden = true
-                self.activityIndicator.stopAnimating()
+                dataManager.loadImage { (image, error) in
+                    if(!error){
+                        self.userImage = image
+                        self.profilePhotoView.image = self.userImage
+                    }
+                    
+                    self.descriptionTextView.text = self.userDescription
+                    
+                    label.text = Helper.app.getInitials(from: self.userName)
+                    self.initialsLabel = label
+                    
+                    if(self.userImage != nil){
+                        self.defaultPhotoView.backgroundColor = .none
+                        self.initialsLabel?.isHidden = true
+                    }
+                    
+                    self.activityIndicator.isHidden = true
+                    self.activityIndicator.stopAnimating()
+                }
             }
         }
     }
@@ -143,12 +162,16 @@ class ProfileViewController: BaseViewController {
             defaultPhotoConstraint.constant = 8
             
             profilePhotoConstant.constant = 8
+            
+            stackViewTopConstraint.constant = 30
         }
         else{
             safeAreaButtonsConstraint.constant = 8 + keyboardViewEndFrame.height - self.view.safeAreaInsets.bottom
             
-            defaultPhotoConstraint.constant = 8 - keyboardViewEndFrame.height * 2 / 3
-            profilePhotoConstant.constant = 8 - keyboardViewEndFrame.height * 2 / 3
+            stackViewTopConstraint.constant = 10
+            
+            defaultPhotoConstraint.constant =  8 - keyboardViewEndFrame.height * 4 / 5
+            profilePhotoConstant.constant = 8 - keyboardViewEndFrame.height * 4 / 5
         }
 
         UIView.animate(withDuration: 0, delay: 0, options: .curveEaseInOut, animations: {
@@ -265,31 +288,107 @@ class ProfileViewController: BaseViewController {
     }
     
     @IBAction func gcdSaveButtonPessed(_ sender: AppBackgroundButton) {
-        self.editBarButtonPressed(self.editBarButton)
-        self.modifyUIForSaveData(false)
-        self.initialsLabel?.text = Helper.app.getInitials(from: self.nameTextView.text)
         let dataManager = dataManagerFactory.createDataManager(.GCD)
+        self.internalSaveData(dataManager)
+    }
+    
+    @IBAction func operationSaveButtonPressed(_ sender: Any) {
+        let dataManager = dataManagerFactory.createDataManager(.Operation)
+        
+        self.internalSaveData(dataManager)
+    }
+    
+    private func internalSaveData(_ dataManager: DataManagerProtocol){
+        // если нажали в режиме редактирования, то выходим из него
+        if (self.editingMode){
+            self.editBarButtonPressed(self.editBarButton)
+        }
+        
+        self.modifyUIForSaveData(false)
+        
+        self.initialsLabel?.text = Helper.app.getInitials(from: self.nameTextView.text)
+        
+        let imageForSave: UIImage? = self.userImage == self.profilePhotoView.image ? nil : self.profilePhotoView.image
         
         if self.nameTextView.text != self.userName,
             self.descriptionTextView.text != self.userDescription{
-            dataManager.saveUserData(name: self.nameTextView.text, description: self.descriptionTextView.text){error in
-                print("2")
+            dataManager.saveUserData(name: self.nameTextView.text, description: self.descriptionTextView.text, image: imageForSave){
+                (response, error) in
                 self.modifyUIForSaveData(true)
+                if(error){
+                    self.updateDataAfterSave(response: response)
+                    
+                    self.failedSaveData(){
+                        self.internalSaveData(dataManager)
+                    }
+                }
+                else{
+                    self.succesSaveData()
+                }
             }
         }
         else if self.nameTextView.text != self.userName{
-            dataManager.saveUserData(name: self.nameTextView.text, description: nil){error in
-                print("name")
+            dataManager.saveUserData(name: self.nameTextView.text, description: nil, image: imageForSave){
+                (response, error) in
                 self.modifyUIForSaveData(true)
+                if(error){
+                    self.updateDataAfterSave(response: response)
+                    
+                    self.failedSaveData(){
+                        self.internalSaveData(dataManager)
+                    }
+                }
+                else{
+                    self.succesSaveData()
+                }
             }
         }
         else if self.descriptionTextView.text != self.userDescription{
-            dataManager.saveUserData(name: nil, description: self.descriptionTextView.text){error in
-                print("description")
+            dataManager.saveUserData(name: nil, description: self.descriptionTextView.text, image: imageForSave){
+                (response, error) in
                 self.modifyUIForSaveData(true)
+                if(error){
+                    self.updateDataAfterSave(response: response)
+                    
+                    self.failedSaveData(){
+                        self.internalSaveData(dataManager)
+                    }
+                }
+                else{
+                    self.succesSaveData()
+                }
             }
         }
-        
+        else if self.userImage != self.profilePhotoView.image{
+            dataManager.saveUserData(name: nil, description: nil, image: self.profilePhotoView.image){
+                (response, error) in
+                self.modifyUIForSaveData(true)
+                if(error){
+                    self.updateDataAfterSave(response: response)
+                    
+                    self.failedSaveData(){
+                        self.internalSaveData(dataManager)
+                    }
+                }
+                else{
+                    self.succesSaveData()
+                }
+            }
+        }
+    }
+    
+    private func updateDataAfterSave(response: Response?){
+        if let response = response{
+            if (!response.nameError){
+                self.userName = self.nameTextView.text
+            }
+            if (!response.descriptionError){
+                self.userDescription = self.descriptionTextView.text
+            }
+            if(!response.imageError){
+                self.userImage = self.profilePhotoView.image
+            }
+        }
     }
     
     private func modifyUIForSaveData(_ enabled: Bool){
@@ -303,14 +402,24 @@ class ProfileViewController: BaseViewController {
         }
         self.gcdSaveButton.isEnabled = false
         self.operationSaveButton.isEnabled = false
+        self.editBarButton.isEnabled = enabled
     }
     
-    @IBAction func operationSaveButtonPressed(_ sender: Any) {
-        print("Operaion")
-        self.gcdSaveButton.isEnabled = false
-        self.operationSaveButton.isEnabled = false
+    private func succesSaveData(){
+        let alertController = UIAlertController(title: "Data saved", message: nil, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alertController, animated: true)
     }
     
+    private func failedSaveData( completion: @escaping (()->Void)){
+        let alertController = UIAlertController(title: "Eroor", message: "Failed to save data", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        let repeatAction = UIAlertAction(title: "Repeat", style: .default) { (action) in
+            completion()
+        }
+        alertController.addAction(repeatAction)
+        self.present(alertController, animated: true)
+    }
 }
 
 // MARK: - UIImagePickerControllerDelegate
@@ -337,6 +446,10 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         
         defaultPhotoView.backgroundColor = .none
         initialsLabel?.isHidden = true
+        
+        self.wasChange = true
+        self.gcdSaveButton.isEnabled = self.wasChange
+        self.operationSaveButton.isEnabled = self.wasChange
         
         dismiss(animated: true)
     }
