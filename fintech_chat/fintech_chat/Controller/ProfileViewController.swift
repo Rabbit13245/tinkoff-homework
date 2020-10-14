@@ -23,8 +23,8 @@ class ProfileViewController: BaseViewController {
     var editingMode = false
     var imageChanged = false
     
-    var userName = "Dmitry Zaytcev"
-    var userDescription = "iOS developer"
+    var userName = ""
+    var userDescription = ""
     var userImage: UIImage? = nil
     
     var wasChange = false
@@ -69,6 +69,9 @@ class ProfileViewController: BaseViewController {
     private func setupUI(){
         descriptionTextView.delegate = self
         nameTextView.delegate = self
+        
+        nameTextView.text = self.userName
+        descriptionTextView.text = self.userDescription
         
         descriptionTextView.layer.cornerRadius = 16
         nameTextView.layer.cornerRadius = 16
@@ -119,38 +122,41 @@ class ProfileViewController: BaseViewController {
         // чтение operations
         let dataManagerOperations = self.dataManagerFactory.createDataManager(.Operation)
         
+        self.editBarButton.isEnabled = false
+        
         readData(dataManagerOperations)
     }
     
     private func readData(_ dataManager: DataManagerProtocol){
-        dataManager.loadName { (name, error) in
-            if(!error){
-                self.userName = name
-                self.nameTextView.text = self.userName
-            }
-            dataManager.loadDescription { (description, error) in
-                if (!error){
-                    self.userDescription = description
+        
+        dataManager.loadUserData { (userData, response) in
+            if let resp = response {
+                if (!resp.nameError){
+                    self.userName = userData.userName ?? "Error Load Name"
+                    self.nameTextView.text = self.userName
                 }
-                dataManager.loadImage { (image, error) in
-                    if(!error){
-                        self.userImage = image
-                        self.profilePhotoView.image = self.userImage
-                    }
-                    
-                    self.descriptionTextView.text = self.userDescription
-                    
-                    
-                    self.initialsLabel.text = Helper.app.getInitials(from: self.userName)
-                    
-                    if(self.userImage != nil){
-                        self.defaultPhotoView.backgroundColor = .none
-                        self.initialsLabel.isHidden = true
-                    }
-                    
-                    self.activityIndicator.isHidden = true
-                    self.activityIndicator.stopAnimating()
+                if (!resp.descriptionError){
+                    self.userDescription = userData.userDescription ?? "Error Load Description"
                 }
+                if (!resp.imageError){
+                    self.userImage = userData.userImage
+                    self.profilePhotoView.image = self.userImage
+                }
+                
+                self.descriptionTextView.text = self.userDescription
+                
+                
+                self.initialsLabel.text = Helper.app.getInitials(from: self.userName)
+                
+                if(self.userImage != nil){
+                    self.defaultPhotoView.backgroundColor = .none
+                    self.initialsLabel.isHidden = true
+                }
+                
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+                self.editBarButton.isEnabled = true
+                
             }
         }
     }
@@ -326,73 +332,77 @@ class ProfileViewController: BaseViewController {
         
         self.initialsLabel.text = Helper.app.getInitials(from: self.nameTextView.text)
         
-        let imageForSave: UIImage? = self.userImage == self.profilePhotoView.image ? nil : self.profilePhotoView.image
-        
         if self.nameTextView.text != self.userName,
             self.descriptionTextView.text != self.userDescription{
-            dataManager.saveUserData(name: self.nameTextView.text, description: self.descriptionTextView.text, image: imageForSave){
+            dataManager.saveUserData(name: self.nameTextView.text, description: self.descriptionTextView.text, oldImage: self.userImage, newImage: self.profilePhotoView.image){
                 (response, error) in
                 self.modifyUIForSaveData(true)
+                self.updateDataAfterSave(response: response)
                 if(error){
-                    self.updateDataAfterSave(response: response)
                     
                     self.failedSaveData(){
                         self.internalSaveData(dataManager)
                     }
                 }
                 else{
-                    self.succesSaveData()
+                    self.succesSaveData(title: "Data saved")
                 }
             }
         }
         else if self.nameTextView.text != self.userName{
-            dataManager.saveUserData(name: self.nameTextView.text, description: nil, image: imageForSave){
+            dataManager.saveUserData(name: self.nameTextView.text, description: nil, oldImage: self.userImage, newImage: self.profilePhotoView.image){
                 (response, error) in
                 self.modifyUIForSaveData(true)
+                self.updateDataAfterSave(response: response)
                 if(error){
-                    self.updateDataAfterSave(response: response)
                     
                     self.failedSaveData(){
                         self.internalSaveData(dataManager)
                     }
                 }
                 else{
-                    self.succesSaveData()
+                    self.succesSaveData(title: "Data saved")
                 }
             }
         }
         else if self.descriptionTextView.text != self.userDescription{
-            dataManager.saveUserData(name: nil, description: self.descriptionTextView.text, image: imageForSave){
+            dataManager.saveUserData(name: nil, description: self.descriptionTextView.text, oldImage: self.userImage, newImage: self.profilePhotoView.image){
                 (response, error) in
                 self.modifyUIForSaveData(true)
+                self.updateDataAfterSave(response: response)
                 if(error){
-                    self.updateDataAfterSave(response: response)
+                    self.failedSaveData(){
+                        self.internalSaveData(dataManager)
+                    }
+                }
+                else{
+                    self.succesSaveData(title: "Data saved")
+                }
+            }
+        }
+        else {
+            dataManager.saveUserData(name: nil, description: nil, oldImage: self.userImage, newImage: self.profilePhotoView.image){
+                (response, error) in
+                self.modifyUIForSaveData(true)
+                
+                self.updateDataAfterSave(response: response)
+                
+                if(error){
                     
                     self.failedSaveData(){
                         self.internalSaveData(dataManager)
                     }
                 }
                 else{
-                    self.succesSaveData()
+                    self.succesSaveData(title: "Data saved")
                 }
             }
         }
-        else if self.userImage != self.profilePhotoView.image{
-            dataManager.saveUserData(name: nil, description: nil, image: self.profilePhotoView.image){
-                (response, error) in
-                self.modifyUIForSaveData(true)
-                if(error){
-                    self.updateDataAfterSave(response: response)
-                    
-                    self.failedSaveData(){
-                        self.internalSaveData(dataManager)
-                    }
-                }
-                else{
-                    self.succesSaveData()
-                }
-            }
-        }
+//        else{
+//            // что-то поменяли, но в итоге сохранять ничего не надо
+//            self.modifyUIForSaveData(true)
+//            self.succesSaveData(title: "No changes")
+//        }
     }
     
     private func updateDataAfterSave(response: Response?){
@@ -423,8 +433,8 @@ class ProfileViewController: BaseViewController {
         self.editBarButton.isEnabled = enabled
     }
     
-    private func succesSaveData(){
-        let alertController = UIAlertController(title: "Data saved", message: nil, preferredStyle: .alert)
+    private func succesSaveData(title: String){
+        let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alertController, animated: true)
     }

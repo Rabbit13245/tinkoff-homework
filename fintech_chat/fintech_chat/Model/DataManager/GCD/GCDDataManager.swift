@@ -12,14 +12,14 @@ class GCDDataManager{
     let imageFile = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Image.png")
     
     private func loadDataFrom(url: URL, completion: ((_ name: String, _ error: Bool) -> Void)?){
-        fileQueue.async {
+        //fileQueue.asyncAfter(deadline: .now() + 5){
+        fileQueue.async{
             do{
                 let strName = try String(contentsOf: url)
                 
                 DispatchQueue.main.async {
                     completion?(strName, false)
                 }
-                
             }
             catch{
                 Logger.app.logMessage("Cant load data from file. \(error.localizedDescription)", logLevel: .Error)
@@ -33,7 +33,9 @@ class GCDDataManager{
     }
     
     private func loadImageFrom(url: URL, completion: ((_ image: UIImage?, _ error: Bool) -> Void)?){
-        fileQueue.async {
+        
+        //fileQueue.asyncAfter(deadline: .now() + 5){
+        fileQueue.async{
             do{
                 let data = try Data(contentsOf: url)
                 if let image = UIImage(data: data){
@@ -75,14 +77,6 @@ class GCDDataManager{
             }
         }
     }
-    
-    init() {
-        Logger.app.logMessage("GCDDataManager init", logLevel: .Info)
-    }
-    
-    deinit {
-        Logger.app.logMessage("GCDDataManager deinit", logLevel: .Info)
-    }
 }
 
 // MARK: - DataManagerProtocol
@@ -100,7 +94,65 @@ extension GCDDataManager: DataManagerProtocol{
         loadImageFrom(url: self.imageFile, completion: completion)
     }
     
-    func saveUserData(name: String?, description: String?, image: UIImage?, completion: ((_ response: Response?, _ error: Bool) -> Void)?){
+    func loadUserData(completion: ((_ userData: User, _ response: Response?) -> Void)?){
+        var response = Response(nameError: false, descriptionError: false, imageError: false)
+        
+        let dispatchGroup = DispatchGroup()
+        
+        var userData = User(userName: nil, userDescription: nil, userImage: nil)
+        dispatchGroup.enter()
+        //fileQueue.asyncAfter(deadline: .now() + 5){
+        fileQueue.async{
+            do{
+                let name = try String(contentsOf: self.nameFile)
+                userData.userName = name
+            }
+            catch{
+                Logger.app.logMessage("Cant load data from file. \(error.localizedDescription)", logLevel: .Error)
+                response.nameError = true
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        //fileQueue.asyncAfter(deadline: .now() + 5){
+        fileQueue.async{
+            do{
+                let description = try String(contentsOf: self.descriptionFile)
+                userData.userDescription = description
+            }
+            catch{
+                Logger.app.logMessage("Cant load data from file. \(error.localizedDescription)", logLevel: .Error)
+                response.descriptionError = true
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        //fileQueue.asyncAfter(deadline: .now() + 5){
+        fileQueue.async{
+            do{
+                let data = try Data(contentsOf: self.imageFile)
+                if let image = UIImage(data: data){
+                    userData.userImage = image
+                }
+            }
+            catch{
+                Logger.app.logMessage("Cant load image from file. \(error.localizedDescription)", logLevel: .Error)
+                response.imageError = true
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: self.fileQueue) {
+            DispatchQueue.main.async {
+                completion?(userData, response)
+            }
+        }
+    }
+    
+    
+    func saveUserData(name: String?, description: String?, oldImage: UIImage?, newImage: UIImage?, completion: ((_ response: Response?, _ error: Bool) -> Void)?){
         var globalError = false
         
         var response = Response(nameError: false, descriptionError: false, imageError: false)
@@ -108,23 +160,7 @@ extension GCDDataManager: DataManagerProtocol{
         let dispatchGroup = DispatchGroup()
         
         if let name = name{
-            
             dispatchGroup.enter()
-//            fileQueue.asyncAfter(deadline: .now() + 2) {
-//                do{
-//                    print("Name")
-//                    //try name.write(to: self.nameFile, atomically: true, encoding: .utf8)
-//                    globalError = true
-//                    response.nameError = true
-//                }
-//                catch{
-//                    Logger.app.logMessage("Can`t write name to file. \(error.localizedDescription)", logLevel: .Error)
-//                    globalError = true
-//                    response.nameError = true
-//                }
-//                dispatchGroup.leave()
-//            }
-            
             fileQueue.async {
                 do{
                     try name.write(to: self.nameFile, atomically: true, encoding: .utf8)
@@ -142,7 +178,6 @@ extension GCDDataManager: DataManagerProtocol{
             dispatchGroup.enter()
             fileQueue.async {
                 do{
-                    print("Description")
                     try description.write(to: self.descriptionFile, atomically: true, encoding: .utf8)
                 }
                 catch{
@@ -154,22 +189,25 @@ extension GCDDataManager: DataManagerProtocol{
             }
         }
         
-        if let image = image{
+        if let oldImage = oldImage,
+            let newImage = newImage{
             dispatchGroup.enter()
             fileQueue.async {
-                do{
-                    print("Image")
-                    if let data = image.pngData(){
-                        try data.write(to: self.imageFile)
+                let equalImages = oldImage.pngData() == newImage.pngData()
+                if(!equalImages){
+                    do{
+                        if let data = newImage.pngData(){
+                            try data.write(to: self.imageFile)
+                        }
+                        else{
+                            globalError = true
+                        }
                     }
-                    else{
+                    catch{
+                        Logger.app.logMessage("Can`t write description to file. \(error.localizedDescription)", logLevel: .Error)
                         globalError = true
+                        response.imageError = true
                     }
-                }
-                catch{
-                    Logger.app.logMessage("Can`t write description to file. \(error.localizedDescription)", logLevel: .Error)
-                    globalError = true
-                    response.imageError = true
                 }
                 dispatchGroup.leave()
             }
@@ -182,7 +220,7 @@ extension GCDDataManager: DataManagerProtocol{
                 }
                     
                 else{
-                    completion?(nil, false)
+                    completion?(response, false)
                 }
             }
         }
