@@ -19,7 +19,7 @@ class ProfileViewController: BaseViewController {
     @IBOutlet weak var defaultPhotoConstraint: NSLayoutConstraint!
     @IBOutlet weak var profilePhotoConstant: NSLayoutConstraint!
 
-    weak var initialsLabel: UILabel?
+    
     
     var editingMode = false
     var imageChanged = false
@@ -33,6 +33,18 @@ class ProfileViewController: BaseViewController {
     lazy var dataManagerFactory: DataManagerFactory = {
         let dataManagerFactory = DataManagerFactory()
         return dataManagerFactory
+    }()
+    
+    lazy var initialsLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 120)
+        label.textColor = UIColor.AppColors.initialsColor
+        label.backgroundColor = .clear
+        
+        return label
     }()
     
     override func viewDidLoad() {
@@ -89,24 +101,26 @@ class ProfileViewController: BaseViewController {
         
         defaultPhotoView.layer.cornerRadius = defaultPhotoView.bounds.width / 2
         
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 120)
-        label.textColor = UIColor.AppColors.initialsColor
-        label.backgroundColor = .clear
-        defaultPhotoView.addSubview(label)
+        defaultPhotoView.addSubview(self.initialsLabel)
         
         NSLayoutConstraint.activate([
-            label.widthAnchor.constraint(equalTo: defaultPhotoView.widthAnchor),
-            label.heightAnchor.constraint(equalTo: defaultPhotoView.heightAnchor),
-            label.centerXAnchor.constraint(equalTo: defaultPhotoView.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: defaultPhotoView.centerYAnchor)
+            self.initialsLabel.widthAnchor.constraint(equalTo: defaultPhotoView.widthAnchor),
+            self.initialsLabel.heightAnchor.constraint(equalTo: defaultPhotoView.heightAnchor),
+            self.initialsLabel.centerXAnchor.constraint(equalTo: defaultPhotoView.centerXAnchor),
+            self.initialsLabel.centerYAnchor.constraint(equalTo: defaultPhotoView.centerYAnchor)
         ])
         
-        let dataManager = self.dataManagerFactory.createDataManager(.GCD)
+        // чтение gcd
+        let dataManagerGCD = self.dataManagerFactory.createDataManager(.GCD)
         
+        // чтение operations
+        let dataManagerOperations = self.dataManagerFactory.createDataManager(.Operation)
+        
+        readData(dataManagerOperations)
+    }
+    
+    private func readData(_ dataManager: DataManagerProtocol){
         dataManager.loadName { (name, error) in
             if(!error){
                 self.userName = name
@@ -124,12 +138,12 @@ class ProfileViewController: BaseViewController {
                     
                     self.descriptionTextView.text = self.userDescription
                     
-                    label.text = Helper.app.getInitials(from: self.userName)
-                    self.initialsLabel = label
+                    
+                    self.initialsLabel.text = Helper.app.getInitials(from: self.userName)
                     
                     if(self.userImage != nil){
                         self.defaultPhotoView.backgroundColor = .none
-                        self.initialsLabel?.isHidden = true
+                        self.initialsLabel.isHidden = true
                     }
                     
                     self.activityIndicator.isHidden = true
@@ -306,7 +320,7 @@ class ProfileViewController: BaseViewController {
         
         self.modifyUIForSaveData(false)
         
-        self.initialsLabel?.text = Helper.app.getInitials(from: self.nameTextView.text)
+        self.initialsLabel.text = Helper.app.getInitials(from: self.nameTextView.text)
         
         let imageForSave: UIImage? = self.userImage == self.profilePhotoView.image ? nil : self.profilePhotoView.image
         
@@ -445,7 +459,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         profilePhotoView.image = image
         
         defaultPhotoView.backgroundColor = .none
-        initialsLabel?.isHidden = true
+        initialsLabel.isHidden = true
         
         self.wasChange = true
         self.gcdSaveButton.isEnabled = self.wasChange

@@ -7,11 +7,6 @@ class GCDDataManager{
         return queue
     }()
     
-    lazy var dispatchGroup: DispatchGroup = {
-        let group = DispatchGroup()
-        return group
-    }()
-    
     let nameFile = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Name.txt")
     let descriptionFile = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Description.txt")
     let imageFile = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Image.png")
@@ -20,19 +15,19 @@ class GCDDataManager{
         fileQueue.async {
             do{
                 let strName = try String(contentsOf: url)
-                if let completion = completion{
-                    DispatchQueue.main.async {
-                        completion(strName, false)
-                    }
+                
+                DispatchQueue.main.async {
+                    completion?(strName, false)
                 }
+                
             }
             catch{
                 Logger.app.logMessage("Cant load data from file. \(error.localizedDescription)", logLevel: .Error)
-                if let completion = completion{
-                    DispatchQueue.main.async {
-                        completion("", true)
-                    }
+                
+                DispatchQueue.main.async {
+                    completion?("", true)
                 }
+                
             }
         }
     }
@@ -42,20 +37,20 @@ class GCDDataManager{
             do{
                 let data = try Data(contentsOf: url)
                 if let image = UIImage(data: data){
-                    if let completion = completion{
-                        DispatchQueue.main.async {
-                            completion(image, false)
-                        }
+                    
+                    DispatchQueue.main.async {
+                        completion?(image, false)
                     }
+                    
                 }
             }
             catch{
                 Logger.app.logMessage("Cant load image from file. \(error.localizedDescription)", logLevel: .Error)
-                if let completion = completion{
-                    DispatchQueue.main.async {
-                        completion(nil, true)
-                    }
+                
+                DispatchQueue.main.async {
+                    completion?(nil, true)
                 }
+                
             }
         }
     }
@@ -64,19 +59,19 @@ class GCDDataManager{
         fileQueue.async {
             do{
                 try data.write(to: url, atomically: true, encoding: .utf8)
-                if let completion = completion{
-                    DispatchQueue.main.async {
-                        completion(false)
-                    }
+                
+                DispatchQueue.main.async {
+                    completion?(false)
                 }
+                
             }
             catch{
                 Logger.app.logMessage("Cant write data to file. \(error.localizedDescription)", logLevel: .Error)
-                if let completion = completion{
-                    DispatchQueue.main.async {
-                        completion(true)
-                    }
+                
+                DispatchQueue.main.async {
+                    completion?(true)
                 }
+                
             }
         }
     }
@@ -110,9 +105,11 @@ extension GCDDataManager: DataManagerProtocol{
         
         var response = Response(nameError: false, descriptionError: false, imageError: false)
         
+        let dispatchGroup = DispatchGroup()
+        
         if let name = name{
             
-            self.dispatchGroup.enter()
+            dispatchGroup.enter()
 //            fileQueue.asyncAfter(deadline: .now() + 2) {
 //                do{
 //                    print("Name")
@@ -125,7 +122,7 @@ extension GCDDataManager: DataManagerProtocol{
 //                    globalError = true
 //                    response.nameError = true
 //                }
-//                self.dispatchGroup.leave()
+//                dispatchGroup.leave()
 //            }
             
             fileQueue.async {
@@ -137,12 +134,12 @@ extension GCDDataManager: DataManagerProtocol{
                     globalError = true
                     response.nameError = true
                 }
-                self.dispatchGroup.leave()
+                dispatchGroup.leave()
             }
         }
         
         if let description = description{
-            self.dispatchGroup.enter()
+            dispatchGroup.enter()
             fileQueue.async {
                 do{
                     print("Description")
@@ -153,12 +150,12 @@ extension GCDDataManager: DataManagerProtocol{
                     globalError = true
                     response.descriptionError = true
                 }
-                self.dispatchGroup.leave()
+                dispatchGroup.leave()
             }
         }
         
         if let image = image{
-            self.dispatchGroup.enter()
+            dispatchGroup.enter()
             fileQueue.async {
                 do{
                     print("Image")
@@ -174,20 +171,18 @@ extension GCDDataManager: DataManagerProtocol{
                     globalError = true
                     response.imageError = true
                 }
-                self.dispatchGroup.leave()
+                dispatchGroup.leave()
             }
         }
         
-        if let completion = completion{
-            self.dispatchGroup.notify(queue: self.fileQueue) {
-                DispatchQueue.main.async {
-                    if (globalError){
-                        completion(response, true)
-                    }
-                        
-                    else{
-                        completion(nil, false)
-                    }
+        dispatchGroup.notify(queue: self.fileQueue) {
+            DispatchQueue.main.async {
+                if (globalError){
+                    completion?(response, true)
+                }
+                    
+                else{
+                    completion?(nil, false)
                 }
             }
         }

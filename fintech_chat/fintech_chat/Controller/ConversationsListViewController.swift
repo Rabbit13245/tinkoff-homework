@@ -68,8 +68,6 @@ class ConversationsListViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationItem.title = ""
-        
-        print("FFFF")
     }
     
    

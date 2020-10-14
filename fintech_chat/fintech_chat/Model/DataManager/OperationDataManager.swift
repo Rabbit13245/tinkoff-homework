@@ -1,7 +1,7 @@
 import UIKit
 
 class SaveDataOperation: Operation{
-    var url: URL? = nil
+    var url: URL
     var stringData: String? = nil
     var imageData: UIImage? = nil
     
@@ -23,15 +23,8 @@ class SaveDataOperation: Operation{
             return
         }
         
-        guard let url = self.url else {
-            Logger.app.logMessage("No URL", logLevel: .Error)
-            return
-        }
-        
-        
         if let stringData = self.stringData{
             do{
-                Logger.app.logMessage("F")
                 try stringData.write(to: url, atomically: true, encoding: .utf8)
             }
             catch{
@@ -58,14 +51,12 @@ class SaveDataOperation: Operation{
 }
 
 class BaseLoadDataOperation: Operation{
-    var url: URL? = nil
+    var url: URL
     var globalError = false
     
     init(url: URL) {
         self.url = url
     }
-    
-    
 }
 
 class LoadStringDataOperation: BaseLoadDataOperation{
@@ -73,12 +64,7 @@ class LoadStringDataOperation: BaseLoadDataOperation{
     
     override func main() {
         guard !isCancelled else {return}
-        
-        guard let url = self.url else {
-            Logger.app.logMessage("No URL", logLevel: .Error)
-            return
-        }
-        
+                
         do{
             stringResult = try String(contentsOf: url)
         }
@@ -93,11 +79,6 @@ class LoadImageOperation: BaseLoadDataOperation{
     
     override func main() {
         guard !isCancelled else {return}
-        
-        guard let url = self.url else {
-            Logger.app.logMessage("No URL", logLevel: .Error)
-            return
-        }
         
         do{
             let data = try Data(contentsOf: url)
@@ -115,7 +96,7 @@ class OperationDataManager{
     let descriptionFile = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Description.txt")
     let imageFile = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Image.png")
     
-    lazy var dataQueue: OperationQueue = {
+    private lazy var dataQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.name = "dataOperationQueue"
         queue.maxConcurrentOperationCount = 1
@@ -135,10 +116,8 @@ extension OperationDataManager: DataManagerProtocol{
     func loadName(completion: ((_ name: String, _ error: Bool) -> Void)?) {
         let loadNameOperation = LoadStringDataOperation(url: self.nameFile)
         loadNameOperation.completionBlock = {
-            if let completion = completion{
-                OperationQueue.main.addOperation {
-                    completion(loadNameOperation.stringResult, loadNameOperation.globalError)
-                }
+            OperationQueue.main.addOperation {
+                completion?(loadNameOperation.stringResult, loadNameOperation.globalError)
             }
         }
         self.dataQueue.addOperation(loadNameOperation)
@@ -147,22 +126,18 @@ extension OperationDataManager: DataManagerProtocol{
     func loadDescription(completion: ((_ description: String, _ error: Bool) -> Void)?) {
         let loadDescriptionOperation = LoadStringDataOperation(url: self.descriptionFile)
         loadDescriptionOperation.completionBlock = {
-            if let completion = completion{
-                OperationQueue.main.addOperation {
-                    completion(loadDescriptionOperation.stringResult, loadDescriptionOperation.globalError)
-                }
+            OperationQueue.main.addOperation {
+                completion?(loadDescriptionOperation.stringResult, loadDescriptionOperation.globalError)
             }
         }
         self.dataQueue.addOperation(loadDescriptionOperation)
     }
     
     func loadImage(completion: ((_ image: UIImage?, _ error: Bool) -> Void)?){
-        let loadImageOperation = LoadImageOperation(url: self.descriptionFile)
+        let loadImageOperation = LoadImageOperation(url: self.imageFile)
         loadImageOperation.completionBlock = {
-            if let completion = completion{
-                OperationQueue.main.addOperation {
-                    completion(loadImageOperation.imageResult, loadImageOperation.globalError)
-                }
+            OperationQueue.main.addOperation {
+                completion?(loadImageOperation.imageResult, loadImageOperation.globalError)
             }
         }
         self.dataQueue.addOperation(loadImageOperation)
@@ -203,12 +178,9 @@ extension OperationDataManager: DataManagerProtocol{
             response.descriptionError = saveDescriptionOperation?.globalError ?? false
             response.imageError = saveImageOperation?.globalError ?? false
             
-            if let completion = completion{
-                OperationQueue.main.addOperation {
-                    completion(response, error)
-                }
+            OperationQueue.main.addOperation {
+                completion?(response, error)
             }
         }
     }
-    
 }
