@@ -8,9 +8,16 @@ class ThemeManager{
     
     var theme: AppTheme {
         didSet{
-            guard theme != oldValue else {return}
-            UserDefaults.standard.setValue(theme.rawValue, forKey: SelectedThemeKey)
-            apply(for: UIApplication.shared)
+            guard theme != oldValue else { return }
+            
+            let queue = DispatchQueue.global(qos: .utility)
+            queue.async {
+                UserDefaults.standard.setValue(self.theme.rawValue, forKey: self.SelectedThemeKey)
+                
+                DispatchQueue.main.async {
+                    self.apply(for: UIApplication.shared)
+                }
+            }
         }
     }
     
