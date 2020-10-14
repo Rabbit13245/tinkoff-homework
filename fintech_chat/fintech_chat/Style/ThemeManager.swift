@@ -59,7 +59,7 @@ class ThemeManager{
         
         UITableViewCell.appearance().backgroundColor =  theme.settings.backgroundColor
         
-        UITextView.appearance().backgroundColor = theme.settings.textFieldBackgroundColor
+        UITextView.appearance().backgroundColor = theme.settings.backgroundColor
         UITextView.appearance().textColor = theme.settings.labelColor
         
         UITextField.appearance().defaultTextAttributes = [NSAttributedString.Key.foregroundColor: theme.settings.labelColor]
@@ -74,6 +74,8 @@ class ThemeManager{
         
         AppBackgroundButton.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
 
+        AppChatTextView.appearance().backgroundColor = theme.settings.textFieldBackgroundColor
+        
         application.windows.reload()
     }
     

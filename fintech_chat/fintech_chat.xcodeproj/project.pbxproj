@@ -14,6 +14,14 @@
 		84489B76252C6E5500F3C80D /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84489B75252C6E5500F3C80D /* UIAlertController.swift */; };
 		8448DF7F252C9EFE00314A95 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448DF7E252C9EFE00314A95 /* AppView.swift */; };
 		844EB08D2510DF5600AF0216 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EB08C2510DF5600AF0216 /* Logger.swift */; };
+		8451E4952536EED7003E95BA /* SaveDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451E4942536EED7003E95BA /* SaveDataOperation.swift */; };
+		8451E4972536EF0D003E95BA /* SaveStringOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451E4962536EF0D003E95BA /* SaveStringOperation.swift */; };
+		8451E4992536EFAD003E95BA /* SaveImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451E4982536EFAD003E95BA /* SaveImageOperation.swift */; };
+		8451E49B2536F159003E95BA /* LoadDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451E49A2536F159003E95BA /* LoadDataOperation.swift */; };
+		8451E49D2536F186003E95BA /* LoadStringOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451E49C2536F186003E95BA /* LoadStringOperation.swift */; };
+		8451E49F2536F1BB003E95BA /* LoadImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451E49E2536F1BB003E95BA /* LoadImageOperation.swift */; };
+		8451E4A22536F374003E95BA /* AppTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451E4A12536F374003E95BA /* AppTextView.swift */; };
+		8451E4A42536F454003E95BA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451E4A32536F454003E95BA /* User.swift */; };
 		84569933252DB45A001C10B1 /* AppLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84569932252DB45A001C10B1 /* AppLabel.swift */; };
 		84569935252DB478001C10B1 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84569934252DB478001C10B1 /* AppButton.swift */; };
 		8463B54E252369B800D1D358 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463B54D252369B800D1D358 /* Helper.swift */; };
@@ -54,6 +62,14 @@
 		84489B75252C6E5500F3C80D /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		8448DF7E252C9EFE00314A95 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		844EB08C2510DF5600AF0216 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		8451E4942536EED7003E95BA /* SaveDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDataOperation.swift; sourceTree = "<group>"; };
+		8451E4962536EF0D003E95BA /* SaveStringOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStringOperation.swift; sourceTree = "<group>"; };
+		8451E4982536EFAD003E95BA /* SaveImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImageOperation.swift; sourceTree = "<group>"; };
+		8451E49A2536F159003E95BA /* LoadDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadDataOperation.swift; sourceTree = "<group>"; };
+		8451E49C2536F186003E95BA /* LoadStringOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadStringOperation.swift; sourceTree = "<group>"; };
+		8451E49E2536F1BB003E95BA /* LoadImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImageOperation.swift; sourceTree = "<group>"; };
+		8451E4A12536F374003E95BA /* AppTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTextView.swift; sourceTree = "<group>"; };
+		8451E4A32536F454003E95BA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		84569932252DB45A001C10B1 /* AppLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLabel.swift; sourceTree = "<group>"; };
 		84569934252DB478001C10B1 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		8463B54D252369B800D1D358 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
@@ -102,10 +118,10 @@
 		8428027B25347D750078723A /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
+				8451E4932536EE91003E95BA /* GCD */,
+				8451E4922536EE7F003E95BA /* Operation */,
 				8428027C25347D9B0078723A /* DataManagerProtocol.swift */,
-				8428027E25347F2E0078723A /* GCDDataManager.swift */,
 				F13AC6C52534CC2600693985 /* DataManagerFactory.swift */,
-				F13AC6C72534CCD400693985 /* OperationDataManager.swift */,
 			);
 			path = DataManager;
 			sourceTree = "<group>";
@@ -129,8 +145,39 @@
 				8448DF7E252C9EFE00314A95 /* AppView.swift */,
 				84569932252DB45A001C10B1 /* AppLabel.swift */,
 				84569934252DB478001C10B1 /* AppButton.swift */,
+				8451E4A12536F374003E95BA /* AppTextView.swift */,
 			);
 			path = Controls;
+			sourceTree = "<group>";
+		};
+		8451E4922536EE7F003E95BA /* Operation */ = {
+			isa = PBXGroup;
+			children = (
+				8451E4A02536F231003E95BA /* Operations */,
+				F13AC6C72534CCD400693985 /* OperationDataManager.swift */,
+			);
+			path = Operation;
+			sourceTree = "<group>";
+		};
+		8451E4932536EE91003E95BA /* GCD */ = {
+			isa = PBXGroup;
+			children = (
+				8428027E25347F2E0078723A /* GCDDataManager.swift */,
+			);
+			path = GCD;
+			sourceTree = "<group>";
+		};
+		8451E4A02536F231003E95BA /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				8451E4942536EED7003E95BA /* SaveDataOperation.swift */,
+				8451E4962536EF0D003E95BA /* SaveStringOperation.swift */,
+				8451E4982536EFAD003E95BA /* SaveImageOperation.swift */,
+				8451E49A2536F159003E95BA /* LoadDataOperation.swift */,
+				8451E49C2536F186003E95BA /* LoadStringOperation.swift */,
+				8451E49E2536F1BB003E95BA /* LoadImageOperation.swift */,
+			);
+			path = Operations;
 			sourceTree = "<group>";
 		};
 		8467A601250FAED300E36BEE = {
@@ -174,6 +221,7 @@
 				F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */,
 				F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */,
 				F10D4E0B252118D400B8CDD0 /* FakeDataGenerator.swift */,
+				8451E4A32536F454003E95BA /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -302,8 +350,11 @@
 				844EB08D2510DF5600AF0216 /* Logger.swift in Sources */,
 				F10D4E04252111A900B8CDD0 /* ConversationCellModel.swift in Sources */,
 				849444E6251E21AF00946D9F /* ConversationViewController.swift in Sources */,
+				8451E49F2536F1BB003E95BA /* LoadImageOperation.swift in Sources */,
 				F1391DA9252BA956007FC97D /* DayTheme.swift in Sources */,
 				F1391DA025290D17007FC97D /* ThemesViewController.swift in Sources */,
+				8451E4A22536F374003E95BA /* AppTextView.swift in Sources */,
+				8451E49B2536F159003E95BA /* LoadDataOperation.swift in Sources */,
 				8428027A2534641B0078723A /* UITextView.swift in Sources */,
 				8428027F25347F2E0078723A /* GCDDataManager.swift in Sources */,
 				F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */,
@@ -311,11 +362,16 @@
 				8442D3CA251B434600F01A1C /* UILabel.swift in Sources */,
 				84569933252DB45A001C10B1 /* AppLabel.swift in Sources */,
 				F13AC6C82534CCD400693985 /* OperationDataManager.swift in Sources */,
+				8451E4A42536F454003E95BA /* User.swift in Sources */,
 				F10D4E092521165B00B8CDD0 /* MessageTableViewCell.swift in Sources */,
 				8463B54E252369B800D1D358 /* Helper.swift in Sources */,
 				849444E0251DE86000946D9F /* ConversationsListViewController.swift in Sources */,
+				8451E4952536EED7003E95BA /* SaveDataOperation.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
 				F1391DAB252BA9B3007FC97D /* NightTheme.swift in Sources */,
+				8451E4972536EF0D003E95BA /* SaveStringOperation.swift in Sources */,
+				8451E4992536EFAD003E95BA /* SaveImageOperation.swift in Sources */,
+				8451E49D2536F186003E95BA /* LoadStringOperation.swift in Sources */,
 				84489B76252C6E5500F3C80D /* UIAlertController.swift in Sources */,
 				F10D4E062521123D00B8CDD0 /* MessageCellModel.swift in Sources */,
 				F1391DAD252BB387007FC97D /* UIWindow.swift in Sources */,

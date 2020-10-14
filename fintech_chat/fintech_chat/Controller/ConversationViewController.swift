@@ -26,8 +26,8 @@ class ConversationViewController: UIViewController {
         return tableView
     }()
     
-    private lazy var inputTextView : UITextView = {
-        let textView = UITextView()
+    private lazy var inputTextView : AppChatTextView = {
+        let textView = AppChatTextView()
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.text = "Your message here..."
         textView.textColor = UIColor.lightGray

@@ -20,7 +20,6 @@ class ProfileViewController: BaseViewController {
     @IBOutlet weak var profilePhotoConstant: NSLayoutConstraint!
 
     
-    
     var editingMode = false
     var imageChanged = false
     
@@ -70,6 +69,9 @@ class ProfileViewController: BaseViewController {
     private func setupUI(){
         descriptionTextView.delegate = self
         nameTextView.delegate = self
+        
+        descriptionTextView.layer.cornerRadius = 16
+        nameTextView.layer.cornerRadius = 16
         
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
@@ -292,12 +294,14 @@ class ProfileViewController: BaseViewController {
         if (self.editingMode){
             sender.title = "Done"
             self.descriptionTextView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
+            self.nameTextView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
         }
         else{
             sender.title = "Edit profile"
             self.nameTextView.endEditing(true)
             self.descriptionTextView.endEditing(true)
             self.descriptionTextView.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
+            self.nameTextView.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
         }
     }
     
