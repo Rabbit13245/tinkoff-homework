@@ -118,13 +118,15 @@ class ProfileViewController: BaseViewController {
         
         // чтение gcd
         let dataManagerGCD = self.dataManagerFactory.createDataManager(.GCD)
+        readData(dataManagerGCD)
         
         // чтение operations
-        let dataManagerOperations = self.dataManagerFactory.createDataManager(.Operation)
+        //let dataManagerOperations = self.dataManagerFactory.createDataManager(.Operation)
+        //readData(dataManagerOperations)
         
         self.editBarButton.isEnabled = false
         
-        readData(dataManagerOperations)
+       
     }
     
     private func readData(_ dataManager: DataManagerProtocol){
