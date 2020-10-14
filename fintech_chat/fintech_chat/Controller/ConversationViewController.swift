@@ -164,13 +164,13 @@ class ConversationViewController: UIViewController {
     
     private func subscribeKeyboardNotifications(){
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func unsubscribeKeyboardNotifications(){
         let notificationCenter = NotificationCenter.default
-        notificationCenter.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         notificationCenter.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
