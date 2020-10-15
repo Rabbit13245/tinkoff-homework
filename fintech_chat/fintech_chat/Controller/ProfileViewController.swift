@@ -337,66 +337,66 @@ class ProfileViewController: BaseViewController {
         if self.nameTextView.text != self.userName,
             self.descriptionTextView.text != self.userDescription{
             dataManager.saveUserData(name: self.nameTextView.text, description: self.descriptionTextView.text, oldImage: self.userImage, newImage: self.profilePhotoView.image){
-                (response, error) in
-                self.modifyUIForSaveData(true)
-                self.updateDataAfterSave(response: response)
+                [weak self] (response, error) in
+                self?.modifyUIForSaveData(true)
+                self?.updateDataAfterSave(response: response)
                 if(error){
                     
-                    self.failedSaveData(){
-                        self.internalSaveData(dataManager)
+                    self?.failedSaveData(){
+                        self?.internalSaveData(dataManager)
                     }
                 }
                 else{
-                    self.succesSaveData(title: "Data saved")
+                    self?.succesSaveData(title: "Data saved")
                 }
             }
         }
         else if self.nameTextView.text != self.userName{
             dataManager.saveUserData(name: self.nameTextView.text, description: nil, oldImage: self.userImage, newImage: self.profilePhotoView.image){
-                (response, error) in
-                self.modifyUIForSaveData(true)
-                self.updateDataAfterSave(response: response)
+                [weak self] (response, error) in
+                self?.modifyUIForSaveData(true)
+                self?.updateDataAfterSave(response: response)
                 if(error){
                     
-                    self.failedSaveData(){
-                        self.internalSaveData(dataManager)
+                    self?.failedSaveData(){
+                        self?.internalSaveData(dataManager)
                     }
                 }
                 else{
-                    self.succesSaveData(title: "Data saved")
+                    self?.succesSaveData(title: "Data saved")
                 }
             }
         }
         else if self.descriptionTextView.text != self.userDescription{
             dataManager.saveUserData(name: nil, description: self.descriptionTextView.text, oldImage: self.userImage, newImage: self.profilePhotoView.image){
-                (response, error) in
-                self.modifyUIForSaveData(true)
-                self.updateDataAfterSave(response: response)
+                [weak self] (response, error) in
+                self?.modifyUIForSaveData(true)
+                self?.updateDataAfterSave(response: response)
                 if(error){
-                    self.failedSaveData(){
-                        self.internalSaveData(dataManager)
+                    self?.failedSaveData(){
+                        self?.internalSaveData(dataManager)
                     }
                 }
                 else{
-                    self.succesSaveData(title: "Data saved")
+                    self?.succesSaveData(title: "Data saved")
                 }
             }
         }
         else {
             dataManager.saveUserData(name: nil, description: nil, oldImage: self.userImage, newImage: self.profilePhotoView.image){
-                (response, error) in
-                self.modifyUIForSaveData(true)
+                [weak self] (response, error) in
+                self?.modifyUIForSaveData(true)
                 
-                self.updateDataAfterSave(response: response)
+                self?.updateDataAfterSave(response: response)
                 
                 if(error){
                     
-                    self.failedSaveData(){
-                        self.internalSaveData(dataManager)
+                    self?.failedSaveData(){
+                        self?.internalSaveData(dataManager)
                     }
                 }
                 else{
-                    self.succesSaveData(title: "Data saved")
+                    self?.succesSaveData(title: "Data saved")
                 }
             }
         }
