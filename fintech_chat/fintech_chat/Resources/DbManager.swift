@@ -1,6 +1,17 @@
 import Foundation
 import Firebase
 
+public enum DatabaseError: Error {
+    case failedToRead
+    
+    public var description: String {
+        switch self {
+        case .failedToFetch:
+            return "Error reading data"
+        }
+    }
+}
+
 class DbManager{
     
     public static let shared: DbManager = {
@@ -15,16 +26,18 @@ class DbManager{
 
 // MARK: - Channels
 extension DbManager{
-    public func getAllChannels(){
+    public func getAllChannels(completion: @escaping (Result<[Channel], Error>) -> Void){
         database.collection("channels").getDocuments { (querySnapshot, error) in
             if let error = error{
-                print("Fuck you")
+                Logger.app.logMessage("\(#function):: Error reading data: \(error.localizedDescription)", logLevel: .Error)
+                completion(.failure(DatabaseError.failedToRead))
             } else{
                 if let snapshot = querySnapshot {
                     print(snapshot.documents.count)
                 }
                 else{
-                    print("empty")
+                    Logger.app.logMessage("\(#function):: Snapshot is nil", logLevel: .Error)
+                    completion(.failure(DatabaseError.failedToRead))
                 }
             }
         }
