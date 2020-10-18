@@ -106,6 +106,13 @@ extension OperationDataManager: DataManagerProtocol{
                 self.dataQueue.addOperation(saveImageOperationTemp)
             }
         }
+        
+        if let newImage = newImage,
+            oldImage == nil{
+            let saveImageOperationTemp = SaveImageOperation(url: self.imageFile, imageData: newImage)
+            saveImageOperation = saveImageOperationTemp
+            self.dataQueue.addOperation(saveImageOperationTemp)
+        }
                 
         self.dataQueue.addOperation {
             let error = saveNameOperation?.globalError ?? false || saveDescriptionOperation?.globalError ?? false || saveImageOperation?.globalError ?? false
