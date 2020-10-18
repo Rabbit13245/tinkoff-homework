@@ -1,4 +1,6 @@
 import UIKit
+import Firebase
+
 
 class ConversationsListViewController: UITableViewController {
     
@@ -64,6 +66,9 @@ class ConversationsListViewController: UITableViewController {
         conversations = dataGenerator.getFriends()
         
         setupUI()
+        
+        DbManager.shared.getAllChannels()
+      
     }
     
     override func viewWillDisappear(_ animated: Bool) {

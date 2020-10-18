@@ -212,6 +212,27 @@ extension GCDDataManager: DataManagerProtocol{
                 dispatchGroup.leave()
             }
         }
+        if let newImage = newImage,
+            oldImage == nil{
+            dispatchGroup.enter()
+            fileQueue.async {
+                do{
+                    if let data = newImage.pngData(){
+                        try data.write(to: self.imageFile)
+                    }
+                    else{
+                        globalError = true
+                    }
+                }
+                catch{
+                    Logger.app.logMessage("Can`t write description to file. \(error.localizedDescription)", logLevel: .Error)
+                    globalError = true
+                    response.imageError = true
+                }
+                dispatchGroup.leave()
+            }
+        }
+    
         
         dispatchGroup.notify(queue: self.fileQueue) {
             DispatchQueue.main.async {
