@@ -2,7 +2,7 @@ import UIKit
 import Firebase
 
 
-class ConversationsListViewController: UIViewController {
+class ChannelsListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -17,11 +17,6 @@ class ConversationsListViewController: UIViewController {
     private lazy var dataManagerFactory: DataManagerFactory = {
         let dataManagerFactory = DataManagerFactory()
         return dataManagerFactory
-    }()
-    
-    private lazy var dataGenerator: FakeDataGenerator = {
-        let fakeDataGenerator = FakeDataGenerator()
-        return fakeDataGenerator
     }()
     
     private lazy var mainStoryboard: UIStoryboard? = {
@@ -70,8 +65,8 @@ class ConversationsListViewController: UIViewController {
         return barButton
     }()
     
-    private lazy var noChannelsLabel: UILabel = {
-        let label = UILabel()
+    private lazy var noChannelsLabel: AppLabel = {
+        let label = AppLabel()
         label.text = "No channels!"
         label.textAlignment = .center
         label.isHidden = true
@@ -115,33 +110,31 @@ class ConversationsListViewController: UIViewController {
         DbManager.shared.getAllChannels { [weak self] (result) in
             switch result{
             case .success(let channels):
+                self?.activityIndicator.stopLoading()
                 guard !channels.isEmpty else {
                     self?.tableView.isHidden = true
                     self?.noChannelsLabel.isHidden = false
-                    self?.activityIndicator.stopLoading()
                     return
                 }
                 self?.tableView.isHidden = false
                 self?.noChannelsLabel.isHidden = true
-                self?.activityIndicator.stopLoading()
                 self?.channels = channels
                 
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                 }
                 
-            case .failure(let error):
+            case .failure(_):
                 self?.tableView.isHidden = true
                 self?.noChannelsLabel.isHidden = false
                 self?.activityIndicator.stopLoading()
-                Logger.app.logMessage("Error fetch channels: \(error.localizedDescription)", logLevel: .Error)
             }
         }
     }
 }
 
 // MARK:- UISetup
-extension ConversationsListViewController{
+extension ChannelsListViewController{
     
     private func setupNavigationController(){
         let manager = dataManagerFactory.createDataManager(.GCD)
@@ -193,7 +186,7 @@ extension ConversationsListViewController{
 }
 
 // MARK: - Actions
-extension ConversationsListViewController{
+extension ChannelsListViewController{
     @objc private func profileButtonPressed(){
         guard let storyboard = storyboard else {return}
         let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
@@ -212,7 +205,7 @@ extension ConversationsListViewController{
 }
 
 // MARK: - Table view data source
-extension ConversationsListViewController : UITableViewDataSource{
+extension ChannelsListViewController : UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -235,14 +228,10 @@ extension ConversationsListViewController : UITableViewDataSource{
 }
 
 // MARK: - Table view delegate
-extension ConversationsListViewController: UITableViewDelegate{
+extension ChannelsListViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = ConversationViewController()
         
-        controller.friendName = conversations?[indexPath.section][indexPath.row].name ?? dataGenerator.getDefaulModel().name
-        controller.friendAvatar = conversations?[indexPath.section][indexPath.row].avatar ?? dataGenerator.getDefaulModel().avatar
-        
-        controller.messages = dataGenerator.getMessages()
+        let controller = ChannelViewController(channelName: channels[indexPath.row].name)
         
         self.navigationController?.pushViewController(controller, animated: true)
     }

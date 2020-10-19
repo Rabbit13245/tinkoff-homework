@@ -64,6 +64,8 @@ class ThemeManager{
         
         UITextField.appearance().defaultTextAttributes = [NSAttributedString.Key.foregroundColor: theme.settings.labelColor]
         
+        UIActivityIndicatorView.appearance().color = theme.settings.labelColor
+        
         AppView.appearance().backgroundColor = theme.settings.backgroundColor
         AppSeparator.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
         AppTextWrapperView.appearance().backgroundColor = theme.settings.textWrapperBackgroundColor

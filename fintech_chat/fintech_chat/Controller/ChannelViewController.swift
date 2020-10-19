@@ -1,17 +1,10 @@
 import UIKit
 
 class ChannelViewController: UIViewController {
-
-    lazy var dataGenerator: FakeDataGenerator = {
-        let fakeDataGenerator = FakeDataGenerator()
-        return fakeDataGenerator
-    }()
     
-    var friendName: String?
+    private var channelName: String
     
-    var friendAvatar: UIImage?
-    
-    var messages : [MessageCellModel]?
+    private var messages : [MessageCellModel]?
 
     private let cellIdentifier = String(describing: MessageTableViewCell.self)
     
@@ -49,6 +42,34 @@ class ChannelViewController: UIViewController {
         return constraint
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.style = .whiteLarge
+        activityIndicator.isHidden = true
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        return activityIndicator
+    }()
+    
+    private lazy var noMessagesLabel: AppLabel = {
+        let label = AppLabel()
+        label.text = "No messages!"
+        label.textAlignment = .center
+        label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    init(channelName: String){
+        self.channelName = channelName
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -60,22 +81,65 @@ class ChannelViewController: UIViewController {
         unsubscribeKeyboardNotifications()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.activityIndicator.startLoading()
+        DbManager.shared.getAllMessages(from: self.channelName) { (result) in
+            switch result{
+            case .success(let messages):
+                self.activityIndicator.stopLoading()
+                guard !messages.isEmpty else {
+                    self.tableView.isHidden = true
+                    self.noMessagesLabel.isHidden = false
+                    return
+                }
+                self.tableView.isHidden = false
+                self.noMessagesLabel.isHidden = true
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+            case .failure( _):
+                self.activityIndicator.stopLoading()
+                self.tableView.isHidden = true
+                self.noMessagesLabel.isHidden = false
+            }
+        }
+    }
+    
     // MARK: - Private functions
     
     private func setupUI(){
-        self.tableView.tableFooterView = UIView()
-        self.tableView.separatorStyle = .none
+        self.view = AppView()
         
         setupNavTitle()
         setupTableView()
         setupInputView()
+        setupActivityIndicator()
         
         subscribeKeyboardNotifications()
     }
     
-    private func setupTableView(){
-        self.view.addSubview(tableView)
+    private func setupActivityIndicator(){
+        self.view.addSubview(self.activityIndicator)
+        self.view.addSubview(self.noMessagesLabel)
         
+        NSLayoutConstraint.activate([
+            self.noMessagesLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.noMessagesLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            
+            self.activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.activityIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+        ])
+    }
+    
+    private func setupTableView(){
+        self.tableView.tableFooterView = AppView()
+        self.tableView.separatorStyle = .none
+        
+        self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -121,45 +185,11 @@ class ChannelViewController: UIViewController {
         self.navigationItem.largeTitleDisplayMode = .never
         
         let label = AppLabel()
-        label.text = friendName
+        label.text = channelName
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textAlignment = .center
         
-        var avatarView :UIView = UIView()
-        
-        let miniAvatarSize: CGFloat = 36
-        
-        if (friendAvatar != nil){
-            let navImage = UIImageView()
-            
-            navImage.image = friendAvatar
-            navImage.contentMode = .scaleAspectFit
-            navImage.clipsToBounds = true
-            navImage.contentMode = .scaleAspectFit
-            navImage.layer.cornerRadius = miniAvatarSize / 2
-            
-            avatarView = navImage
-        }
-        else {
-            let someView = Helper.app.generateDefaultAvatar(name: friendName ?? "", width: miniAvatarSize)
-            
-            avatarView = someView
-        }
-        
-        avatarView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            avatarView.widthAnchor.constraint(equalToConstant: miniAvatarSize),
-            avatarView.heightAnchor.constraint(equalToConstant: miniAvatarSize),
-        ])
-        
-        let stackView = UIStackView(arrangedSubviews: [avatarView, label])
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        stackView.spacing = 10
-        
-        self.navigationItem.titleView = stackView
+        self.navigationItem.titleView = label
     }
     
     private func subscribeKeyboardNotifications(){
@@ -174,6 +204,10 @@ class ChannelViewController: UIViewController {
         notificationCenter.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+}
+
+// MARK: - keyboard show
+extension ChannelViewController{
     @objc private func adjustForKeyboard(notification: Notification){
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         
@@ -207,8 +241,8 @@ class ChannelViewController: UIViewController {
             }
         }, completion: nil
         )
-        
     }
+    
 }
 
 // MARK: - Table view data source
@@ -225,24 +259,22 @@ extension ChannelViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MessageTableViewCell.self), for: indexPath) as? MessageTableViewCell else { return UITableViewCell() }
         
-        let message = messages?[indexPath.row] ?? dataGenerator.getDefaultMessage()
+        //cell.configure(with: message)
         
-        cell.configure(with: message)
-        
-        let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
-        
-        if (message.direction == .input){
-            cell.messageTextLabel.frame = CGRect(x: 16, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
-            
-            cell.bubbleView.frame = CGRect(x: 8, y: 0, width: estimatedFrame.width + 8 + 8, height: estimatedFrame.height + 20)
-        }
-        else{
-            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 16, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
-            
-            cell.bubbleView.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 24, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
-        }
+//        let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
+//        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+//        let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
+//
+//        if (message.direction == .input){
+//            cell.messageTextLabel.frame = CGRect(x: 16, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
+//
+//            cell.bubbleView.frame = CGRect(x: 8, y: 0, width: estimatedFrame.width + 8 + 8, height: estimatedFrame.height + 20)
+//        }
+//        else{
+//            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 16, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
+//
+//            cell.bubbleView.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 24, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
+//        }
         
         return cell
     }
