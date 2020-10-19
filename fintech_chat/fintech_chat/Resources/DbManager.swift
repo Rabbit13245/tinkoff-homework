@@ -6,7 +6,7 @@ public enum DatabaseError: Error {
     
     public var description: String {
         switch self {
-        case .failedToFetch:
+        case .failedToRead:
             return "Error reading data"
         }
     }
@@ -33,7 +33,7 @@ extension DbManager{
                 completion(.failure(DatabaseError.failedToRead))
             } else{
                 if let snapshot = querySnapshot {
-                    print(snapshot.documents.count)
+                    completion(.success(self.parseChannels(snapshot.documents)))
                 }
                 else{
                     Logger.app.logMessage("\(#function):: Snapshot is nil", logLevel: .Error)
@@ -41,5 +41,12 @@ extension DbManager{
                 }
             }
         }
+    }
+}
+
+// MARK:- decode
+extension DbManager{
+    private func parseChannels(_ documents: [QueryDocumentSnapshot]) -> [Channel]{
+        return documents.compactMap{Channel($0)}
     }
 }

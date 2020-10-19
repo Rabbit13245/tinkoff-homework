@@ -2,36 +2,52 @@ import UIKit
 import Firebase
 
 
-class ConversationsListViewController: UITableViewController {
+class ConversationsListViewController: UIViewController {
     
-    var userName = "Dmitry Zaytcev"
+    @IBOutlet weak var tableView: UITableView!
     
-    lazy var dataManagerFactory: DataManagerFactory = {
+    private var userName = "Dmitry Zaytcev"
+    
+    private let chatName = "Tinkoff Chat"
+    
+    private var channels = [Channel]()
+    
+    private var conversations : [[ConversationCellModel]]?
+    
+    private lazy var dataManagerFactory: DataManagerFactory = {
         let dataManagerFactory = DataManagerFactory()
         return dataManagerFactory
     }()
     
-    lazy var dataGenerator: FakeDataGenerator = {
+    private lazy var dataGenerator: FakeDataGenerator = {
         let fakeDataGenerator = FakeDataGenerator()
         return fakeDataGenerator
     }()
     
-    lazy var mainStoryboard: UIStoryboard? = {
+    private lazy var mainStoryboard: UIStoryboard? = {
         let storyboard = self.navigationController?.storyboard
         return storyboard
     }()
     
-    lazy var settingsBarButton: UIBarButtonItem = {
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.style = .whiteLarge
+        activityIndicator.isHidden = true
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        return activityIndicator
+    }()
+    
+    private lazy var settingsBarButton: UIBarButtonItem = {
         let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "settings"), style: .plain, target: self, action: #selector(settingsButtonPressed))
         return barButton
     }()
     
-    lazy var profileBarButton: UIBarButtonItem = {
-//        let customView = Helper.app.generateDefaultAvatar(name: "Dmitry Zaytcev", width: 34)
-//        let view = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
-//        view.addSubview(customView)
-//       let barButtom = UIBarButtonItem(customView: view)
-        
+    private lazy var profileBarButton: UIBarButtonItem = {
+        // let customView = Helper.app.generateDefaultAvatar(name: "Dmitry Zaytcev", width: 34)
+        // let view = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
+        // view.addSubview(customView)
+        // let barButtom = UIBarButtonItem(customView: view)
         
         // Для ios 12 получается только так
         let button = UIButton(type: .system)
@@ -48,27 +64,34 @@ class ConversationsListViewController: UITableViewController {
             }
             button.setTitle(Helper.app.getInitials(from: self.userName), for: .normal)
         }
-
+        
         let barButton = UIBarButtonItem(customView: button)
         barButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileButtonPressed)))
         return barButton
     }()
     
-    var conversations : [[ConversationCellModel]]?
+    private lazy var noChannelsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No channels!"
+        label.textAlignment = .center
+        label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
-    let chatName = "Tinkoff Chat"
-        
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UINib(nibName: String(describing: ConversationTableViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: ConversationTableViewCell.self))
-        
-        conversations = dataGenerator.getFriends()
-        
         setupUI()
+        setupTable()
+        getChannels()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        settingsBarButton.tintColor = ThemeManager.shared.theme.settings.labelColor
+        self.navigationItem.title = chatName
         
-        DbManager.shared.getAllChannels()
-      
+        super.viewWillAppear(animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -76,83 +99,57 @@ class ConversationsListViewController: UITableViewController {
         self.navigationItem.title = ""
     }
     
-   
-    override func viewWillAppear(_ animated: Bool) {
-        settingsBarButton.tintColor = ThemeManager.shared.theme.settings.labelColor
-        self.navigationItem.title = chatName
-        
-        super.viewWillAppear(animated)
-    }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return conversations?.count ?? 0
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return conversations?[section].count ?? 0
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ConversationTableViewCell.self), for: indexPath) as? ConversationTableViewCell else {return UITableViewCell()}
-                
-        let cellData = conversations?[indexPath.section][indexPath.row] ?? dataGenerator.getDefaulModel()
-        
-        cell.configure(with: cellData)
-        
-        return cell
-    }
-    
-    // MARK: - Table view delegate
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = ConversationViewController()
-        
-        controller.friendName = conversations?[indexPath.section][indexPath.row].name ?? dataGenerator.getDefaulModel().name
-        controller.friendAvatar = conversations?[indexPath.section][indexPath.row].avatar ?? dataGenerator.getDefaulModel().avatar
-        
-        controller.messages = dataGenerator.getMessages()
-        
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = AppSeparator()
-        let label = AppLabel()
-        label.font = UIFont.systemFont(ofSize: 28)
-        switch section {
-        case 0:
-            label.text =  "Online"
-        case 1:
-            label.text =  "History"
-        default:
-            label.text =  ""
-        }
-        view.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
-        return view
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 35
-    }
-    
     // MARK: - Private functions
+    private func setupTable(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.register(UINib(nibName: String(describing: ConversationTableViewCell.self), bundle: nil), forCellReuseIdentifier: String(describing: ConversationTableViewCell.self))
+        
+        self.tableView.tableFooterView = AppView()
+    }
     
-    private func setupUI(){
-        navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = chatName
-        
-        self.navigationItem.leftBarButtonItem = self.settingsBarButton
-        
+    private func getChannels(){
+        self.activityIndicator.startLoading()
+
+        DbManager.shared.getAllChannels { [weak self] (result) in
+            switch result{
+            case .success(let channels):
+                guard !channels.isEmpty else {
+                    self?.tableView.isHidden = true
+                    self?.noChannelsLabel.isHidden = false
+                    self?.activityIndicator.stopLoading()
+                    return
+                }
+                self?.tableView.isHidden = false
+                self?.noChannelsLabel.isHidden = true
+                self?.activityIndicator.stopLoading()
+                self?.channels = channels
+                
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+                
+            case .failure(let error):
+                self?.tableView.isHidden = true
+                self?.noChannelsLabel.isHidden = false
+                self?.activityIndicator.stopLoading()
+                Logger.app.logMessage("Error fetch channels: \(error.localizedDescription)", logLevel: .Error)
+            }
+        }
+    }
+}
+
+// MARK:- UISetup
+extension ConversationsListViewController{
+    
+    private func setupNavigationController(){
         let manager = dataManagerFactory.createDataManager(.GCD)
         
+        navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.title = chatName
+    
+        self.navigationItem.leftBarButtonItem = self.settingsBarButton
         self.navigationItem.rightBarButtonItem = self.profileBarButton
         
         manager.loadImage { (image, error) in
@@ -170,14 +167,33 @@ class ConversationsListViewController: UITableViewController {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: customView)
             }
         }
-        
-//        let searchController = UISearchController(searchResultsController: nil)
-//        searchController.searchBar.placeholder = "Search friends"
-//        searchController.obscuresBackgroundDuringPresentation = false
-//        definesPresentationContext = true
-//        self.navigationItem.searchController = searchController
     }
     
+    private func setupUI(){
+        setupNavigationController()
+    
+        self.view.addSubview(self.noChannelsLabel)
+        self.view.addSubview(self.activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            self.noChannelsLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.noChannelsLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            
+            self.activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.activityIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+        ])
+        
+        
+        //        let searchController = UISearchController(searchResultsController: nil)
+        //        searchController.searchBar.placeholder = "Search friends"
+        //        searchController.obscuresBackgroundDuringPresentation = false
+        //        definesPresentationContext = true
+        //        self.navigationItem.searchController = searchController
+    }
+}
+
+// MARK: - Actions
+extension ConversationsListViewController{
     @objc private func profileButtonPressed(){
         guard let storyboard = storyboard else {return}
         let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
@@ -192,5 +208,60 @@ class ConversationsListViewController: UITableViewController {
         themesVC.changeThemeClosure = ThemeManager.shared.applyTheme
         
         self.navigationController?.pushViewController(themesVC, animated: true)
+    }
+}
+
+// MARK: - Table view data source
+extension ConversationsListViewController : UITableViewDataSource{
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return channels.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ConversationTableViewCell.self), for: indexPath) as? ConversationTableViewCell else {return UITableViewCell()}
+        
+        let cellData = self.channels[indexPath.row]
+        
+        cell.configure(with: cellData)
+        
+        return cell
+    }
+}
+
+// MARK: - Table view delegate
+extension ConversationsListViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = ConversationViewController()
+        
+        controller.friendName = conversations?[indexPath.section][indexPath.row].name ?? dataGenerator.getDefaulModel().name
+        controller.friendAvatar = conversations?[indexPath.section][indexPath.row].avatar ?? dataGenerator.getDefaulModel().avatar
+        
+        controller.messages = dataGenerator.getMessages()
+        
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = AppSeparator()
+        let label = AppLabel()
+        label.font = UIFont.systemFont(ofSize: 28)
+        label.text =  "Channels"
+        view.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35
     }
 }

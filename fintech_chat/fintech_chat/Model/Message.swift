@@ -6,3 +6,5 @@ struct Message {
     let senderId: String
     let senderName: String
 }
+
+
