@@ -32,10 +32,10 @@
 		8467A617250FAED500E36BEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467A616250FAED500E36BEE /* Assets.xcassets */; };
 		8467A61A250FAED500E36BEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8467A618250FAED500E36BEE /* LaunchScreen.storyboard */; };
 		847E600025232496008B8C27 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847E5FFF25232496008B8C27 /* ConfigurableView.swift */; };
-		849444E0251DE86000946D9F /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444DF251DE86000946D9F /* ConversationsListViewController.swift */; };
+		849444E0251DE86000946D9F /* ChannelsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444DF251DE86000946D9F /* ChannelsListViewController.swift */; };
 		849444E3251DF3C800946D9F /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E1251DF3C800946D9F /* ConversationTableViewCell.swift */; };
 		849444E4251DF3C800946D9F /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849444E2251DF3C800946D9F /* ConversationTableViewCell.xib */; };
-		849444E6251E21AF00946D9F /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E5251E21AF00946D9F /* ConversationViewController.swift */; };
+		849444E6251E21AF00946D9F /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E5251E21AF00946D9F /* ChannelViewController.swift */; };
 		F10D4E022520F03E00B8CDD0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E012520F03E00B8CDD0 /* Date.swift */; };
 		F10D4E04252111A900B8CDD0 /* ConversationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */; };
 		F10D4E062521123D00B8CDD0 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */; };
@@ -89,10 +89,10 @@
 		8467A619250FAED500E36BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8467A61B250FAED500E36BEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		847E5FFF25232496008B8C27 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
-		849444DF251DE86000946D9F /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
+		849444DF251DE86000946D9F /* ChannelsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsListViewController.swift; sourceTree = "<group>"; };
 		849444E1251DF3C800946D9F /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		849444E2251DF3C800946D9F /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
-		849444E5251E21AF00946D9F /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
+		849444E5251E21AF00946D9F /* ChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
 		9953A7A4C1B56AF4D0C3C4F3 /* Pods-fintech_chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat/Pods-fintech_chat.release.xcconfig"; sourceTree = "<group>"; };
 		F10D4E012520F03E00B8CDD0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConversationCellModel.swift; path = fintech_chat/Extensions/ConversationCellModel.swift; sourceTree = SOURCE_ROOT; };
@@ -269,8 +269,8 @@
 			children = (
 				8467A611250FAED400E36BEE /* BaseViewController.swift */,
 				F136EF942517EDE400F0818C /* ProfileViewController.swift */,
-				849444DF251DE86000946D9F /* ConversationsListViewController.swift */,
-				849444E5251E21AF00946D9F /* ConversationViewController.swift */,
+				849444DF251DE86000946D9F /* ChannelsListViewController.swift */,
+				849444E5251E21AF00946D9F /* ChannelViewController.swift */,
 				F1391D9F25290D17007FC97D /* ThemesViewController.swift */,
 			);
 			path = Controller;
@@ -449,7 +449,7 @@
 				8467A612250FAED400E36BEE /* BaseViewController.swift in Sources */,
 				844EB08D2510DF5600AF0216 /* Logger.swift in Sources */,
 				F10D4E04252111A900B8CDD0 /* ConversationCellModel.swift in Sources */,
-				849444E6251E21AF00946D9F /* ConversationViewController.swift in Sources */,
+				849444E6251E21AF00946D9F /* ChannelViewController.swift in Sources */,
 				8451E49F2536F1BB003E95BA /* LoadImageOperation.swift in Sources */,
 				F1391DA9252BA956007FC97D /* DayTheme.swift in Sources */,
 				F1391DA025290D17007FC97D /* ThemesViewController.swift in Sources */,
@@ -469,7 +469,7 @@
 				F10FF091253CD74C00A0996B /* Channel.swift in Sources */,
 				8463B54E252369B800D1D358 /* Helper.swift in Sources */,
 				F10FF08F253CC3EC00A0996B /* DbManager.swift in Sources */,
-				849444E0251DE86000946D9F /* ConversationsListViewController.swift in Sources */,
+				849444E0251DE86000946D9F /* ChannelsListViewController.swift in Sources */,
 				8451E4952536EED7003E95BA /* SaveDataOperation.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
 				F1391DAB252BA9B3007FC97D /* NightTheme.swift in Sources */,

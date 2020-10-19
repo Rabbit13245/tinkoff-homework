@@ -149,10 +149,10 @@
             </objects>
             <point key="canvasLocation" x="1770.4000000000001" y="78.710644677661179"/>
         </scene>
-        <!--Conversations List View Controller-->
+        <!--Channels List View Controller-->
         <scene sceneID="Qho-kD-S8g">
             <objects>
-                <viewController id="3aL-Sv-cVb" customClass="ConversationsListViewController" customModule="Финтех_чат" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3aL-Sv-cVb" customClass="ChannelsListViewController" customModule="Финтех_чат" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Iul-YD-zUy" customClass="AppView" customModule="Финтех_чат" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

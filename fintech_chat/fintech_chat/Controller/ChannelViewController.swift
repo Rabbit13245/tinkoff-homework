@@ -1,6 +1,6 @@
 import UIKit
 
-class ConversationViewController: UIViewController {
+class ChannelViewController: UIViewController {
 
     lazy var dataGenerator: FakeDataGenerator = {
         let fakeDataGenerator = FakeDataGenerator()
@@ -212,7 +212,7 @@ class ConversationViewController: UIViewController {
 }
 
 // MARK: - Table view data source
-extension ConversationViewController: UITableViewDataSource{
+extension ChannelViewController: UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -249,7 +249,7 @@ extension ConversationViewController: UITableViewDataSource{
 }
 
 // MARK: - Table view delegate
-extension ConversationViewController: UITableViewDelegate{
+extension ChannelViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if let message = messages?[indexPath.row]{
@@ -268,7 +268,7 @@ extension ConversationViewController: UITableViewDelegate{
 }
 
 // MARK: - Text view delegate
-extension ConversationViewController : UITextViewDelegate{
+extension ChannelViewController : UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
