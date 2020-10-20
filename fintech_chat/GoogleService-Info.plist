@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>827279154631-mg02lq28rs91m7gejbb23n2hto0oqb7q.apps.googleusercontent.com</string>
+	<string>964672379642-9dvdf650cvg32nsm77lrni4q8u8butp4.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.827279154631-mg02lq28rs91m7gejbb23n2hto0oqb7q</string>
+	<string>com.googleusercontent.apps.964672379642-9dvdf650cvg32nsm77lrni4q8u8butp4</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAiO0vaZDeAzUzKBnbG2FYLRXbMidDfx88</string>
+	<string>AIzaSyBCdmzgB9e75L_6w_W4UHcBj235srK6_64</string>
 	<key>GCM_SENDER_ID</key>
-	<string>827279154631</string>
+	<string>964672379642</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>ru.DmitriyZaytcev.fintech-chat</string>
+	<string>ru.tinkoff.TinkoffChat</string>
 	<key>PROJECT_ID</key>
-	<string>test-c956c</string>
+	<string>tinkoffchat-6672e</string>
 	<key>STORAGE_BUCKET</key>
-	<string>test-c956c.appspot.com</string>
+	<string>tinkoffchat-6672e.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:827279154631:ios:4a8f1df80b091c71714de2</string>
+	<string>1:964672379642:ios:4d29aa71b4b669d61a0743</string>
 	<key>DATABASE_URL</key>
-	<string>https://test-c956c.firebaseio.com</string>
+	<string>https://tinkoffchat-6672e.firebaseio.com</string>
 </dict>
 </plist>

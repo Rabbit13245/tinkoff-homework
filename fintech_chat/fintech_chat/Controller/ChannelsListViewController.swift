@@ -288,6 +288,7 @@ extension ChannelsListViewController: UITableViewDelegate {
         let controller = ChannelViewController(channelName: channels[indexPath.row].name, channelId: channels[indexPath.row].identifier)
 
         self.navigationController?.pushViewController(controller, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

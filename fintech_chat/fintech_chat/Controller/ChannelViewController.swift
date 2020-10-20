@@ -329,7 +329,7 @@ extension ChannelViewController: UITableViewDelegate {
 
         let messageCellModel = MessageCellModel(message: self.messages[indexPath.row])
 
-        let size = CGSize(width: self.view.frame.width * 0.75, height: 1000)
+        let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
 
         let estimatedFrame = NSString(
