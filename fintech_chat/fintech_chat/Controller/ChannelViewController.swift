@@ -226,7 +226,10 @@ extension ChannelViewController{
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         
         let keyboardScreenFrame = keyboardValue.cgRectValue
+        
+        print(keyboardScreenFrame.height)
         let keyboardViewFrame = view.convert(keyboardScreenFrame, from: view.window)
+        print(keyboardViewFrame.height)
         
         let keyboardHiding = notification.name == UIResponder.keyboardWillHideNotification
         
@@ -279,22 +282,25 @@ extension ChannelViewController: UITableViewDataSource{
         
         let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedFrame = NSString(string: messageCellModel.message.content).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
-
+        
+        let estimatedFrameMessage = NSString(string: messageCellModel.message.content).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
+        let estimatedFrameUserName = NSString(string: messageCellModel.message.senderName).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17)], context: nil)
+        
+        let maxWidth = estimatedFrameMessage.width > estimatedFrameUserName.width ? estimatedFrameMessage.width : estimatedFrameUserName.width
+        
         if (messageCellModel.direction == .input){
             let senderNameHeight = cell.senderNameLabel.font.pointSize
             cell.senderNameLabel.text = messageCellModel.message.senderName
-            //cell.senderNameLabel.isHidden = false
-            cell.senderNameLabel.frame = CGRect(x: 16, y: 10, width: estimatedFrame.width, height: senderNameHeight)
+            cell.senderNameLabel.isHidden = false
             
-            cell.messageTextLabel.frame = CGRect(x: 16, y: 10 + senderNameHeight , width: estimatedFrame.width, height: estimatedFrame.height)
-            
-            cell.bubbleView.frame = CGRect(x: 8, y: 0, width: estimatedFrame.width + 8 + 8, height: estimatedFrame.height + 20 + senderNameHeight)
+            cell.senderNameLabel.frame = CGRect(x: 16, y: 10, width: maxWidth, height: senderNameHeight)
+            cell.messageTextLabel.frame = CGRect(x: 16, y: 10 + senderNameHeight + 2, width: maxWidth, height: estimatedFrameMessage.height)
+            cell.bubbleView.frame = CGRect(x: 8, y: 0, width: maxWidth + 8 + 8, height: estimatedFrameMessage.height + 20 + senderNameHeight + 2)
             
         }
         else{
-            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 16, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
-            cell.bubbleView.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 24, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
+            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - maxWidth - 16, y: 10, width: maxWidth, height: estimatedFrameMessage.height)
+            cell.bubbleView.frame = CGRect(x: self.view.frame.width - maxWidth - 24, y: 0, width: maxWidth + 16, height: estimatedFrameMessage.height + 20)
             cell.senderNameLabel.isHidden = true
         }
         

@@ -65,6 +65,12 @@ class ChannelsListViewController: UIViewController {
         return barButton
     }()
     
+    private lazy var addChannelBarButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        
+        return barButtonItem
+    }()
+    
     private lazy var noChannelsLabel: AppLabel = {
         let label = AppLabel()
         label.text = "No channels!"
