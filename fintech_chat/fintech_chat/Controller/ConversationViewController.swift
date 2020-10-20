@@ -1,11 +1,3 @@
-//
-//  ConversationViewController.swift
-//  fintech_chat
-//
-//  Created by Admin on 9/25/20.
-//  Copyright © 2020 Admin. All rights reserved.
-//
-
 import UIKit
 
 class ConversationViewController: UIViewController {
@@ -28,6 +20,7 @@ class ConversationViewController: UIViewController {
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
+        
         return tableView
     }()
     
@@ -40,20 +33,18 @@ class ConversationViewController: UIViewController {
         textView.delegate = self
         
         textView.layer.cornerRadius = 16
-        textView.backgroundColor = UIColor.white
         
         return textView
+    }()
+    
+    private lazy var messageInputView: AppTextWrapperView = {
+        let view = AppTextWrapperView()
+        return view
     }()
     
     private lazy var bottomConstraint: NSLayoutConstraint = {
         let constraint = NSLayoutConstraint(item: messageInputView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 0)
         return constraint
-    }()
-    
-    let messageInputView: UIView = {
-       let view = UIView()
-        view.backgroundColor = UIColor.AppColors.InputTextContainerGray
-        return view
     }()
     
     override func viewDidLoad() {
@@ -95,7 +86,6 @@ class ConversationViewController: UIViewController {
         self.view.addSubview(messageInputView)
         
         messageInputView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             messageInputView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             messageInputView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -127,7 +117,7 @@ class ConversationViewController: UIViewController {
     private func setupNavTitle(){
         self.navigationItem.largeTitleDisplayMode = .never
         
-        let label = UILabel()
+        let label = AppLabel()
         label.text = friendName
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textAlignment = .center
@@ -273,7 +263,7 @@ extension ConversationViewController : UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray {
             textView.text = nil
-            textView.textColor = UIColor.black
+            textView.textColor = ThemeManager.shared.theme.settings.labelColor
         }
     }
     

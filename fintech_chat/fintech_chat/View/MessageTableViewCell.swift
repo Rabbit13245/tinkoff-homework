@@ -1,11 +1,3 @@
-//
-//  MessageTableViewCell.swift
-//  fintech_chat
-//
-//  Created by Макбук on 27.09.2020.
-//  Copyright © 2020 Admin. All rights reserved.
-//
-
 import UIKit
 
 class MessageTableViewCell: UITableViewCell {
@@ -42,7 +34,7 @@ class MessageTableViewCell: UITableViewCell {
     private func configureUI(){
         self.contentView.addSubview(bubbleView)
         self.contentView.addSubview(messageTextLabel)
-        
+                
         self.selectionStyle = .none
     }
 }
@@ -56,10 +48,12 @@ extension MessageTableViewCell: ConfigurableView{
         messageTextLabel.text = model.text
         switch (model.direction){
         case .input:
-            bubbleView.backgroundColor = UIColor.AppColors.InputMessageBackground
+            bubbleView.backgroundColor = ThemeManager.shared.theme.settings.inputMessageBackgroundColor
+            messageTextLabel.textColor = ThemeManager.shared.theme.settings.inputMessageTextColor
             break
         case .output:
-            bubbleView.backgroundColor = UIColor.AppColors.OutputMessageBackground
+            bubbleView.backgroundColor = ThemeManager.shared.theme.settings.outputMessageBackgroundColor
+            messageTextLabel.textColor = ThemeManager.shared.theme.settings.outputMessageTextColor
             break
         }
     }

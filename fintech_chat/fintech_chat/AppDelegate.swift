@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  fintech_chat
-//
-//  Created by Admin on 9/14/20.
-//  Copyright © 2020 Admin. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain
@@ -22,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 13.0, *) {
             window?.overrideUserInterfaceStyle = .light
         }
+        
+        ThemeManager.shared.apply(for: application)
         
         return true
     }

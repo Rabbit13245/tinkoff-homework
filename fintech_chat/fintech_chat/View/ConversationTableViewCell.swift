@@ -1,11 +1,3 @@
-//
-//  DialogTableViewCell.swift
-//  fintech_chat
-//
-//  Created by Admin on 9/25/20.
-//  Copyright © 2020 Admin. All rights reserved.
-//
-
 import UIKit
 
 class ConversationTableViewCell: UITableViewCell {
@@ -24,12 +16,6 @@ class ConversationTableViewCell: UITableViewCell {
         
         configureUI()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        configureUI()
-    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -41,15 +27,15 @@ class ConversationTableViewCell: UITableViewCell {
     // MARK: - Private functions
     
     private func configureUI(){
+        
         friendImage.layer.cornerRadius = friendImage.bounds.width / 2
         
         onlineCircle.layer.cornerRadius = onlineCircle.bounds.width / 2
-        onlineCircle.backgroundColor = UIColor.AppColors.OnlineGreen
+        onlineCircle.backgroundColor = UIColor.AppColors.onlineGreen
         onlineCircle.layer.borderWidth = 2
         onlineCircle.layer.borderColor = UIColor.white.cgColor
         
         self.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-        
     }
     
     private func getString(from date: Date) -> String{
@@ -82,7 +68,8 @@ extension ConversationTableViewCell: ConfigurableView {
                 font = UIFont.systemFont(ofSize: 13, weight: .heavy)
             }
             
-            lastMessage.attributedText = NSAttributedString(string: data.message, attributes: [NSAttributedString.Key.font: font])
+            lastMessage.attributedText = NSAttributedString(string: data.message, attributes: [NSAttributedString.Key.font: font,
+            ])
             
             lastMessageDate.text = getString(from: data.date)
         }
@@ -96,7 +83,6 @@ extension ConversationTableViewCell: ConfigurableView {
         }
 
         if (data.isOnline){
-            self.backgroundColor = UIColor.AppColors.YellowLight
             self.onlineCircle.isHidden = false
         }
         

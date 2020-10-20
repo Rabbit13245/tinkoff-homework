@@ -1,11 +1,3 @@
-//
-//  Helper.swift
-//  fintech_chat
-//
-//  Created by Admin on 9/29/20.
-//  Copyright © 2020 Admin. All rights reserved.
-//
-
 import UIKit
 
 class Helper{
@@ -18,25 +10,22 @@ class Helper{
     func generateDefaultAvatar(name: String, width: CGFloat) -> UIView{
         let resultView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: width))
         resultView.layer.cornerRadius = resultView.frame.width / 2
-        resultView.backgroundColor = UIColor.AppColors.YellowLogo
+        resultView.backgroundColor = UIColor.AppColors.yellowLogo
         
         let label = UILabel()
         label.text = getInitials(from: name)
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = UIColor.AppColors.initialsColor
         
         label.translatesAutoresizingMaskIntoConstraints = false
         
         resultView.addSubview(label)
-        
+
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: resultView.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: resultView.trailingAnchor),
+            label.centerXAnchor.constraint(equalTo: resultView.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: resultView.centerYAnchor)
         ])
         
-        
-
         return resultView
     }
     
