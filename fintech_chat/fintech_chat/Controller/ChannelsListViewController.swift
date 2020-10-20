@@ -65,9 +65,8 @@ class ChannelsListViewController: UIViewController {
         return barButton
     }()
     
-    private lazy var addChannelBarButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
-        
+    private lazy var addChannelBarButton: AppBarButtonItem = {
+        let barButtonItem = AppBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
         return barButtonItem
     }()
     
@@ -90,6 +89,8 @@ class ChannelsListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         settingsBarButton.tintColor = ThemeManager.shared.theme.settings.labelColor
+        addChannelBarButton.tintColor = ThemeManager.shared.theme.settings.labelColor
+        
         self.navigationItem.title = chatName
         
         super.viewWillAppear(animated)
@@ -149,7 +150,7 @@ extension ChannelsListViewController{
         self.navigationItem.title = chatName
     
         self.navigationItem.leftBarButtonItem = self.settingsBarButton
-        self.navigationItem.rightBarButtonItem = self.profileBarButton
+        self.navigationItem.rightBarButtonItems = [self.profileBarButton, self.addChannelBarButton]
         
         manager.loadImage { (image, error) in
             if(!error){
@@ -163,7 +164,7 @@ extension ChannelsListViewController{
                 customView.addSubview(uiImageView)
                 let barButtonItem = UIBarButtonItem(customView: customView)
                 barButtonItem.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profileButtonPressed)))
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: customView)
+                self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: customView), self.addChannelBarButton]
             }
         }
     }

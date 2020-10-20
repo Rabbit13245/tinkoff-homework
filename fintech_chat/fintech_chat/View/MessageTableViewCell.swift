@@ -23,7 +23,6 @@ class MessageTableViewCell: UITableViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.backgroundColor = UIColor.clear
         
-        //label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -61,9 +60,11 @@ extension MessageTableViewCell: ConfigurableView{
         case .input:
             bubbleView.backgroundColor = ThemeManager.shared.theme.settings.inputMessageBackgroundColor
             messageTextLabel.textColor = ThemeManager.shared.theme.settings.inputMessageTextColor
+            senderNameLabel.textColor = ThemeManager.shared.theme.settings.inputMessageTextColor
         case .output:
             bubbleView.backgroundColor = ThemeManager.shared.theme.settings.outputMessageBackgroundColor
             messageTextLabel.textColor = ThemeManager.shared.theme.settings.outputMessageTextColor
+            senderNameLabel.textColor = ThemeManager.shared.theme.settings.outputMessageTextColor
         }
     }
 }
