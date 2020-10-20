@@ -46,7 +46,7 @@ class ConversationTableViewCell: UITableViewCell {
 extension ConversationTableViewCell: ConfigurableView {
     typealias ConfigurationModel = Channel
     
-    func configure(with data: Channel){
+    func configure(with data: ConfigurationModel){
         channelName.text = data.name
         
         if let lastMessage = data.lastMessage{

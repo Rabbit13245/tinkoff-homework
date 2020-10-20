@@ -28,33 +28,33 @@ class FakeDataGenerator{
         ],
     ]
     
-    let messages = [
-           MessageCellModel(text: "1. Hello! How are you? What is the most popular meal in Japan? Hello! How are you? What is the most popular meal in Japan?", direction: .input),
-           MessageCellModel(text: "Do you like it?",
-                            direction: .input),
-           MessageCellModel(text: "Hi! Im fine. How are you? Yep, i like it!!!!",
-                            direction: .output),
-           MessageCellModel(text: "2. Hello! How are you? What is the most popular meal in Japan? Hello! How are you? What is the most popular meal in Japan?", direction: .input),
-           MessageCellModel(text: "Do you like it?",
-                            direction: .input),
-           MessageCellModel(text: "Hi! Im fine. How are you? Yep, i like it!!!!",
-           direction: .output),
-           MessageCellModel(text: "3. Hello! How are you? What is the most popular meal in Japan? Hello! How are you? What is the most popular meal in Japan?", direction: .input),
-           MessageCellModel(text: "Do you like it?",
-                            direction: .input),
-           MessageCellModel(text: "Hi! Im fine. How are you? Yep, i like it!!!!",
-           direction: .output),
-           MessageCellModel(text: "4. Hello! How are you? What is the most popular meal in Japan? Hello! How are you? What is the most popular meal in Japan?", direction: .input),
-           MessageCellModel(text: "Do you like it?",
-                            direction: .input),
-           MessageCellModel(text: "Hi! Im fine. How are you? Yep, i like it!!!!",
-           direction: .output),
-           MessageCellModel(text: "5. Hello! How are you? What is the most popular meal in Japan? Hello! How are you? What is the most popular meal in Japan?", direction: .input),
-           MessageCellModel(text: "Do you like it?",
-                            direction: .input),
-           MessageCellModel(text: "Hi! Im fine. How are you? Yep, i like it!!!!",
-           direction: .output),
-       ]
+//    let messages = [
+//           MessageCellModel(text: "1. Hello! How are you? What is the most popular meal in Japan? Hello! How are you? What is the most popular meal in Japan?", direction: .input),
+//           MessageCellModel(text: "Do you like it?",
+//                            direction: .input),
+//           MessageCellModel(text: "Hi! Im fine. How are you? Yep, i like it!!!!",
+//                            direction: .output),
+//           MessageCellModel(text: "2. Hello! How are you? What is the most popular meal in Japan? Hello! How are you? What is the most popular meal in Japan?", direction: .input),
+//           MessageCellModel(text: "Do you like it?",
+//                            direction: .input),
+//           MessageCellModel(text: "Hi! Im fine. How are you? Yep, i like it!!!!",
+//           direction: .output),
+//           MessageCellModel(text: "3. Hello! How are you? What is the most popular meal in Japan? Hello! How are you? What is the most popular meal in Japan?", direction: .input),
+//           MessageCellModel(text: "Do you like it?",
+//                            direction: .input),
+//           MessageCellModel(text: "Hi! Im fine. How are you? Yep, i like it!!!!",
+//           direction: .output),
+//           MessageCellModel(text: "4. Hello! How are you? What is the most popular meal in Japan? Hello! How are you? What is the most popular meal in Japan?", direction: .input),
+//           MessageCellModel(text: "Do you like it?",
+//                            direction: .input),
+//           MessageCellModel(text: "Hi! Im fine. How are you? Yep, i like it!!!!",
+//           direction: .output),
+//           MessageCellModel(text: "5. Hello! How are you? What is the most popular meal in Japan? Hello! How are you? What is the most popular meal in Japan?", direction: .input),
+//           MessageCellModel(text: "Do you like it?",
+//                            direction: .input),
+//           MessageCellModel(text: "Hi! Im fine. How are you? Yep, i like it!!!!",
+//           direction: .output),
+//       ]
     
     // MARK: - Get conversations
     
@@ -68,11 +68,11 @@ class FakeDataGenerator{
     
     // MARK: = Get messages
     
-    func getMessages() -> [MessageCellModel]{
-        return messages
-    }
+//    func getMessages() -> [MessageCellModel]{
+//        return messages
+//    }
     
-    func getDefaultMessage() -> MessageCellModel{
-        return MessageCellModel(text: "Default Text", direction: .input)
-    }
+//    func getDefaultMessage() -> MessageCellModel{
+//        return MessageCellModel(text: "Default Text", direction: .input)
+//    }
 }

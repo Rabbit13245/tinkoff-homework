@@ -1,8 +1,17 @@
 import Foundation
 
 struct MessageCellModel{
-    let text: String
     let direction: MessageDirection
+    let message: Message
+    
+    init(message: Message) {
+        self.message = message
+        if (self.message.senderId == DbManager.shared.myId){
+            self.direction = .output
+        } else{
+            self.direction = .input
+        }
+    }
 }
 
 enum MessageDirection{

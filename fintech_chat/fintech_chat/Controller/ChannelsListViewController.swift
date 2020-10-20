@@ -231,7 +231,7 @@ extension ChannelsListViewController : UITableViewDataSource{
 extension ChannelsListViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let controller = ChannelViewController(channelName: channels[indexPath.row].name)
+        let controller = ChannelViewController(channelName: channels[indexPath.row].name, channelId: channels[indexPath.row].identifier)
         
         self.navigationController?.pushViewController(controller, animated: true)
     }

@@ -17,6 +17,16 @@ class MessageTableViewCell: UITableViewCell {
         return label
     }()
     
+    let senderNameLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.backgroundColor = UIColor.clear
+        
+        //label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -24,9 +34,7 @@ class MessageTableViewCell: UITableViewCell {
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        
-        configureUI()
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Private functions
@@ -34,7 +42,8 @@ class MessageTableViewCell: UITableViewCell {
     private func configureUI(){
         self.contentView.addSubview(bubbleView)
         self.contentView.addSubview(messageTextLabel)
-                
+        self.contentView.addSubview(senderNameLabel)
+        
         self.selectionStyle = .none
     }
 }
@@ -44,17 +53,17 @@ class MessageTableViewCell: UITableViewCell {
 extension MessageTableViewCell: ConfigurableView{
     typealias ConfigurationModel = MessageCellModel
     
-    func configure(with model: MessageCellModel) {
-        messageTextLabel.text = model.text
-        switch (model.direction){
+    func configure(with model: ConfigurationModel) {
+        
+        messageTextLabel.text = model.message.content
+        
+        switch model.direction {
         case .input:
             bubbleView.backgroundColor = ThemeManager.shared.theme.settings.inputMessageBackgroundColor
             messageTextLabel.textColor = ThemeManager.shared.theme.settings.inputMessageTextColor
-            break
         case .output:
             bubbleView.backgroundColor = ThemeManager.shared.theme.settings.outputMessageBackgroundColor
             messageTextLabel.textColor = ThemeManager.shared.theme.settings.outputMessageTextColor
-            break
         }
     }
 }

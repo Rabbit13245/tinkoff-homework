@@ -4,7 +4,9 @@ class ChannelViewController: UIViewController {
     
     private var channelName: String
     
-    private var messages : [MessageCellModel]?
+    private var channelId: String
+    
+    private var messages = [Message]()
 
     private let cellIdentifier = String(describing: MessageTableViewCell.self)
     
@@ -60,8 +62,9 @@ class ChannelViewController: UIViewController {
         return label
     }()
     
-    init(channelName: String){
+    init(channelName: String, channelId: String){
         self.channelName = channelName
+        self.channelId = channelId
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -83,9 +86,14 @@ class ChannelViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        loadMessages()
+    }
+    
+    // MARK: - Private functions
+    private func loadMessages(){
         self.activityIndicator.startLoading()
-        DbManager.shared.getAllMessages(from: self.channelName) { (result) in
+        
+        DbManager.shared.getAllMessages(from: self.channelId) { (result) in
             switch result{
             case .success(let messages):
                 self.activityIndicator.stopLoading()
@@ -96,6 +104,8 @@ class ChannelViewController: UIViewController {
                 }
                 self.tableView.isHidden = false
                 self.noMessagesLabel.isHidden = true
+                
+                self.messages = messages
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -108,8 +118,6 @@ class ChannelViewController: UIViewController {
             }
         }
     }
-    
-    // MARK: - Private functions
     
     private func setupUI(){
         self.view = AppView()
@@ -163,7 +171,7 @@ class ChannelViewController: UIViewController {
         let buttonAdd = UIButton(type: .contactAdd)
         let buttonSend = UIButton(type: .roundedRect)
         buttonSend.setTitle("Send", for: .normal)
-        
+        buttonSend.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
         let stackView = UIStackView(arrangedSubviews: [buttonAdd, inputTextView, buttonSend])
         stackView.axis = .horizontal
         stackView.spacing = 10
@@ -203,7 +211,13 @@ class ChannelViewController: UIViewController {
         notificationCenter.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         notificationCenter.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
+}
+
+// MARK: - actions
+extension ChannelViewController{
+    @objc private func sendButtonPressed(){
+        DbManager.shared.sendMessage(self.inputTextView.text, to: self.channelId)
+    }
 }
 
 // MARK: - keyboard show
@@ -253,28 +267,36 @@ extension ChannelViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages?.count ?? 0
+        return messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: MessageTableViewCell.self), for: indexPath) as? MessageTableViewCell else { return UITableViewCell() }
         
-        //cell.configure(with: message)
+        let messageCellModel = MessageCellModel(message: self.messages[indexPath.row])
         
-//        let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
-//        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-//        let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
-//
-//        if (message.direction == .input){
-//            cell.messageTextLabel.frame = CGRect(x: 16, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
-//
-//            cell.bubbleView.frame = CGRect(x: 8, y: 0, width: estimatedFrame.width + 8 + 8, height: estimatedFrame.height + 20)
-//        }
-//        else{
-//            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 16, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
-//
-//            cell.bubbleView.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 24, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
-//        }
+        cell.configure(with: messageCellModel)
+        
+        let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let estimatedFrame = NSString(string: messageCellModel.message.content).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
+
+        if (messageCellModel.direction == .input){
+            let senderNameHeight = cell.senderNameLabel.font.pointSize
+            cell.senderNameLabel.text = messageCellModel.message.senderName
+            //cell.senderNameLabel.isHidden = false
+            cell.senderNameLabel.frame = CGRect(x: 16, y: 10, width: estimatedFrame.width, height: senderNameHeight)
+            
+            cell.messageTextLabel.frame = CGRect(x: 16, y: 10 + senderNameHeight , width: estimatedFrame.width, height: estimatedFrame.height)
+            
+            cell.bubbleView.frame = CGRect(x: 8, y: 0, width: estimatedFrame.width + 8 + 8, height: estimatedFrame.height + 20 + senderNameHeight)
+            
+        }
+        else{
+            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 16, y: 10, width: estimatedFrame.width, height: estimatedFrame.height)
+            cell.bubbleView.frame = CGRect(x: self.view.frame.width - estimatedFrame.width - 24, y: 0, width: estimatedFrame.width + 16, height: estimatedFrame.height + 20)
+            cell.senderNameLabel.isHidden = true
+        }
         
         return cell
     }
@@ -284,14 +306,13 @@ extension ChannelViewController: UITableViewDataSource{
 extension ChannelViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        if let message = messages?[indexPath.row]{
-            let size = CGSize(width: self.view.frame.width * 0.75, height: 1000)
-            let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-            let estimatedFrame = NSString(string: message.text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
-                
-            return estimatedFrame.height + 20 + 20
-        }
-        return 44
+        let message = messages[indexPath.row]
+        
+        let size = CGSize(width: self.view.frame.width * 0.75, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let estimatedFrame = NSString(string: message.content).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
+
+        return estimatedFrame.height + 20 + 20
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

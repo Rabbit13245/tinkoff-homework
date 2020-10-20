@@ -22,7 +22,8 @@ class DbManager{
     private init(){}
     
     private let channels = Firestore.firestore().collection("channels")
-    private let myId = UIDevice.current.identifierForVendor?.uuidString
+    
+    let myId = UIDevice.current.identifierForVendor?.uuidString
 }
 
 // MARK: - Channels
@@ -69,8 +70,19 @@ extension DbManager{
         }
     }
     
-    public func sendMessage(to channel: String){
+    public func sendMessage(_ text: String, to channel: String){
+        guard let safeId = myId else {
+            Logger.app.logMessage("Cant get uuid device. ", logLevel: .Error)
+            return
+        }
         
+        let messageData:[String: Any] = [
+            "content": text,
+            "created": Timestamp(),
+            "senderId": safeId,
+            "senderName": "Dmitry Zaytcev"
+        ]
+        channels.document(channel).collection("messages").addDocument(data: messageData)
     }
 }
 
