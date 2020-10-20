@@ -46,6 +46,7 @@
 		F10FF091253CD74C00A0996B /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10FF090253CD74C00A0996B /* Channel.swift */; };
 		F10FF093253CD76400A0996B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10FF092253CD76400A0996B /* Message.swift */; };
 		F10FF095253E260D00A0996B /* UIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10FF094253E260D00A0996B /* UIActivityIndicatorView.swift */; };
+		F133F05F253F4BA500337D95 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F133F05E253F4BA500337D95 /* UITextField.swift */; };
 		F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF942517EDE400F0818C /* ProfileViewController.swift */; };
 		F136EF992517F10400F0818C /* LogLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF982517F10400F0818C /* LogLevels.swift */; };
 		F1391DA025290D17007FC97D /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1391D9F25290D17007FC97D /* ThemesViewController.swift */; };
@@ -104,6 +105,7 @@
 		F10FF090253CD74C00A0996B /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		F10FF092253CD76400A0996B /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		F10FF094253E260D00A0996B /* UIActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityIndicatorView.swift; sourceTree = "<group>"; };
+		F133F05E253F4BA500337D95 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		F136EF942517EDE400F0818C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F136EF982517F10400F0818C /* LogLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogLevels.swift; sourceTree = "<group>"; };
 		F1391D9F25290D17007FC97D /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				84489B75252C6E5500F3C80D /* UIAlertController.swift */,
 				842802792534641B0078723A /* UITextView.swift */,
 				F10FF094253E260D00A0996B /* UIActivityIndicatorView.swift */,
+				F133F05E253F4BA500337D95 /* UITextField.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 				F10FF091253CD74C00A0996B /* Channel.swift in Sources */,
 				8463B54E252369B800D1D358 /* Helper.swift in Sources */,
 				F10FF08F253CC3EC00A0996B /* DbManager.swift in Sources */,
+				F133F05F253F4BA500337D95 /* UITextField.swift in Sources */,
 				849444E0251DE86000946D9F /* ChannelsListViewController.swift in Sources */,
 				8451E4952536EED7003E95BA /* SaveDataOperation.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,

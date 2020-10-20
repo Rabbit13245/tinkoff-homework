@@ -10,9 +10,15 @@ class ChannelsListViewController: UIViewController {
     
     private let chatName = "Tinkoff Chat"
     
-    private var channels = [Channel]()
+    private var channels = [Channel](){
+        didSet{
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     
-    private var conversations : [[ConversationCellModel]]?
+    private var createChannelAction: UIAlertAction?
     
     private lazy var dataManagerFactory: DataManagerFactory = {
         let dataManagerFactory = DataManagerFactory()
@@ -66,7 +72,7 @@ class ChannelsListViewController: UIViewController {
     }()
     
     private lazy var addChannelBarButton: AppBarButtonItem = {
-        let barButtonItem = AppBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        let barButtonItem = AppBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addChannelButtonPressed))
         return barButtonItem
     }()
     
@@ -126,10 +132,6 @@ class ChannelsListViewController: UIViewController {
                 self?.tableView.isHidden = false
                 self?.noChannelsLabel.isHidden = true
                 self?.channels = channels
-                
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
                 
             case .failure(_):
                 self?.tableView.isHidden = true
@@ -208,6 +210,48 @@ extension ChannelsListViewController{
         themesVC.changeThemeClosure = ThemeManager.shared.applyTheme
         
         self.navigationController?.pushViewController(themesVC, animated: true)
+    }
+    
+    @objc private func addChannelButtonPressed(){
+        let alertController = UIAlertController(title: "Create channel", message: nil, preferredStyle: .alert)
+        alertController.applyTheme()
+        alertController.addTextField(){ [weak self] textField in
+            textField.applyTheme()
+            textField.addTarget(self, action: #selector(self?.textFieldDidChange(_:)), for: .editingChanged)
+        }
+        
+        let createAction = UIAlertAction(title: "Create", style: .default) {[weak alertController, weak self]_ in
+        guard let safeAC = alertController,
+            let safeTF = safeAC.textFields?.first,
+            let channelName = safeTF.text,
+            channelName.count > 0 else { return }
+            
+            self?.addChannelBarButton.isEnabled = false
+            DbManager.shared.createChannel(with: channelName) { [weak self] (error) in
+                self?.addChannelBarButton.isEnabled = true
+                guard let _ = error else {return}
+                self?.presentMessage("Error creating channel")
+            }
+        }
+        
+        createAction.isEnabled = false
+        self.createChannelAction = createAction
+        
+        alertController.addAction(createAction)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alertController, animated: true)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        self.createChannelAction?.isEnabled = textField.text?.count ?? 0 > 0 ? true : false
+    }
+    
+    private func presentMessage(_ message: String){
+        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+        alertController.applyTheme()
+        
+        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        present(alertController, animated: true)
     }
 }
 

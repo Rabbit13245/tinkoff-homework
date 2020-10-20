@@ -6,7 +6,13 @@ class ChannelViewController: UIViewController {
     
     private var channelId: String
     
-    private var messages = [Message]()
+    private var messages = [Message](){
+        didSet{
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
 
     private let cellIdentifier = String(describing: MessageTableViewCell.self)
     
@@ -106,10 +112,6 @@ class ChannelViewController: UIViewController {
                 self.noMessagesLabel.isHidden = true
                 
                 self.messages = messages
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
                 
             case .failure( _):
                 self.activityIndicator.stopLoading()
@@ -226,10 +228,7 @@ extension ChannelViewController{
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         
         let keyboardScreenFrame = keyboardValue.cgRectValue
-        
-        print(keyboardScreenFrame.height)
         let keyboardViewFrame = view.convert(keyboardScreenFrame, from: view.window)
-        print(keyboardViewFrame.height)
         
         let keyboardHiding = notification.name == UIResponder.keyboardWillHideNotification
         
@@ -284,7 +283,7 @@ extension ChannelViewController: UITableViewDataSource{
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         
         let estimatedFrameMessage = NSString(string: messageCellModel.message.content).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
-        let estimatedFrameUserName = NSString(string: messageCellModel.message.senderName).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17)], context: nil)
+        let estimatedFrameUserName = NSString(string: messageCellModel.message.senderName).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)], context: nil)
         
         let maxWidth = estimatedFrameMessage.width > estimatedFrameUserName.width ? estimatedFrameMessage.width : estimatedFrameUserName.width
         
@@ -319,7 +318,7 @@ extension ChannelViewController: UITableViewDelegate{
         let estimatedFrame = NSString(string: messageCellModel.message.content).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
         
         if (messageCellModel.direction == .input){
-            return estimatedFrame.height + 20 + 6 + 17
+            return estimatedFrame.height + 20 + 6 + 14
         } else{
             return estimatedFrame.height + 20 + 6
         }

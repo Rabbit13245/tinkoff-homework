@@ -6,8 +6,6 @@ class ConversationTableViewCell: UITableViewCell {
     @IBOutlet private weak var lastMessageDate: UILabel!
     @IBOutlet private weak var lastMessage: UILabel!
     
-    var defaultAvatar: UIView?
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -17,7 +15,6 @@ class ConversationTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.backgroundColor = UIColor.clear
-        defaultAvatar?.removeFromSuperview()
     }
     
     // MARK: - Private functions
@@ -49,31 +46,28 @@ extension ConversationTableViewCell: ConfigurableView {
     func configure(with data: ConfigurationModel){
         channelName.text = data.name
         
-        if let lastMessage = data.lastMessage{
-            if (data.lastMessage != ""){
-                let font = UIFont.systemFont(ofSize: 13)
-                
-                //            if (data.hasUnreadMessages){
-                //                font = UIFont.systemFont(ofSize: 13, weight: .heavy)
-                //            }
-                
-                self.lastMessage.attributedText = NSAttributedString(string: lastMessage, attributes: [NSAttributedString.Key.font: font,
-                ])
-                
-                if let lastActivity = data.lastActivity{
-                    self.lastMessageDate.text = getString(from: lastActivity)
-                }
-                
+        if let lastMessage = data.lastMessage,
+            lastMessage != ""{
+            let font = UIFont.systemFont(ofSize: 13)
+            
+            //            if (data.hasUnreadMessages){
+            //                font = UIFont.systemFont(ofSize: 13, weight: .heavy)
+            //            }
+            
+            self.lastMessage.attributedText = NSAttributedString(string: lastMessage, attributes: [NSAttributedString.Key.font: font,
+            ])
+            
+            if let lastActivity = data.lastActivity{
+                self.lastMessageDate.text = getString(from: lastActivity)
             }
-            else {
-                let text = "No messages yet"
-                let font = UIFont(name: "Apple SD Gothic Neo", size: 13)
-                let attributes = [NSAttributedString.Key.font: font]
-                self.lastMessage.attributedText = NSAttributedString(string: text, attributes: attributes as [NSAttributedString.Key : Any])
-                
-                lastMessageDate.text = ""
-            }
+            
+        } else {
+            let text = "No messages yet"
+            let font = UIFont(name: "Apple SD Gothic Neo", size: 13)
+            let attributes = [NSAttributedString.Key.font: font]
+            self.lastMessage.attributedText = NSAttributedString(string: text, attributes: attributes as [NSAttributedString.Key : Any])
+            
+            self.lastMessageDate.text = ""
         }
-        
     }
 }

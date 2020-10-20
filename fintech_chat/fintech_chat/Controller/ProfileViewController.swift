@@ -236,9 +236,7 @@ class ProfileViewController: BaseViewController {
     
     private func presentCameraSettings(){
         let alertController = UIAlertController(title: "Error", message: "Camera access is denied", preferredStyle: .alert)
-        alertController.setBackground(color: ThemeManager.shared.theme.settings.secondaryBackgroundColor)
-        alertController.setTitle(color: ThemeManager.shared.theme.settings.labelColor)
-        alertController.setMessage(color: ThemeManager.shared.theme.settings.labelColor)
+        alertController.applyTheme()
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "Settings", style: .default){(_) in
@@ -251,9 +249,7 @@ class ProfileViewController: BaseViewController {
     
     private func presentMessage(_ message: String){
         let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alertController.setBackground(color: ThemeManager.shared.theme.settings.secondaryBackgroundColor)
-        alertController.setTitle(color: ThemeManager.shared.theme.settings.labelColor)
-        alertController.setMessage(color: ThemeManager.shared.theme.settings.labelColor)
+        alertController.applyTheme()
         
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(alertController, animated: true)
@@ -263,8 +259,7 @@ class ProfileViewController: BaseViewController {
     
     @IBAction func editTouch(_ sender: UIButton) {
         let actionSheet = UIAlertController(title: nil, message: nil,  preferredStyle: .actionSheet)
-        actionSheet.setBackground(color: ThemeManager.shared.theme.settings.secondaryBackgroundColor)
-        //actionSheet.setTint(color: ThemeManager.shared.theme.settings.labelColor)
+        actionSheet.applyTheme()
         
         let cameraIcon = #imageLiteral(resourceName: "camera")
         let photoIcon = #imageLiteral(resourceName: "photo")

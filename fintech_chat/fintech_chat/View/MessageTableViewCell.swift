@@ -20,7 +20,7 @@ class MessageTableViewCell: UITableViewCell {
     let senderNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         label.backgroundColor = UIColor.clear
         
         return label

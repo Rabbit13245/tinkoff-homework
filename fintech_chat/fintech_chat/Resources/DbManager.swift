@@ -45,8 +45,20 @@ extension DbManager{
         }
     }
     
-    public func createChannel(with name: String){
+    public func createChannel(with name: String, completion: @escaping ((Error?) -> Void)){
+        let channelDocument: [String: Any] = [
+            "name": name,
+            "lastMessage": "",
+            "lastActivity": Timestamp()
+        ]
         
+        channels.addDocument(data: channelDocument) { (error) in
+            if let safeError = error{
+                Logger.app.logMessage("Create channel error: \(safeError.localizedDescription)", logLevel: .Error)
+                
+            }
+            completion(error)
+        }
     }
 }
 
