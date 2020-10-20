@@ -3,7 +3,7 @@ import Firebase
 
 public enum DatabaseError: Error {
     case failedToRead
-    
+
     public var description: String {
         switch self {
         case .failedToRead:
@@ -12,50 +12,50 @@ public enum DatabaseError: Error {
     }
 }
 
-class DbManager{
-    
+class DbManager {
+
     public static let shared: DbManager = {
         let dbManager = DbManager()
         return dbManager
     }()
-    
-    private init(){}
-    
+
+    private init() {}
+
     private let channels = Firestore.firestore().collection("channels")
-    
+
     let myId = UIDevice.current.identifierForVendor?.uuidString
 }
 
 // MARK: - Channels
-extension DbManager{
-    public func getAllChannels(completion: @escaping (Result<[Channel], Error>) -> Void){
-        channels.addSnapshotListener{ (querySnapshot, error) in
-            if let error = error{
-                Logger.app.logMessage("\(#function):: Error reading data: \(error.localizedDescription)", logLevel: .Error)
+extension DbManager {
+    public func getAllChannels(completion: @escaping (Result<[Channel], Error>) -> Void) {
+        channels.addSnapshotListener { (querySnapshot, error) in
+            if let error = error {
+                Logger.app.logMessage("\(#function):: Error reading data: \(error.localizedDescription)",
+                    logLevel: .error)
                 completion(.failure(DatabaseError.failedToRead))
-            } else{
+            } else {
                 if let snapshot = querySnapshot {
                     completion(.success(self.parseChannels(snapshot.documents)))
-                }
-                else{
-                    Logger.app.logMessage("\(#function):: Snapshot is nil", logLevel: .Error)
+                } else {
+                    Logger.app.logMessage("\(#function):: Snapshot is nil", logLevel: .error)
                     completion(.failure(DatabaseError.failedToRead))
                 }
             }
         }
     }
-    
-    public func createChannel(with name: String, completion: @escaping ((Error?) -> Void)){
+
+    public func createChannel(with name: String, completion: @escaping ((Error?) -> Void)) {
         let channelDocument: [String: Any] = [
             "name": name,
             "lastMessage": "",
             "lastActivity": Timestamp()
         ]
-        
+
         channels.addDocument(data: channelDocument) { (error) in
-            if let safeError = error{
-                Logger.app.logMessage("Create channel error: \(safeError.localizedDescription)", logLevel: .Error)
-                
+            if let safeError = error {
+                Logger.app.logMessage("Create channel error: \(safeError.localizedDescription)", logLevel: .error)
+
             }
             completion(error)
         }
@@ -63,32 +63,31 @@ extension DbManager{
 }
 
 // MARK: - Messages
-extension DbManager{
-    public func getAllMessages(from channelId: String, completion: @escaping ((Result<[Message], Error>) -> Void)){
+extension DbManager {
+    public func getAllMessages(from channelId: String, completion: @escaping ((Result<[Message], Error>) -> Void)) {
         channels.document(channelId).collection("messages").addSnapshotListener { (querySnapshot, error) in
-            if let error = error{
-                Logger.app.logMessage("\(#function):: Error reading data: \(error.localizedDescription)", logLevel: .Error)
+            if let error = error {
+                Logger.app.logMessage("\(#function):: Error reading data: \(error.localizedDescription)",
+                    logLevel: .error)
                 completion(.failure(DatabaseError.failedToRead))
-            }
-            else{
-                if let snapshot = querySnapshot{
+            } else {
+                if let snapshot = querySnapshot {
                     completion(.success(self.parseMessages(snapshot.documents)))
-                }
-                else{
-                    Logger.app.logMessage("\(#function):: Snapshot is nil", logLevel: .Error)
+                } else {
+                    Logger.app.logMessage("\(#function):: Snapshot is nil", logLevel: .error)
                     completion(.failure(DatabaseError.failedToRead))
                 }
             }
         }
     }
-    
-    public func sendMessage(_ text: String, to channel: String){
+
+    public func sendMessage(_ text: String, to channel: String) {
         guard let safeId = myId else {
-            Logger.app.logMessage("Cant get uuid device. ", logLevel: .Error)
+            Logger.app.logMessage("Cant get uuid device. ", logLevel: .error)
             return
         }
-        
-        let messageData:[String: Any] = [
+
+        let messageData: [String: Any] = [
             "content": text,
             "created": Timestamp(),
             "senderId": safeId,
@@ -98,13 +97,13 @@ extension DbManager{
     }
 }
 
-// MARK:- Decode
-extension DbManager{
-    private func parseChannels(_ documents: [QueryDocumentSnapshot]) -> [Channel]{
-        return documents.compactMap{Channel($0)}
+// MARK: - Decode
+extension DbManager {
+    private func parseChannels(_ documents: [QueryDocumentSnapshot]) -> [Channel] {
+        return documents.compactMap {Channel($0)}
     }
-    
-    private func parseMessages(_ documents: [QueryDocumentSnapshot]) -> [Message]{
-        return documents.compactMap{Message($0)}
+
+    private func parseMessages(_ documents: [QueryDocumentSnapshot]) -> [Message] {
+        return documents.compactMap {Message($0)}
     }
 }

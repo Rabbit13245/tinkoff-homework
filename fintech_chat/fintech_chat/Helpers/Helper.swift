@@ -1,27 +1,25 @@
 import UIKit
 
-class Helper{
+class Helper {
     static var app: Helper = {
         return Helper()
     }()
-    
+
     private init() {}
-    
-    func generateDefaultAvatar(name: String, width: CGFloat) -> UIView{
-        
-        
-        
+
+    func generateDefaultAvatar(name: String, width: CGFloat) -> UIView {
+
         let resultView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: width))
         resultView.layer.cornerRadius = resultView.frame.width / 2
         resultView.backgroundColor = UIColor.AppColors.yellowLogo
-        
+
         let label = UILabel()
         label.text = getInitials(from: name)
         label.textAlignment = .center
         label.textColor = UIColor.AppColors.initialsColor
-        
+
         label.translatesAutoresizingMaskIntoConstraints = false
-        
+
         resultView.addSubview(label)
 
         NSLayoutConstraint.activate([
@@ -30,19 +28,19 @@ class Helper{
         ])
         return resultView
     }
-    
-    func getInitials(from name: String) -> String{
+
+    func getInitials(from name: String) -> String {
         guard name != "" else {return ""}
         let names = name.components(separatedBy: " ")
-        switch(names.count){
-            case 0:
-                return ""
-            case 1:
-                return "\(names[0].prefix(1))".uppercased()
-            case 2..<Int.max:
-                return "\(names[0].prefix(1))\(names[1].prefix(1))".uppercased()
-            default:
-                return ""
+        switch names.count {
+        case 0:
+            return ""
+        case 1:
+            return "\(names[0].prefix(1))".uppercased()
+        case 2..<Int.max:
+            return "\(names[0].prefix(1))\(names[1].prefix(1))".uppercased()
+        default:
+            return ""
         }
     }
 }

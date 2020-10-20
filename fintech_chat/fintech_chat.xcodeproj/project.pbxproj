@@ -40,7 +40,6 @@
 		F10D4E04252111A900B8CDD0 /* ConversationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */; };
 		F10D4E062521123D00B8CDD0 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */; };
 		F10D4E092521165B00B8CDD0 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E072521165B00B8CDD0 /* MessageTableViewCell.swift */; };
-		F10D4E0C252118D400B8CDD0 /* FakeDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E0B252118D400B8CDD0 /* FakeDataGenerator.swift */; };
 		F10FF08D253CBBD100A0996B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F10FF08C253CBBD100A0996B /* GoogleService-Info.plist */; };
 		F10FF08F253CC3EC00A0996B /* DbManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10FF08E253CC3EC00A0996B /* DbManager.swift */; };
 		F10FF091253CD74C00A0996B /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10FF090253CD74C00A0996B /* Channel.swift */; };
@@ -99,7 +98,6 @@
 		F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConversationCellModel.swift; path = fintech_chat/Extensions/ConversationCellModel.swift; sourceTree = SOURCE_ROOT; };
 		F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessageCellModel.swift; path = fintech_chat/Extensions/MessageCellModel.swift; sourceTree = SOURCE_ROOT; };
 		F10D4E072521165B00B8CDD0 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
-		F10D4E0B252118D400B8CDD0 /* FakeDataGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FakeDataGenerator.swift; path = fintech_chat/View/FakeDataGenerator.swift; sourceTree = SOURCE_ROOT; };
 		F10FF08C253CBBD100A0996B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		F10FF08E253CC3EC00A0996B /* DbManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbManager.swift; sourceTree = "<group>"; };
 		F10FF090253CD74C00A0996B /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
@@ -247,7 +245,6 @@
 				847E5FFF25232496008B8C27 /* ConfigurableView.swift */,
 				F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */,
 				F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */,
-				F10D4E0B252118D400B8CDD0 /* FakeDataGenerator.swift */,
 				8451E4A32536F454003E95BA /* User.swift */,
 				F10FF090253CD74C00A0996B /* Channel.swift */,
 				F10FF092253CD76400A0996B /* Message.swift */,
@@ -342,6 +339,7 @@
 				8467A607250FAED400E36BEE /* Frameworks */,
 				8467A608250FAED400E36BEE /* Resources */,
 				3774B9F5694D80CF31BE1EE7 /* [CP] Embed Pods Frameworks */,
+				F133F060253F836B00337D95 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -440,6 +438,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F133F060253F836B00337D95 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -490,7 +505,6 @@
 				F1391DA3252BA679007FC97D /* ThemeManager.swift in Sources */,
 				847E600025232496008B8C27 /* ConfigurableView.swift in Sources */,
 				F1391DA5252BA6F4007FC97D /* Theme.swift in Sources */,
-				F10D4E0C252118D400B8CDD0 /* FakeDataGenerator.swift in Sources */,
 				F1D84D4C251E9804000A69AF /* UIColor.swift in Sources */,
 				8428027D25347D9B0078723A /* DataManagerProtocol.swift in Sources */,
 			);

@@ -1,12 +1,12 @@
 import UIKit
 
-class AppLabel: UILabel{
-    
-    @objc dynamic var configurableTextColor: UIColor{
+class AppLabel: UILabel {
+
+    @objc dynamic var configurableTextColor: UIColor {
         get {
             return textColor
         }
-        set{
+        set {
             textColor = newValue
         }
     }

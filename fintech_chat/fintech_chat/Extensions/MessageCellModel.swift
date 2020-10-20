@@ -1,20 +1,20 @@
 import Foundation
 
-struct MessageCellModel{
+struct MessageCellModel {
     let direction: MessageDirection
     let message: Message
-    
+
     init(message: Message) {
         self.message = message
-        if (self.message.senderId == DbManager.shared.myId){
+        if self.message.senderId == DbManager.shared.myId {
             self.direction = .output
-        } else{
+        } else {
             self.direction = .input
         }
     }
 }
 
-enum MessageDirection{
+enum MessageDirection {
     case input
     case output
 }

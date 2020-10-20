@@ -1,11 +1,11 @@
 import UIKit
 
-extension UIActivityIndicatorView{
-    func startLoading(){
+extension UIActivityIndicatorView {
+    func startLoading() {
         self.isHidden = false
         self.startAnimating()
     }
-    func stopLoading(){
+    func stopLoading() {
         self.isHidden = true
         self.startAnimating()
     }

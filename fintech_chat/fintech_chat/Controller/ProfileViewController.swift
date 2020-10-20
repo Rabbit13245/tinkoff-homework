@@ -2,7 +2,7 @@ import UIKit
 import AVFoundation
 
 class ProfileViewController: BaseViewController {
-    
+
     @IBOutlet weak var defaultPhotoView: UIView!
     @IBOutlet weak var nameTextView: UITextView!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -11,190 +11,185 @@ class ProfileViewController: BaseViewController {
     @IBOutlet weak var editBarButton: UIBarButtonItem!
     @IBOutlet weak var gcdSaveButton: AppBackgroundButton!
     @IBOutlet weak var operationSaveButton: AppBackgroundButton!
-    
+
     @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var safeAreaButtonsConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+
     @IBOutlet weak var defaultPhotoConstraint: NSLayoutConstraint!
     @IBOutlet weak var profilePhotoConstant: NSLayoutConstraint!
 
-    
     var editingMode = false
     var imageChanged = false
-    
+
     var userName = ""
     var userDescription = ""
-    var userImage: UIImage? = nil
-    
+    var userImage: UIImage?
+
     var wasChange = false
-    
+
     lazy var dataManagerFactory: DataManagerFactory = {
         let dataManagerFactory = DataManagerFactory()
         return dataManagerFactory
     }()
-    
+
     lazy var initialsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        
+
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 120)
         label.textColor = UIColor.AppColors.initialsColor
         label.backgroundColor = .clear
-        
+
         return label
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         subscribeKeyboardNotifications()
         setupUI()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         unsubscribeKeyboardNotifications()
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.nameTextView.endEditing(true)
         self.descriptionTextView.endEditing(true)
     }
-    
+
     // MARK: - Private methods
-    
-    private func setupUI(){
+
+    private func setupUI() {
         descriptionTextView.delegate = self
         nameTextView.delegate = self
-        
+
         nameTextView.text = self.userName
         descriptionTextView.text = self.userDescription
-        
+
         descriptionTextView.layer.cornerRadius = 16
         nameTextView.layer.cornerRadius = 16
-        
+
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         activityIndicator.color = ThemeManager.shared.theme.settings.labelColor
-        
+
         safeAreaButtonsConstraint.constant = 30
         defaultPhotoConstraint.constant = 8
         profilePhotoConstant.constant = 8
-        
+
         profilePhotoView.layer.cornerRadius = profilePhotoView.bounds.width / 2
         profilePhotoView.contentMode = .scaleAspectFill
         profilePhotoView.clipsToBounds = true
-        
+
         gcdSaveButton.layer.cornerRadius = gcdSaveButton.bounds.height / 3
         gcdSaveButton.isEnabled = self.wasChange
-        
+
         operationSaveButton.layer.cornerRadius = operationSaveButton.bounds.height / 3
         operationSaveButton.isEnabled = self.wasChange
-        
+
         nameTextView.isEditable = self.editingMode
-        
+
         descriptionTextView.isEditable = self.editingMode
         descriptionTextView.setLineHeight(lineHeight: 6)
         descriptionTextView.font = UIFont.systemFont(ofSize: 16)
-        
+
         editButton.isEnabled = self.editingMode
-        
+
         guard profilePhotoView.image == nil else { return }
-        
+
         defaultPhotoView.layer.cornerRadius = defaultPhotoView.bounds.width / 2
-        
-        
+
         defaultPhotoView.addSubview(self.initialsLabel)
-        
+
         NSLayoutConstraint.activate([
             self.initialsLabel.widthAnchor.constraint(equalTo: defaultPhotoView.widthAnchor),
             self.initialsLabel.heightAnchor.constraint(equalTo: defaultPhotoView.heightAnchor),
             self.initialsLabel.centerXAnchor.constraint(equalTo: defaultPhotoView.centerXAnchor),
             self.initialsLabel.centerYAnchor.constraint(equalTo: defaultPhotoView.centerYAnchor)
         ])
-        
+
         // чтение gcd
         let dataManagerGCD = self.dataManagerFactory.createDataManager(.GCD)
         readData(dataManagerGCD)
-        
+
         // чтение operations
         //let dataManagerOperations = self.dataManagerFactory.createDataManager(.Operation)
         //readData(dataManagerOperations)
-        
+
         self.editBarButton.isEnabled = false
-        
-       
+
     }
-    
-    private func readData(_ dataManager: DataManagerProtocol){
-        
+
+    private func readData(_ dataManager: DataManagerProtocol) {
+
         dataManager.loadUserData { (userData, response) in
             if let resp = response {
-                if (!resp.nameError){
+                if !resp.nameError {
                     self.userName = userData.userName ?? "Error Load Name"
                     self.nameTextView.text = self.userName
                 }
-                if (!resp.descriptionError){
+                if !resp.descriptionError {
                     self.userDescription = userData.userDescription ?? "Error Load Description"
                 }
-                if (!resp.imageError){
+                if !resp.imageError {
                     self.userImage = userData.userImage
                     self.profilePhotoView.image = self.userImage
                 }
-                
+
                 self.descriptionTextView.text = self.userDescription
-                
-                
+
                 self.initialsLabel.text = Helper.app.getInitials(from: self.userName)
-                
-                if(self.userImage != nil){
+
+                if self.userImage != nil {
                     self.defaultPhotoView.backgroundColor = .none
                     self.initialsLabel.isHidden = true
                 }
-                
+
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.isHidden = true
                 self.editBarButton.isEnabled = true
-                
+
             }
         }
     }
-    
-    private func subscribeKeyboardNotifications(){
+
+    private func subscribeKeyboardNotifications() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-    private func unsubscribeKeyboardNotifications(){
+
+    private func unsubscribeKeyboardNotifications() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         notificationCenter.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-    @objc private func adjustKeyboard(notification: Notification){
+
+    @objc private func adjustKeyboard(notification: Notification) {
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {return}
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
 
-        if (notification.name == UIResponder.keyboardWillHideNotification){
-            
+        if notification.name == UIResponder.keyboardWillHideNotification {
+
             safeAreaButtonsConstraint.constant = 30
             defaultPhotoConstraint.constant = 8
-            
+
             profilePhotoConstant.constant = 8
-            
+
             stackViewTopConstraint.constant = 30
-        }
-        else{
+        } else {
             safeAreaButtonsConstraint.constant = 8 + keyboardViewEndFrame.height - self.view.safeAreaInsets.bottom
-            
+
             stackViewTopConstraint.constant = 10
-            
-            defaultPhotoConstraint.constant =  8 - keyboardViewEndFrame.height * 4 / 5
+
+            defaultPhotoConstraint.constant = 8 - keyboardViewEndFrame.height * 4 / 5
             profilePhotoConstant.constant = 8 - keyboardViewEndFrame.height * 4 / 5
         }
 
@@ -202,104 +197,98 @@ class ProfileViewController: BaseViewController {
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
-    
-    
-    private func checkCameraPermission(){
-        if (UIImagePickerController.isCameraDeviceAvailable(.rear) || UIImagePickerController.isCameraDeviceAvailable(.front)) {
+
+    private func checkCameraPermission() {
+        if UIImagePickerController.isCameraDeviceAvailable(.rear) || UIImagePickerController.isCameraDeviceAvailable(.front) {
             let cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
             switch cameraStatus {
             case .denied:
                 self.presentCameraSettings()
-                break
             case .restricted:
                 self.presentMessage("You don`t allow")
-                break
             case .authorized:
                 self.chooseImagePicker(source: .camera)
             case .notDetermined:
-                AVCaptureDevice.requestAccess(for: .video){(success) in
-                    if (success){
+                AVCaptureDevice.requestAccess(for: .video) {(success) in
+                    if success {
                         self.chooseImagePicker(source: .camera)
-                    }
-                    else{
+                    } else {
                         self.presentMessage("Camera access is denied")
                     }
                 }
             default:
                 break
             }
-        }
-        else{
+        } else {
             self.presentMessage("Your camera is not available")
         }
     }
-    
-    private func presentCameraSettings(){
+
+    private func presentCameraSettings() {
         let alertController = UIAlertController(title: "Error", message: "Camera access is denied", preferredStyle: .alert)
         alertController.applyTheme()
-        
+
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Settings", style: .default){(_) in
-            if let url = URL(string: UIApplication.openSettingsURLString){
+        alertController.addAction(UIAlertAction(title: "Settings", style: .default) {(_) in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         })
         present(alertController, animated: true)
     }
-    
-    private func presentMessage(_ message: String){
+
+    private func presentMessage(_ message: String) {
         let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
         alertController.applyTheme()
-        
+
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(alertController, animated: true)
     }
-    
+
     // MARK: - IBActions
-    
+
     @IBAction func editTouch(_ sender: UIButton) {
-        let actionSheet = UIAlertController(title: nil, message: nil,  preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         actionSheet.applyTheme()
-        
+
         let cameraIcon = #imageLiteral(resourceName: "camera")
         let photoIcon = #imageLiteral(resourceName: "photo")
-        
-        let galery = UIAlertAction(title: "Photo Library", style: .default){(_) in
+
+        let galery = UIAlertAction(title: "Photo Library", style: .default) {(_) in
             self.chooseImagePicker(source: .photoLibrary)
         }
         galery.setValue(photoIcon, forKey: "image")
         galery.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-        let camera = UIAlertAction(title: "Camera", style: .default){(_) in
+        let camera = UIAlertAction(title: "Camera", style: .default) {(_) in
             self.checkCameraPermission()
         }
         camera.setValue(cameraIcon, forKey: "image")
         camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-        
+
         let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         actionSheet.addAction(galery)
         actionSheet.addAction(camera)
         actionSheet.addAction(cancel)
-        
+
         present(actionSheet, animated: true)
     }
-    
+
     @IBAction func closeButtonPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    
+
     @IBAction func editBarButtonPressed(_ sender: UIBarButtonItem) {
         self.editingMode = !self.editingMode
         self.editButton.isEnabled = self.editingMode
-        
+
         self.descriptionTextView.isEditable = self.editingMode
         self.nameTextView.isEditable = self.editingMode
-        
-        if (self.editingMode){
+
+        if self.editingMode {
             sender.title = "Done"
             self.descriptionTextView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
             self.nameTextView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
-        }
-        else{
+        } else {
             sender.title = "Edit profile"
             self.nameTextView.endEditing(true)
             self.descriptionTextView.endEditing(true)
@@ -307,90 +296,91 @@ class ProfileViewController: BaseViewController {
             self.nameTextView.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
         }
     }
-    
+
     @IBAction func gcdSaveButtonPessed(_ sender: AppBackgroundButton) {
         let dataManager = dataManagerFactory.createDataManager(.GCD)
         self.internalSaveData(dataManager)
     }
-    
+
     @IBAction func operationSaveButtonPressed(_ sender: Any) {
-        let dataManager = dataManagerFactory.createDataManager(.Operation)
-        
+        let dataManager = dataManagerFactory.createDataManager(.operation)
+
         self.internalSaveData(dataManager)
     }
-    
-    private func internalSaveData(_ dataManager: DataManagerProtocol){
+
+    private func internalSaveData(_ dataManager: DataManagerProtocol) {
         // если нажали в режиме редактирования, то выходим из него
-        if (self.editingMode){
+        if self.editingMode {
             self.editBarButtonPressed(self.editBarButton)
         }
-        
+
         self.modifyUIForSaveData(false)
-        
+
         self.initialsLabel.text = Helper.app.getInitials(from: self.nameTextView.text)
-        
+
         if self.nameTextView.text != self.userName,
-            self.descriptionTextView.text != self.userDescription{
-            dataManager.saveUserData(name: self.nameTextView.text, description: self.descriptionTextView.text, oldImage: self.userImage, newImage: self.profilePhotoView.image){
-                [weak self] (response, error) in
+            self.descriptionTextView.text != self.userDescription {
+            dataManager.saveUserData(
+            name: self.nameTextView.text,
+            description: self.descriptionTextView.text,
+            oldImage: self.userImage,
+            newImage: self.profilePhotoView.image) { [weak self] (response, error) in
                 self?.modifyUIForSaveData(true)
                 self?.updateDataAfterSave(response: response)
-                if(error){
-                    
-                    self?.failedSaveData(){
+                if error {
+
+                    self?.failedSaveData {
                         self?.internalSaveData(dataManager)
                     }
-                }
-                else{
+                } else {
                     self?.succesSaveData(title: "Data saved")
                 }
             }
-        }
-        else if self.nameTextView.text != self.userName{
-            dataManager.saveUserData(name: self.nameTextView.text, description: nil, oldImage: self.userImage, newImage: self.profilePhotoView.image){
-                [weak self] (response, error) in
+        } else if self.nameTextView.text != self.userName {
+            dataManager.saveUserData(
+            name: self.nameTextView.text,
+            description: nil,
+            oldImage: self.userImage,
+            newImage: self.profilePhotoView.image) { [weak self] (response, error) in
                 self?.modifyUIForSaveData(true)
                 self?.updateDataAfterSave(response: response)
-                if(error){
-                    
-                    self?.failedSaveData(){
+                if error {
+
+                    self?.failedSaveData {
                         self?.internalSaveData(dataManager)
                     }
-                }
-                else{
+                } else {
                     self?.succesSaveData(title: "Data saved")
                 }
             }
-        }
-        else if self.descriptionTextView.text != self.userDescription{
-            dataManager.saveUserData(name: nil, description: self.descriptionTextView.text, oldImage: self.userImage, newImage: self.profilePhotoView.image){
-                [weak self] (response, error) in
+        } else if self.descriptionTextView.text != self.userDescription {
+            dataManager.saveUserData(
+            name: nil,
+            description: self.descriptionTextView.text,
+            oldImage: self.userImage,
+            newImage: self.profilePhotoView.image) { [weak self] (response, error) in
                 self?.modifyUIForSaveData(true)
                 self?.updateDataAfterSave(response: response)
-                if(error){
-                    self?.failedSaveData(){
+                if error {
+                    self?.failedSaveData {
                         self?.internalSaveData(dataManager)
                     }
-                }
-                else{
+                } else {
                     self?.succesSaveData(title: "Data saved")
                 }
             }
-        }
-        else {
-            dataManager.saveUserData(name: nil, description: nil, oldImage: self.userImage, newImage: self.profilePhotoView.image){
-                [weak self] (response, error) in
+        } else {
+            dataManager.saveUserData(name: nil, description: nil, oldImage: self.userImage, newImage: self.profilePhotoView.image) { [weak self] (response, error) in
                 self?.modifyUIForSaveData(true)
-                
+
                 self?.updateDataAfterSave(response: response)
-                
-                if(error){
-                    
-                    self?.failedSaveData(){
+
+                if error {
+
+                    self?.failedSaveData {
                         self?.internalSaveData(dataManager)
                     }
-                }
-                else{
+                } else {
                     self?.succesSaveData(title: "Data saved")
                 }
             }
@@ -401,27 +391,26 @@ class ProfileViewController: BaseViewController {
 //            self.succesSaveData(title: "No changes")
 //        }
     }
-    
-    private func updateDataAfterSave(response: Response?){
-        if let response = response{
-            if (!response.nameError){
+
+    private func updateDataAfterSave(response: Response?) {
+        if let response = response {
+            if !response.nameError {
                 self.userName = self.nameTextView.text
             }
-            if (!response.descriptionError){
+            if !response.descriptionError {
                 self.userDescription = self.descriptionTextView.text
             }
-            if(!response.imageError){
+            if !response.imageError {
                 self.userImage = self.profilePhotoView.image
             }
         }
     }
-    
-    private func modifyUIForSaveData(_ enabled: Bool){
-        if (!enabled){
+
+    private func modifyUIForSaveData(_ enabled: Bool) {
+        if !enabled {
             self.activityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
-        }
-        else{
+        } else {
             self.activityIndicator.isHidden = true
             self.activityIndicator.stopAnimating()
         }
@@ -429,17 +418,17 @@ class ProfileViewController: BaseViewController {
         self.operationSaveButton.isEnabled = false
         self.editBarButton.isEnabled = enabled
     }
-    
-    private func succesSaveData(title: String){
+
+    private func succesSaveData(title: String) {
         let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alertController, animated: true)
     }
-    
-    private func failedSaveData( completion: @escaping (()->Void)){
+
+    private func failedSaveData( completion: @escaping (() -> Void)) {
         let alertController = UIAlertController(title: "Eroor", message: "Failed to save data", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        let repeatAction = UIAlertAction(title: "Repeat", style: .default) { (action) in
+        let repeatAction = UIAlertAction(title: "Repeat", style: .default) { (_) in
             completion()
         }
         alertController.addAction(repeatAction)
@@ -450,37 +439,37 @@ class ProfileViewController: BaseViewController {
 // MARK: - UIImagePickerControllerDelegate
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func chooseImagePicker(source: UIImagePickerController.SourceType){
-        if (UIImagePickerController.isSourceTypeAvailable(source)){
+
+    func chooseImagePicker(source: UIImagePickerController.SourceType) {
+        if UIImagePickerController.isSourceTypeAvailable(source) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
-            
+
             imagePicker.allowsEditing = true
             imagePicker.sourceType = source
-            
+
             present(imagePicker, animated: true)
         }
     }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+
         guard let image = info[.editedImage] as? UIImage else {return}
-        
+
         profilePhotoView.image = image
-        
+
         defaultPhotoView.backgroundColor = .none
         initialsLabel.isHidden = true
-        
+
         self.wasChange = true
         self.gcdSaveButton.isEnabled = self.wasChange
         self.operationSaveButton.isEnabled = self.wasChange
-        
+
         dismiss(animated: true)
     }
 }
 
-extension ProfileViewController: UITextViewDelegate{
+extension ProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         self.wasChange = true
         self.gcdSaveButton.isEnabled = self.wasChange

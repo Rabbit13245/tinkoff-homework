@@ -1,5 +1,5 @@
 import UIKit
 
-class AppBackgroundButton: UIButton{}
+class AppBackgroundButton: UIButton {}
 
-class AppBarButtonItem: UIBarButtonItem{}
+class AppBarButtonItem: UIBarButtonItem {}
