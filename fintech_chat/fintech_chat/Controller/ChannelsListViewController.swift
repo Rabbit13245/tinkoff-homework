@@ -7,7 +7,7 @@ class ChannelsListViewController: UIViewController {
 
     private var userName = "Dmitry Zaytcev"
 
-    private let chatName = "Tinkoff Chat"
+    private let chatName = "Channels"
 
     private var channels = [Channel]() {
         didSet {
@@ -291,21 +291,21 @@ extension ChannelsListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = AppSeparator()
-        let label = AppLabel()
-        label.font = UIFont.systemFont(ofSize: 28)
-        label.text =  "Channels"
-        view.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-        return view
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 35
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let view = AppSeparator()
+//        let label = AppLabel()
+//        label.font = UIFont.systemFont(ofSize: 28)
+//        label.text =  "Channels"
+//        view.addSubview(label)
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+//            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+//        ])
+//        return view
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 35
+//    }
 }
