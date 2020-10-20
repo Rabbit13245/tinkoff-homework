@@ -292,15 +292,14 @@ extension ChannelViewController: UITableViewDataSource{
             let senderNameHeight = cell.senderNameLabel.font.pointSize
             cell.senderNameLabel.text = messageCellModel.message.senderName
             cell.senderNameLabel.isHidden = false
-            
             cell.senderNameLabel.frame = CGRect(x: 16, y: 10, width: maxWidth, height: senderNameHeight)
             cell.messageTextLabel.frame = CGRect(x: 16, y: 10 + senderNameHeight + 2, width: maxWidth, height: estimatedFrameMessage.height)
             cell.bubbleView.frame = CGRect(x: 8, y: 0, width: maxWidth + 8 + 8, height: estimatedFrameMessage.height + 20 + senderNameHeight + 2)
             
         }
         else{
-            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - maxWidth - 16, y: 10, width: maxWidth, height: estimatedFrameMessage.height)
-            cell.bubbleView.frame = CGRect(x: self.view.frame.width - maxWidth - 24, y: 0, width: maxWidth + 16, height: estimatedFrameMessage.height + 20)
+            cell.messageTextLabel.frame = CGRect(x: self.view.frame.width - estimatedFrameMessage.width - 16, y: 10, width: estimatedFrameMessage.width, height: estimatedFrameMessage.height)
+            cell.bubbleView.frame = CGRect(x: self.view.frame.width - estimatedFrameMessage.width - 24, y: 0, width: estimatedFrameMessage.width + 16, height: estimatedFrameMessage.height + 20)
             cell.senderNameLabel.isHidden = true
         }
         
@@ -312,13 +311,18 @@ extension ChannelViewController: UITableViewDataSource{
 extension ChannelViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        let message = messages[indexPath.row]
+        let messageCellModel = MessageCellModel(message: self.messages[indexPath.row])
         
         let size = CGSize(width: self.view.frame.width * 0.75, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        let estimatedFrame = NSString(string: message.content).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
-
-        return estimatedFrame.height + 20 + 20
+        
+        let estimatedFrame = NSString(string: messageCellModel.message.content).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16)], context: nil)
+        
+        if (messageCellModel.direction == .input){
+            return estimatedFrame.height + 20 + 6 + 17
+        } else{
+            return estimatedFrame.height + 20 + 6
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
