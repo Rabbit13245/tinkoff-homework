@@ -106,26 +106,27 @@ class ChannelViewController: UIViewController {
     }
     
     private func loadMessages() {
-        self.activityIndicator.startLoading()
+        self.activityIndicator.startAnimating()
 
-        DbManager.shared.getAllMessages(from: self.channelId) { (result) in
+        DbManager.shared.getAllMessages(from: self.channelId) {[weak self] (result) in
+            guard let safeSelf = self else { return }
+            safeSelf.activityIndicator.stopAnimating()
+            
             switch result {
             case .success(let messages):
-                self.activityIndicator.stopLoading()
                 guard !messages.isEmpty else {
-                    self.tableView.isHidden = true
-                    self.noMessagesLabel.isHidden = false
+                    safeSelf.tableView.isHidden = true
+                    safeSelf.noMessagesLabel.isHidden = false
                     return
                 }
-                self.tableView.isHidden = false
-                self.noMessagesLabel.isHidden = true
+                safeSelf.tableView.isHidden = false
+                safeSelf.noMessagesLabel.isHidden = true
 
-                self.messages = messages
+                safeSelf.messages = messages
 
             case .failure:
-                self.activityIndicator.stopLoading()
-                self.tableView.isHidden = true
-                self.noMessagesLabel.isHidden = false
+                safeSelf.tableView.isHidden = true
+                safeSelf.noMessagesLabel.isHidden = false
             }
         }
     }
@@ -250,8 +251,7 @@ extension ChannelViewController {
             
             if error != nil {
                 safeSelf.presentMessage("Error sending message")
-            }
-            else {
+            } else {
                 safeSelf.inputTextView.text = ""
             }
         }

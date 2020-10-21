@@ -9,6 +9,8 @@ class ChannelsListViewController: UIViewController {
 
     private let chatName = "Channels"
 
+    private var firstShow = true
+    
     private var channels = [Channel]() {
         didSet {
             DispatchQueue.main.async {
@@ -120,12 +122,16 @@ class ChannelsListViewController: UIViewController {
     }
 
     private func getChannels() {
-        self.activityIndicator.startLoading()
-
+        self.activityIndicator.startAnimating()
+        
         DbManager.shared.getAllChannels { [weak self] (result) in
+            
+            self?.activityIndicator.stopAnimating()
+            //self?.activityIndicator.removeFromSuperview()
+            
             switch result {
             case .success(let channels):
-                self?.activityIndicator.stopLoading()
+                
                 guard !channels.isEmpty else {
                     self?.tableView.isHidden = true
                     self?.noChannelsLabel.isHidden = false
@@ -138,7 +144,6 @@ class ChannelsListViewController: UIViewController {
             case .failure:
                 self?.tableView.isHidden = true
                 self?.noChannelsLabel.isHidden = false
-                self?.activityIndicator.stopLoading()
             }
         }
     }
