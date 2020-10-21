@@ -120,7 +120,7 @@ class ThemesViewController: UIViewController {
         alignThemeElements(button: classicButton, label: classicLabel)
         alignThemeElements(button: dayButton, label: dayLabel)
         alignThemeElements(button: nightButton, label: nightLabel)
-
+        
         NSLayoutConstraint.activate([
             classicButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             dayButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
@@ -130,7 +130,7 @@ class ThemesViewController: UIViewController {
             dayLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             nightLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
 
-            classicButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 160),
+            classicButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
 
             dayButton.topAnchor.constraint(equalTo: classicButton.bottomAnchor, constant: 80),
 
