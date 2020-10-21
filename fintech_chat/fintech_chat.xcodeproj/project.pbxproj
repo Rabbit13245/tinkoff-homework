@@ -58,6 +58,7 @@
 		F13AC6C62534CC2600693985 /* DataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AC6C52534CC2600693985 /* DataManagerFactory.swift */; };
 		F13AC6C82534CCD400693985 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AC6C72534CCD400693985 /* OperationDataManager.swift */; };
 		F1D84D4C251E9804000A69AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D84D4B251E9804000A69AF /* UIColor.swift */; };
+		F1E25BD82540CCD700009F45 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E25BD72540CCD700009F45 /* String.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,6 +117,7 @@
 		F13AC6C52534CC2600693985 /* DataManagerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerFactory.swift; sourceTree = "<group>"; };
 		F13AC6C72534CCD400693985 /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
 		F1D84D4B251E9804000A69AF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		F1E25BD72540CCD700009F45 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 				842802792534641B0078723A /* UITextView.swift */,
 				F10FF094253E260D00A0996B /* UIActivityIndicatorView.swift */,
 				F133F05E253F4BA500337D95 /* UITextField.swift */,
+				F1E25BD72540CCD700009F45 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 			files = (
 				F13AC6C62534CC2600693985 /* DataManagerFactory.swift in Sources */,
 				8448DF7F252C9EFE00314A95 /* AppView.swift in Sources */,
+				F1E25BD82540CCD700009F45 /* String.swift in Sources */,
 				8467A612250FAED400E36BEE /* BaseViewController.swift in Sources */,
 				844EB08D2510DF5600AF0216 /* Logger.swift in Sources */,
 				F10D4E04252111A900B8CDD0 /* ConversationCellModel.swift in Sources */,

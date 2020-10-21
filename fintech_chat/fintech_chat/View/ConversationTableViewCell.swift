@@ -45,10 +45,8 @@ extension ConversationTableViewCell: ConfigurableView {
 
     func configure(with data: ConfigurationModel) {
         channelName.text = data.name
-        self.lastMessageDate.text = ""
         
-        if let lastMessage = data.lastMessage,
-            lastMessage != ""{
+        if let lastMessage = data.lastMessage {
             let font = UIFont.systemFont(ofSize: 13)
             
             self.lastMessage.attributedText = NSAttributedString(string: lastMessage, attributes: [NSAttributedString.Key.font: font
@@ -62,6 +60,7 @@ extension ConversationTableViewCell: ConfigurableView {
             let text = "No messages yet"
             let font = UIFont(name: "Apple SD Gothic Neo", size: 13)
             self.lastMessage.attributedText = NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: font as Any])
+            self.lastMessageDate.text = ""
         }
     }
 }

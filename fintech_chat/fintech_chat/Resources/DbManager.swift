@@ -3,11 +3,18 @@ import Firebase
 
 public enum DatabaseError: Error {
     case failedToRead
-
+    case failedToSend
+    case failedToCreateChannel
     public var description: String {
         switch self {
         case .failedToRead:
             return "Error reading data"
+            
+        case .failedToSend:
+            return "Error sending data"
+            
+        case .failedToCreateChannel:
+            return "Error creating channel"
         }
     }
 }
@@ -47,17 +54,15 @@ extension DbManager {
 
     public func createChannel(with name: String, completion: @escaping ((Error?) -> Void)) {
         let channelDocument: [String: Any] = [
-            "name": name,
-            "lastMessage": "",
-            "lastActivity": Timestamp()
+            "name": name
         ]
 
         channels.addDocument(data: channelDocument) { (error) in
             if let safeError = error {
                 Logger.app.logMessage("Create channel error: \(safeError.localizedDescription)", logLevel: .error)
-
+                completion(DatabaseError.failedToCreateChannel)
             }
-            completion(error)
+            completion(nil)
         }
     }
 }
@@ -81,9 +86,10 @@ extension DbManager {
         }
     }
 
-    public func sendMessage(_ text: String, to channel: String) {
+    public func sendMessage(_ text: String, to channel: String, completion: @escaping (Error?) -> Void) {
         guard let safeId = myId else {
             Logger.app.logMessage("Cant get uuid device. ", logLevel: .error)
+            completion(DatabaseError.failedToSend)
             return
         }
 
@@ -93,17 +99,32 @@ extension DbManager {
             "senderId": safeId,
             "senderName": "Dmitry Zaytcev"
         ]
-        channels.document(channel).collection("messages").addDocument(data: messageData)
+        
+        channels.document(channel).collection("messages").addDocument(data: messageData) { (error) in
+            if let safeError = error {
+                Logger.app.logMessage("Cant send message: \(safeError.localizedDescription)", logLevel: .error)
+                completion(DatabaseError.failedToSend)
+            }
+            completion(nil)
+        }
     }
 }
 
 // MARK: - Decode
 extension DbManager {
     private func parseChannels(_ documents: [QueryDocumentSnapshot]) -> [Channel] {
-        return documents.compactMap {Channel($0)}
+        let channels = documents.compactMap {Channel($0)}
+        let sortedChannels = channels.sorted {
+            $0.lastActivity ?? .distantPast > $1.lastActivity ?? .distantPast
+        }
+        
+        return sortedChannels
     }
 
     private func parseMessages(_ documents: [QueryDocumentSnapshot]) -> [Message] {
-        return documents.compactMap {Message($0)}
+        let messages = documents.compactMap {Message($0)}
+        return messages.sorted {
+            $0.created < $1.created
+        }
     }
 }

@@ -13,7 +13,16 @@ struct Channel {
         self.identifier = data.documentID
 
         self.name = channelName
-        self.lastMessage = rawData["lastMessage"] as? String
-        self.lastActivity = (rawData["lastActivity"] as? Timestamp)?.dateValue()
+        
+        let receiedLastMessage = rawData["lastMessage"] as? String
+        let receivedLastActivity = rawData["lastActivity"] as? Timestamp
+        
+        if receiedLastMessage == nil && receivedLastActivity != nil ||
+            receiedLastMessage != nil && receivedLastActivity == nil {
+            return nil
+        }
+        
+        self.lastMessage = receiedLastMessage
+        self.lastActivity = receivedLastActivity?.dateValue()
     }
 }

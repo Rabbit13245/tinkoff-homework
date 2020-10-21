@@ -5,7 +5,7 @@ class ChannelsListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    private var userName = "Dmitry Zaytcev"
+    private var userName = ""
 
     private let chatName = "Channels"
 
@@ -244,7 +244,7 @@ extension ChannelsListViewController {
     }
 
     @objc func textFieldDidChange(_ textField: UITextField) {
-        self.createChannelAction?.isEnabled = textField.text?.count ?? 0 > 0 ? true : false
+        self.createChannelAction?.isEnabled = !textField.text.isBlank
     }
 
     private func presentMessage(_ message: String) {
@@ -283,6 +283,10 @@ extension ChannelsListViewController: UITableViewDataSource {
 
 // MARK: - Table view delegate
 extension ChannelsListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         let controller = ChannelViewController(channelName: channels[indexPath.row].name, channelId: channels[indexPath.row].identifier)

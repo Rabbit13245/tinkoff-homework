@@ -10,6 +10,7 @@ class ChannelViewController: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.scrollTableToBottom()
             }
         }
     }
@@ -18,6 +19,8 @@ class ChannelViewController: UIViewController {
 
     private var keyboardHeight: CGFloat = 0
 
+    private var sendMessageButton: UIButton?
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
@@ -96,6 +99,12 @@ class ChannelViewController: UIViewController {
     }
 
     // MARK: - Private functions
+    private func scrollTableToBottom() {
+        if !self.messages.isEmpty {
+            self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+        }
+    }
+    
     private func loadMessages() {
         self.activityIndicator.startLoading()
 
@@ -171,9 +180,13 @@ class ChannelViewController: UIViewController {
         ])
 
         let buttonAdd = UIButton(type: .contactAdd)
+        
         let buttonSend = UIButton(type: .roundedRect)
         buttonSend.setTitle("Send", for: .normal)
         buttonSend.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
+        buttonSend.isEnabled = false
+        self.sendMessageButton = buttonSend
+        
         let stackView = UIStackView(arrangedSubviews: [buttonAdd, inputTextView, buttonSend])
         stackView.axis = .horizontal
         stackView.spacing = 10
@@ -213,12 +226,35 @@ class ChannelViewController: UIViewController {
         notificationCenter.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         notificationCenter.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    private func presentMessage(_ message: String) {
+        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+        alertController.applyTheme()
+
+        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        present(alertController, animated: true)
+    }
 }
 
 // MARK: - actions
 extension ChannelViewController {
+    @objc func messageTextFieldDidChange(_ textField: UITextField) {
+        self.sendMessageButton?.isEnabled = !textField.text.isBlank
+    }
+    
     @objc private func sendButtonPressed() {
-        DbManager.shared.sendMessage(self.inputTextView.text, to: self.channelId)
+        self.sendMessageButton?.isEnabled = false
+        DbManager.shared.sendMessage(self.inputTextView.text, to: self.channelId) { [weak self] error in
+            guard let safeSelf = self else { return }
+            safeSelf.sendMessageButton?.isEnabled = true
+            
+            if error != nil {
+                safeSelf.presentMessage("Error sending message")
+            }
+            else {
+                safeSelf.inputTextView.text = ""
+            }
+        }
     }
 }
 
@@ -365,5 +401,13 @@ extension ChannelViewController: UITextViewDelegate {
             textView.text = "Your message here..."
             textView.textColor = UIColor.lightGray
         }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText = textView.text ?? ""
+        let newText = currentText + text
+        self.sendMessageButton?.isEnabled = !newText.isBlank
+        
+        return true
     }
 }
