@@ -8,9 +8,16 @@ class ThemeManager{
     
     var theme: AppTheme {
         didSet{
-            guard theme != oldValue else {return}
-            UserDefaults.standard.setValue(theme.rawValue, forKey: SelectedThemeKey)
-            apply(for: UIApplication.shared)
+            guard theme != oldValue else { return }
+            
+            let queue = DispatchQueue.global(qos: .utility)
+            queue.async {
+                UserDefaults.standard.setValue(self.theme.rawValue, forKey: self.SelectedThemeKey)
+                
+                DispatchQueue.main.async {
+                    self.apply(for: UIApplication.shared)
+                }
+            }
         }
     }
     
@@ -52,7 +59,7 @@ class ThemeManager{
         
         UITableViewCell.appearance().backgroundColor =  theme.settings.backgroundColor
         
-        UITextView.appearance().backgroundColor = theme.settings.textFieldBackgroundColor
+        UITextView.appearance().backgroundColor = theme.settings.backgroundColor
         UITextView.appearance().textColor = theme.settings.labelColor
         
         UITextField.appearance().defaultTextAttributes = [NSAttributedString.Key.foregroundColor: theme.settings.labelColor]
@@ -67,6 +74,8 @@ class ThemeManager{
         
         AppBackgroundButton.appearance().backgroundColor = theme.settings.secondaryBackgroundColor
 
+        AppChatTextView.appearance().backgroundColor = theme.settings.textFieldBackgroundColor
+        
         application.windows.reload()
     }
     

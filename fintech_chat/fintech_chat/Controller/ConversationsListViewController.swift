@@ -2,6 +2,13 @@ import UIKit
 
 class ConversationsListViewController: UITableViewController {
     
+    var userName = "Dmitry Zaytcev"
+    
+    lazy var dataManagerFactory: DataManagerFactory = {
+        let dataManagerFactory = DataManagerFactory()
+        return dataManagerFactory
+    }()
+    
     lazy var dataGenerator: FakeDataGenerator = {
         let fakeDataGenerator = FakeDataGenerator()
         return fakeDataGenerator
@@ -23,14 +30,23 @@ class ConversationsListViewController: UITableViewController {
 //        view.addSubview(customView)
 //       let barButtom = UIBarButtonItem(customView: view)
         
+        
         // Для ios 12 получается только так
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.AppColors.yellowLogo;
-        button.setTitle(Helper.app.getInitials(from: "Dmitry Zaytcev"), for: .normal)
         button.setTitleColor(UIColor.AppColors.initialsColor, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
         button.layer.cornerRadius = button.frame.height / 2
         
+        let manager = dataManagerFactory.createDataManager(.GCD)
+        
+        manager.loadName{(name, error) in
+            if (!error){
+                self.userName = name
+            }
+            button.setTitle(Helper.app.getInitials(from: self.userName), for: .normal)
+        }
+
         let barButton = UIBarButtonItem(customView: button)
         barButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileButtonPressed)))
         return barButton
@@ -128,8 +144,27 @@ class ConversationsListViewController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = chatName
         
-        self.navigationItem.leftBarButtonItem = settingsBarButton
-        self.navigationItem.rightBarButtonItem = profileBarButton
+        self.navigationItem.leftBarButtonItem = self.settingsBarButton
+        
+        let manager = dataManagerFactory.createDataManager(.GCD)
+        
+        self.navigationItem.rightBarButtonItem = self.profileBarButton
+        
+        manager.loadImage { (image, error) in
+            if(!error){
+                let customView = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
+                customView.layer.cornerRadius = customView.frame.height / 2
+                let uiImageView = UIImageView(image: image)
+                uiImageView.layer.cornerRadius = customView.frame.height / 2
+                uiImageView.frame = customView.frame
+                uiImageView.contentMode = .scaleAspectFill
+                uiImageView.clipsToBounds = true
+                customView.addSubview(uiImageView)
+                let barButtonItem = UIBarButtonItem(customView: customView)
+                barButtonItem.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profileButtonPressed)))
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: customView)
+            }
+        }
         
 //        let searchController = UISearchController(searchResultsController: nil)
 //        searchController.searchBar.placeholder = "Search friends"
