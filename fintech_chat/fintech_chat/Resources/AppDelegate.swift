@@ -8,16 +8,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var previousState: UIApplication.State = .inactive
 
+    var coreDataStack = CoreDataStack()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         previousState = application.applicationState
-
-        FirebaseApp.configure()
-
+       
         if #available(iOS 13.0, *) {
             window?.overrideUserInterfaceStyle = .light
         }
 
-        ThemeManager.shared.apply(for: application)
+        setupApp(application)
 
         return true
     }
@@ -44,5 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         Logger.app.logMessage("application moved from 'Background' to 'Not runnig' or 'Suspended': \(#function)")
+    }
+}
+
+extension AppDelegate {
+    private func setupApp(_ application: UIApplication) {
+        ThemeManager.shared.apply(for: application)
+        FirebaseApp.configure()
     }
 }

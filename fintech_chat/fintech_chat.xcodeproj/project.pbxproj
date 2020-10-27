@@ -19,6 +19,7 @@
 		8448F538254832CA009F7983 /* ChannelDb+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448F536254832C9009F7983 /* ChannelDb+CoreDataProperties.swift */; };
 		8448F53B254832D1009F7983 /* MessageDb+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448F539254832D0009F7983 /* MessageDb+CoreDataClass.swift */; };
 		8448F53C254832D1009F7983 /* MessageDb+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448F53A254832D1009F7983 /* MessageDb+CoreDataProperties.swift */; };
+		8448F540254847A1009F7983 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448F53F254847A1009F7983 /* CoreDataStack.swift */; };
 		844EB08D2510DF5600AF0216 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EB08C2510DF5600AF0216 /* Logger.swift */; };
 		8451E4952536EED7003E95BA /* SaveDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451E4942536EED7003E95BA /* SaveDataOperation.swift */; };
 		8451E4972536EF0D003E95BA /* SaveStringOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451E4962536EF0D003E95BA /* SaveStringOperation.swift */; };
@@ -80,6 +81,7 @@
 		8448F536254832C9009F7983 /* ChannelDb+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChannelDb+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8448F539254832D0009F7983 /* MessageDb+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageDb+CoreDataClass.swift"; sourceTree = "<group>"; };
 		8448F53A254832D1009F7983 /* MessageDb+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageDb+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8448F53F254847A1009F7983 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		844EB08C2510DF5600AF0216 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		8451E4942536EED7003E95BA /* SaveDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDataOperation.swift; sourceTree = "<group>"; };
 		8451E4962536EF0D003E95BA /* SaveStringOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStringOperation.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				8428027B25347D750078723A /* DataManager */,
 				8467A60D250FAED400E36BEE /* AppDelegate.swift */,
 				F10FF08E253CC3EC00A0996B /* DbManager.swift */,
+				8448F53F254847A1009F7983 /* CoreDataStack.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 				F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */,
 				F136EF992517F10400F0818C /* LogLevels.swift in Sources */,
 				8442D3CA251B434600F01A1C /* UILabel.swift in Sources */,
+				8448F540254847A1009F7983 /* CoreDataStack.swift in Sources */,
 				84569933252DB45A001C10B1 /* AppLabel.swift in Sources */,
 				F10FF093253CD76400A0996B /* Message.swift in Sources */,
 				F13AC6C82534CCD400693985 /* OperationDataManager.swift in Sources */,
