@@ -292,7 +292,6 @@ extension ChannelViewController {
         }, completion: nil
         )
     }
-
 }
 
 // MARK: - Table view data source
