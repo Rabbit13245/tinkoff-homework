@@ -15,6 +15,10 @@
 		84489B76252C6E5500F3C80D /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84489B75252C6E5500F3C80D /* UIAlertController.swift */; };
 		8448DF7F252C9EFE00314A95 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448DF7E252C9EFE00314A95 /* AppView.swift */; };
 		8448F528254822BA009F7983 /* Chats.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8448F526254822BA009F7983 /* Chats.xcdatamodeld */; };
+		8448F537254832CA009F7983 /* ChannelDb+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448F535254832C9009F7983 /* ChannelDb+CoreDataClass.swift */; };
+		8448F538254832CA009F7983 /* ChannelDb+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448F536254832C9009F7983 /* ChannelDb+CoreDataProperties.swift */; };
+		8448F53B254832D1009F7983 /* MessageDb+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448F539254832D0009F7983 /* MessageDb+CoreDataClass.swift */; };
+		8448F53C254832D1009F7983 /* MessageDb+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448F53A254832D1009F7983 /* MessageDb+CoreDataProperties.swift */; };
 		844EB08D2510DF5600AF0216 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EB08C2510DF5600AF0216 /* Logger.swift */; };
 		8451E4952536EED7003E95BA /* SaveDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451E4942536EED7003E95BA /* SaveDataOperation.swift */; };
 		8451E4972536EF0D003E95BA /* SaveStringOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451E4962536EF0D003E95BA /* SaveStringOperation.swift */; };
@@ -72,6 +76,10 @@
 		84489B75252C6E5500F3C80D /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		8448DF7E252C9EFE00314A95 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		8448F527254822BA009F7983 /* Chats.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chats.xcdatamodel; sourceTree = "<group>"; };
+		8448F535254832C9009F7983 /* ChannelDb+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChannelDb+CoreDataClass.swift"; sourceTree = "<group>"; };
+		8448F536254832C9009F7983 /* ChannelDb+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChannelDb+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8448F539254832D0009F7983 /* MessageDb+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageDb+CoreDataClass.swift"; sourceTree = "<group>"; };
+		8448F53A254832D1009F7983 /* MessageDb+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageDb+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		844EB08C2510DF5600AF0216 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		8451E4942536EED7003E95BA /* SaveDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDataOperation.swift; sourceTree = "<group>"; };
 		8451E4962536EF0D003E95BA /* SaveStringOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveStringOperation.swift; sourceTree = "<group>"; };
@@ -188,6 +196,26 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		8448F53D254832D3009F7983 /* Channel */ = {
+			isa = PBXGroup;
+			children = (
+				F10FF090253CD74C00A0996B /* Channel.swift */,
+				8448F535254832C9009F7983 /* ChannelDb+CoreDataClass.swift */,
+				8448F536254832C9009F7983 /* ChannelDb+CoreDataProperties.swift */,
+			);
+			path = Channel;
+			sourceTree = "<group>";
+		};
+		8448F53E254832ED009F7983 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				F10FF092253CD76400A0996B /* Message.swift */,
+				8448F539254832D0009F7983 /* MessageDb+CoreDataClass.swift */,
+				8448F53A254832D1009F7983 /* MessageDb+CoreDataProperties.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
 		8451E4922536EE7F003E95BA /* Operation */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,12 +283,12 @@
 		849444DB251DE7DB00946D9F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8448F53E254832ED009F7983 /* Message */,
+				8448F53D254832D3009F7983 /* Channel */,
 				847E5FFF25232496008B8C27 /* ConfigurableView.swift */,
 				F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */,
 				F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */,
 				8451E4A32536F454003E95BA /* User.swift */,
-				F10FF090253CD74C00A0996B /* Channel.swift */,
-				F10FF092253CD76400A0996B /* Message.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -505,6 +533,7 @@
 				F10FF08F253CC3EC00A0996B /* DbManager.swift in Sources */,
 				F133F05F253F4BA500337D95 /* UITextField.swift in Sources */,
 				849444E0251DE86000946D9F /* ChannelsListViewController.swift in Sources */,
+				8448F53C254832D1009F7983 /* MessageDb+CoreDataProperties.swift in Sources */,
 				8451E4952536EED7003E95BA /* SaveDataOperation.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
 				F1391DAB252BA9B3007FC97D /* NightTheme.swift in Sources */,
@@ -519,6 +548,9 @@
 				849444E3251DF3C800946D9F /* ConversationTableViewCell.swift in Sources */,
 				F1391DA7252BA8AD007FC97D /* ClassicTheme.swift in Sources */,
 				F1391DA3252BA679007FC97D /* ThemeManager.swift in Sources */,
+				8448F53B254832D1009F7983 /* MessageDb+CoreDataClass.swift in Sources */,
+				8448F538254832CA009F7983 /* ChannelDb+CoreDataProperties.swift in Sources */,
+				8448F537254832CA009F7983 /* ChannelDb+CoreDataClass.swift in Sources */,
 				847E600025232496008B8C27 /* ConfigurableView.swift in Sources */,
 				F1391DA5252BA6F4007FC97D /* Theme.swift in Sources */,
 				F1D84D4C251E9804000A69AF /* UIColor.swift in Sources */,
