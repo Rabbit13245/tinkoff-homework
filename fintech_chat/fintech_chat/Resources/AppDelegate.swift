@@ -7,8 +7,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     var previousState: UIApplication.State = .inactive
-
-    var coreDataStack = CoreDataStack()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         previousState = application.applicationState
@@ -51,5 +49,13 @@ extension AppDelegate {
     private func setupApp(_ application: UIApplication) {
         ThemeManager.shared.apply(for: application)
         FirebaseApp.configure()
+        
+        CoreDataStack.shared.didUpdateDataBase = { stack in
+            stack.printStatistic()
+        }
+        
+        CoreDataStack.shared.enableObservers()
+        
+        CoreDataStack.shared.getChannels()
     }
 }

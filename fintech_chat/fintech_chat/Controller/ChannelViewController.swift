@@ -12,6 +12,7 @@ class ChannelViewController: UIViewController {
                 self.tableView.reloadData()
                 self.scrollTableToBottom()
             }
+            //saveMessagesToCoreData()
         }
     }
 
@@ -20,7 +21,7 @@ class ChannelViewController: UIViewController {
     private var keyboardHeight: CGFloat = 0
 
     private var sendMessageButton: UIButton?
-    
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
@@ -99,6 +100,15 @@ class ChannelViewController: UIViewController {
     }
 
     // MARK: - Private functions
+    private func saveMessagesToCoreData() {
+        self.messages.forEach { (singleMessage) in
+            CoreDataStack.shared.performSave { (context) in
+                _ = MessageDb(message: singleMessage,
+                              in: context)
+            }
+        }
+    }
+    
     private func scrollTableToBottom() {
         if !self.messages.isEmpty {
             self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)

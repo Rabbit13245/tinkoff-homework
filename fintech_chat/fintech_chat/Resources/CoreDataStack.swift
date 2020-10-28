@@ -2,11 +2,30 @@ import Foundation
 import CoreData
 
 class CoreDataStack {
+    
+    private static var instance: CoreDataStack?
+    
+    static var shared: CoreDataStack {
+        guard let instance = self.instance else {
+            let newInstance = CoreDataStack()
+            self.instance = newInstance
+            return newInstance
+        }
+        return instance
+    }
+    
+    private init() {}
+    
+    var didUpdateDataBase: ((CoreDataStack) -> Void)?
+    
     private var databaseUrl: URL = {
         guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             fatalError("Unable to read documents")
         }
-        return documentsUrl.appendingPathComponent("Chats.sqlite")
+        
+        let documentUrl = documentsUrl.appendingPathComponent("Chats.sqlite")
+        print(documentUrl)
+        return documentUrl
     }()
     
     private let modelName = "Chats"
@@ -53,11 +72,110 @@ class CoreDataStack {
         return context
     }()
     
-    private lazy var saveContext: NSManagedObjectContext = {
+    private func saveContext() -> NSManagedObjectContext {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.parent = self.mainContext
+        context.parent = mainContext
         context.automaticallyMergesChangesFromParent = true
-        context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+
         return context
-    }()
+    }
+    
+//    private lazy var saveContext: NSManagedObjectContext = {
+//        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+//        context.parent = mainContext
+//        context.automaticallyMergesChangesFromParent = true
+//        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+//
+//        return context
+//    }()
+    
+    // MARK: - Save Context
+    func performSave(_ block: (NSManagedObjectContext) -> Void) {
+        let context = saveContext()
+        context.performAndWait {
+            block(context)
+            if context.hasChanges {
+                performSave(in: context)
+            }
+        }
+    }
+    
+    private func performSave(in context: NSManagedObjectContext) {
+        context.performAndWait {
+            do {
+                try context.save()
+            } catch {
+                assertionFailure(error.localizedDescription)
+            }
+        }
+        if let parent = context.parent { performSave(in: parent) }
+    }
+    
+    // MARK: - Observers
+    func enableObservers() {
+        let notificationCenter = NotificationCenter.default
+        
+        notificationCenter.addObserver(self,
+                                       selector: #selector(managedObjectContextObjectsDidChange(notification:)),
+                                       name: NSNotification.Name.NSManagedObjectContextObjectsDidChange,
+                                       object: mainContext)
+    }
+    
+    @objc private func managedObjectContextObjectsDidChange(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else {return}
+        
+        didUpdateDataBase?(self)
+        
+        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>,
+            inserts.count > 0 {
+            Logger.app.logMessage("Added objects: \(inserts.count)", logLevel: .info)
+        }
+        
+        if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>,
+            updates.count > 0 {
+            Logger.app.logMessage("Updated objects: \(updates.count)", logLevel: .info)
+        }
+        
+        if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>,
+            deletes.count > 0 {
+            Logger.app.logMessage("Deleted objects: \(deletes.count)", logLevel: .info)
+        }
+    }
+    
+    // MARK: - Core Data Logs
+    func printStatistic() {
+        mainContext.perform {
+            do {
+                Logger.app.logMessage("Core Data Statistic", logLevel: .info)
+                
+                let count = try self.mainContext.count(for: ChannelDb.fetchRequest())
+                Logger.app.logMessage("\(count) channels", logLevel: .info)
+//                let array = try self.mainContext.fetch(ChannelDb.fetchRequest()) as? [ChannelDb] ?? []
+//                array.forEach {
+//                    Logger.app.logMessage($0.statistic, logLevel: .info)
+//                }
+//                let count = try self.mainContext.count(for: User.fetchRequest())
+//                Logger.app.logMessage("\(count) users", logLevel: .info)
+//                let array = try self.mainContext.fetch(User.fetchRequest()) as? [User] ?? []
+//                array.forEach {
+//                    Logger.app.logMessage($0.about, logLevel: .info)
+//                }
+            } catch {
+                fatalError(error.localizedDescription)
+            }
+        }
+    }
+    
+    // MARK: - Requests
+    func getChannels() {
+        do {
+            let context = mainContext
+            let channels = try context.fetch(ChannelDb.fetchRequest())
+            
+            Logger.app.logMessage("Channels from db: \(channels.count)", logLevel: .info)
+        } catch {
+            Logger.app.logMessage("Error", logLevel: .error)
+        }
+    }
 }

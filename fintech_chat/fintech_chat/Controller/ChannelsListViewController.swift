@@ -16,6 +16,7 @@ class ChannelsListViewController: UIViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
+            saveChannelsToCoreData()
         }
     }
 
@@ -109,6 +110,15 @@ class ChannelsListViewController: UIViewController {
     }
 
     // MARK: - Private functions
+    private func saveChannelsToCoreData() {
+        CoreDataStack.shared.performSave { [weak self] (context) in
+            guard let safeSelf = self else {return}
+            safeSelf.channels.forEach { (singleChannel) in
+                _ = ChannelDb(channel: singleChannel, in: context)
+            }
+        }
+    }
+    
     private func setupTable() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -125,9 +135,7 @@ class ChannelsListViewController: UIViewController {
         self.activityIndicator.startAnimating()
         
         DbManager.shared.getAllChannels { [weak self] (result) in
-            
             self?.activityIndicator.stopAnimating()
-            //self?.activityIndicator.removeFromSuperview()
             
             switch result {
             case .success(let channels):
@@ -140,7 +148,7 @@ class ChannelsListViewController: UIViewController {
                 self?.tableView.isHidden = false
                 self?.noChannelsLabel.isHidden = true
                 self?.channels = channels
-
+            
             case .failure:
                 self?.tableView.isHidden = true
                 self?.noChannelsLabel.isHidden = false
