@@ -149,12 +149,16 @@ class CoreDataStack {
             do {
                 Logger.app.logMessage("Core Data Statistic", logLevel: .info)
                 
-                let count = try self.mainContext.count(for: ChannelDb.fetchRequest())
-                Logger.app.logMessage("\(count) channels", logLevel: .info)
+                let countChannels = try self.mainContext.count(for: ChannelDb.fetchRequest())
+                Logger.app.logMessage("\(countChannels) channels", logLevel: .info)
 //                let array = try self.mainContext.fetch(ChannelDb.fetchRequest()) as? [ChannelDb] ?? []
 //                array.forEach {
 //                    Logger.app.logMessage($0.statistic, logLevel: .info)
 //                }
+                
+                let countMessages = try self.mainContext.count(for: MessageDb.fetchRequest())
+                Logger.app.logMessage("\(countMessages) messages", logLevel: .info)
+                
 //                let count = try self.mainContext.count(for: User.fetchRequest())
 //                Logger.app.logMessage("\(count) users", logLevel: .info)
 //                let array = try self.mainContext.fetch(User.fetchRequest()) as? [User] ?? []
@@ -168,14 +172,18 @@ class CoreDataStack {
     }
     
     // MARK: - Requests
-    func getChannels() {
+    func getChannel(with id: String, in context: NSManagedObjectContext) -> ChannelDb? {
         do {
-            let context = mainContext
-            let channels = try context.fetch(ChannelDb.fetchRequest())
+            let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
             
-            Logger.app.logMessage("Channels from db: \(channels.count)", logLevel: .info)
+            let predicate = NSPredicate(format: "identifier == %@", id)
+            request.predicate = predicate
+            
+            let channels = try context.fetch(request)
+            return channels.first
         } catch {
-            Logger.app.logMessage("Error", logLevel: .error)
+            Logger.app.logMessage("getChannel Error \(error.localizedDescription)", logLevel: .error)
+            return nil
         }
     }
 }

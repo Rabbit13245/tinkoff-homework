@@ -55,7 +55,5 @@ extension AppDelegate {
         }
         
         CoreDataStack.shared.enableObservers()
-        
-        CoreDataStack.shared.getChannels()
     }
 }

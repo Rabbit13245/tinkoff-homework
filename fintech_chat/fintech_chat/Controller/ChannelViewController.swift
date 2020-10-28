@@ -12,7 +12,7 @@ class ChannelViewController: UIViewController {
                 self.tableView.reloadData()
                 self.scrollTableToBottom()
             }
-            //saveMessagesToCoreData()
+            saveMessagesToCoreData()
         }
     }
 
@@ -101,11 +101,14 @@ class ChannelViewController: UIViewController {
 
     // MARK: - Private functions
     private func saveMessagesToCoreData() {
-        self.messages.forEach { (singleMessage) in
-            CoreDataStack.shared.performSave { (context) in
-                _ = MessageDb(message: singleMessage,
-                              in: context)
+        CoreDataStack.shared.performSave { [weak self] (context) in
+            guard let safeSelf = self,
+                let channelFromDb = CoreDataStack.shared.getChannel(with: safeSelf.channelId, in: context) else {return}
+            let messagesForAdd = safeSelf.messages.map {
+                MessageDb(message: $0, in: context)
             }
+            let setMessagesForAdd = NSSet(array: messagesForAdd)
+            channelFromDb.addToMessages(setMessagesForAdd)
         }
     }
     
