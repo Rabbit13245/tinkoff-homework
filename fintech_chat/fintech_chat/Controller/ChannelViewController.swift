@@ -103,18 +103,21 @@ class ChannelViewController: UIViewController {
     private func saveMessagesToCoreData() {
         guard let channelFromDb = CoreDataStack.shared.getChannel(with: self.channelId) else { return }
         
-        CoreDataStack.shared.performSave { [weak self] (context) in
-            guard let safeSelf = self,
-                let safeChannel = try? context.existingObject(with: channelFromDb.objectID) as? ChannelDb else {return}
-            
-            //            guard let safeSelf = self,
-            //                let safeChannel = CoreDataStack.shared.getChannel(with: safeSelf.channelId, in: context) else {return}
-            
-            let messagesForAdd = safeSelf.messages.map {
-                MessageDb(message: $0, in: context)
+        let queue = DispatchQueue.global(qos: .background)
+        queue.async {
+            CoreDataStack.shared.performSave { [weak self] (context) in
+                guard let safeSelf = self,
+                    let safeChannel = try? context.existingObject(with: channelFromDb.objectID) as? ChannelDb else {return}
+                
+                //            guard let safeSelf = self,
+                //                let safeChannel = CoreDataStack.shared.getChannel(with: safeSelf.channelId, in: context) else {return}
+                
+                let messagesForAdd = safeSelf.messages.map {
+                    MessageDb(message: $0, in: context)
+                }
+                let setMessagesForAdd = NSSet(array: messagesForAdd)
+                safeChannel.addToMessages(setMessagesForAdd)
             }
-            let setMessagesForAdd = NSSet(array: messagesForAdd)
-            safeChannel.addToMessages(setMessagesForAdd)
         }
     }
     

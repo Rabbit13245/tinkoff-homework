@@ -105,6 +105,7 @@ class CoreDataStack {
         context.performAndWait {
             do {
                 try context.save()
+                print("thread is main: \(Thread.isMainThread)")
             } catch {
                 assertionFailure(error.localizedDescription)
             }
