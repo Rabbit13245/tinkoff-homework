@@ -165,6 +165,8 @@ class CoreDataStack {
 //                array.forEach {
 //                    Logger.app.logMessage($0.about, logLevel: .info)
 //                }
+                
+                Logger.app.logMessage("", logLevel: .info)
             } catch {
                 fatalError(error.localizedDescription)
             }
@@ -172,14 +174,16 @@ class CoreDataStack {
     }
     
     // MARK: - Requests
-    func getChannel(with id: String, in context: NSManagedObjectContext) -> ChannelDb? {
+    func getChannel(with id: String, in context: NSManagedObjectContext? = nil) -> ChannelDb? {
         do {
             let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
             
             let predicate = NSPredicate(format: "identifier == %@", id)
             request.predicate = predicate
             
-            let channels = try context.fetch(request)
+            let contextForRequest = context ?? mainContext
+            let channels = try contextForRequest.fetch(request)
+            
             return channels.first
         } catch {
             Logger.app.logMessage("getChannel Error \(error.localizedDescription)", logLevel: .error)
