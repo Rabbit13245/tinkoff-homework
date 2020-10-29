@@ -16,7 +16,7 @@ public class MessageDb: NSManagedObject {
 
 extension MessageDb {
     var statistic: String {
-        let description = "[MessageId: \(self.id), senderName: \(self.senderName), time: \(self.created)]\nMessage text: \(self.content).\n"
+        let description = "[MessageId: \(self.id), senderName: \(self.senderName), time: \(self.created)]\nMessage text: \(self.content)"
         
         return description
     }
