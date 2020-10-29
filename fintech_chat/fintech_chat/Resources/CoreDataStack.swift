@@ -24,7 +24,7 @@ class CoreDataStack {
         }
         
         let documentUrl = documentsUrl.appendingPathComponent("Chats.sqlite")
-        print(documentUrl)
+        //print(documentUrl)
         return documentUrl
     }()
     
@@ -42,16 +42,13 @@ class CoreDataStack {
     private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
-        let queue = DispatchQueue.global(qos: .background)
-        queue.async {
-            do {
-                try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
-                                                   configurationName: nil,
-                                                   at: self.databaseUrl,
-                                                   options: nil)
-            } catch {
-                fatalError("Unable to load Persistent Store. \(error.localizedDescription)")
-            }
+        do {
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType,
+                                               configurationName: nil,
+                                               at: self.databaseUrl,
+                                               options: nil)
+        } catch {
+            fatalError("Unable to load Persistent Store. \(error.localizedDescription)")
         }
         
         return coordinator
@@ -139,12 +136,10 @@ extension CoreDataStack {
                 let countMessages = try self.mainContext.count(for: MessageDb.fetchRequest())
                 Logger.app.logMessage("✉️: \(countMessages) messages", logLevel: .info)
                 
-                let array = try self.mainContext.fetch(ChannelDb.fetchRequest()) as? [ChannelDb] ?? []
-                array.forEach {
-                    Logger.app.logMessage($0.statistic, logLevel: .info)
-                }
-                
-                Logger.app.logMessage("", logLevel: .info)
+//                let array = try self.mainContext.fetch(ChannelDb.fetchRequest()) as? [ChannelDb] ?? []
+//                array.forEach {
+//                    Logger.app.logMessage($0.statistic, logLevel: .info)
+//                }
             } catch {
                 fatalError(error.localizedDescription)
             }
