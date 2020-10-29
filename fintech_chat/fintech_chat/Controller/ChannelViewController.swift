@@ -424,17 +424,23 @@ extension ChannelViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let currentText = textView.text ?? ""
         let newText = currentText + text
+        var canSend = false
+
+        // удаляем что-то
+        if text == "" {
+            if newText != "",
+                let stringRange = Range(range, in: currentText) {
+                let newString = currentText.replacingCharacters(in: stringRange, with: text)
+                if !newString.isBlank {
+                    canSend = true
+                }
+            }
+        } else {
+            canSend = !newText.isBlank
+        }
         
-//        print("current \(currentText)")
-//        print("newText \(newText)")
-//        print("text \(text)")
-//        print(text == "")
-//
-//        let removeLastSymbol = currentText.count == 1 && text.isBlank || currentText.isBlank && text.isBlank
-//
-//        self.sendMessageButton?.isEnabled = !(newText.isBlank || removeLastSymbol)
-        
-        self.sendMessageButton?.isEnabled = !(newText.isBlank)
+        self.sendMessageButton?.isEnabled = canSend
+    
         return true
     }
 }
