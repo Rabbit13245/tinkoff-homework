@@ -136,10 +136,10 @@ extension CoreDataStack {
                 let countMessages = try self.mainContext.count(for: MessageDb.fetchRequest())
                 Logger.app.logMessage("✉️: \(countMessages) messages", logLevel: .info)
                 
-//                let array = try self.mainContext.fetch(ChannelDb.fetchRequest()) as? [ChannelDb] ?? []
-//                array.forEach {
-//                    Logger.app.logMessage($0.statistic, logLevel: .info)
-//                }
+                let array = try self.mainContext.fetch(ChannelDb.fetchRequest()) as? [ChannelDb] ?? []
+                array.forEach {
+                    Logger.app.logMessage($0.statistic, logLevel: .info)
+                }
             } catch {
                 fatalError(error.localizedDescription)
             }
