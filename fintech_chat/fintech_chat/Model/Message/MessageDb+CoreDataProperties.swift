@@ -7,6 +7,7 @@ extension MessageDb {
         return NSFetchRequest<MessageDb>(entityName: "MessageDb")
     }
 
+    @NSManaged public var id: String
     @NSManaged public var content: String
     @NSManaged public var created: Date
     @NSManaged public var senderId: String

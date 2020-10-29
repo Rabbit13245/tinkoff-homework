@@ -111,13 +111,13 @@ class ChannelsListViewController: UIViewController {
 
     // MARK: - Private functions
     private func saveChannelsToCoreData() {
-        let queue = DispatchQueue.global(qos: .background)
-        queue.async {
-            CoreDataStack.shared.performSave { [weak self] (context) in
-                guard let safeSelf = self else {return}
-                safeSelf.channels.forEach { (singleChannel) in
-                    _ = ChannelDb(channel: singleChannel, in: context)
-                }
+        CoreDataStack.shared.performSave { [weak self] (context) in
+            guard let safeSelf = self else {return}
+            
+            //_ = ChannelDb(channel: safeSelf.channels.first!, in: context)
+            
+            safeSelf.channels.forEach { (singleChannel) in
+                _ = ChannelDb(channel: singleChannel, in: context)
             }
         }
     }

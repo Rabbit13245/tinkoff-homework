@@ -15,19 +15,18 @@
     <entity name="MessageDb" representedClassName="MessageDb" syncable="YES">
         <attribute name="content" attributeType="String"/>
         <attribute name="created" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="String"/>
         <attribute name="senderId" attributeType="String"/>
         <attribute name="senderName" attributeType="String"/>
         <relationship name="channel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChannelDb" inverseName="messages" inverseEntity="ChannelDb"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
-                <constraint value="senderId"/>
-                <constraint value="created"/>
-                <constraint value="content"/>
+                <constraint value="id"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
     <elements>
         <element name="ChannelDb" positionX="-358.9765625" positionY="-194.9765625" width="128" height="118"/>
-        <element name="MessageDb" positionX="-69.03125" positionY="-21.96484375" width="128" height="118"/>
+        <element name="MessageDb" positionX="-69.03125" positionY="-21.96484375" width="128" height="133"/>
     </elements>
 </model>

@@ -74,46 +74,86 @@ class CoreDataStack {
     
     private func saveContext() -> NSManagedObjectContext {
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.parent = mainContext
+        context.parent = self.mainContext
         context.automaticallyMergesChangesFromParent = true
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
         return context
     }
     
-//    private lazy var saveContext: NSManagedObjectContext = {
-//        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-//        context.parent = mainContext
-//        context.automaticallyMergesChangesFromParent = true
-//        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-//
-//        return context
-//    }()
-    
     // MARK: - Save Context
-    func performSave(_ block: (NSManagedObjectContext) -> Void) {
+    func performSave(_ block: @escaping (NSManagedObjectContext) -> Void) {
         let context = saveContext()
-        context.performAndWait {
+        
+        context.perform {
             block(context)
             if context.hasChanges {
-                performSave(in: context)
+                self.performSave(in: context)
             }
         }
     }
     
     private func performSave(in context: NSManagedObjectContext) {
-        context.performAndWait {
+        context.perform {
             do {
+                //print("is main thread: \(Thread.isMainThread)")
                 try context.save()
-                print("thread is main: \(Thread.isMainThread)")
+                if let parent = context.parent {
+                    self.performSave(in: parent)
+                }
             } catch {
                 assertionFailure(error.localizedDescription)
             }
         }
-        if let parent = context.parent { performSave(in: parent) }
+        
     }
     
-    // MARK: - Observers
+    // MARK: - Requests
+    func getChannel(with id: String, in context: NSManagedObjectContext? = nil) -> ChannelDb? {
+        do {
+            let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
+            
+            let predicate = NSPredicate(format: "identifier == %@", id)
+            request.predicate = predicate
+            
+            let contextForRequest = context ?? mainContext
+            let channels = try contextForRequest.fetch(request)
+            
+            return channels.first
+        } catch {
+            Logger.app.logMessage("getChannel Error \(error.localizedDescription)", logLevel: .error)
+            return nil
+        }
+    }
+}
+
+// MARK: - Core Data Logs
+extension CoreDataStack {
+    func printStatistic() {
+        mainContext.perform {
+            do {
+                Logger.app.logMessage("Core Data Statistic", logLevel: .info)
+                
+                let countChannels = try self.mainContext.count(for: ChannelDb.fetchRequest())
+                Logger.app.logMessage("📱: \(countChannels) channels", logLevel: .info)
+                let countMessages = try self.mainContext.count(for: MessageDb.fetchRequest())
+                Logger.app.logMessage("✉️: \(countMessages) messages", logLevel: .info)
+                
+                let array = try self.mainContext.fetch(ChannelDb.fetchRequest()) as? [ChannelDb] ?? []
+                array.forEach {
+                    Logger.app.logMessage($0.statistic, logLevel: .info)
+                }
+                
+                Logger.app.logMessage("", logLevel: .info)
+            } catch {
+                fatalError(error.localizedDescription)
+            }
+        }
+    }
+}
+
+// MARK: - Observers
+extension CoreDataStack {
     func enableObservers() {
         let notificationCenter = NotificationCenter.default
         
@@ -141,54 +181,6 @@ class CoreDataStack {
         if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>,
             deletes.count > 0 {
             Logger.app.logMessage("Deleted objects: \(deletes.count)", logLevel: .info)
-        }
-    }
-    
-    // MARK: - Core Data Logs
-    func printStatistic() {
-        mainContext.perform {
-            do {
-                Logger.app.logMessage("Core Data Statistic", logLevel: .info)
-                
-                let countChannels = try self.mainContext.count(for: ChannelDb.fetchRequest())
-                Logger.app.logMessage("\(countChannels) channels", logLevel: .info)
-//                let array = try self.mainContext.fetch(ChannelDb.fetchRequest()) as? [ChannelDb] ?? []
-//                array.forEach {
-//                    Logger.app.logMessage($0.statistic, logLevel: .info)
-//                }
-                
-                let countMessages = try self.mainContext.count(for: MessageDb.fetchRequest())
-                Logger.app.logMessage("\(countMessages) messages", logLevel: .info)
-                
-//                let count = try self.mainContext.count(for: User.fetchRequest())
-//                Logger.app.logMessage("\(count) users", logLevel: .info)
-//                let array = try self.mainContext.fetch(User.fetchRequest()) as? [User] ?? []
-//                array.forEach {
-//                    Logger.app.logMessage($0.about, logLevel: .info)
-//                }
-                
-                Logger.app.logMessage("", logLevel: .info)
-            } catch {
-                fatalError(error.localizedDescription)
-            }
-        }
-    }
-    
-    // MARK: - Requests
-    func getChannel(with id: String, in context: NSManagedObjectContext? = nil) -> ChannelDb? {
-        do {
-            let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
-            
-            let predicate = NSPredicate(format: "identifier == %@", id)
-            request.predicate = predicate
-            
-            let contextForRequest = context ?? mainContext
-            let channels = try contextForRequest.fetch(request)
-            
-            return channels.first
-        } catch {
-            Logger.app.logMessage("getChannel Error \(error.localizedDescription)", logLevel: .error)
-            return nil
         }
     }
 }

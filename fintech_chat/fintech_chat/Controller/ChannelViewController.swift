@@ -102,22 +102,19 @@ class ChannelViewController: UIViewController {
     // MARK: - Private functions
     private func saveMessagesToCoreData() {
         guard let channelFromDb = CoreDataStack.shared.getChannel(with: self.channelId) else { return }
-        
-        let queue = DispatchQueue.global(qos: .background)
-        queue.async {
-            CoreDataStack.shared.performSave { [weak self] (context) in
-                guard let safeSelf = self,
-                    let safeChannel = try? context.existingObject(with: channelFromDb.objectID) as? ChannelDb else {return}
-                
-                //            guard let safeSelf = self,
-                //                let safeChannel = CoreDataStack.shared.getChannel(with: safeSelf.channelId, in: context) else {return}
-                
-                let messagesForAdd = safeSelf.messages.map {
-                    MessageDb(message: $0, in: context)
-                }
-                let setMessagesForAdd = NSSet(array: messagesForAdd)
-                safeChannel.addToMessages(setMessagesForAdd)
+    
+        CoreDataStack.shared.performSave { [weak self] (context) in
+            guard let safeSelf = self,
+                let safeChannel = try? context.existingObject(with: channelFromDb.objectID) as? ChannelDb else {return}
+            
+            //            guard let safeSelf = self,
+            //                let safeChannel = CoreDataStack.shared.getChannel(with: safeSelf.channelId, in: context) else {return}
+            
+            let messagesForAdd = safeSelf.messages.map {
+                MessageDb(message: $0, in: context)
             }
+            let setMessagesForAdd = NSSet(array: messagesForAdd)
+            safeChannel.addToMessages(setMessagesForAdd)
         }
     }
     
@@ -427,8 +424,17 @@ extension ChannelViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let currentText = textView.text ?? ""
         let newText = currentText + text
-        self.sendMessageButton?.isEnabled = !newText.isBlank
         
+//        print("current \(currentText)")
+//        print("newText \(newText)")
+//        print("text \(text)")
+//        print(text == "")
+//
+//        let removeLastSymbol = currentText.count == 1 && text.isBlank || currentText.isBlank && text.isBlank
+//
+//        self.sendMessageButton?.isEnabled = !(newText.isBlank || removeLastSymbol)
+        
+        self.sendMessageButton?.isEnabled = !(newText.isBlank)
         return true
     }
 }

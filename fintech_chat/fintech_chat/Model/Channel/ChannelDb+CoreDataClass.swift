@@ -15,15 +15,13 @@ public class ChannelDb: NSManagedObject {
 
 extension ChannelDb {
     var statistic: String {
-        let description = "Id: \(self.identifier), name: \(self.name).\n"
+        let description = "📱 Id: \(self.identifier), name: \(self.name), last message: \"\(String(describing: lastMessage))\" at \(String(describing: lastActivity))\n"
         
-        if let lastMessage = self.lastMessage,
-            let lastActivity = self.lastActivity {
-            let messageDescription = "Last message: \"\(lastMessage)\" at \(lastActivity)"
-            
-            return description + messageDescription
-        }
+        let messages = self.messages?.allObjects
+            .compactMap { $0 as? MessageDb }
+            .map { "✉️ \($0.statistic)" }
+            .joined(separator: "\n") ?? ""
         
-        return description
+        return description + messages
     }
 }
