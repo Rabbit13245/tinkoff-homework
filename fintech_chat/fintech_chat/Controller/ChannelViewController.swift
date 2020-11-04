@@ -1,4 +1,5 @@
 import UIKit
+import CoreData
 
 class ChannelViewController: UIViewController {
 
@@ -71,6 +72,23 @@ class ChannelViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    private lazy var fetchedResultController: NSFetchedResultsController<MessageDb> = {
+        let request: NSFetchRequest<MessageDb> = MessageDb.fetchRequest()
+        let sort = NSSortDescriptor(key: "created", ascending: true)
+        request.sortDescriptors = [sort]
+
+        let predicate = NSPredicate(format: "channel.identifier == %@", self.channelId)
+        request.predicate = predicate
+        
+        let frc = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: CoreDataStack.shared.mainContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return frc
+    }()
 
     init(channelName: String, channelId: String) {
         self.channelName = channelName
@@ -96,7 +114,15 @@ class ChannelViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        loadMessages()
+        
+        do {
+            try fetchedResultController.performFetch()
+            self.tableView.reloadData()
+        } catch {
+            Logger.app.logMessage("FRC messages error: \(error.localizedDescription)", logLevel: .error)
+        }
+        
+        //loadMessagesFromFirebase()
     }
 
     // MARK: - Private functions
@@ -119,12 +145,13 @@ class ChannelViewController: UIViewController {
     }
     
     private func scrollTableToBottom() {
+        // todo: - не сделано
         if !self.messages.isEmpty {
             self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
         }
     }
     
-    private func loadMessages() {
+    private func loadMessagesFromFirebase() {
         self.activityIndicator.startAnimating()
 
         DbManager.shared.getAllMessages(from: self.channelId) {[weak self] (result) in
@@ -317,20 +344,23 @@ extension ChannelViewController {
 extension ChannelViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return fetchedResultController.sections?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return fetchedResultController.sections?[section].numberOfObjects ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier:
-            String(describing: MessageTableViewCell.self),
-                                                       for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: String(describing: MessageTableViewCell.self),
+            for: indexPath)
             as? MessageTableViewCell else { return UITableViewCell() }
 
-        let messageCellModel = MessageCellModel(message: self.messages[indexPath.row])
+        //let message = self.messages[indexPath.row]
+        let messageDb = fetchedResultController.object(at: indexPath)
+        let message = Message(messageDb)
+        let messageCellModel = MessageCellModel(message: message)
 
         cell.configure(with: messageCellModel)
 
@@ -381,7 +411,11 @@ extension ChannelViewController: UITableViewDataSource {
 extension ChannelViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
-        let messageCellModel = MessageCellModel(message: self.messages[indexPath.row])
+        //let message = self.messages[indexPath.row]
+        let messageDb = fetchedResultController.object(at: indexPath)
+        let message = Message(messageDb)
+        
+        let messageCellModel = MessageCellModel(message: message)
 
         let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)

@@ -1,10 +1,11 @@
 import UIKit
 import Firebase
+import CoreData
 
 class ChannelsListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-
+    
     private var userName = ""
 
     private let chatName = "Channels"
@@ -22,6 +23,23 @@ class ChannelsListViewController: UIViewController {
 
     private var createChannelAction: UIAlertAction?
 
+    private lazy var fetchedResultController: NSFetchedResultsController<ChannelDb> = {
+        let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
+        let sort = NSSortDescriptor(key: "lastActivity", ascending: false)
+        
+        request.sortDescriptors = [sort]
+        request.fetchBatchSize = 30
+        
+        let frc = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: CoreDataStack.shared.mainContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        //frc.delegate = self
+        
+        return frc
+    }()
+    
     private lazy var dataManagerFactory: DataManagerFactory = {
         let dataManagerFactory = DataManagerFactory()
         return dataManagerFactory
@@ -92,7 +110,8 @@ class ChannelsListViewController: UIViewController {
 
         setupUI()
         setupTable()
-        getChannels()
+        getCacheChannels()
+        // getChannelsFromFirebase()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -134,7 +153,16 @@ class ChannelsListViewController: UIViewController {
         self.tableView.tableFooterView = AppView()
     }
 
-    private func getChannels() {
+    private func getCacheChannels() {
+        do {
+            try fetchedResultController.performFetch()
+            self.tableView.reloadData()
+        } catch {
+            Logger.app.logMessage("FRC channels error: \(error.localizedDescription)", logLevel: .error)
+        }
+    }
+    
+    private func getChannelsFromFirebase() {
         self.activityIndicator.startAnimating()
         
         DbManager.shared.getAllChannels { [weak self] (result) in
@@ -276,11 +304,12 @@ extension ChannelsListViewController {
 extension ChannelsListViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return fetchedResultController.sections?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return channels.count
+        guard let sectionInfo = fetchedResultController.sections?[section] else { return 0 }
+        return sectionInfo.numberOfObjects
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -289,8 +318,10 @@ extension ChannelsListViewController: UITableViewDataSource {
             withIdentifier: String(describing: ConversationTableViewCell.self),
             for: indexPath) as? ConversationTableViewCell else {return UITableViewCell()}
 
-        let cellData = self.channels[indexPath.row]
-
+        //let cellData = self.channels[indexPath.row]
+        let channelDb = fetchedResultController.object(at: indexPath)
+        let cellData = Channel(channelDb)
+        
         cell.configure(with: cellData)
 
         return cell
@@ -305,7 +336,9 @@ extension ChannelsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        let controller = ChannelViewController(channelName: channels[indexPath.row].name, channelId: channels[indexPath.row].identifier)
+        let channelDb = fetchedResultController.object(at: indexPath)
+        
+        let controller = ChannelViewController(channelName: channelDb.name, channelId: channelDb.identifier)
 
         self.navigationController?.pushViewController(controller, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)

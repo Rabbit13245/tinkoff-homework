@@ -22,4 +22,12 @@ struct Message {
         self.senderId = senderId
         self.senderName = senderName
     }
+    
+    init(_ data: MessageDb) {
+        self.id = data.id
+        self.content = data.content
+        self.created = data.created
+        self.senderId = data.senderId
+        self.senderName = data.senderName
+    }
 }

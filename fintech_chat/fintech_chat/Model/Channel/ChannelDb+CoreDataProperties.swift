@@ -12,7 +12,6 @@ extension ChannelDb {
     @NSManaged public var lastMessage: String?
     @NSManaged public var name: String
     @NSManaged public var messages: NSSet?
-
 }
 
 // MARK: Generated accessors for messages
