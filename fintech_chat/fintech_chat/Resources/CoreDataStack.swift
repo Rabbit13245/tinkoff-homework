@@ -85,6 +85,12 @@ class CoreDataStack {
         context.perform {
             block(context)
             if context.hasChanges {
+                
+                do {
+                    try context.obtainPermanentIDs(for: Array(context.insertedObjects))
+                } catch {
+                    print("FFFFF")
+                }
                 self.performSave(in: context)
             }
         }
@@ -94,6 +100,7 @@ class CoreDataStack {
         context.perform {
             do {
                 //print("is main thread: \(Thread.isMainThread)")
+                
                 try context.save()
                 if let parent = context.parent {
                     self.performSave(in: parent)

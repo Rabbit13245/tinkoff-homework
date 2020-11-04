@@ -111,7 +111,7 @@ class ChannelsListViewController: UIViewController {
         setupUI()
         setupTable()
         getCacheChannels()
-        // getChannelsFromFirebase()
+        getChannelsFromFirebase()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -381,12 +381,12 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
         switch type {
         case .insert:
             if let newIndexPath = newIndexPath {
-                Logger.app.logMessage("Insert", logLevel: .info)
+                Logger.app.logMessage("Insert \(newIndexPath)", logLevel: .info)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         case .delete:
             if let indexPath = indexPath {
-                Logger.app.logMessage("Delete", logLevel: .info)
+                Logger.app.logMessage("Delete \(indexPath)", logLevel: .info)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         case .move:
