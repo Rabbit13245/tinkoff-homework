@@ -35,7 +35,7 @@ class ChannelsListViewController: UIViewController {
             managedObjectContext: CoreDataStack.shared.mainContext,
             sectionNameKeyPath: nil,
             cacheName: nil)
-        //frc.delegate = self
+        frc.delegate = self
         
         return frc
     }()
@@ -361,4 +361,57 @@ extension ChannelsListViewController: UITableViewDelegate {
 //    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 //        return 35
 //    }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
+    /// Начало изменения
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    /// Изменение объекта
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            if let newIndexPath = newIndexPath {
+                Logger.app.logMessage("Insert", logLevel: .info)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                Logger.app.logMessage("Delete", logLevel: .info)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+        case .move:
+            if let newIndexPath = newIndexPath,
+                let oldIndexPath = indexPath {
+                Logger.app.logMessage("Move", logLevel: .info)
+                tableView.deleteRows(at: [oldIndexPath], with: .automatic)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
+        case .update:
+            if let indexPath = indexPath,
+                let cell = tableView.cellForRow(at: indexPath) as? ConversationTableViewCell {
+                Logger.app.logMessage("Update", logLevel: .info)
+                
+                let channelDb = fetchedResultController.object(at: indexPath)
+                let cellData = Channel(channelDb)
+                cell.configure(with: cellData)
+            }
+        default:
+            break
+        }
+    }
+    
+    /// Конец изменения
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
 }
