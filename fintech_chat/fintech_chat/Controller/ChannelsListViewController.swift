@@ -12,6 +12,9 @@ class ChannelsListViewController: UIViewController {
     
     private var createChannelAction: UIAlertAction?
 
+    /// Флаг первого запроса к firebase для актуализации данных
+    private var fistRequest = true
+    
     private lazy var fetchedResultController: NSFetchedResultsController<ChannelDb> = {
         let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
         let sort = NSSortDescriptor(key: "lastActivity", ascending: false)
@@ -95,7 +98,21 @@ class ChannelsListViewController: UIViewController {
         setupUI()
         setupTable()
         getCacheChannels()
-        getChannelsFromFirebase()
+        
+        if fistRequest {
+            FirebaseManager.shared.getAllChannelsFirstTime { [weak self] (result) in
+                switch result {
+                case .success(let channels):
+                    channels.forEach {
+                        print($0.name)
+                    }
+                case .failure:
+                    self?.presentMessage("Error first time getting channels from firebase")
+                }
+            }
+        } else {
+            subscribeChannelsFromFirebase()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -137,8 +154,7 @@ class ChannelsListViewController: UIViewController {
         }
     }
     
-    private func getChannelsFromFirebase() {
-        
+    private func subscribeChannelsFromFirebase() {
         FirebaseManager.shared.getAllChannels { [weak self] (result) in
             switch result {
             case .success(let documentChanges):
