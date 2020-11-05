@@ -165,7 +165,7 @@ class ChannelsListViewController: UIViewController {
                 CoreDataStack.shared.modifyChannels(modified)
                 
             case .failure:
-                self?.noChannelsLabel.isHidden = false
+                self?.presentMessage("Error getting channels from firebase")
             }
         }
     }
