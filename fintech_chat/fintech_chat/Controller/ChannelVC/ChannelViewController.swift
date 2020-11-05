@@ -3,20 +3,14 @@ import CoreData
 
 class ChannelViewController: UIViewController {
 
-    private var channelName: String
+    //private var channelName: String
 
-    private var channelId: String
+    /// id в firebase
+    //private var channelId: String
 
-    private var messages = [Message]() {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.scrollTableToBottom()
-            }
-            saveMessagesToCoreData()
-        }
-    }
-
+    /// Канал, по которому будем выводить сообщения
+    private var channel: ChannelDb
+    
     private let cellIdentifier = String(describing: MessageTableViewCell.self)
 
     private var keyboardHeight: CGFloat = 0
@@ -28,7 +22,7 @@ class ChannelViewController: UIViewController {
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
-
+        
         return tableView
     }()
 
@@ -78,7 +72,7 @@ class ChannelViewController: UIViewController {
         let sort = NSSortDescriptor(key: "created", ascending: true)
         request.sortDescriptors = [sort]
 
-        let predicate = NSPredicate(format: "channel.identifier == %@", self.channelId)
+        let predicate = NSPredicate(format: "channel.identifier == %@", self.channel.identifier)
         request.predicate = predicate
         
         let frc = NSFetchedResultsController(
@@ -87,12 +81,13 @@ class ChannelViewController: UIViewController {
             sectionNameKeyPath: nil,
             cacheName: nil)
         
+        frc.delegate = self
+        
         return frc
     }()
 
-    init(channelName: String, channelId: String) {
-        self.channelName = channelName
-        self.channelId = channelId
+    init(channel: ChannelDb) {
+        self.channel = channel
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -104,16 +99,6 @@ class ChannelViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-
-        unsubscribeKeyboardNotifications()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
         do {
             try fetchedResultController.performFetch()
@@ -122,56 +107,61 @@ class ChannelViewController: UIViewController {
             Logger.app.logMessage("FRC messages error: \(error.localizedDescription)", logLevel: .error)
         }
         
-        //loadMessagesFromFirebase()
+        loadMessagesFromFirebase()
     }
 
-    // MARK: - Private functions
-    private func saveMessagesToCoreData() {
-        guard let channelFromDb = CoreDataStack.shared.getChannel(with: self.channelId) else { return }
-    
-        CoreDataStack.shared.performSave { [weak self] (context) in
-            guard let safeSelf = self,
-                let safeChannel = try? context.existingObject(with: channelFromDb.objectID) as? ChannelDb else {return}
-            
-            //            guard let safeSelf = self,
-            //                let safeChannel = CoreDataStack.shared.getChannel(with: safeSelf.channelId, in: context) else {return}
-            
-            let messagesForAdd = safeSelf.messages.map {
-                MessageDb(message: $0, in: context)
-            }
-            let setMessagesForAdd = NSSet(array: messagesForAdd)
-            safeChannel.addToMessages(setMessagesForAdd)
-        }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        unsubscribeKeyboardNotifications()
     }
-    
+
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//
+//        do {
+//            self.activityIndicator.startAnimating()
+//            try fetchedResultController.performFetch()
+//            self.tableView.reloadData()
+//            self.activityIndicator.stopAnimating()
+//        } catch {
+//            Logger.app.logMessage("FRC messages error: \(error.localizedDescription)", logLevel: .error)
+//        }
+//
+//        loadMessagesFromFirebase()
+//    }
+
+    // MARK: - Private functions
     private func scrollTableToBottom() {
         // todo: - не сделано
-        if !self.messages.isEmpty {
-            self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
-        }
+//        if !self.messages.isEmpty {
+//            self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+//        }
     }
     
     private func loadMessagesFromFirebase() {
-        self.activityIndicator.startAnimating()
-
-        DbManager.shared.getAllMessages(from: self.channelId) {[weak self] (result) in
+        FirebaseManager.shared.getAllMessages(from: self.channel.identifier) {[weak self] (result) in
             guard let safeSelf = self else { return }
-            safeSelf.activityIndicator.stopAnimating()
-            
             switch result {
-            case .success(let messages):
-                guard !messages.isEmpty else {
-                    safeSelf.tableView.isHidden = true
-                    safeSelf.noMessagesLabel.isHidden = false
-                    return
+            case .success(let documentChanges):
+                var modified = [Message]()
+                var added = [Message]()
+                var removed = [Message]()
+                
+                for change in documentChanges {
+                    guard let channel = Message(change.document) else { continue }
+                    switch change.type {
+                    case .added:
+                        added.append(channel)
+                    case .removed:
+                        removed.append(channel)
+                    case .modified:
+                        modified.append(channel)
+                    }
                 }
-                safeSelf.tableView.isHidden = false
-                safeSelf.noMessagesLabel.isHidden = true
-
-                safeSelf.messages = messages
-
+                
+                CoreDataStack.shared.addNewMessages(added, for: safeSelf.channel.objectID)
             case .failure:
-                safeSelf.tableView.isHidden = true
                 safeSelf.noMessagesLabel.isHidden = false
             }
         }
@@ -204,7 +194,7 @@ class ChannelViewController: UIViewController {
     private func setupTableView() {
         self.tableView.tableFooterView = AppView()
         self.tableView.separatorStyle = .none
-
+        
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -213,6 +203,8 @@ class ChannelViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -80)
         ])
+        
+        print("setupTableView")
     }
 
     private func setupInputView() {
@@ -255,7 +247,7 @@ class ChannelViewController: UIViewController {
         self.navigationItem.largeTitleDisplayMode = .never
 
         let label = AppLabel()
-        label.text = channelName
+        label.text = channel.name
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textAlignment = .center
 
@@ -291,7 +283,7 @@ extension ChannelViewController {
     
     @objc private func sendButtonPressed() {
         self.sendMessageButton?.isEnabled = false
-        DbManager.shared.sendMessage(self.inputTextView.text, to: self.channelId) { [weak self] error in
+        FirebaseManager.shared.sendMessage(self.inputTextView.text, to: self.channel.identifier) { [weak self] error in
             guard let safeSelf = self else { return }
             safeSelf.sendMessageButton?.isEnabled = true
             
