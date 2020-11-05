@@ -17,9 +17,9 @@ class ChannelsListViewController: UIViewController {
     
     private lazy var fetchedResultController: NSFetchedResultsController<ChannelDb> = {
         let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
-        let sort = NSSortDescriptor(key: "lastActivity", ascending: false)
         
-        request.sortDescriptors = [sort]
+        request.sortDescriptors = [.init(key: "lastActivity", ascending: false),
+                                   .init(key: "name", ascending: true)]
         request.fetchBatchSize = 30
         
         let frc = NSFetchedResultsController(
@@ -40,7 +40,7 @@ class ChannelsListViewController: UIViewController {
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.style = .whiteLarge
-        activityIndicator.isHidden = true
+        activityIndicator.isHidden = false
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
 
         return activityIndicator
@@ -149,6 +149,7 @@ class ChannelsListViewController: UIViewController {
             try fetchedResultController.performFetch()
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
         } catch {
             Logger.app.logMessage("FRC channels error: \(error.localizedDescription)", logLevel: .error)
         }
@@ -297,7 +298,7 @@ extension ChannelsListViewController {
             present(alertController, animated: true)
         } else {
             dismiss(animated: true) {
-                present(alertController, animated: true)
+                self.present(alertController, animated: true)
             }
         }
     }
@@ -380,19 +381,19 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
         case .insert:
             if let newIndexPath = newIndexPath {
                 Logger.app.logMessage("ChannelList Insert \(newIndexPath)", logLevel: .debug)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
+                tableView.insertRows(at: [newIndexPath], with: .fade)
             }
         case .delete:
             if let indexPath = indexPath {
                 Logger.app.logMessage("ChannelList Delete \(indexPath)", logLevel: .debug)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.deleteRows(at: [indexPath], with: .fade)
             }
         case .move:
             if let newIndexPath = newIndexPath,
                 let oldIndexPath = indexPath {
                 Logger.app.logMessage("ChannelList Move", logLevel: .debug)
-                tableView.deleteRows(at: [oldIndexPath], with: .automatic)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
+                tableView.deleteRows(at: [oldIndexPath], with: .fade)
+                tableView.insertRows(at: [newIndexPath], with: .fade)
             }
         case .update:
             if let indexPath = indexPath {
