@@ -9,8 +9,6 @@ class ChannelsListViewController: UIViewController {
     private var userName = ""
 
     private let chatName = "Channels"
-
-    private var firstShow = true
     
     private var createChannelAction: UIAlertAction?
 
@@ -329,8 +327,6 @@ extension ChannelsListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Logger.app.logMessage("Tap on channel: \(indexPath)", logLevel: .info)
-        
         let channelDb = fetchedResultController.object(at: indexPath)
         let controller = ChannelViewController(channel: channelDb)
 
@@ -343,6 +339,8 @@ extension ChannelsListViewController: UITableViewDelegate {
 extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
     /// Начало изменения
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard self.isViewLoaded,
+                self.view.window != nil else { return }
         tableView.beginUpdates()
     }
     
@@ -353,7 +351,8 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
         at indexPath: IndexPath?,
         for type: NSFetchedResultsChangeType,
         newIndexPath: IndexPath?) {
-        
+        guard self.isViewLoaded,
+        self.view.window != nil else { return }
         switch type {
         case .insert:
             if let newIndexPath = newIndexPath {
@@ -362,7 +361,7 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
             }
         case .delete:
             if let indexPath = indexPath {
-//                Logger.app.logMessage("ChannelList Delete \(indexPath)", logLevel: .debug)
+                Logger.app.logMessage("ChannelList Delete \(indexPath)", logLevel: .debug)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         case .move:
@@ -377,14 +376,6 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
                 Logger.app.logMessage("ChannelList Update \(indexPath)", logLevel: .debug)
                 tableView.reloadRows(at: [indexPath], with: .automatic)
             }
-//            if let indexPath = indexPath,
-//                let cell = tableView.cellForRow(at: indexPath) as? ConversationTableViewCell {
-////
-//
-//                let channelDb = fetchedResultController.object(at: indexPath)
-//                let cellData = Channel(channelDb)
-//                cell.configure(with: cellData)
-//            }
         default:
             break
         }
@@ -392,6 +383,8 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
     
     /// Конец изменения
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        guard self.isViewLoaded,
+        self.view.window != nil else { return }
         tableView.endUpdates()
     }
 }
