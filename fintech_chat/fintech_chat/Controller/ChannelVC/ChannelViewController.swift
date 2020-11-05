@@ -116,21 +116,6 @@ class ChannelViewController: UIViewController {
         unsubscribeKeyboardNotifications()
     }
 
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        do {
-//            self.activityIndicator.startAnimating()
-//            try fetchedResultController.performFetch()
-//            self.tableView.reloadData()
-//            self.activityIndicator.stopAnimating()
-//        } catch {
-//            Logger.app.logMessage("FRC messages error: \(error.localizedDescription)", logLevel: .error)
-//        }
-//
-//        loadMessagesFromFirebase()
-//    }
-
     // MARK: - Private functions
     private func scrollTableToBottom() {
         // todo: - не сделано
@@ -203,8 +188,6 @@ class ChannelViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -80)
         ])
-        
-        print("setupTableView")
     }
 
     private func setupInputView() {
@@ -390,26 +373,25 @@ extension ChannelViewController: NSFetchedResultsControllerDelegate {
         switch type {
         case .insert:
             if let newIndexPath = newIndexPath {
-                Logger.app.logMessage("Insert", logLevel: .info)
+//                Logger.app.logMessage("Insert", logLevel: .info)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         case .delete:
             if let indexPath = indexPath {
-                Logger.app.logMessage("Delete", logLevel: .info)
+//                Logger.app.logMessage("Delete", logLevel: .info)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         case .move:
             if let newIndexPath = newIndexPath,
                 let oldIndexPath = indexPath {
-                Logger.app.logMessage("Move", logLevel: .info)
+//                Logger.app.logMessage("Move", logLevel: .info)
                 tableView.deleteRows(at: [oldIndexPath], with: .automatic)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         case .update:
             if let indexPath = indexPath,
                 let cell = tableView.cellForRow(at: indexPath) as? MessageTableViewCell {
-                Logger.app.logMessage("Update", logLevel: .info)
-                
+//                Logger.app.logMessage("Update", logLevel: .info)
                 let messageDb = fetchedResultController.object(at: indexPath)
                 let message = Message(messageDb)
                 let messageCellModel = MessageCellModel(message: message)

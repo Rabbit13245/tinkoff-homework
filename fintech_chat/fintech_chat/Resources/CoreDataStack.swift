@@ -152,7 +152,12 @@ extension CoreDataStack {
     
     /// Удалить каналы
     func removeChannels(_ channels: [Channel]) {
-        
+        performSave { (context) in
+            channels.forEach { (singleChannel) in
+                guard let channelForRemove = self.getChannel(with: singleChannel.identifier, in: context) else { return }
+                context.delete(channelForRemove)
+            }
+        }
     }
 }
 

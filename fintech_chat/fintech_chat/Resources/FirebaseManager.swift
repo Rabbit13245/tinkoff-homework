@@ -5,6 +5,7 @@ public enum DatabaseError: Error {
     case failedToRead
     case failedToSend
     case failedToCreateChannel
+    case failedToRemoveChannel
     public var description: String {
         switch self {
         case .failedToRead:
@@ -15,6 +16,8 @@ public enum DatabaseError: Error {
             
         case .failedToCreateChannel:
             return "Error creating channel"
+        case .failedToRemoveChannel:
+            return "Error removing channel"
         }
     }
 }
@@ -62,6 +65,16 @@ extension FirebaseManager {
             if let safeError = error {
                 Logger.app.logMessage("Create channel error: \(safeError.localizedDescription)", logLevel: .error)
                 completion(DatabaseError.failedToCreateChannel)
+            }
+            completion(nil)
+        }
+    }
+    
+    public func removeChannel(with channelId: String, completion: @escaping ((Error?) -> Void)) {
+        channels.document(channelId).delete { (error) in
+            if let safeError = error {
+                Logger.app.logMessage("Create channel error: \(safeError.localizedDescription)", logLevel: .error)
+                completion(DatabaseError.failedToRemoveChannel)
             }
             completion(nil)
         }

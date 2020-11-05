@@ -309,6 +309,17 @@ extension ChannelsListViewController: UITableViewDataSource {
 
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let channelForRemove = fetchedResultController.object(at: indexPath)
+                        
+            FirebaseManager.shared.removeChannel(with: channelForRemove.identifier) { [weak self] (error) in
+                guard error != nil else {return}
+                self?.presentMessage("Error removing channel")
+            }
+        }
+    }
 }
 
 // MARK: - Table view delegate
@@ -318,7 +329,8 @@ extension ChannelsListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        Logger.app.logMessage("Tap on channel: \(indexPath)", logLevel: .info)
+        
         let channelDb = fetchedResultController.object(at: indexPath)
         let controller = ChannelViewController(channel: channelDb)
 
@@ -345,30 +357,34 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
         switch type {
         case .insert:
             if let newIndexPath = newIndexPath {
-//                Logger.app.logMessage("Insert \(newIndexPath)", logLevel: .info)
+                Logger.app.logMessage("ChannelList Insert \(newIndexPath)", logLevel: .info)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         case .delete:
             if let indexPath = indexPath {
-//                Logger.app.logMessage("Delete \(indexPath)", logLevel: .info)
+//                Logger.app.logMessage("ChannelList Delete \(indexPath)", logLevel: .info)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         case .move:
             if let newIndexPath = newIndexPath,
                 let oldIndexPath = indexPath {
-//                Logger.app.logMessage("Move", logLevel: .info)
+                Logger.app.logMessage("ChannelList Move", logLevel: .info)
                 tableView.deleteRows(at: [oldIndexPath], with: .automatic)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         case .update:
-            if let indexPath = indexPath,
-                let cell = tableView.cellForRow(at: indexPath) as? ConversationTableViewCell {
-//                Logger.app.logMessage("Update", logLevel: .info)
-                
-                let channelDb = fetchedResultController.object(at: indexPath)
-                let cellData = Channel(channelDb)
-                cell.configure(with: cellData)
+            if let indexPath = indexPath {
+                Logger.app.logMessage("ChannelList Update \(indexPath)", logLevel: .info)
+                //tableView.reloadRows(at: [indexPath], with: .automatic)
             }
+//            if let indexPath = indexPath,
+//                let cell = tableView.cellForRow(at: indexPath) as? ConversationTableViewCell {
+////
+//
+//                let channelDb = fetchedResultController.object(at: indexPath)
+//                let cellData = Channel(channelDb)
+//                cell.configure(with: cellData)
+//            }
         default:
             break
         }
