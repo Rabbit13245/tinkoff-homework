@@ -47,7 +47,7 @@ class ChannelViewController: UIViewController {
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.style = .whiteLarge
-        activityIndicator.isHidden = true
+        activityIndicator.isHidden = false
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
 
         return activityIndicator
@@ -90,17 +90,12 @@ class ChannelViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         
-        do {
-            try fetchedResultController.performFetch()
-            self.tableView.reloadData()
-        } catch {
-            Logger.app.logMessage("FRC messages error: \(error.localizedDescription)", logLevel: .error)
-        }
+        getCachedMessages()
         
         loadMessagesFromFirebase()
     }
@@ -119,6 +114,18 @@ class ChannelViewController: UIViewController {
             elementsNumber > 0 else { return }
         
         self.tableView.scrollToRow(at: IndexPath(row: elementsNumber - 1, section: sectionNumber - 1), at: .bottom, animated: true)
+    }
+    
+    private func getCachedMessages() {
+        do {
+            self.activityIndicator.startAnimating()
+            try fetchedResultController.performFetch()
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+            self.tableView.reloadData()
+        } catch {
+            Logger.app.logMessage("FRC messages error: \(error.localizedDescription)", logLevel: .error)
+        }
     }
     
     private func loadMessagesFromFirebase() {
@@ -144,7 +151,7 @@ class ChannelViewController: UIViewController {
                 
                 CoreDataStack.shared.addNewMessages(added, for: safeSelf.channel.objectID)
             case .failure:
-                safeSelf.noMessagesLabel.isHidden = false
+                safeSelf.presentMessage("Error getting messages from firebase")
             }
         }
     }
@@ -257,7 +264,13 @@ class ChannelViewController: UIViewController {
         alertController.applyTheme()
 
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        present(alertController, animated: true)
+        if presentedViewController == nil {
+            present(alertController, animated: true)
+        } else {
+            dismiss(animated: true) {
+                self.present(alertController, animated: true)
+            }
+        }
     }
 }
 

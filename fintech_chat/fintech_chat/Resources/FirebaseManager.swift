@@ -134,6 +134,7 @@ extension FirebaseManager {
             if let safeError = error {
                 Logger.app.logMessage("Cant send message: \(safeError.localizedDescription)", logLevel: .error)
                 completion(DatabaseError.failedToSend)
+                return
             }
             completion(nil)
         }
