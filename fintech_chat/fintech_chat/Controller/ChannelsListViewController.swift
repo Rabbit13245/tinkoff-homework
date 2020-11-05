@@ -357,25 +357,25 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
         switch type {
         case .insert:
             if let newIndexPath = newIndexPath {
-                Logger.app.logMessage("ChannelList Insert \(newIndexPath)", logLevel: .info)
+                Logger.app.logMessage("ChannelList Insert \(newIndexPath)", logLevel: .debug)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         case .delete:
             if let indexPath = indexPath {
-//                Logger.app.logMessage("ChannelList Delete \(indexPath)", logLevel: .info)
+//                Logger.app.logMessage("ChannelList Delete \(indexPath)", logLevel: .debug)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         case .move:
             if let newIndexPath = newIndexPath,
                 let oldIndexPath = indexPath {
-                Logger.app.logMessage("ChannelList Move", logLevel: .info)
+                Logger.app.logMessage("ChannelList Move", logLevel: .debug)
                 tableView.deleteRows(at: [oldIndexPath], with: .automatic)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         case .update:
             if let indexPath = indexPath {
-                Logger.app.logMessage("ChannelList Update \(indexPath)", logLevel: .info)
-                //tableView.reloadRows(at: [indexPath], with: .automatic)
+                Logger.app.logMessage("ChannelList Update \(indexPath)", logLevel: .debug)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
             }
 //            if let indexPath = indexPath,
 //                let cell = tableView.cellForRow(at: indexPath) as? ConversationTableViewCell {

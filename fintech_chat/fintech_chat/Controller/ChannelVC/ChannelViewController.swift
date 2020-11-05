@@ -2,12 +2,7 @@ import UIKit
 import CoreData
 
 class ChannelViewController: UIViewController {
-
-    //private var channelName: String
-
-    /// id в firebase
-    //private var channelId: String
-
+    
     /// Канал, по которому будем выводить сообщения
     private var channel: ChannelDb
     
@@ -118,10 +113,12 @@ class ChannelViewController: UIViewController {
 
     // MARK: - Private functions
     private func scrollTableToBottom() {
-        // todo: - не сделано
-//        if !self.messages.isEmpty {
-//            self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
-//        }
+        guard let sectionNumber = fetchedResultController.sections?.count,
+            sectionNumber > 0,
+            let elementsNumber = fetchedResultController.sections?[sectionNumber - 1].numberOfObjects,
+            elementsNumber > 0 else { return }
+        
+        self.tableView.scrollToRow(at: IndexPath(row: elementsNumber - 1, section: sectionNumber - 1), at: .bottom, animated: true)
     }
     
     private func loadMessagesFromFirebase() {
@@ -373,25 +370,25 @@ extension ChannelViewController: NSFetchedResultsControllerDelegate {
         switch type {
         case .insert:
             if let newIndexPath = newIndexPath {
-//                Logger.app.logMessage("Insert", logLevel: .info)
+                Logger.app.logMessage("Insert", logLevel: .debug)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         case .delete:
             if let indexPath = indexPath {
-//                Logger.app.logMessage("Delete", logLevel: .info)
+                Logger.app.logMessage("Delete", logLevel: .debug)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
         case .move:
             if let newIndexPath = newIndexPath,
                 let oldIndexPath = indexPath {
-//                Logger.app.logMessage("Move", logLevel: .info)
+                Logger.app.logMessage("Move", logLevel: .debug)
                 tableView.deleteRows(at: [oldIndexPath], with: .automatic)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         case .update:
             if let indexPath = indexPath,
                 let cell = tableView.cellForRow(at: indexPath) as? MessageTableViewCell {
-//                Logger.app.logMessage("Update", logLevel: .info)
+                Logger.app.logMessage("Update", logLevel: .debug)
                 let messageDb = fetchedResultController.object(at: indexPath)
                 let message = Message(messageDb)
                 let messageCellModel = MessageCellModel(message: message)
@@ -405,5 +402,6 @@ extension ChannelViewController: NSFetchedResultsControllerDelegate {
     /// Конец изменения
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
+        scrollTableToBottom()
     }
 }
