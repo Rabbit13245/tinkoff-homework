@@ -352,7 +352,7 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
         for type: NSFetchedResultsChangeType,
         newIndexPath: IndexPath?) {
         guard self.isViewLoaded,
-        self.view.window != nil else { return }
+            self.view.window != nil else { return }
         switch type {
         case .insert:
             if let newIndexPath = newIndexPath {
@@ -384,7 +384,7 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
     /// Конец изменения
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard self.isViewLoaded,
-        self.view.window != nil else { return }
+            self.view.window != nil else { return }
         tableView.endUpdates()
     }
 }
