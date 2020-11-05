@@ -39,15 +39,15 @@ class FirebaseManager {
 // MARK: - Channels
 extension FirebaseManager {
     /// Получить все каналы первый раз, для актуализации списка в кор дата
-    public func getAllChannelsFirstTime(competion: @escaping ((Result<[Channel], Error>) -> Void)) {
+    public func getAllChannelsFirstTime(completion: @escaping ((Result<[Channel], Error>) -> Void)) {
         channels.getDocuments { (snapshot, error) in
             if let error = error {
                 Logger.app.logMessage("\(#function):: Error fetching data: \(error.localizedDescription)",
                     logLevel: .error)
-                //completion(.failure(DatabaseError.failedToRead))
+                completion(.failure(DatabaseError.failedToRead))
             }
             if let snapshot = snapshot {
-                competion(.success(self.parseChannels(snapshot.documents)))
+                completion(.success(self.parseChannels(snapshot.documents)))
             }
         }
     }

@@ -159,6 +159,21 @@ extension CoreDataStack {
             }
         }
     }
+    
+    func removeOldChannels(_ channels: [Channel]) {
+        let ids = channels.map { $0.identifier }
+        let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
+        request.predicate = NSPredicate(format: "NOT identifier IN %@", ids)
+        
+        performSave { (context) in
+            if let channelsToRemove = try? context.fetch(request),
+               channelsToRemove.count > 0 {
+                channelsToRemove.forEach {
+                    context.delete($0)
+                }
+            }
+        }
+    }
 }
 
 // MARK: - Messages work

@@ -13,7 +13,7 @@ class ChannelsListViewController: UIViewController {
     private var createChannelAction: UIAlertAction?
 
     /// Флаг первого запроса к firebase для актуализации данных
-    private var fistRequest = true
+    private var firstRequest = true
     
     private lazy var fetchedResultController: NSFetchedResultsController<ChannelDb> = {
         let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
@@ -99,16 +99,16 @@ class ChannelsListViewController: UIViewController {
         setupTable()
         getCacheChannels()
         
-        if fistRequest {
+        if firstRequest {
             FirebaseManager.shared.getAllChannelsFirstTime { [weak self] (result) in
                 switch result {
                 case .success(let channels):
-                    channels.forEach {
-                        print($0.name)
-                    }
+                    CoreDataStack.shared.removeOldChannels(channels)
                 case .failure:
                     self?.presentMessage("Error first time getting channels from firebase")
                 }
+                self?.subscribeChannelsFromFirebase()
+                self?.firstRequest = false
             }
         } else {
             subscribeChannelsFromFirebase()
@@ -293,7 +293,13 @@ extension ChannelsListViewController {
         alertController.applyTheme()
 
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        present(alertController, animated: true)
+        if presentedViewController == nil {
+            present(alertController, animated: true)
+        } else {
+            dismiss(animated: true) {
+                present(alertController, animated: true)
+            }
+        }
     }
 }
 
@@ -355,8 +361,9 @@ extension ChannelsListViewController: UITableViewDelegate {
 extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
     /// Начало изменения
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        guard self.isViewLoaded,
-                self.view.window != nil else { return }
+        // Убрал, иначе мы не получим изменения каналов, пока будем на другом экране
+//        guard self.isViewLoaded,
+//                self.view.window != nil else { return }
         tableView.beginUpdates()
     }
     
@@ -367,8 +374,8 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
         at indexPath: IndexPath?,
         for type: NSFetchedResultsChangeType,
         newIndexPath: IndexPath?) {
-        guard self.isViewLoaded,
-            self.view.window != nil else { return }
+//        guard self.isViewLoaded,
+//            self.view.window != nil else { return }
         switch type {
         case .insert:
             if let newIndexPath = newIndexPath {
@@ -399,8 +406,8 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
     
     /// Конец изменения
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        guard self.isViewLoaded,
-            self.view.window != nil else { return }
+//        guard self.isViewLoaded,
+//            self.view.window != nil else { return }
         tableView.endUpdates()
     }
 }
