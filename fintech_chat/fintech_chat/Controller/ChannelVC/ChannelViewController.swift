@@ -149,9 +149,15 @@ class ChannelViewController: UIViewController {
         }
     }
 
+    fileprivate func setupView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeybord))
+        view.addGestureRecognizer(tap)
+    }
+    
     private func setupUI() {
         self.view = AppView()
 
+        setupView()
         setupNavTitle()
         setupTableView()
         setupInputView()
@@ -273,6 +279,10 @@ extension ChannelViewController {
                 safeSelf.inputTextView.text = ""
             }
         }
+    }
+    
+    @objc private func dismissKeybord() {
+        inputTextView.endEditing(true)
     }
 }
 

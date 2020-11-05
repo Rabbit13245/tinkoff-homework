@@ -93,8 +93,4 @@ extension ChannelViewController: UITableViewDelegate {
             return estimatedFrame.height + 20 + 6
         }
     }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        inputTextView.endEditing(true)
-    }
 }
