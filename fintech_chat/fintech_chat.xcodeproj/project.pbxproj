@@ -271,17 +271,65 @@
 		8467A60C250FAED400E36BEE /* fintech_chat */ = {
 			isa = PBXGroup;
 			children = (
-				F10FF08C253CBBD100A0996B /* GoogleService-Info.plist */,
+				84778BF9255BA160009AE053 /* Presentation Layer */,
+				84778BFA255BA169009AE053 /* Service Layer */,
+				84778BFB255BA170009AE053 /* Core Layer */,
 				F10FF08A253CBAB400A0996B /* Resources */,
 				F1391DA1252BA3C2007FC97D /* Style */,
 				849444DE251DE81300946D9F /* Helpers */,
 				849444DB251DE7DB00946D9F /* Model */,
 				849444DD251DE7E900946D9F /* Controller */,
+				F10FF08C253CBBD100A0996B /* GoogleService-Info.plist */,
 				849444DC251DE7E500946D9F /* View */,
 				8442D3CB251B434D00F01A1C /* Extensions */,
 				8467A61B250FAED500E36BEE /* Info.plist */,
 			);
 			path = fintech_chat;
+			sourceTree = "<group>";
+		};
+		84778BF9255BA160009AE053 /* Presentation Layer */ = {
+			isa = PBXGroup;
+			children = (
+				84778BFF255BA65A009AE053 /* Assembly */,
+			);
+			path = "Presentation Layer";
+			sourceTree = "<group>";
+		};
+		84778BFA255BA169009AE053 /* Service Layer */ = {
+			isa = PBXGroup;
+			children = (
+				84778BFE255BA655009AE053 /* Assembly */,
+			);
+			path = "Service Layer";
+			sourceTree = "<group>";
+		};
+		84778BFB255BA170009AE053 /* Core Layer */ = {
+			isa = PBXGroup;
+			children = (
+				84778BFD255BA64C009AE053 /* Assembly */,
+			);
+			path = "Core Layer";
+			sourceTree = "<group>";
+		};
+		84778BFD255BA64C009AE053 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		84778BFE255BA655009AE053 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		84778BFF255BA65A009AE053 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Assembly;
 			sourceTree = "<group>";
 		};
 		849444DB251DE7DB00946D9F /* Model */ = {
