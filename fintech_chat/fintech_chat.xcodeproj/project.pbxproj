@@ -49,6 +49,12 @@
 		849444E6251E21AF00946D9F /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E5251E21AF00946D9F /* ChannelViewController.swift */; };
 		84B40192255C903B00F2D9DB /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B40191255C903B00F2D9DB /* UIViewController+Alert.swift */; };
 		84B4019D255C955D00F2D9DB /* IDataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B4019C255C955D00F2D9DB /* IDataManagerFactory.swift */; };
+		84B401A2255C98B100F2D9DB /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B401A1255C98B100F2D9DB /* CoreDataClient.swift */; };
+		84B401A5255C98FA00F2D9DB /* ICoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B401A4255C98FA00F2D9DB /* ICoreDataClient.swift */; };
+		84B401AA255C9A6700F2D9DB /* IChannelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B401A9255C9A6700F2D9DB /* IChannelManager.swift */; };
+		84B401AF255C9AC800F2D9DB /* ChannelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B401AE255C9AC800F2D9DB /* ChannelManager.swift */; };
+		84B401B2255C9AE300F2D9DB /* IMessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B401B1255C9AE300F2D9DB /* IMessageManager.swift */; };
+		84B401B5255C9AF700F2D9DB /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B401B4255C9AF700F2D9DB /* MessageManager.swift */; };
 		84D2135925535BC20083BA7F /* ChannelViewController+TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2135825535BC20083BA7F /* ChannelViewController+TableViewDelegate.swift */; };
 		F10D4E022520F03E00B8CDD0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E012520F03E00B8CDD0 /* Date.swift */; };
 		F10D4E04252111A900B8CDD0 /* ConversationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */; };
@@ -121,6 +127,12 @@
 		849444E5251E21AF00946D9F /* ChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
 		84B40191255C903B00F2D9DB /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		84B4019C255C955D00F2D9DB /* IDataManagerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDataManagerFactory.swift; sourceTree = "<group>"; };
+		84B401A1255C98B100F2D9DB /* CoreDataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataClient.swift; sourceTree = "<group>"; };
+		84B401A4255C98FA00F2D9DB /* ICoreDataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICoreDataClient.swift; sourceTree = "<group>"; };
+		84B401A9255C9A6700F2D9DB /* IChannelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IChannelManager.swift; sourceTree = "<group>"; };
+		84B401AE255C9AC800F2D9DB /* ChannelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelManager.swift; sourceTree = "<group>"; };
+		84B401B1255C9AE300F2D9DB /* IMessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMessageManager.swift; sourceTree = "<group>"; };
+		84B401B4255C9AF700F2D9DB /* MessageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
 		84D2135825535BC20083BA7F /* ChannelViewController+TableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelViewController+TableViewDelegate.swift"; sourceTree = "<group>"; };
 		9953A7A4C1B56AF4D0C3C4F3 /* Pods-fintech_chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat/Pods-fintech_chat.release.xcconfig"; sourceTree = "<group>"; };
 		F10D4E012520F03E00B8CDD0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -307,6 +319,8 @@
 		846EA93A255BA99000776D49 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				84B401A8255C9A5600F2D9DB /* MessageManager */,
+				84B401A7255C9A4E00F2D9DB /* ChannelManager */,
 				84B40199255C93F300F2D9DB /* DataManager */,
 				846EA94E255C42BB00776D49 /* ThemeService */,
 			);
@@ -409,6 +423,7 @@
 		84778BFB255BA170009AE053 /* Core Layer */ = {
 			isa = PBXGroup;
 			children = (
+				84B401A0255C988D00F2D9DB /* CoreDataManager */,
 				846EA965255C48B700776D49 /* CameraManager */,
 				84778BFD255BA64C009AE053 /* Assembly */,
 			);
@@ -483,6 +498,34 @@
 			path = DataManager;
 			sourceTree = "<group>";
 		};
+		84B401A0255C988D00F2D9DB /* CoreDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				8448F53F254847A1009F7983 /* CoreDataStack.swift */,
+				84B401A1255C98B100F2D9DB /* CoreDataClient.swift */,
+				84B401A4255C98FA00F2D9DB /* ICoreDataClient.swift */,
+			);
+			path = CoreDataManager;
+			sourceTree = "<group>";
+		};
+		84B401A7255C9A4E00F2D9DB /* ChannelManager */ = {
+			isa = PBXGroup;
+			children = (
+				84B401A9255C9A6700F2D9DB /* IChannelManager.swift */,
+				84B401AE255C9AC800F2D9DB /* ChannelManager.swift */,
+			);
+			path = ChannelManager;
+			sourceTree = "<group>";
+		};
+		84B401A8255C9A5600F2D9DB /* MessageManager */ = {
+			isa = PBXGroup;
+			children = (
+				84B401B1255C9AE300F2D9DB /* IMessageManager.swift */,
+				84B401B4255C9AF700F2D9DB /* MessageManager.swift */,
+			);
+			path = MessageManager;
+			sourceTree = "<group>";
+		};
 		9B50D5890130E137450028D6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -499,7 +542,6 @@
 				8428027B25347D750078723A /* DataManager */,
 				8467A60D250FAED400E36BEE /* AppDelegate.swift */,
 				F10FF08E253CC3EC00A0996B /* FirebaseManager.swift */,
-				8448F53F254847A1009F7983 /* CoreDataStack.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -680,10 +722,12 @@
 				F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */,
 				F136EF992517F10400F0818C /* LogLevels.swift in Sources */,
 				8442D3CA251B434600F01A1C /* UILabel.swift in Sources */,
+				84B401B5255C9AF700F2D9DB /* MessageManager.swift in Sources */,
 				8448F540254847A1009F7983 /* CoreDataStack.swift in Sources */,
 				84569933252DB45A001C10B1 /* AppLabel.swift in Sources */,
 				F10FF093253CD76400A0996B /* Message.swift in Sources */,
 				F13AC6C82534CCD400693985 /* OperationDataManager.swift in Sources */,
+				84B401A5255C98FA00F2D9DB /* ICoreDataClient.swift in Sources */,
 				8451E4A42536F454003E95BA /* User.swift in Sources */,
 				F10D4E092521165B00B8CDD0 /* MessageTableViewCell.swift in Sources */,
 				F10FF091253CD74C00A0996B /* Channel.swift in Sources */,
@@ -693,6 +737,7 @@
 				849444E0251DE86000946D9F /* ChannelsListViewController.swift in Sources */,
 				8448F53C254832D1009F7983 /* MessageDb+CoreDataProperties.swift in Sources */,
 				8451E4952536EED7003E95BA /* SaveDataOperation.swift in Sources */,
+				84B401AF255C9AC800F2D9DB /* ChannelManager.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
 				F1391DAB252BA9B3007FC97D /* NightTheme.swift in Sources */,
 				846EA944255BE31B00776D49 /* ThemeElement.swift in Sources */,
@@ -702,6 +747,7 @@
 				84489B76252C6E5500F3C80D /* UIAlertController.swift in Sources */,
 				F10D4E062521123D00B8CDD0 /* MessageCellModel.swift in Sources */,
 				F1391DAD252BB387007FC97D /* UIWindow.swift in Sources */,
+				84B401A2255C98B100F2D9DB /* CoreDataClient.swift in Sources */,
 				84569935252DB478001C10B1 /* AppButton.swift in Sources */,
 				846EA951255C43C400776D49 /* ThemeServiceProtocol.swift in Sources */,
 				F10D4E022520F03E00B8CDD0 /* Date.swift in Sources */,
@@ -713,8 +759,10 @@
 				846EA967255C48C600776D49 /* ICameraManager.swift in Sources */,
 				8448F538254832CA009F7983 /* ChannelDb+CoreDataProperties.swift in Sources */,
 				8448F537254832CA009F7983 /* ChannelDb+CoreDataClass.swift in Sources */,
+				84B401AA255C9A6700F2D9DB /* IChannelManager.swift in Sources */,
 				847E600025232496008B8C27 /* ConfigurableView.swift in Sources */,
 				84B40192255C903B00F2D9DB /* UIViewController+Alert.swift in Sources */,
+				84B401B2255C9AE300F2D9DB /* IMessageManager.swift in Sources */,
 				84B4019D255C955D00F2D9DB /* IDataManagerFactory.swift in Sources */,
 				F1391DA5252BA6F4007FC97D /* Theme.swift in Sources */,
 				F1D84D4C251E9804000A69AF /* UIColor.swift in Sources */,
