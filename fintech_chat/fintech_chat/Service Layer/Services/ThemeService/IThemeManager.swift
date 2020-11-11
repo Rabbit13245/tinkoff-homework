@@ -1,6 +1,6 @@
 import UIKit
 
-class ThemeManager: ThemeManagerProtocol {
+class ThemeManager: IThemeManager {
 
     // MARK: - Private properties
     

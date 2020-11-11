@@ -40,7 +40,7 @@
 		846EA944255BE31B00776D49 /* ThemeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EA943255BE31B00776D49 /* ThemeElement.swift */; };
 		846EA94B255BF50D00776D49 /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EA94A255BF50D00776D49 /* ThemeView.swift */; };
 		846EA951255C43C400776D49 /* ThemeServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EA950255C43C400776D49 /* ThemeServiceProtocol.swift */; };
-		846EA967255C48C600776D49 /* CameraManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EA966255C48C600776D49 /* CameraManagerProtocol.swift */; };
+		846EA967255C48C600776D49 /* ICameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EA966255C48C600776D49 /* ICameraManager.swift */; };
 		846EA96B255C48D200776D49 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EA96A255C48D200776D49 /* CameraManager.swift */; };
 		847E600025232496008B8C27 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847E5FFF25232496008B8C27 /* ConfigurableView.swift */; };
 		849444E0251DE86000946D9F /* ChannelsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444DF251DE86000946D9F /* ChannelsListViewController.swift */; };
@@ -61,7 +61,7 @@
 		F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF942517EDE400F0818C /* ProfileViewController.swift */; };
 		F136EF992517F10400F0818C /* LogLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF982517F10400F0818C /* LogLevels.swift */; };
 		F1391DA025290D17007FC97D /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1391D9F25290D17007FC97D /* ThemesViewController.swift */; };
-		F1391DA3252BA679007FC97D /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1391DA2252BA679007FC97D /* ThemeManager.swift */; };
+		F1391DA3252BA679007FC97D /* IThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1391DA2252BA679007FC97D /* IThemeManager.swift */; };
 		F1391DA5252BA6F4007FC97D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1391DA4252BA6F4007FC97D /* Theme.swift */; };
 		F1391DA7252BA8AD007FC97D /* ClassicTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1391DA6252BA8AD007FC97D /* ClassicTheme.swift */; };
 		F1391DA9252BA956007FC97D /* DayTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1391DA8252BA956007FC97D /* DayTheme.swift */; };
@@ -110,7 +110,7 @@
 		846EA943255BE31B00776D49 /* ThemeElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeElement.swift; sourceTree = "<group>"; };
 		846EA94A255BF50D00776D49 /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
 		846EA950255C43C400776D49 /* ThemeServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeServiceProtocol.swift; sourceTree = "<group>"; };
-		846EA966255C48C600776D49 /* CameraManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManagerProtocol.swift; sourceTree = "<group>"; };
+		846EA966255C48C600776D49 /* ICameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICameraManager.swift; sourceTree = "<group>"; };
 		846EA96A255C48D200776D49 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		847E5FFF25232496008B8C27 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		849444DF251DE86000946D9F /* ChannelsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsListViewController.swift; sourceTree = "<group>"; };
@@ -132,7 +132,7 @@
 		F136EF942517EDE400F0818C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F136EF982517F10400F0818C /* LogLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogLevels.swift; sourceTree = "<group>"; };
 		F1391D9F25290D17007FC97D /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
-		F1391DA2252BA679007FC97D /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		F1391DA2252BA679007FC97D /* IThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IThemeManager.swift; sourceTree = "<group>"; };
 		F1391DA4252BA6F4007FC97D /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		F1391DA6252BA8AD007FC97D /* ClassicTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicTheme.swift; sourceTree = "<group>"; };
 		F1391DA8252BA956007FC97D /* DayTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTheme.swift; sourceTree = "<group>"; };
@@ -370,7 +370,7 @@
 		846EA94E255C42BB00776D49 /* ThemeService */ = {
 			isa = PBXGroup;
 			children = (
-				F1391DA2252BA679007FC97D /* ThemeManager.swift */,
+				F1391DA2252BA679007FC97D /* IThemeManager.swift */,
 				846EA950255C43C400776D49 /* ThemeServiceProtocol.swift */,
 			);
 			path = ThemeService;
@@ -379,7 +379,7 @@
 		846EA965255C48B700776D49 /* CameraManager */ = {
 			isa = PBXGroup;
 			children = (
-				846EA966255C48C600776D49 /* CameraManagerProtocol.swift */,
+				846EA966255C48C600776D49 /* ICameraManager.swift */,
 				846EA96A255C48D200776D49 /* CameraManager.swift */,
 			);
 			path = CameraManager;
@@ -694,9 +694,9 @@
 				84D2135925535BC20083BA7F /* ChannelViewController+TableViewDelegate.swift in Sources */,
 				849444E3251DF3C800946D9F /* ConversationTableViewCell.swift in Sources */,
 				F1391DA7252BA8AD007FC97D /* ClassicTheme.swift in Sources */,
-				F1391DA3252BA679007FC97D /* ThemeManager.swift in Sources */,
+				F1391DA3252BA679007FC97D /* IThemeManager.swift in Sources */,
 				8448F53B254832D1009F7983 /* MessageDb+CoreDataClass.swift in Sources */,
-				846EA967255C48C600776D49 /* CameraManagerProtocol.swift in Sources */,
+				846EA967255C48C600776D49 /* ICameraManager.swift in Sources */,
 				8448F538254832CA009F7983 /* ChannelDb+CoreDataProperties.swift in Sources */,
 				8448F537254832CA009F7983 /* ChannelDb+CoreDataClass.swift in Sources */,
 				847E600025232496008B8C27 /* ConfigurableView.swift in Sources */,

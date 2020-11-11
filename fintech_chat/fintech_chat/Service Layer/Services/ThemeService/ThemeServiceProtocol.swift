@@ -1,6 +1,6 @@
 import UIKit
 
-protocol ThemeManagerProtocol {
+protocol IThemeManager {
     /// Применить тему для приложения
     func apply(for application: UIApplication)
     

@@ -33,6 +33,78 @@ class ProfileViewController: LoggedViewController {
         return label
     }()
     
+    // MARK: - IBActions
+
+    @IBAction func editTouch(_ sender: UIButton) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.applyTheme()
+
+        let galery = UIAlertAction(title: "Photo Library", style: .default) {(_) in
+            self.chooseImagePicker(source: .photoLibrary)
+        }
+        let photoIcon = #imageLiteral(resourceName: "photo")
+        galery.setValue(photoIcon, forKey: "image")
+        galery.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+        
+        let camera = UIAlertAction(
+            title: "Camera",
+            style: .default,
+            handler: { [weak self] (_) in
+                guard let access = self?.cameraManager?.checkCameraPermission(),
+                      let ac = self?.cameraManager?.cameraSettings() else { return }
+                if access {
+                    self?.chooseImagePicker(source: .camera)
+                } else {
+                    self?.present(ac, animated: true, completion: nil)
+                }
+            })
+        let cameraIcon = #imageLiteral(resourceName: "camera")
+        camera.setValue(cameraIcon, forKey: "image")
+        camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        actionSheet.addAction(galery)
+        actionSheet.addAction(camera)
+        actionSheet.addAction(cancel)
+
+        present(actionSheet, animated: true)
+    }
+
+    @IBAction func closeButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+
+    @IBAction func editBarButtonPressed(_ sender: UIBarButtonItem) {
+        self.editingMode = !self.editingMode
+        self.editButton.isEnabled = self.editingMode
+
+        self.descriptionTextView.isEditable = self.editingMode
+        self.nameTextView.isEditable = self.editingMode
+
+        if self.editingMode {
+            sender.title = "Done"
+            self.descriptionTextView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
+            self.nameTextView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
+        } else {
+            sender.title = "Edit profile"
+            self.nameTextView.endEditing(true)
+            self.descriptionTextView.endEditing(true)
+            self.descriptionTextView.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
+            self.nameTextView.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
+        }
+    }
+
+    @IBAction func gcdSaveButtonPessed(_ sender: AppBackgroundButton) {
+        let dataManager = dataManagerFactory.createDataManager(.GCD)
+        self.internalSaveData(dataManager)
+    }
+
+    @IBAction func operationSaveButtonPressed(_ sender: Any) {
+        let dataManager = dataManagerFactory.createDataManager(.operation)
+
+        self.internalSaveData(dataManager)
+    }
+    
     // MARK: - Private properties
     
     private var editingMode = false
@@ -49,7 +121,7 @@ class ProfileViewController: LoggedViewController {
         return dataManagerFactory
     }()
     
-    var cameraManager: CameraManagerProtocol
+    var cameraManager: ICameraManager?
 
     // MARK: - Lifecycle methods
     
@@ -73,14 +145,18 @@ class ProfileViewController: LoggedViewController {
 
     // MARK: - Initializers
     
-    init(cameraManager: CameraManagerProtocol) {
+    init(cameraManager: ICameraManager) {
         self.cameraManager = cameraManager
         
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+    }
+    
+    public func initialize(cameraManager: ICameraManager) {
+        self.cameraManager = cameraManager
     }
     
     // MARK: - Private methods
@@ -146,7 +222,6 @@ class ProfileViewController: LoggedViewController {
     }
 
     private func readData(_ dataManager: DataManagerProtocol) {
-
         dataManager.loadUserData { (userData, response) in
             if let resp = response {
                 if !resp.nameError {
@@ -222,7 +297,8 @@ class ProfileViewController: LoggedViewController {
             let cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
             switch cameraStatus {
             case .denied:
-                self.presentCameraSettings()
+                guard let ac = cameraManager?.cameraSettings() else { return }
+                present(ac, animated: true, completion: nil)
             case .restricted:
                 self.presentMessage("You don`t allow")
             case .authorized:
@@ -243,88 +319,12 @@ class ProfileViewController: LoggedViewController {
         }
     }
 
-    private func presentCameraSettings() {
-        let alertController = UIAlertController(title: "Error", message: "Camera access is denied", preferredStyle: .alert)
-        alertController.applyTheme()
-
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Settings", style: .default) {(_) in
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        })
-        present(alertController, animated: true)
-    }
-
     private func presentMessage(_ message: String) {
         let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
         alertController.applyTheme()
 
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(alertController, animated: true)
-    }
-
-    // MARK: - IBActions
-
-    @IBAction func editTouch(_ sender: UIButton) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        actionSheet.applyTheme()
-
-        let cameraIcon = #imageLiteral(resourceName: "camera")
-        let photoIcon = #imageLiteral(resourceName: "photo")
-
-        let galery = UIAlertAction(title: "Photo Library", style: .default) {(_) in
-            self.chooseImagePicker(source: .photoLibrary)
-        }
-        galery.setValue(photoIcon, forKey: "image")
-        galery.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-        let camera = UIAlertAction(title: "Camera", style: .default) {(_) in
-            self.checkCameraPermission()
-        }
-        camera.setValue(cameraIcon, forKey: "image")
-        camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
-
-        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-        actionSheet.addAction(galery)
-        actionSheet.addAction(camera)
-        actionSheet.addAction(cancel)
-
-        present(actionSheet, animated: true)
-    }
-
-    @IBAction func closeButtonPressed(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
-    }
-
-    @IBAction func editBarButtonPressed(_ sender: UIBarButtonItem) {
-        self.editingMode = !self.editingMode
-        self.editButton.isEnabled = self.editingMode
-
-        self.descriptionTextView.isEditable = self.editingMode
-        self.nameTextView.isEditable = self.editingMode
-
-        if self.editingMode {
-            sender.title = "Done"
-            self.descriptionTextView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
-            self.nameTextView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
-        } else {
-            sender.title = "Edit profile"
-            self.nameTextView.endEditing(true)
-            self.descriptionTextView.endEditing(true)
-            self.descriptionTextView.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
-            self.nameTextView.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
-        }
-    }
-
-    @IBAction func gcdSaveButtonPessed(_ sender: AppBackgroundButton) {
-        let dataManager = dataManagerFactory.createDataManager(.GCD)
-        self.internalSaveData(dataManager)
-    }
-
-    @IBAction func operationSaveButtonPressed(_ sender: Any) {
-        let dataManager = dataManagerFactory.createDataManager(.operation)
-
-        self.internalSaveData(dataManager)
     }
 
     private func internalSaveData(_ dataManager: DataManagerProtocol) {

@@ -1,7 +1,7 @@
 import UIKit
 import AVFoundation
 
-class CameraManager: CameraManagerProtocol {
+class CameraManager: ICameraManager {
     func checkCameraPermission() -> Bool {
         guard UIImagePickerController.isCameraDeviceAvailable(.rear) || UIImagePickerController.isCameraDeviceAvailable(.front) else {
             return false
@@ -24,5 +24,19 @@ class CameraManager: CameraManagerProtocol {
         @unknown default:
             return false
         }
+    }
+    
+    func cameraSettings() -> UIAlertController {
+        let ac = UIAlertController(title: "Error", message: "Camera access is denied", preferredStyle: .alert)
+        ac.applyTheme()
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "Settings", style: .default) {(_) in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        })
+        
+        return ac
     }
 }
