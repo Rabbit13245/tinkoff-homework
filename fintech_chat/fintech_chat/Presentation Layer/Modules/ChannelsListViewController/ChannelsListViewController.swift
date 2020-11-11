@@ -248,9 +248,8 @@ extension ChannelsListViewController {
     @objc private func settingsButtonPressed() {
         let themesVC = ThemesViewController()
 
-        themesVC.currentTheme = ThemeManager.shared.theme
-        //themesVC.delegate = ThemeManager.shared
-        themesVC.changeThemeClosure = ThemeManager.shared.applyTheme
+        themesVC.delegate = ThemeManager.shared
+        // themesVC.changeThemeClosure = ThemeManager.shared.applyTheme
 
         self.navigationController?.pushViewController(themesVC, animated: true)
     }

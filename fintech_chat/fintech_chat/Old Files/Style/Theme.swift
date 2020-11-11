@@ -42,6 +42,9 @@ enum AppTheme: Int, CaseIterable {
             return "Night"
         }
     }
+    var isSelected: Bool {
+        return ThemeManager.shared.theme == self
+    }
 }
 
 protocol ThemesPickerDelegate: class {

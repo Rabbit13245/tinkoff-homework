@@ -38,8 +38,10 @@
 		8467A617250FAED500E36BEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467A616250FAED500E36BEE /* Assets.xcassets */; };
 		8467A61A250FAED500E36BEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8467A618250FAED500E36BEE /* LaunchScreen.storyboard */; };
 		846EA944255BE31B00776D49 /* ThemeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EA943255BE31B00776D49 /* ThemeElement.swift */; };
-		846EA947255BEA4700776D49 /* ThemeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EA946255BEA4700776D49 /* ThemeModel.swift */; };
 		846EA94B255BF50D00776D49 /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EA94A255BF50D00776D49 /* ThemeView.swift */; };
+		846EA951255C43C400776D49 /* ThemeServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EA950255C43C400776D49 /* ThemeServiceProtocol.swift */; };
+		846EA967255C48C600776D49 /* CameraManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EA966255C48C600776D49 /* CameraManagerProtocol.swift */; };
+		846EA96B255C48D200776D49 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EA96A255C48D200776D49 /* CameraManager.swift */; };
 		847E600025232496008B8C27 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847E5FFF25232496008B8C27 /* ConfigurableView.swift */; };
 		849444E0251DE86000946D9F /* ChannelsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444DF251DE86000946D9F /* ChannelsListViewController.swift */; };
 		849444E3251DF3C800946D9F /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E1251DF3C800946D9F /* ConversationTableViewCell.swift */; };
@@ -106,8 +108,10 @@
 		8467A619250FAED500E36BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8467A61B250FAED500E36BEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		846EA943255BE31B00776D49 /* ThemeElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeElement.swift; sourceTree = "<group>"; };
-		846EA946255BEA4700776D49 /* ThemeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeModel.swift; sourceTree = "<group>"; };
 		846EA94A255BF50D00776D49 /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
+		846EA950255C43C400776D49 /* ThemeServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeServiceProtocol.swift; sourceTree = "<group>"; };
+		846EA966255C48C600776D49 /* CameraManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManagerProtocol.swift; sourceTree = "<group>"; };
+		846EA96A255C48D200776D49 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		847E5FFF25232496008B8C27 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
 		849444DF251DE86000946D9F /* ChannelsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsListViewController.swift; sourceTree = "<group>"; };
 		849444E1251DF3C800946D9F /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
@@ -303,6 +307,7 @@
 		846EA93A255BA99000776D49 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				846EA94E255C42BB00776D49 /* ThemeService */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -332,7 +337,6 @@
 			children = (
 				F1391D9F25290D17007FC97D /* ThemesViewController.swift */,
 				846EA943255BE31B00776D49 /* ThemeElement.swift */,
-				846EA946255BEA4700776D49 /* ThemeModel.swift */,
 				846EA94A255BF50D00776D49 /* ThemeView.swift */,
 			);
 			path = ThemesViewController;
@@ -363,9 +367,28 @@
 			path = ChannelViewController;
 			sourceTree = "<group>";
 		};
+		846EA94E255C42BB00776D49 /* ThemeService */ = {
+			isa = PBXGroup;
+			children = (
+				F1391DA2252BA679007FC97D /* ThemeManager.swift */,
+				846EA950255C43C400776D49 /* ThemeServiceProtocol.swift */,
+			);
+			path = ThemeService;
+			sourceTree = "<group>";
+		};
+		846EA965255C48B700776D49 /* CameraManager */ = {
+			isa = PBXGroup;
+			children = (
+				846EA966255C48C600776D49 /* CameraManagerProtocol.swift */,
+				846EA96A255C48D200776D49 /* CameraManager.swift */,
+			);
+			path = CameraManager;
+			sourceTree = "<group>";
+		};
 		84778BF9255BA160009AE053 /* Presentation Layer */ = {
 			isa = PBXGroup;
 			children = (
+				8448DF7D252C9EE300314A95 /* Controls */,
 				84778BFF255BA65A009AE053 /* Assembly */,
 				846EA93B255BA9AE00776D49 /* Modules */,
 			);
@@ -384,6 +407,7 @@
 		84778BFB255BA170009AE053 /* Core Layer */ = {
 			isa = PBXGroup;
 			children = (
+				846EA965255C48B700776D49 /* CameraManager */,
 				84778BFD255BA64C009AE053 /* Assembly */,
 			);
 			path = "Core Layer";
@@ -478,8 +502,6 @@
 		F1391DA1252BA3C2007FC97D /* Style */ = {
 			isa = PBXGroup;
 			children = (
-				8448DF7D252C9EE300314A95 /* Controls */,
-				F1391DA2252BA679007FC97D /* ThemeManager.swift */,
 				F1391DA4252BA6F4007FC97D /* Theme.swift */,
 				F1391DA6252BA8AD007FC97D /* ClassicTheme.swift */,
 				F1391DA8252BA956007FC97D /* DayTheme.swift */,
@@ -629,6 +651,7 @@
 				8467A612250FAED400E36BEE /* LoggedViewController.swift in Sources */,
 				8448F528254822BA009F7983 /* Chats.xcdatamodeld in Sources */,
 				844EB08D2510DF5600AF0216 /* Logger.swift in Sources */,
+				846EA96B255C48D200776D49 /* CameraManager.swift in Sources */,
 				F10D4E04252111A900B8CDD0 /* ConversationCellModel.swift in Sources */,
 				849444E6251E21AF00946D9F /* ChannelViewController.swift in Sources */,
 				846EA94B255BF50D00776D49 /* ThemeView.swift in Sources */,
@@ -666,13 +689,14 @@
 				F10D4E062521123D00B8CDD0 /* MessageCellModel.swift in Sources */,
 				F1391DAD252BB387007FC97D /* UIWindow.swift in Sources */,
 				84569935252DB478001C10B1 /* AppButton.swift in Sources */,
+				846EA951255C43C400776D49 /* ThemeServiceProtocol.swift in Sources */,
 				F10D4E022520F03E00B8CDD0 /* Date.swift in Sources */,
 				84D2135925535BC20083BA7F /* ChannelViewController+TableViewDelegate.swift in Sources */,
 				849444E3251DF3C800946D9F /* ConversationTableViewCell.swift in Sources */,
 				F1391DA7252BA8AD007FC97D /* ClassicTheme.swift in Sources */,
 				F1391DA3252BA679007FC97D /* ThemeManager.swift in Sources */,
-				846EA947255BEA4700776D49 /* ThemeModel.swift in Sources */,
 				8448F53B254832D1009F7983 /* MessageDb+CoreDataClass.swift in Sources */,
+				846EA967255C48C600776D49 /* CameraManagerProtocol.swift in Sources */,
 				8448F538254832CA009F7983 /* ChannelDb+CoreDataProperties.swift in Sources */,
 				8448F537254832CA009F7983 /* ChannelDb+CoreDataClass.swift in Sources */,
 				847E600025232496008B8C27 /* ConfigurableView.swift in Sources */,

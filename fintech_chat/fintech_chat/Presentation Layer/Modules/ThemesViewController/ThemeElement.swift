@@ -9,7 +9,7 @@ class ThemeElement: UIView {
     // MARK: - Public properties
     
     var theme: AppTheme?
-    weak var themeElementDelegate: ThemeChangeDelegate?
+    weak var delegate: ThemeChangeDelegate?
     
     // MARK: - Private properties
     private let buttonHeight: CGFloat = 60
@@ -28,15 +28,17 @@ class ThemeElement: UIView {
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor.clear.cgColor
         
+        button.addTarget(self, action: #selector(selectTheme), for: .touchUpInside)
+        
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
     lazy var label: AppLabel = {
         let label = AppLabel()
-        label.text = "Classic"
         label.isUserInteractionEnabled = true
-
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectTheme)))
+        
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -53,6 +55,14 @@ class ThemeElement: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        NSLayoutConstraint.activate([
+            button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 50),
+            button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50)
+        ])
+    }
+    
     // MARK: - Private methods
     
     private func setupView() {
@@ -64,34 +74,18 @@ class ThemeElement: UIView {
     
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            button.widthAnchor.constraint(equalToConstant: 300),
             button.heightAnchor.constraint(equalToConstant: buttonHeight),
-            
             button.topAnchor.constraint(equalTo: topAnchor),
             label.topAnchor.constraint(equalTo: button.bottomAnchor, constant: padding),
-            
-            button.centerXAnchor.constraint(equalTo: centerXAnchor),
             label.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
-    }
-    
-    // MARK: - Public methods
-    
-    func activeTheme() {
-        button.isSelected = true
-        label.layer.borderColor = UIColor.AppColors.borderSelectedThemeColor.cgColor
-    }
-    
-    func deactiveTheme() {
-        button.isSelected = false
-        label.layer.borderColor = UIColor.clear.cgColor
     }
     
     // MARK: - Actions
     
     @objc private func selectTheme() {
         guard let theme = self.theme else { return }
-        themeElementDelegate?.select(theme: theme)
+        delegate?.select(theme: theme)
     }
 }
 
@@ -104,5 +98,13 @@ extension ThemeElement: ConfigurableView {
         button.setImage(UIImage(named: model.name), for: .normal)
         button.imageView?.layer.cornerRadius = 15
         label.text = model.name
+        
+        if model.isSelected {
+            button.isSelected = true
+            button.layer.borderColor = UIColor.red.cgColor
+        } else {
+            button.isSelected = false
+            button.layer.borderColor = UIColor.clear.cgColor
+        }
     }
 }

@@ -2,6 +2,8 @@ import UIKit
 
 class ThemeView: AppThemesView {
 
+    weak var delegate: ThemeChangeDelegate?
+    
     // MARK: - UI
     
     private lazy var themeElements: [ThemeElement] = {
@@ -9,17 +11,12 @@ class ThemeView: AppThemesView {
         AppTheme.allCases.forEach {
             let theme = ThemeElement()
             theme.configure(with: $0)
+            theme.delegate = self
+            
             elements.append(theme)
         }
         
         return elements
-    }()
-    
-    private lazy var temp: ThemeElement = {
-        let theme = ThemeElement()
-        theme.configure(with: AppTheme.classic)
-        theme.translatesAutoresizingMaskIntoConstraints = false
-        return theme
     }()
     
     // MARK: - Initializers
@@ -46,21 +43,22 @@ class ThemeView: AppThemesView {
         addSubview(sv)
         NSLayoutConstraint.activate([
             sv.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            sv.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 10),
+            sv.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10),
             sv.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10)
 
         ])
-        
-        //addSubview(temp)
-        
-        // setupLayout()
     }
     
     private func setupLayout() {
-        NSLayoutConstraint.activate([
-            temp.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            temp.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 10),
-            temp.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10)
-        ])
+    }
+}
+
+extension ThemeView: ThemeChangeDelegate {
+    func select(theme: AppTheme) {
+        self.delegate?.select(theme: theme)
+        
+        for (index, element) in AppTheme.allCases.enumerated() {
+            themeElements[index].configure(with: element)
+        }
     }
 }

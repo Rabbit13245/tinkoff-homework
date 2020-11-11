@@ -1,11 +1,31 @@
 import UIKit
 
-class ThemeManager {
+class ThemeManager: ThemeManagerProtocol {
 
+    // MARK: - Private properties
+    
     private let selectedThemeKey = "SelectedTheme"
 
+    // MARK: - Singletone
+    
     private static var instance: ThemeManager?
 
+    static var shared: ThemeManager {
+        guard let instance = self.instance else {
+            let themeForApply = AppTheme(rawValue: UserDefaults.standard.integer(forKey: "SelectedTheme")) ?? .classic
+            let newInstance = ThemeManager(defaultTheme: themeForApply)
+            self.instance = newInstance
+            return newInstance
+        }
+        return instance
+    }
+
+    private init(defaultTheme: AppTheme) {
+        self.theme = defaultTheme
+    }
+    
+    // MARK: - Public properties
+    
     var theme: AppTheme {
         didSet {
             guard theme != oldValue else { return }
@@ -21,20 +41,8 @@ class ThemeManager {
         }
     }
 
-    static var shared: ThemeManager {
-        guard let instance = self.instance else {
-            let themeForApply = AppTheme(rawValue: UserDefaults.standard.integer(forKey: "SelectedTheme")) ?? .classic
-            let newInstance = ThemeManager(defaultTheme: themeForApply)
-            self.instance = newInstance
-            return newInstance
-        }
-        return instance
-    }
-
-    private init(defaultTheme: AppTheme) {
-        self.theme = defaultTheme
-    }
-
+    // MARK: - Private methods
+    
     func apply(for application: UIApplication) {
         if #available(iOS 13.0, *) {
             let appearance = UINavigationBarAppearance()

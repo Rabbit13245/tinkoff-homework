@@ -2,29 +2,28 @@ import UIKit
 
 class ThemesViewController: UIViewController {
 
+    // MARK: - Public properties
     
-
-    var currentTheme: AppTheme?
-    //{
-//        didSet {
-//            guard let curTheme = currentTheme else { return }
-//            switch curTheme {
-//            case .classic:
-//                configButtons(classicButton)
-//            case .day:
-//                configButtons(dayButton)
-//            case .night:
-//                configButtons(nightButton)
-//            }
-//        }
-    //}
-
     var changeThemeClosure: ((_ theme: AppTheme) -> Void)?
 
     weak var delegate: ThemesPickerDelegate?
 
+    // MARK: - Initializers
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle methods
+    
     override func loadView() {
-        view = ThemeView()
+        let themeView = ThemeView()
+        themeView.delegate = self
+        view = themeView
     }
     
     override func viewDidLoad() {
@@ -32,61 +31,22 @@ class ThemesViewController: UIViewController {
         setupUI()
     }
 
-    private func setupUI() {
-    
-        setupNavTitle()
-        setupThemesElements()
-    }
-
     // MARK: - Private functions
 
+    private func setupUI() {
+        setupNavTitle()
+    }
+    
     private func setupNavTitle() {
         self.navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = "Settings"
         self.navigationItem.backBarButtonItem?.title = "Chat"
     }
+}
 
-    private func setupThemesElements() {
-        
-    }
-
-    @objc private func selectClassicTheme(sender: AnyObject) {
-//        if let button = sender as? UIButton {
-//            configButtons(button)
-//        } else {
-//            configButtons(classicButton)
-//        }
-
-        currentTheme = .classic
-        delegate?.changeTheme(.classic)
-        if let changeTheme = changeThemeClosure {
-            changeTheme(.classic)
-        }
-    }
-    @objc private func selectDayTheme(sender: AnyObject) {
-//       if let button = sender as? UIButton {
-//            configButtons(button)
-//        } else {
-//            configButtons(dayButton)
-//        }
-
-        currentTheme = .day
-        delegate?.changeTheme(.day)
-        if let changeTheme = changeThemeClosure {
-            changeTheme(.day)
-        }
-    }
-    @objc private func selectNightTheme(sender: AnyObject) {
-//        if let button = sender as? UIButton {
-//            configButtons(button)
-//        } else {
-//            configButtons(nightButton)
-//        }
-
-        currentTheme = .night
-        delegate?.changeTheme(.night)
-        if let changeTheme = changeThemeClosure {
-            changeTheme(.night)
-        }
+extension ThemesViewController: ThemeChangeDelegate {
+    func select(theme: AppTheme) {
+        delegate?.changeTheme(theme)
+        changeThemeClosure?(theme)
     }
 }

@@ -2,7 +2,9 @@ import UIKit
 import AVFoundation
 
 class ProfileViewController: LoggedViewController {
-
+    
+    // MARK: - UI
+    
     @IBOutlet weak var defaultPhotoView: UIView!
     @IBOutlet weak var nameTextView: UITextView!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -19,32 +21,38 @@ class ProfileViewController: LoggedViewController {
     @IBOutlet weak var defaultPhotoConstraint: NSLayoutConstraint!
     @IBOutlet weak var profilePhotoConstant: NSLayoutConstraint!
 
-    var editingMode = false
-    var imageChanged = false
-
-    var userName = ""
-    var userDescription = ""
-    var userImage: UIImage?
-
-    var wasChange = false
-
-    lazy var dataManagerFactory: DataManagerFactory = {
-        let dataManagerFactory = DataManagerFactory()
-        return dataManagerFactory
-    }()
-
     lazy var initialsLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
 
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 120)
         label.textColor = UIColor.AppColors.initialsColor
         label.backgroundColor = .clear
 
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    // MARK: - Private properties
+    
+    private var editingMode = false
+    private var imageChanged = false
 
+    private var userName = ""
+    private var userDescription = ""
+    private var userImage: UIImage?
+
+    private var wasChange = false
+
+    lazy var dataManagerFactory: DataManagerFactory = {
+        let dataManagerFactory = DataManagerFactory()
+        return dataManagerFactory
+    }()
+    
+    var cameraManager: CameraManagerProtocol
+
+    // MARK: - Lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,6 +71,18 @@ class ProfileViewController: LoggedViewController {
         self.descriptionTextView.endEditing(true)
     }
 
+    // MARK: - Initializers
+    
+    init(cameraManager: CameraManagerProtocol) {
+        self.cameraManager = cameraManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Private methods
 
     private func setupUI() {
@@ -123,7 +143,6 @@ class ProfileViewController: LoggedViewController {
         //readData(dataManagerOperations)
 
         self.editBarButton.isEnabled = false
-
     }
 
     private func readData(_ dataManager: DataManagerProtocol) {
