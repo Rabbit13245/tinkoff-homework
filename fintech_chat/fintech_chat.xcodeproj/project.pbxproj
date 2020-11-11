@@ -226,7 +226,6 @@
 		8448F53D254832D3009F7983 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
-				F10FF090253CD74C00A0996B /* Channel.swift */,
 				8448F535254832C9009F7983 /* ChannelDb+CoreDataClass.swift */,
 				8448F536254832C9009F7983 /* ChannelDb+CoreDataProperties.swift */,
 			);
@@ -236,7 +235,6 @@
 		8448F53E254832ED009F7983 /* Message */ = {
 			isa = PBXGroup;
 			children = (
-				F10FF092253CD76400A0996B /* Message.swift */,
 				8448F539254832D0009F7983 /* MessageDb+CoreDataClass.swift */,
 				8448F53A254832D1009F7983 /* MessageDb+CoreDataProperties.swift */,
 			);
@@ -319,6 +317,7 @@
 		846EA93A255BA99000776D49 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				84B401B8255C9BFB00F2D9DB /* Models */,
 				84B401A8255C9A5600F2D9DB /* MessageManager */,
 				84B401A7255C9A4E00F2D9DB /* ChannelManager */,
 				84B40199255C93F300F2D9DB /* DataManager */,
@@ -423,6 +422,7 @@
 		84778BFB255BA170009AE053 /* Core Layer */ = {
 			isa = PBXGroup;
 			children = (
+				84B401B7255C9B5D00F2D9DB /* Models */,
 				84B401A0255C988D00F2D9DB /* CoreDataManager */,
 				846EA965255C48B700776D49 /* CameraManager */,
 				84778BFD255BA64C009AE053 /* Assembly */,
@@ -454,8 +454,6 @@
 		849444DB251DE7DB00946D9F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8448F53E254832ED009F7983 /* Message */,
-				8448F53D254832D3009F7983 /* Channel */,
 				847E5FFF25232496008B8C27 /* ConfigurableView.swift */,
 				F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */,
 				F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */,
@@ -524,6 +522,24 @@
 				84B401B4255C9AF700F2D9DB /* MessageManager.swift */,
 			);
 			path = MessageManager;
+			sourceTree = "<group>";
+		};
+		84B401B7255C9B5D00F2D9DB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8448F53D254832D3009F7983 /* Channel */,
+				8448F53E254832ED009F7983 /* Message */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		84B401B8255C9BFB00F2D9DB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F10FF090253CD74C00A0996B /* Channel.swift */,
+				F10FF092253CD76400A0996B /* Message.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		9B50D5890130E137450028D6 /* Pods */ = {
