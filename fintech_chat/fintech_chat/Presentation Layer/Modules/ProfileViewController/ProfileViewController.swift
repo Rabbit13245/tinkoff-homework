@@ -1,7 +1,7 @@
 import UIKit
 import AVFoundation
 
-class ProfileViewController: BaseViewController {
+class ProfileViewController: LoggedViewController {
 
     @IBOutlet weak var defaultPhotoView: UIView!
     @IBOutlet weak var nameTextView: UITextView!

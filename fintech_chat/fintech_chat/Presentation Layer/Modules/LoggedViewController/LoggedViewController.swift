@@ -7,7 +7,7 @@ enum VCState {
     case disappeared
 }
 
-class BaseViewController: UIViewController {
+class LoggedViewController: UIViewController {
 
     var currentState = VCState.disappeared
 
@@ -57,9 +57,5 @@ class BaseViewController: UIViewController {
         super.viewDidLayoutSubviews()
 
         Logger.app.logMessage(#function, logLevel: .debug)
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
 }

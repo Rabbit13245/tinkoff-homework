@@ -18,7 +18,7 @@ protocol Theme {
     var indicatorStyle: UIScrollView.IndicatorStyle { get }
 }
 
-enum AppTheme: Int {
+enum AppTheme: Int, CaseIterable {
     case classic
     case day
     case night
@@ -30,6 +30,16 @@ enum AppTheme: Int {
             return DayTheme()
         case .night:
             return NightTheme()
+        }
+    }
+    var name: String {
+        switch self {
+        case .classic:
+            return "Classic"
+        case .day:
+            return "Day"
+        case .night:
+            return "Night"
         }
     }
 }
