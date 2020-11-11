@@ -80,7 +80,7 @@ class GCDDataManager {
 
 // MARK: - DataManagerProtocol
 
-extension GCDDataManager: DataManagerProtocol {
+extension GCDDataManager: IDataManager {
     func loadName(completion: ((_ name: String, _ error: Bool) -> Void)?) {
         loadDataFrom(url: self.nameFile, completion: completion)
     }

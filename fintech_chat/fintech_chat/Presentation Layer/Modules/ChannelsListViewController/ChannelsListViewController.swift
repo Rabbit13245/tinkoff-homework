@@ -188,16 +188,15 @@ class ChannelsListViewController: UIViewController {
 
 // MARK: - UISetup
 extension ChannelsListViewController {
-
     private func setupNavigationController() {
-        let manager = dataManagerFactory.createDataManager(.GCD)
-
         navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = chatName
 
         self.navigationItem.leftBarButtonItem = self.settingsBarButton
         self.navigationItem.rightBarButtonItems = [self.profileBarButton, self.addChannelBarButton]
 
+        
+        let manager = dataManagerFactory.createDataManager(.GCD)
         manager.loadImage { (image, error) in
             if !error {
                 let customView = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
@@ -287,20 +286,6 @@ extension ChannelsListViewController {
     @objc func textFieldDidChange(_ textField: UITextField) {
         self.createChannelAction?.isEnabled = !textField.text.isBlank
     }
-
-    private func presentMessage(_ message: String) {
-        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alertController.applyTheme()
-
-        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        if presentedViewController == nil {
-            present(alertController, animated: true)
-        } else {
-            dismiss(animated: true) {
-                self.present(alertController, animated: true)
-            }
-        }
-    }
 }
 
 // MARK: - Table view data source
@@ -361,9 +346,6 @@ extension ChannelsListViewController: UITableViewDelegate {
 extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
     /// Начало изменения
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        // Убрал, иначе мы не получим изменения каналов, пока будем на другом экране
-//        guard self.isViewLoaded,
-//                self.view.window != nil else { return }
         tableView.beginUpdates()
     }
     
@@ -374,8 +356,6 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
         at indexPath: IndexPath?,
         for type: NSFetchedResultsChangeType,
         newIndexPath: IndexPath?) {
-//        guard self.isViewLoaded,
-//            self.view.window != nil else { return }
         switch type {
         case .insert:
             if let newIndexPath = newIndexPath {
@@ -406,8 +386,6 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
     
     /// Конец изменения
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        guard self.isViewLoaded,
-//            self.view.window != nil else { return }
         tableView.endUpdates()
     }
 }

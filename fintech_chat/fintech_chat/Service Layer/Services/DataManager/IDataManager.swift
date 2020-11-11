@@ -1,6 +1,6 @@
 import UIKit
 
-protocol DataManagerProtocol {
+protocol IDataManager {
     func loadName(completion: ((_ name: String, _ error: Bool) -> Void)?)
     func loadDescription(completion: ((_ description: String, _ error: Bool) -> Void)?)
     func loadImage(completion: ((_ image: UIImage?, _ error: Bool) -> Void)?)

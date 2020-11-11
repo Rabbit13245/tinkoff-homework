@@ -1,6 +1,8 @@
 import UIKit
 import AVFoundation
 
+// TODO Вынести view в отдельный файл
+
 class ProfileViewController: LoggedViewController {
     
     // MARK: - UI
@@ -17,13 +19,11 @@ class ProfileViewController: LoggedViewController {
     @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var safeAreaButtonsConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-
     @IBOutlet weak var defaultPhotoConstraint: NSLayoutConstraint!
     @IBOutlet weak var profilePhotoConstant: NSLayoutConstraint!
 
     lazy var initialsLabel: UILabel = {
         let label = UILabel()
-
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 120)
         label.textColor = UIColor.AppColors.initialsColor
@@ -76,8 +76,8 @@ class ProfileViewController: LoggedViewController {
 
     @IBAction func editBarButtonPressed(_ sender: UIBarButtonItem) {
         self.editingMode = !self.editingMode
+        
         self.editButton.isEnabled = self.editingMode
-
         self.descriptionTextView.isEditable = self.editingMode
         self.nameTextView.isEditable = self.editingMode
 
@@ -95,16 +95,19 @@ class ProfileViewController: LoggedViewController {
     }
 
     @IBAction func gcdSaveButtonPessed(_ sender: AppBackgroundButton) {
-        let dataManager = dataManagerFactory.createDataManager(.GCD)
+        guard let dataManager = dataManagerFactory?.createDataManager(.GCD) else { return }
         self.internalSaveData(dataManager)
     }
 
     @IBAction func operationSaveButtonPressed(_ sender: Any) {
-        let dataManager = dataManagerFactory.createDataManager(.operation)
-
+        guard let dataManager = dataManagerFactory?.createDataManager(.operation) else { return }
         self.internalSaveData(dataManager)
     }
     
+    // MARK: - Dependencies
+    
+    private var dataManagerFactory: IDataManagerFactory?
+    private var cameraManager: ICameraManager?
     // MARK: - Private properties
     
     private var editingMode = false
@@ -115,14 +118,7 @@ class ProfileViewController: LoggedViewController {
     private var userImage: UIImage?
 
     private var wasChange = false
-
-    lazy var dataManagerFactory: DataManagerFactory = {
-        let dataManagerFactory = DataManagerFactory()
-        return dataManagerFactory
-    }()
     
-    var cameraManager: ICameraManager?
-
     // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
@@ -145,18 +141,21 @@ class ProfileViewController: LoggedViewController {
 
     // MARK: - Initializers
     
-    init(cameraManager: ICameraManager) {
-        self.cameraManager = cameraManager
-        
+    init(cameraManager: ICameraManager,
+         dataManagerFactory: IDataManagerFactory) {
         super.init(nibName: nil, bundle: nil)
+        
+        setDependencies(cameraManager: cameraManager, dataManagerFactory: dataManagerFactory)
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    public func initialize(cameraManager: ICameraManager) {
+    public func setDependencies(cameraManager: ICameraManager,
+                                dataManagerFactory: IDataManagerFactory) {
         self.cameraManager = cameraManager
+        self.dataManagerFactory = dataManagerFactory
     }
     
     // MARK: - Private methods
@@ -211,17 +210,17 @@ class ProfileViewController: LoggedViewController {
         ])
 
         // чтение gcd
-        let dataManagerGCD = self.dataManagerFactory.createDataManager(.GCD)
+        guard let dataManagerGCD = dataManagerFactory?.createDataManager(.GCD) else { return }
         readData(dataManagerGCD)
 
         // чтение operations
-        //let dataManagerOperations = self.dataManagerFactory.createDataManager(.Operation)
+        //guard let dataManagerOperations = dataManagerFactory?.createDataManager(.operation) else { return }
         //readData(dataManagerOperations)
 
         self.editBarButton.isEnabled = false
     }
 
-    private func readData(_ dataManager: DataManagerProtocol) {
+    private func readData(_ dataManager: IDataManager) {
         dataManager.loadUserData { (userData, response) in
             if let resp = response {
                 if !resp.nameError {
@@ -248,7 +247,6 @@ class ProfileViewController: LoggedViewController {
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.isHidden = true
                 self.editBarButton.isEnabled = true
-
             }
         }
     }
@@ -271,18 +269,13 @@ class ProfileViewController: LoggedViewController {
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
 
         if notification.name == UIResponder.keyboardWillHideNotification {
-
             safeAreaButtonsConstraint.constant = 30
             defaultPhotoConstraint.constant = 8
-
             profilePhotoConstant.constant = 8
-
             stackViewTopConstraint.constant = 30
         } else {
             safeAreaButtonsConstraint.constant = 8 + keyboardViewEndFrame.height - self.view.safeAreaInsets.bottom
-
             stackViewTopConstraint.constant = 10
-
             defaultPhotoConstraint.constant = 8 - keyboardViewEndFrame.height * 4 / 5
             profilePhotoConstant.constant = 8 - keyboardViewEndFrame.height * 4 / 5
         }
@@ -292,49 +285,12 @@ class ProfileViewController: LoggedViewController {
         }, completion: nil)
     }
 
-    private func checkCameraPermission() {
-        if UIImagePickerController.isCameraDeviceAvailable(.rear) || UIImagePickerController.isCameraDeviceAvailable(.front) {
-            let cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
-            switch cameraStatus {
-            case .denied:
-                guard let ac = cameraManager?.cameraSettings() else { return }
-                present(ac, animated: true, completion: nil)
-            case .restricted:
-                self.presentMessage("You don`t allow")
-            case .authorized:
-                self.chooseImagePicker(source: .camera)
-            case .notDetermined:
-                AVCaptureDevice.requestAccess(for: .video) {(success) in
-                    if success {
-                        self.chooseImagePicker(source: .camera)
-                    } else {
-                        self.presentMessage("Camera access is denied")
-                    }
-                }
-            default:
-                break
-            }
-        } else {
-            self.presentMessage("Your camera is not available")
-        }
-    }
-
-    private func presentMessage(_ message: String) {
-        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alertController.applyTheme()
-
-        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        present(alertController, animated: true)
-    }
-
-    private func internalSaveData(_ dataManager: DataManagerProtocol) {
+    private func internalSaveData(_ dataManager: IDataManager) {
         // если нажали в режиме редактирования, то выходим из него
         if self.editingMode {
             self.editBarButtonPressed(self.editBarButton)
         }
-
         self.modifyUIForSaveData(false)
-
         self.initialsLabel.text = Helper.app.getInitials(from: self.nameTextView.text)
 
         if self.nameTextView.text != self.userName,
@@ -346,8 +302,8 @@ class ProfileViewController: LoggedViewController {
             newImage: self.profilePhotoView.image) { [weak self] (response, error) in
                 self?.modifyUIForSaveData(true)
                 self?.updateDataAfterSave(response: response)
+                
                 if error {
-
                     self?.failedSaveData {
                         self?.internalSaveData(dataManager)
                     }
@@ -363,8 +319,8 @@ class ProfileViewController: LoggedViewController {
             newImage: self.profilePhotoView.image) { [weak self] (response, error) in
                 self?.modifyUIForSaveData(true)
                 self?.updateDataAfterSave(response: response)
+                
                 if error {
-
                     self?.failedSaveData {
                         self?.internalSaveData(dataManager)
                     }
@@ -380,6 +336,7 @@ class ProfileViewController: LoggedViewController {
             newImage: self.profilePhotoView.image) { [weak self] (response, error) in
                 self?.modifyUIForSaveData(true)
                 self?.updateDataAfterSave(response: response)
+                
                 if error {
                     self?.failedSaveData {
                         self?.internalSaveData(dataManager)
@@ -391,11 +348,9 @@ class ProfileViewController: LoggedViewController {
         } else {
             dataManager.saveUserData(name: nil, description: nil, oldImage: self.userImage, newImage: self.profilePhotoView.image) { [weak self] (response, error) in
                 self?.modifyUIForSaveData(true)
-
                 self?.updateDataAfterSave(response: response)
-
+                
                 if error {
-
                     self?.failedSaveData {
                         self?.internalSaveData(dataManager)
                     }
@@ -458,15 +413,12 @@ class ProfileViewController: LoggedViewController {
 // MARK: - UIImagePickerControllerDelegate
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
     func chooseImagePicker(source: UIImagePickerController.SourceType) {
         if UIImagePickerController.isSourceTypeAvailable(source) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
-
             imagePicker.allowsEditing = true
             imagePicker.sourceType = source
-
             present(imagePicker, animated: true)
         }
     }
@@ -476,7 +428,6 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         guard let image = info[.editedImage] as? UIImage else {return}
 
         profilePhotoView.image = image
-
         defaultPhotoView.backgroundColor = .none
         initialsLabel.isHidden = true
 

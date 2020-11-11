@@ -20,7 +20,7 @@ class OperationDataManager {
     }()
 }
 
-extension OperationDataManager: DataManagerProtocol {
+extension OperationDataManager: IDataManager {
     func loadName(completion: ((_ name: String, _ error: Bool) -> Void)?) {
         let loadNameOperation = LoadStringOperation(url: self.nameFile)
         loadNameOperation.completionBlock = {

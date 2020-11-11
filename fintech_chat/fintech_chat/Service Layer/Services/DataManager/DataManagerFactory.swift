@@ -1,12 +1,7 @@
 import Foundation
 
-enum DataManagerType {
-    case GCD
-    case operation
-}
-
-struct DataManagerFactory {
-    func createDataManager(_ type: DataManagerType) -> DataManagerProtocol {
+struct DataManagerFactory: IDataManagerFactory {
+    func createDataManager(_ type: DataManagerType) -> IDataManager {
         switch type {
         case .GCD:
             return GCDDataManager()
