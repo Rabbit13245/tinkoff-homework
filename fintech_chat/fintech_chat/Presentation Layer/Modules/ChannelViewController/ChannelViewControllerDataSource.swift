@@ -1,8 +1,16 @@
 import UIKit
+import CoreData
 
-// MARK: - Table view data source
-extension ChannelViewController: UITableViewDataSource {
-
+class ChannelViewControllerDataSource: NSObject, UITableViewDataSource {
+    
+    private var fetchedResultController: NSFetchedResultsController<MessageDb>
+    private weak var vc: ChannelViewController?
+    
+    init(frc: NSFetchedResultsController<MessageDb>, vc: ChannelViewController) {
+        fetchedResultController = frc
+        self.vc = vc
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultController.sections?.count ?? 0
     }
@@ -12,10 +20,13 @@ extension ChannelViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: String(describing: MessageTableViewCell.self),
-            for: indexPath)
-            as? MessageTableViewCell else { return UITableViewCell() }
+                withIdentifier: String(describing: MessageTableViewCell.self),
+                for: indexPath)
+                as? MessageTableViewCell,
+              let vc = vc
+        else { return UITableViewCell() }
 
         //let message = self.messages[indexPath.row]
         let messageDb = fetchedResultController.object(at: indexPath)
@@ -24,7 +35,7 @@ extension ChannelViewController: UITableViewDataSource {
 
         cell.configure(with: messageCellModel)
 
-        let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
+        let size = CGSize(width: vc.view.frame.width * 0.75 - 16, height: 1000)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
 
         let estimatedFrameMessage = NSString(
@@ -51,12 +62,12 @@ extension ChannelViewController: UITableViewDataSource {
 
         } else {
             cell.messageTextLabel.frame = CGRect(
-                x: self.view.frame.width - estimatedFrameMessage.width - 16,
+                x: vc.view.frame.width - estimatedFrameMessage.width - 16,
                 y: 10,
                 width: estimatedFrameMessage.width,
                 height: estimatedFrameMessage.height)
             cell.bubbleView.frame = CGRect(
-                x: self.view.frame.width - estimatedFrameMessage.width - 24,
+                x: vc.view.frame.width - estimatedFrameMessage.width - 24,
                 y: 0,
                 width: estimatedFrameMessage.width + 16,
                 height: estimatedFrameMessage.height + 20)
@@ -64,33 +75,5 @@ extension ChannelViewController: UITableViewDataSource {
         }
 
         return cell
-    }
-}
-
-// MARK: - Table view delegate
-extension ChannelViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        //let message = self.messages[indexPath.row]
-        let messageDb = fetchedResultController.object(at: indexPath)
-        let message = Message(messageDb)
-        
-        let messageCellModel = MessageCellModel(message: message)
-
-        let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-
-        let estimatedFrame = NSString(
-            string: messageCellModel.message.content).boundingRect(
-                with: size,
-                options: options,
-                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)],
-                context: nil)
-
-        if messageCellModel.direction == .input {
-            return estimatedFrame.height + 20 + 6 + 14
-        } else {
-            return estimatedFrame.height + 20 + 6
-        }
     }
 }

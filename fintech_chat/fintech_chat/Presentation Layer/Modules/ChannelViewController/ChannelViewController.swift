@@ -10,6 +10,9 @@ class ChannelViewController: UIViewController {
     private let cellIdentifier = String(describing: MessageTableViewCell.self)
     private var keyboardHeight: CGFloat = 0
     
+    private lazy var tableViewDelegate = ChannelViewControllerDelegate(frc: fetchedResultController, vc: self)
+    private lazy var tableViewDataSource = ChannelViewControllerDataSource(frc: fetchedResultController, vc: self)
+    
     // MARK: - Dependencies
     
     private var messageManager: IMessageManager
@@ -19,8 +22,8 @@ class ChannelViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        tableView.dataSource = self
-        tableView.delegate = self
+        tableView.dataSource = tableViewDataSource
+        tableView.delegate = tableViewDelegate
         
         return tableView
     }()
