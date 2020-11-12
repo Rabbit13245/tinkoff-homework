@@ -8,7 +8,7 @@ protocol IPresentationAssembly {
     func channelsListViewController() -> ChannelsListViewController
     
     /// Создает экран с сообщениями канала
-    func channelViewController(channel: ChannelDb) -> ChannelViewController
+    func channelViewController(channel: ChannelCellModel) -> ChannelViewController
     
     /// Создает экран с экраном настроек профиля
     func profileViewController() -> UINavigationController
@@ -47,7 +47,7 @@ class PresentationAssembly: IPresentationAssembly {
     
     // MARK: - ChannelViewController
     
-    func channelViewController(channel: ChannelDb) -> ChannelViewController {
+    func channelViewController(channel: ChannelCellModel) -> ChannelViewController {
         let channelVC = ChannelViewController(channel: channel, messageManager: serviceAssembly.messageManager)
 
         return channelVC

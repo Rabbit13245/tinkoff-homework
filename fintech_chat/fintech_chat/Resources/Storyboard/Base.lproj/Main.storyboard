@@ -19,14 +19,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Rr-UM-bDg">
-                                <rect key="frame" x="67.5" y="104" width="240" height="240"/>
+                                <rect key="frame" x="67.5" y="8" width="240" height="240"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="JmA-f2-kxQ"/>
                                     <constraint firstAttribute="height" constant="240" id="c9b-Kx-vy2"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zcl-wE-uK0">
-                                <rect key="frame" x="67.5" y="104" width="240" height="240"/>
+                                <rect key="frame" x="67.5" y="8" width="240" height="240"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AvU-LR-dsQ">
                                         <rect key="frame" x="210" y="216" width="30" height="32"/>
@@ -50,7 +50,7 @@
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Dmitry Zaytcev" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3t5-3i-OcL">
-                                <rect key="frame" x="67.5" y="360" width="240" height="60"/>
+                                <rect key="frame" x="67.5" y="264" width="240" height="60"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="YEq-Cf-9L0"/>
@@ -60,7 +60,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="iOS developer" translatesAutoresizingMaskIntoConstraints="NO" id="3Nn-Ph-yEC">
-                                <rect key="frame" x="67.5" y="438" width="240" height="129"/>
+                                <rect key="frame" x="67.5" y="342" width="240" height="225"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -148,7 +148,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1770.4000000000001" y="78.710644677661179"/>
+            <point key="canvasLocation" x="671" y="81"/>
         </scene>
         <!--Channels List View Controller-->
         <scene sceneID="Qho-kD-S8g">
@@ -180,42 +180,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w2G-lz-YPU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-96.799999999999997" y="81.409295352323838"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Zc1-NW-7d6">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1Xf-AN-sf7" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Z6H-fv-vhR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="why-se-mSu"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jwD-nt-3aM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="831.20000000000005" y="78.710644677661179"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="fww-7M-WP0">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FbI-Zf-rUs" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QeU-iN-cjd">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="3aL-Sv-cVb" kind="relationship" relationship="rootViewController" id="6DR-X3-aS6"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NsP-rJ-iCV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1036" y="81.409295352323838"/>
         </scene>
     </scenes>
     <resources>

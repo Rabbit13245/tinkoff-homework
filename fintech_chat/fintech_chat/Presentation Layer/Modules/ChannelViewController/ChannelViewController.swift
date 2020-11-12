@@ -6,7 +6,7 @@ class ChannelViewController: UIViewController {
     // MARK: - Private properties
     
     /// Канал, по которому будем выводить сообщения
-    private var channel: ChannelDb
+    private var channel: ChannelCellModel
     private let cellIdentifier = String(describing: MessageTableViewCell.self)
     private var keyboardHeight: CGFloat = 0
     
@@ -91,7 +91,7 @@ class ChannelViewController: UIViewController {
 
     // MARK: - Initializers
     
-    init(channel: ChannelDb, messageManager: IMessageManager) {
+    init(channel: ChannelCellModel, messageManager: IMessageManager) {
         self.channel = channel
         self.messageManager = messageManager
         

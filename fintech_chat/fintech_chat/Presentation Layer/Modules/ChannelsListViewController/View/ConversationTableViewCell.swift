@@ -41,7 +41,7 @@ class ConversationTableViewCell: UITableViewCell {
 // MARK: - ConfigurableView
 
 extension ConversationTableViewCell: ConfigurableView {
-    typealias ConfigurationModel = Channel
+    typealias ConfigurationModel = ChannelCellModel
 
     func configure(with data: ConfigurationModel) {
         channelName.text = data.name

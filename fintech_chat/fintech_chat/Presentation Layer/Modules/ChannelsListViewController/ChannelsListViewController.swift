@@ -267,7 +267,7 @@ extension ChannelsListViewController: UITableViewDataSource {
 
         //let cellData = self.channels[indexPath.row]
         let channelDb = fetchedResultController.object(at: indexPath)
-        let cellData = Channel(channelDb)
+        let cellData = ChannelCellModel(channelDb)
         
         cell.configure(with: cellData)
 
@@ -292,9 +292,11 @@ extension ChannelsListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let channelDb = fetchedResultController.object(at: indexPath)
         
-        guard let channelVC = presentationAssembly?.channelViewController(channel: channelDb) else { return }
+        let channelDb = fetchedResultController.object(at: indexPath)
+        let channelCellModel = ChannelCellModel(channelDb)
+        
+        guard let channelVC = presentationAssembly?.channelViewController(channel: channelCellModel) else { return }
 
         self.navigationController?.pushViewController(channelVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
