@@ -110,7 +110,12 @@ class ChannelsListViewController: UIViewController {
         setupTable()
         
         getCacheChannels()
-        channelManager?.subscribeChannels()
+        channelManager?.subscribeChannels(completion: { [weak self] (error) in
+            guard error != nil else { return }
+            DispatchQueue.main.async {
+                self?.presentMessage("Error subscribing channels")
+            }
+        })
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -230,7 +235,10 @@ extension ChannelsListViewController {
             self?.channelManager?.createChannel(with: channelName, completion: { [weak self] (error) in
                 self?.addChannelBarButton.isEnabled = true
                 guard error != nil else {return}
-                self?.presentMessage("Error creating channel")
+                
+                DispatchQueue.main.async {
+                    self?.presentMessage("Error creating channel")
+                }
             })
         }
 
@@ -279,7 +287,9 @@ extension ChannelsListViewController: UITableViewDataSource {
             let channelForRemove = fetchedResultController.object(at: indexPath)
             channelManager?.removeChannel(channelForRemove.identifier) { [weak self] (error) in
                 guard error != nil else { return }
-                self?.presentMessage("Error removing channel")
+                DispatchQueue.main.async {
+                    self?.presentMessage("Error removing channel")
+                }
             }
         }
     }

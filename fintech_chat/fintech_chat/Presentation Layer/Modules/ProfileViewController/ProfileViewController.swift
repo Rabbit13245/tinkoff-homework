@@ -109,6 +109,11 @@ class ProfileViewController: LoggedViewController {
     private var dataManagerFactory: IDataManagerFactory?
     private var cameraManager: ICameraManager?
     
+    public func setupDependencies(cameraManager: ICameraManager, dataManagerFactory: IDataManagerFactory) {
+        self.cameraManager = cameraManager
+        self.dataManagerFactory = dataManagerFactory
+    }
+    
     // MARK: - Private properties
     
     private var editingMode = false
@@ -140,24 +145,6 @@ class ProfileViewController: LoggedViewController {
         self.descriptionTextView.endEditing(true)
     }
 
-    // MARK: - Initializers
-    
-    init(cameraManager: ICameraManager,
-         dataManagerFactory: IDataManagerFactory) {
-        super.init(nibName: nil, bundle: nil)
-        
-        setupDependencies(cameraManager: cameraManager, dataManagerFactory: dataManagerFactory)
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    public func setupDependencies(cameraManager: ICameraManager, dataManagerFactory: IDataManagerFactory) {
-        self.cameraManager = cameraManager
-        self.dataManagerFactory = dataManagerFactory
-    }
-    
     // MARK: - Private methods
 
     private func setupUI() {

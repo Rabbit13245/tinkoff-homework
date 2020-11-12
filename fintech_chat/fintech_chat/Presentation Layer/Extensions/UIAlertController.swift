@@ -9,6 +9,7 @@ extension UIAlertController {
         contentView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
 
         guard let title = self.title else {return}
+        
         let attributedStringTitle = NSMutableAttributedString(string: title)
         attributedStringTitle.addAttributes([
         NSAttributedString.Key.foregroundColor: ThemeManager.shared.theme.settings.labelColor], range: NSRange(location: 0, length: title.utf8.count))

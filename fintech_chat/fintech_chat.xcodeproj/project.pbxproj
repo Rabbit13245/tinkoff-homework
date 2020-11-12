@@ -63,6 +63,7 @@
 		84B854C1255DAC630052293E /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B854C0255DAC630052293E /* RootAssembly.swift */; };
 		84B854C6255DC6D50052293E /* IFetchingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B854C5255DC6D50052293E /* IFetchingManager.swift */; };
 		84B854C9255DC6E90052293E /* FetchingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B854C8255DC6E90052293E /* FetchingManager.swift */; };
+		84B854E1255DE2590052293E /* ChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B854E0255DE2590052293E /* ChannelView.swift */; };
 		84D2135925535BC20083BA7F /* ChannelViewController+TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2135825535BC20083BA7F /* ChannelViewController+TableViewDelegate.swift */; };
 		F10D4E022520F03E00B8CDD0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E012520F03E00B8CDD0 /* Date.swift */; };
 		F10D4E04252111A900B8CDD0 /* ChannelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E03252111A900B8CDD0 /* ChannelCellModel.swift */; };
@@ -148,6 +149,7 @@
 		84B854C0255DAC630052293E /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		84B854C5255DC6D50052293E /* IFetchingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFetchingManager.swift; sourceTree = "<group>"; };
 		84B854C8255DC6E90052293E /* FetchingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchingManager.swift; sourceTree = "<group>"; };
+		84B854E0255DE2590052293E /* ChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelView.swift; sourceTree = "<group>"; };
 		84D2135825535BC20083BA7F /* ChannelViewController+TableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelViewController+TableViewDelegate.swift"; sourceTree = "<group>"; };
 		9953A7A4C1B56AF4D0C3C4F3 /* Pods-fintech_chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat/Pods-fintech_chat.release.xcconfig"; sourceTree = "<group>"; };
 		F10D4E012520F03E00B8CDD0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -342,9 +344,8 @@
 		846EA93D255BA9E800776D49 /* ThemesViewController */ = {
 			isa = PBXGroup;
 			children = (
+				84B854CC255DE0290052293E /* View */,
 				F1391D9F25290D17007FC97D /* ThemesViewController.swift */,
-				846EA943255BE31B00776D49 /* ThemeElement.swift */,
-				846EA94A255BF50D00776D49 /* ThemeView.swift */,
 			);
 			path = ThemesViewController;
 			sourceTree = "<group>";
@@ -397,6 +398,7 @@
 		84778BF9255BA160009AE053 /* Presentation Layer */ = {
 			isa = PBXGroup;
 			children = (
+				F10FF08B253CBAC200A0996B /* Storyboard */,
 				84778BFF255BA65A009AE053 /* Assembly */,
 				8442D3CB251B434D00F01A1C /* Extensions */,
 				8448DF7D252C9EE300314A95 /* Controls */,
@@ -420,7 +422,6 @@
 				84B401B7255C9B5D00F2D9DB /* Models */,
 				84778BFD255BA64C009AE053 /* Assembly */,
 				849D39C7255D529B00B0A111 /* FirebaseClient */,
-				849D39C5255D2E7800B0A111 /* Logger */,
 				84B401A0255C988D00F2D9DB /* CoreDataClient */,
 				846EA965255C48B700776D49 /* CameraManager */,
 			);
@@ -481,6 +482,7 @@
 		849D39D2255D721000B0A111 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				84B854DF255DE23D0052293E /* View */,
 				F10D4E072521165B00B8CDD0 /* MessageTableViewCell.swift */,
 			);
 			path = View;
@@ -589,6 +591,23 @@
 			path = FetchingManager;
 			sourceTree = "<group>";
 		};
+		84B854CC255DE0290052293E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				846EA94A255BF50D00776D49 /* ThemeView.swift */,
+				846EA943255BE31B00776D49 /* ThemeElement.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		84B854DF255DE23D0052293E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84B854E0255DE2590052293E /* ChannelView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		9B50D5890130E137450028D6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -601,8 +620,8 @@
 		F10FF08A253CBAB400A0996B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				849D39C5255D2E7800B0A111 /* Logger */,
 				8467A60D250FAED400E36BEE /* AppDelegate.swift */,
-				F10FF08B253CBAC200A0996B /* Storyboard */,
 				F10FF08C253CBBD100A0996B /* GoogleService-Info.plist */,
 				8467A616250FAED500E36BEE /* Assets.xcassets */,
 				84B854C0255DAC630052293E /* RootAssembly.swift */,
@@ -820,6 +839,7 @@
 				8448F537254832CA009F7983 /* ChannelDb+CoreDataClass.swift in Sources */,
 				84B401AA255C9A6700F2D9DB /* IChannelManager.swift in Sources */,
 				849D39F5255D7AC200B0A111 /* ServicesAssembly.swift in Sources */,
+				84B854E1255DE2590052293E /* ChannelView.swift in Sources */,
 				847E600025232496008B8C27 /* ConfigurableView.swift in Sources */,
 				84B40192255C903B00F2D9DB /* UIViewController+Alert.swift in Sources */,
 				84B401B2255C9AE300F2D9DB /* IMessageManager.swift in Sources */,

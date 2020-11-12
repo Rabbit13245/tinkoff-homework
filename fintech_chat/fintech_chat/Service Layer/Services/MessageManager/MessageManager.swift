@@ -19,7 +19,7 @@ class MessageManager: IMessageManager {
     }
     
     /// Подписаться на сообщения в канале
-    public func subscribeOnChannelMessagesUpdates(channelId: String) {
+    public func subscribeOnChannelMessagesUpdates(channelId: String, completion: @escaping ((Error?) -> Void)) {
         firebaseClient.subscribeMessagesUpdates(with: channelId) { [weak self] (result) in
             switch result {
             case .success(let documentChanges):
@@ -40,14 +40,14 @@ class MessageManager: IMessageManager {
                 }
                 
                 self?.coreDataClient.addNewMessages(added, for: channelId)
-            case .failure:
-                print("FFFFAAAIILLUURREE")
+            case .failure(let error):
+                completion(error)
             }
         }
     }
     
     /// Отправить сообщение в канал
-    public func sendMessage(_ text: String, to channelId: String, completion: @escaping (Error?) -> Void) {
+    public func sendMessage(_ text: String, to channelId: String, completion: @escaping ((Error?) -> Void)) {
         
         guard let safeId = myId else {
             Logger.app.logMessage("Cant get uuid device. ", logLevel: .error)

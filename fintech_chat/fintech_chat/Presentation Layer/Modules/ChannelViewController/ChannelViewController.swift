@@ -15,8 +15,6 @@ class ChannelViewController: UIViewController {
     private var messageManager: IMessageManager
     
     // MARK: - UI
-    
-    private var sendMessageButton: UIButton?
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -27,21 +25,10 @@ class ChannelViewController: UIViewController {
         return tableView
     }()
 
-    internal lazy var inputTextView: AppChatTextView = {
-        let textView = AppChatTextView()
-        textView.font = UIFont.systemFont(ofSize: 16)
-        textView.text = "Your message here..."
-        textView.textColor = UIColor.lightGray
-
-        textView.delegate = self
-
-        textView.layer.cornerRadius = 16
-
-        return textView
-    }()
-
-    private lazy var messageInputView: AppTextWrapperView = {
-        let view = AppTextWrapperView()
+    private lazy var messageInputView: SendMessageView = {
+        let view = SendMessageView()
+        view.inputTextView.delegate = self
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -109,7 +96,14 @@ class ChannelViewController: UIViewController {
         setupUI()
         
         getCachedMessages()
-        messageManager.subscribeOnChannelMessagesUpdates(channelId: self.channel.identifier)
+        messageManager.subscribeOnChannelMessagesUpdates(channelId: self.channel.identifier) { [weak self] (error) in
+            if error != nil {
+                DispatchQueue.main.async {
+                    self?.presentMessage("Error subscribing messages")
+                }
+            }
+        }
+//        messageManager.subscribeOnChannelMessages(channelId: self.channel.identifier, )
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -188,36 +182,11 @@ class ChannelViewController: UIViewController {
     private func setupInputView() {
         self.view.addSubview(messageInputView)
 
-        messageInputView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             messageInputView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             messageInputView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             bottomConstraint,
             messageInputView.heightAnchor.constraint(equalToConstant: 80)
-        ])
-
-        let buttonAdd = UIButton(type: .contactAdd)
-        
-        let buttonSend = UIButton(type: .roundedRect)
-        buttonSend.setTitle("Send", for: .normal)
-        buttonSend.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
-        buttonSend.isEnabled = false
-        self.sendMessageButton = buttonSend
-        
-        let stackView = UIStackView(arrangedSubviews: [buttonAdd, inputTextView, buttonSend])
-        stackView.axis = .horizontal
-        stackView.spacing = 10
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        messageInputView.addSubview(stackView)
-
-        NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: messageInputView.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: messageInputView.trailingAnchor, constant: -16),
-            stackView.topAnchor.constraint(equalTo: messageInputView.topAnchor, constant: 16),
-            stackView.heightAnchor.constraint(lessThanOrEqualTo: messageInputView.heightAnchor, multiplier: 0.5),
-
-            inputTextView.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
 
@@ -248,25 +217,25 @@ class ChannelViewController: UIViewController {
 // MARK: - actions
 extension ChannelViewController {
     @objc func messageTextFieldDidChange(_ textField: UITextField) {
-        self.sendMessageButton?.isEnabled = !textField.text.isBlank
+        self.messageInputView.buttonSend.isEnabled = !textField.text.isBlank
     }
     
     @objc private func sendButtonPressed() {
-        self.sendMessageButton?.isEnabled = false
-        messageManager.sendMessage(self.inputTextView.text, to: self.channel.identifier) { [weak self] error in
+        self.messageInputView.buttonSend.isEnabled = false
+        messageManager.sendMessage(self.messageInputView.inputTextView.text, to: self.channel.identifier) { [weak self] error in
             guard let safeSelf = self else { return }
-            safeSelf.sendMessageButton?.isEnabled = true
+            safeSelf.messageInputView.buttonSend.isEnabled = true
             
             if error != nil {
                 safeSelf.presentMessage("Error sending message")
             } else {
-                safeSelf.inputTextView.text = ""
+                safeSelf.messageInputView.inputTextView.text = ""
             }
         }
     }
     
     @objc private func dismissKeybord() {
-        inputTextView.endEditing(true)
+        messageInputView.inputTextView.endEditing(true)
     }
 }
 
@@ -323,7 +292,7 @@ extension ChannelViewController: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        self.sendMessageButton?.isEnabled = !textView.text.isBlank
+        self.messageInputView.buttonSend.isEnabled = !textView.text.isBlank
     }
 }
 
