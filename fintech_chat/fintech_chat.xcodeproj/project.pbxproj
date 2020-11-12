@@ -338,7 +338,7 @@
 			children = (
 				849D39D4255D722300B0A111 /* Model */,
 				849D39D1255D71F400B0A111 /* View */,
-				849444DF251DE86000946D9F /* ChannelsListViewController.swift */,
+				84B854E9255DF6630052293E /* Controller */,
 			);
 			path = ChannelsListViewController;
 			sourceTree = "<group>";
@@ -347,7 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				84B854CC255DE0290052293E /* View */,
-				F1391D9F25290D17007FC97D /* ThemesViewController.swift */,
+				84B854EA255DF6770052293E /* Controller */,
 			);
 			path = ThemesViewController;
 			sourceTree = "<group>";
@@ -373,9 +373,7 @@
 			children = (
 				849D39D3255D721C00B0A111 /* Model */,
 				849D39D2255D721000B0A111 /* View */,
-				849444E5251E21AF00946D9F /* ChannelViewController.swift */,
-				84D2135825535BC20083BA7F /* ChannelViewControllerDelegate.swift */,
-				84B854E4255DF3B30052293E /* ChannelViewControllerDataSource.swift */,
+				84B854E8255DF6510052293E /* Controller */,
 			);
 			path = ChannelViewController;
 			sourceTree = "<group>";
@@ -601,6 +599,32 @@
 				846EA943255BE31B00776D49 /* ThemeElement.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		84B854E8255DF6510052293E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				84D2135825535BC20083BA7F /* ChannelViewControllerDelegate.swift */,
+				84B854E4255DF3B30052293E /* ChannelViewControllerDataSource.swift */,
+				849444E5251E21AF00946D9F /* ChannelViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		84B854E9255DF6630052293E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				849444DF251DE86000946D9F /* ChannelsListViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		84B854EA255DF6770052293E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F1391D9F25290D17007FC97D /* ThemesViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		9B50D5890130E137450028D6 /* Pods */ = {

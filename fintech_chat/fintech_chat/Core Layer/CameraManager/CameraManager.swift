@@ -36,7 +36,6 @@ class CameraManager: ICameraManager {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         })
-        
         return ac
     }
 }

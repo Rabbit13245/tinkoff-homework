@@ -55,11 +55,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     private func setupApp(_ application: UIApplication) {
         FirebaseApp.configure()
+        CoreDataStack.shared.enableObservers()
         
 //        CoreDataStack.shared.didUpdateDataBase = { stack in
 //            stack.printStatistic()
 //        }
-        
-//        CoreDataStack.shared.enableObservers()
     }
 }

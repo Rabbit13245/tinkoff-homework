@@ -25,11 +25,6 @@ class ThemeManager: IThemeManager {
         self.theme = defaultTheme
     }
     
-//    init() {
-//        let themeForApply = AppTheme(rawValue: UserDefaults.standard.integer(forKey: "SelectedTheme")) ?? .classic
-//        self.theme = themeForApply
-//    }
-    
     // MARK: - Public properties
     
     var theme: AppTheme {
