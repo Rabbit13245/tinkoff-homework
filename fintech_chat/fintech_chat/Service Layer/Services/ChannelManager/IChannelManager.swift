@@ -1,18 +1,18 @@
 import Foundation
 
 protocol IChannelManager {
+    
     // func getChannel(with id: String, in context: NSManagedObjectContext? = nil) -> ChannelDb?
+    
+    /// Получить канал по id
     func getChannel(with id: String) -> ChannelDb?
     
-    /// Добавить новые каналы
-    func addNewChannels(_ channels: [Channel])
+    /// Подписаться на обновления каналов из firebase
+    func subscribeChannels()
     
-    /// Обновить существующие каналы
-    func modifyChannels(_ channels: [Channel])
+    /// Создать канал
+    func createChannel(with name: String, completion: @escaping ((Error?) -> Void))
     
-    /// Удалить каналы
-    func removeChannels(_ channels: [Channel])
-    
-    /// Удалить старты каналы
-    func removeOldChannels(_ channels: [Channel])
+    /// Удалить канал 
+    func removeChannel(_ channelId: String, completion: @escaping ((Error?) -> Void))
 }

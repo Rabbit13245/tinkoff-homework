@@ -1,6 +1,6 @@
 import UIKit
 
-struct User {
+struct UserModel {
     var userName: String?
     var userDescription: String?
     var userImage: UIImage?

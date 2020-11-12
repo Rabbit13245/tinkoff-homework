@@ -1,19 +1,16 @@
 import UIKit
+
 import Firebase
 import CoreData
 
 class ChannelsListViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    // MARK: - Private properties
     
     private var userName = ""
-
     private let chatName = "Channels"
     
-    private var createChannelAction: UIAlertAction?
-
-    /// Флаг первого запроса к firebase для актуализации данных
-    private var firstRequest = true
+    // MARK: - FRC
     
     private lazy var fetchedResultController: NSFetchedResultsController<ChannelDb> = {
         let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
@@ -32,10 +29,16 @@ class ChannelsListViewController: UIViewController {
         return frc
     }()
     
-    private lazy var dataManagerFactory: DataManagerFactory = {
-        let dataManagerFactory = DataManagerFactory()
-        return dataManagerFactory
-    }()
+    // MARK: - Dependencies
+    
+    private var channelManager: IChannelManager?
+    private var dataManagerFactory: IDataManagerFactory?
+    
+    // MARK: - UI
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    private var createChannelAction: UIAlertAction?
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
@@ -52,19 +55,17 @@ class ChannelsListViewController: UIViewController {
     }()
 
     private lazy var profileBarButton: UIBarButtonItem = {
-        // let customView = Helper.app.generateDefaultAvatar(name: "Dmitry Zaytcev", width: 34)
-        // let view = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
-        // view.addSubview(customView)
-        // let barButtom = UIBarButtonItem(customView: view)
-
         // Для ios 12 получается только так
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.AppColors.yellowLogo
         button.setTitleColor(UIColor.AppColors.initialsColor, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
         button.layer.cornerRadius = button.frame.height / 2
-
-        let manager = dataManagerFactory.createDataManager(.GCD)
+        
+        let barButton = UIBarButtonItem(customView: button)
+        barButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileButtonPressed)))
+        
+        guard let manager = dataManagerFactory?.createDataManager(.GCD) else { return barButton }
 
         manager.loadName {(name, error) in
             if !error {
@@ -72,9 +73,6 @@ class ChannelsListViewController: UIViewController {
             }
             button.setTitle(Helper.app.getInitials(from: self.userName), for: .normal)
         }
-
-        let barButton = UIBarButtonItem(customView: button)
-        barButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileButtonPressed)))
         return barButton
     }()
 
@@ -91,28 +89,17 @@ class ChannelsListViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
+    // MARK: - Lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUI()
         setupTable()
-        getCacheChannels()
         
-        if firstRequest {
-            FirebaseManager.shared.getAllChannelsFirstTime { [weak self] (result) in
-                switch result {
-                case .success(let channels):
-                    CoreDataStack.shared.removeOldChannels(channels)
-                case .failure:
-                    self?.presentMessage("Error first time getting channels from firebase")
-                }
-                self?.subscribeChannelsFromFirebase()
-                self?.firstRequest = false
-            }
-        } else {
-            subscribeChannelsFromFirebase()
-        }
+        getCacheChannels()
+        channelManager?.subscribeChannels()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -145,6 +132,7 @@ class ChannelsListViewController: UIViewController {
 
     private func getCacheChannels() {
         do {
+            self.activityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
             try fetchedResultController.performFetch()
             self.tableView.reloadData()
@@ -154,39 +142,10 @@ class ChannelsListViewController: UIViewController {
             Logger.app.logMessage("FRC channels error: \(error.localizedDescription)", logLevel: .error)
         }
     }
-    
-    private func subscribeChannelsFromFirebase() {
-        FirebaseManager.shared.getAllChannels { [weak self] (result) in
-            switch result {
-            case .success(let documentChanges):
-                var modified = [Channel]()
-                var added = [Channel]()
-                var removed = [Channel]()
-                
-                for change in documentChanges {
-                    guard let channel = Channel(change.document) else { continue }
-                    switch change.type {
-                    case .added:
-                        added.append(channel)
-                    case .removed:
-                        removed.append(channel)
-                    case .modified:
-                        modified.append(channel)
-                    }
-                }
-                
-                CoreDataStack.shared.addNewChannels(added)
-                CoreDataStack.shared.removeChannels(removed)
-                CoreDataStack.shared.modifyChannels(modified)
-                
-            case .failure:
-                self?.presentMessage("Error getting channels from firebase")
-            }
-        }
-    }
 }
 
 // MARK: - UISetup
+
 extension ChannelsListViewController {
     private func setupNavigationController() {
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -195,8 +154,7 @@ extension ChannelsListViewController {
         self.navigationItem.leftBarButtonItem = self.settingsBarButton
         self.navigationItem.rightBarButtonItems = [self.profileBarButton, self.addChannelBarButton]
 
-        
-        let manager = dataManagerFactory.createDataManager(.GCD)
+        guard let manager = dataManagerFactory?.createDataManager(.GCD) else { return }
         manager.loadImage { (image, error) in
             if !error {
                 let customView = UIView(frame: CGRect(x: 0, y: 0, width: 34, height: 34))
@@ -227,17 +185,12 @@ extension ChannelsListViewController {
             self.activityIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             self.activityIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
-
-        //        let searchController = UISearchController(searchResultsController: nil)
-        //        searchController.searchBar.placeholder = "Search friends"
-        //        searchController.obscuresBackgroundDuringPresentation = false
-        //        definesPresentationContext = true
-        //        self.navigationItem.searchController = searchController
     }
 }
 
 // MARK: - Actions
 extension ChannelsListViewController {
+    
     @objc private func profileButtonPressed() {
         guard let storyboard = storyboard else {return}
         let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
@@ -261,18 +214,19 @@ extension ChannelsListViewController {
             textField.addTarget(self, action: #selector(self?.textFieldDidChange(_:)), for: .editingChanged)
         }
 
-        let createAction = UIAlertAction(title: "Create", style: .default) {[weak alertController, weak self]_ in
+        let createAction = UIAlertAction(title: "Create", style: .default) { [weak alertController, weak self] _ in
         guard let safeAC = alertController,
             let safeTF = safeAC.textFields?.first,
             let channelName = safeTF.text,
             channelName.count > 0 else { return }
 
             self?.addChannelBarButton.isEnabled = false
-            FirebaseManager.shared.createChannel(with: channelName) { [weak self] (error) in
+            
+            self?.channelManager?.createChannel(with: channelName, completion: { [weak self] (error) in
                 self?.addChannelBarButton.isEnabled = true
                 guard error != nil else {return}
                 self?.presentMessage("Error creating channel")
-            }
+            })
         }
 
         createAction.isEnabled = false
@@ -318,9 +272,8 @@ extension ChannelsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let channelForRemove = fetchedResultController.object(at: indexPath)
-                        
-            FirebaseManager.shared.removeChannel(with: channelForRemove.identifier) { [weak self] (error) in
-                guard error != nil else {return}
+            channelManager?.removeChannel(channelForRemove.identifier) { [weak self] (error) in
+                guard error != nil else { return }
                 self?.presentMessage("Error removing channel")
             }
         }

@@ -51,9 +51,9 @@ extension OperationDataManager: IDataManager {
         self.dataQueue.addOperation(loadImageOperation)
     }
 
-    func loadUserData(completion: ((_ userData: User, _ response: Response?) -> Void)?) {
+    func loadUserData(completion: ((_ userData: UserModel, _ response: Response?) -> Void)?) {
         var response = Response(nameError: false, descriptionError: false, imageError: false)
-        var userData = User(userName: nil, userDescription: nil, userImage: nil)
+        var userData = UserModel(userName: nil, userDescription: nil, userImage: nil)
 
         let loadNameOperation = LoadStringOperation(url: self.nameFile)
         self.dataQueue.addOperation(loadNameOperation)

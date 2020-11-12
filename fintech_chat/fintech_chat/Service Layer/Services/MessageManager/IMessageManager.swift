@@ -1,6 +1,10 @@
 import CoreData
 
 protocol IMessageManager {
-    /// Добавить новые сообщения в канал
-    func addNewMessages(_ messages: [Message], for channelId: NSManagedObjectID)
+    
+    /// Подписаться на обновления сообщений в канале
+    func subscribeOnChannelMessages(channelId: String)
+    
+    /// Отправить сообщение в канал
+    func sendMessage(_ text: String, to channelId: String, completion: @escaping (Error?) -> Void)
 }

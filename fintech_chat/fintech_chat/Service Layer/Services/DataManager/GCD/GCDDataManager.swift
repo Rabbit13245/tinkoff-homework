@@ -93,12 +93,12 @@ extension GCDDataManager: IDataManager {
         loadImageFrom(url: self.imageFile, completion: completion)
     }
 
-    func loadUserData(completion: ((_ userData: User, _ response: Response?) -> Void)?) {
+    func loadUserData(completion: ((_ userData: UserModel, _ response: Response?) -> Void)?) {
         var response = Response(nameError: false, descriptionError: false, imageError: false)
 
         let dispatchGroup = DispatchGroup()
 
-        var userData = User(userName: nil, userDescription: nil, userImage: nil)
+        var userData = UserModel(userName: nil, userDescription: nil, userImage: nil)
         dispatchGroup.enter()
         //fileQueue.asyncAfter(deadline: .now() + 5){
         fileQueue.async {

@@ -3,13 +3,19 @@ import CoreData
 
 class ChannelViewController: UIViewController {
     
+    // MARK: - Private properties
+    
     /// Канал, по которому будем выводить сообщения
     private var channel: ChannelDb
-    
     private let cellIdentifier = String(describing: MessageTableViewCell.self)
-
     private var keyboardHeight: CGFloat = 0
-
+    
+    // MARK: - Dependencies
+    
+    private var messageManager: IMessageManager?
+    
+    // MARK: - UI
+    
     private var sendMessageButton: UIButton?
 
     private lazy var tableView: UITableView = {
@@ -62,6 +68,8 @@ class ChannelViewController: UIViewController {
         return label
     }()
     
+    // MARK: - FRC
+    
     internal lazy var fetchedResultController: NSFetchedResultsController<MessageDb> = {
         let request: NSFetchRequest<MessageDb> = MessageDb.fetchRequest()
         let sort = NSSortDescriptor(key: "created", ascending: true)
@@ -81,6 +89,8 @@ class ChannelViewController: UIViewController {
         return frc
     }()
 
+    // MARK: - Initializers
+    
     init(channel: ChannelDb) {
         self.channel = channel
 
@@ -91,13 +101,14 @@ class ChannelViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         
         getCachedMessages()
-        
-        loadMessagesFromFirebase()
+        messageManager?.subscribeOnChannelMessages(channelId: self.channel.identifier)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -107,6 +118,7 @@ class ChannelViewController: UIViewController {
     }
 
     // MARK: - Private functions
+    
     private func scrollTableToBottom() {
         guard let sectionNumber = fetchedResultController.sections?.count,
             sectionNumber > 0,
@@ -125,34 +137,6 @@ class ChannelViewController: UIViewController {
             self.tableView.reloadData()
         } catch {
             Logger.app.logMessage("FRC messages error: \(error.localizedDescription)", logLevel: .error)
-        }
-    }
-    
-    private func loadMessagesFromFirebase() {
-        FirebaseManager.shared.getAllMessages(from: self.channel.identifier) {[weak self] (result) in
-            guard let safeSelf = self else { return }
-            switch result {
-            case .success(let documentChanges):
-                var modified = [Message]()
-                var added = [Message]()
-                var removed = [Message]()
-                
-                for change in documentChanges {
-                    guard let channel = Message(change.document) else { continue }
-                    switch change.type {
-                    case .added:
-                        added.append(channel)
-                    case .removed:
-                        removed.append(channel)
-                    case .modified:
-                        modified.append(channel)
-                    }
-                }
-                
-                CoreDataStack.shared.addNewMessages(added, for: safeSelf.channel.objectID)
-            case .failure:
-                safeSelf.presentMessage("Error getting messages from firebase")
-            }
         }
     }
 
@@ -268,7 +252,7 @@ extension ChannelViewController {
     
     @objc private func sendButtonPressed() {
         self.sendMessageButton?.isEnabled = false
-        FirebaseManager.shared.sendMessage(self.inputTextView.text, to: self.channel.identifier) { [weak self] error in
+        messageManager?.sendMessage(self.inputTextView.text, to: self.channel.identifier) { [weak self] error in
             guard let safeSelf = self else { return }
             safeSelf.sendMessageButton?.isEnabled = true
             

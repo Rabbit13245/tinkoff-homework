@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 
 class CoreDataStack {
-    
+        
     private static var instance: CoreDataStack?
     
     static var shared: CoreDataStack {
@@ -14,7 +14,7 @@ class CoreDataStack {
         return instance
     }
     
-    private init() {}
+    init() {}
     
     var didUpdateDataBase: ((CoreDataStack) -> Void)?
     
@@ -32,9 +32,14 @@ class CoreDataStack {
     private let modelExtension = "momd"
     
     private lazy var managedObjectModel: NSManagedObjectModel = {
-        guard let modelUrl = Bundle.main.url(forResource: self.modelName, withExtension: self.modelExtension) else {fatalError("Unable to find Data Model")}
+        guard let modelUrl = Bundle.main.url(forResource: self.modelName,
+                                             withExtension: self.modelExtension) else {
+            fatalError("Unable to find Data Model")
+        }
         
-        guard let managedObjectModel = NSManagedObjectModel(contentsOf: modelUrl) else { fatalError("Unable to load Data Model")}
+        guard let managedObjectModel = NSManagedObjectModel(contentsOf: modelUrl) else {
+            fatalError("Unable to load Data Model")
+        }
         
         return managedObjectModel
     }()
@@ -105,85 +110,6 @@ class CoreDataStack {
             } catch {
                 assertionFailure(error.localizedDescription)
             }
-        }
-    }
-}
-
-// MARK: - Channels work
-extension CoreDataStack {
-    /// Получить канал по id
-    func getChannel(with id: String, in context: NSManagedObjectContext? = nil) -> ChannelDb? {
-        do {
-            let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
-            
-            let predicate = NSPredicate(format: "identifier == %@", id)
-            request.predicate = predicate
-            
-            let contextForRequest = context ?? mainContext
-            let channels = try contextForRequest.fetch(request)
-            
-            return channels.first
-        } catch {
-            Logger.app.logMessage("getChannel Error \(error.localizedDescription)", logLevel: .error)
-            return nil
-        }
-    }
-    
-    /// Добавить новые каналы
-    func addNewChannels(_ channels: [Channel]) {
-        performSave { (context) in
-            channels.forEach { (singleChannel) in
-                _ = ChannelDb(channel: singleChannel, in: context)
-            }
-        }
-    }
-    
-    /// Обновить существующие каналы
-    func modifyChannels(_ channels: [Channel]) {
-        performSave { (context) in
-            channels.forEach { (singleChannel) in
-                guard let existChannel = self.getChannel(with: singleChannel.identifier, in: context) else { return }
-                existChannel.setValue(singleChannel.lastActivity, forKey: "lastActivity")
-                existChannel.setValue(singleChannel.lastMessage, forKey: "lastMessage")
-                existChannel.setValue(singleChannel.name, forKey: "name")
-            }
-        }
-    }
-    
-    /// Удалить каналы
-    func removeChannels(_ channels: [Channel]) {
-        performSave { (context) in
-            channels.forEach { (singleChannel) in
-                guard let channelForRemove = self.getChannel(with: singleChannel.identifier, in: context) else { return }
-                context.delete(channelForRemove)
-            }
-        }
-    }
-    
-    func removeOldChannels(_ channels: [Channel]) {
-        let ids = channels.map { $0.identifier }
-        let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
-        request.predicate = NSPredicate(format: "NOT identifier IN %@", ids)
-        
-        performSave { (context) in
-            if let channelsToRemove = try? context.fetch(request),
-               channelsToRemove.count > 0 {
-                channelsToRemove.forEach {
-                    context.delete($0)
-                }
-            }
-        }
-    }
-}
-
-// MARK: - Messages work
-extension CoreDataStack {
-    func addNewMessages(_ messages: [Message], for channelId: NSManagedObjectID) {
-        performSave { (context) in
-            guard let channelToAdd = context.object(with: channelId) as? ChannelDb else { return }
-            let messagesDbToAdd = messages.map { MessageDb(message: $0, in: context) }
-            let setMessages = NSSet(array: messagesDbToAdd)
-            channelToAdd.addToMessages(setMessages)
         }
     }
 }
