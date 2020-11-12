@@ -29,11 +29,6 @@ class ChannelsListViewController: UIViewController {
         return frc
     }()
     
-    // MARK: - Dependencies
-    
-    private var channelManager: IChannelManager?
-    private var dataManagerFactory: IDataManagerFactory?
-    
     // MARK: - UI
     
     @IBOutlet weak var tableView: UITableView!
@@ -89,6 +84,22 @@ class ChannelsListViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    // MARK: - Dependencies
+    
+    private var presentationAssembly: IPresentationAssembly?
+    private var channelManager: IChannelManager?
+    private var dataManagerFactory: IDataManagerFactory?
+    
+    // MARK: - Setup dependencies
+    
+    func setupDependencies(channelManager: IChannelManager,
+                           dataManagerFactory: IDataManagerFactory,
+                           presentationAssembly: IPresentationAssembly) {
+        self.channelManager = channelManager
+        self.dataManagerFactory = dataManagerFactory
+        self.presentationAssembly = presentationAssembly
+    }
     
     // MARK: - Lifecycle methods
     
@@ -190,19 +201,13 @@ extension ChannelsListViewController {
 
 // MARK: - Actions
 extension ChannelsListViewController {
-    
     @objc private func profileButtonPressed() {
-        guard let storyboard = storyboard else {return}
-        let profileVC = storyboard.instantiateViewController(withIdentifier: "ProfileVC")
+        guard let profileVC = presentationAssembly?.profileViewController() else { return }
         self.present(profileVC, animated: true, completion: nil)
     }
 
     @objc private func settingsButtonPressed() {
-        let themesVC = ThemesViewController()
-
-        themesVC.delegate = ThemeManager.shared
-        // themesVC.changeThemeClosure = ThemeManager.shared.applyTheme
-
+        guard let themesVC = presentationAssembly?.themesViewController() else { return }
         self.navigationController?.pushViewController(themesVC, animated: true)
     }
 
@@ -288,9 +293,10 @@ extension ChannelsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let channelDb = fetchedResultController.object(at: indexPath)
-        let controller = ChannelViewController(channel: channelDb)
+        
+        guard let channelVC = presentationAssembly?.channelViewController(channel: channelDb) else { return }
 
-        self.navigationController?.pushViewController(controller, animated: true)
+        self.navigationController?.pushViewController(channelVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

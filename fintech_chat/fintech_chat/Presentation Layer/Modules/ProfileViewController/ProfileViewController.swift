@@ -108,6 +108,7 @@ class ProfileViewController: LoggedViewController {
     
     private var dataManagerFactory: IDataManagerFactory?
     private var cameraManager: ICameraManager?
+    
     // MARK: - Private properties
     
     private var editingMode = false
@@ -145,15 +146,14 @@ class ProfileViewController: LoggedViewController {
          dataManagerFactory: IDataManagerFactory) {
         super.init(nibName: nil, bundle: nil)
         
-        setDependencies(cameraManager: cameraManager, dataManagerFactory: dataManagerFactory)
+        setupDependencies(cameraManager: cameraManager, dataManagerFactory: dataManagerFactory)
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    public func setDependencies(cameraManager: ICameraManager,
-                                dataManagerFactory: IDataManagerFactory) {
+    public func setupDependencies(cameraManager: ICameraManager, dataManagerFactory: IDataManagerFactory) {
         self.cameraManager = cameraManager
         self.dataManagerFactory = dataManagerFactory
     }

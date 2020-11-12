@@ -12,7 +12,7 @@ class ChannelViewController: UIViewController {
     
     // MARK: - Dependencies
     
-    private var messageManager: IMessageManager?
+    private var messageManager: IMessageManager
     
     // MARK: - UI
     
@@ -91,9 +91,10 @@ class ChannelViewController: UIViewController {
 
     // MARK: - Initializers
     
-    init(channel: ChannelDb) {
+    init(channel: ChannelDb, messageManager: IMessageManager) {
         self.channel = channel
-
+        self.messageManager = messageManager
+        
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -108,7 +109,7 @@ class ChannelViewController: UIViewController {
         setupUI()
         
         getCachedMessages()
-        messageManager?.subscribeOnChannelMessages(channelId: self.channel.identifier)
+        messageManager.subscribeOnChannelMessagesUpdates(channelId: self.channel.identifier)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -252,7 +253,7 @@ extension ChannelViewController {
     
     @objc private func sendButtonPressed() {
         self.sendMessageButton?.isEnabled = false
-        messageManager?.sendMessage(self.inputTextView.text, to: self.channel.identifier) { [weak self] error in
+        messageManager.sendMessage(self.inputTextView.text, to: self.channel.identifier) { [weak self] error in
             guard let safeSelf = self else { return }
             safeSelf.sendMessageButton?.isEnabled = true
             

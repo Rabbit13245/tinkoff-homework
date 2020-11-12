@@ -7,16 +7,6 @@ class ThemesViewController: UIViewController {
     var changeThemeClosure: ((_ theme: AppTheme) -> Void)?
 
     weak var delegate: ThemesPickerDelegate?
-
-    // MARK: - Initializers
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     // MARK: - Lifecycle methods
     

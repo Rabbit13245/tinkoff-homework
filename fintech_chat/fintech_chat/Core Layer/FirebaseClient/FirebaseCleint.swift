@@ -45,6 +45,25 @@ class FirebaseCleint: IFirebaseCleint {
         }
     }
     
+    /// Подписаться на обновления каналов
+    public func subscribeChannelsUpdates(completion: @escaping (Result<[DocumentChange], Error>) -> Void) {
+        channels.addSnapshotListener { (querySnapshot, error) in
+            if let error = error {
+                Logger.app.logMessage("\(#function):: Error reading data: \(error.localizedDescription)",
+                                      logLevel: .error)
+                completion(.failure(DatabaseError.failedToRead))
+            } else {
+                if let snapshot = querySnapshot {
+                    let documentChanges = snapshot.documentChanges
+                    completion(.success(documentChanges))
+                } else {
+                    Logger.app.logMessage("\(#function):: Snapshot is nil", logLevel: .error)
+                    completion(.failure(DatabaseError.failedToRead))
+                }
+            }
+        }
+    }
+    
     /// Создать канал
     public func createChannel(_ channelDocument: [String: Any], completion: @escaping ((Error?) -> Void)) {
         channels.addDocument(data: channelDocument) { (error) in
@@ -67,8 +86,8 @@ class FirebaseCleint: IFirebaseCleint {
         }
     }
     
-    /// Получить все сообщения
-    public func getAllMessages(from channelId: String, completion: @escaping ((Result<[DocumentChange], Error>) -> Void)) {
+    /// Подписаться на обновления сообщений в канале
+    func subscribeMessagesUpdates(with channelId: String, completion: @escaping ((Result<[DocumentChange], Error>) -> Void)) {
         channels.document(channelId).collection("messages").addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 Logger.app.logMessage("\(#function):: Error reading data: \(error.localizedDescription)",
@@ -87,19 +106,14 @@ class FirebaseCleint: IFirebaseCleint {
     }
 
     /// Отправить сообщение
-    public func sendMessage(_ messageData: [String: Any], to channelId: String, completion: @escaping (Error?) -> Void) {
-//        guard let safeId = myId else {
-//            Logger.app.logMessage("Cant get uuid device. ", logLevel: .error)
-//            completion(DatabaseError.failedToSend)
-//            return
-//        }
-
-//        let messageData: [String: Any] = [
-//            "content": text,
-//            "created": Timestamp(),
-//            "senderId": safeId,
-//            "senderName": "Dmitry Zaytcev"
-//        ]
+    public func sendMessage(_ text: String, from userId: String, to channelId: String, completion: @escaping (Error?) -> Void) {
+        
+        let messageData: [String: Any] = [
+            "content": text,
+            "created": Timestamp(),
+            "senderId": userId,
+            "senderName": "Dmitry Zaytcev"
+        ]
         
         channels.document(channelId).collection("messages").addDocument(data: messageData) { (error) in
             if let safeError = error {

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 struct MessageCellModel {
     let direction: MessageDirection
@@ -7,13 +8,11 @@ struct MessageCellModel {
     init(message: Message) {
         self.message = message
         
-        self.direction = .output
-        
-//        if self.message.senderId == FirebaseManager.shared.myId {
-//            self.direction = .output
-//        } else {
-//            self.direction = .input
-//        }
+        if self.message.senderId == UIDevice.current.identifierForVendor?.uuidString {
+            self.direction = .output
+        } else {
+            self.direction = .input
+        }
     }
 }
 

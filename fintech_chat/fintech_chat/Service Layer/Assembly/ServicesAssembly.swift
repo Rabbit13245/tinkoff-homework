@@ -5,6 +5,7 @@ protocol IServicesAssembly {
     var channelManager: IChannelManager { get }
     var dataManagerFactory: IDataManagerFactory { get }
     var themeManager: IThemeManager { get }
+    var cameraManager: ICameraManager { get }
 }
 
 class ServicesAssembly: IServicesAssembly {
@@ -14,11 +15,17 @@ class ServicesAssembly: IServicesAssembly {
         self.coreAssembly = coreAssembly
     }
     
-    lazy var messageManager: IMessageManager = MessageManager(firebaseClient: self.coreAssembly.firebaseClient)
+    lazy var messageManager: IMessageManager = MessageManager(
+        firebaseClient: self.coreAssembly.firebaseClient,
+        coreDataClient: self.coreAssembly.coreDataClient)
     
-    lazy var channelManager: IChannelManager = ChannelManager(firebaseClient: self.coreAssembly.firebaseClient)
+    lazy var channelManager: IChannelManager = ChannelManager(
+        firebaseClient: self.coreAssembly.firebaseClient,
+        coreDataClient: self.coreAssembly.coreDataClient)
     
     lazy var dataManagerFactory: IDataManagerFactory = DataManagerFactory()
     
     lazy var themeManager: IThemeManager = ThemeManager.shared
+    
+    lazy var cameraManager: ICameraManager = CameraManager()
 }

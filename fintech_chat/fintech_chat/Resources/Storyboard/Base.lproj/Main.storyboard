@@ -13,7 +13,7 @@
         <!--My Profile-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ProfileViewController" customModule="Финтех_чат" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileVC" id="BYZ-38-t0r" customClass="ProfileViewController" customModule="Финтех_чат" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="AppView" customModule="Финтех_чат" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -153,7 +153,7 @@
         <!--Channels List View Controller-->
         <scene sceneID="Qho-kD-S8g">
             <objects>
-                <viewController id="3aL-Sv-cVb" customClass="ChannelsListViewController" customModule="Финтех_чат" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChannelsListVC" id="3aL-Sv-cVb" customClass="ChannelsListViewController" customModule="Финтех_чат" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Iul-YD-zUy" customClass="AppView" customModule="Финтех_чат" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -184,7 +184,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Zc1-NW-7d6">
             <objects>
-                <navigationController storyboardIdentifier="ProfileVC" automaticallyAdjustsScrollViewInsets="NO" id="1Xf-AN-sf7" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1Xf-AN-sf7" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Z6H-fv-vhR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
@@ -202,7 +202,7 @@
         <!--Navigation Controller-->
         <scene sceneID="fww-7M-WP0">
             <objects>
-                <navigationController storyboardIdentifier="ChannelsListVC" automaticallyAdjustsScrollViewInsets="NO" id="FbI-Zf-rUs" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FbI-Zf-rUs" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QeU-iN-cjd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

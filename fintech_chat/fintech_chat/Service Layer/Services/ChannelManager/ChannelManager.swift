@@ -10,30 +10,31 @@ class ChannelManager: IChannelManager {
     // MARK: - Dependencies
     
     private var firebaseClient: IFirebaseCleint
+    private var coreDataClient: ICoreDataClient
     
     // MARK: - Initializers
     
-    init(firebaseClient: IFirebaseCleint) {
+    init(firebaseClient: IFirebaseCleint, coreDataClient: ICoreDataClient) {
         self.firebaseClient = firebaseClient
+        self.coreDataClient = coreDataClient
     }
     
     /// Подписаться на обновления каналов из firebase
     func subscribeChannels() {
         if firstRequest {
-            //firebaseClient.
-            
-//            FirebaseManager.shared.getAllChannelsFirstTime { [weak self] (result) in
-//                switch result {
-//                case .success(let channels):
-//                    CoreDataStack.shared.removeOldChannels(channels)
-//                case .failure:
-//                    self?.presentMessage("Error first time getting channels from firebase")
-//                }
-//                self?.subscribeChannelsFromFirebase()
-//                self?.firstRequest = false
-//            }
+            firebaseClient.getAllChannels { [weak self] (result) in
+                switch result {
+                case .success(let channels):
+                    let ids = channels.map { $0.identifier }
+                    self?.coreDataClient.removeDeletedChannels(ids: ids)
+                case .failure:
+                    print("FAILURE")
+                }
+                self?.firstRequest = false
+                self?.subscribeChannelsUpdates()
+            }
         } else {
-            //subscribeChannelsFromFirebase()
+            subscribeChannelsUpdates()
         }
     }
     
@@ -57,6 +58,36 @@ class ChannelManager: IChannelManager {
     }
     
     // MARK: - Private
+    
+    private func subscribeChannelsUpdates() {
+        firebaseClient.subscribeChannelsUpdates { [weak self] (result) in
+            switch result {
+            case .success(let documentChanges):
+                var modified = [Channel]()
+                var added = [Channel]()
+                var removed = [Channel]()
+                
+                for change in documentChanges {
+                    guard let channel = Channel(change.document) else { continue }
+                    switch change.type {
+                    case .added:
+                        added.append(channel)
+                    case .removed:
+                        removed.append(channel)
+                    case .modified:
+                        modified.append(channel)
+                    }
+                }
+                
+                self?.coreDataClient.addNewChannels(added)
+                self?.coreDataClient.removeChannels(removed)
+                self?.coreDataClient.modifyChannels(modified)
+                
+            case .failure:
+                print("Error")
+            }
+        }
+    }
     
 //    private func subscribeChannelsFromFirebase() {
 //        FirebaseManager.shared.getAllChannels { [weak self] (result) in

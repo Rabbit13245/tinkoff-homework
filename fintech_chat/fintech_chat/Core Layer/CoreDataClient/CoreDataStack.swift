@@ -3,6 +3,8 @@ import CoreData
 
 class CoreDataStack {
         
+    // MARK: - Singleton
+    
     private static var instance: CoreDataStack?
     
     static var shared: CoreDataStack {
@@ -14,7 +16,7 @@ class CoreDataStack {
         return instance
     }
     
-    init() {}
+    private init() {}
     
     var didUpdateDataBase: ((CoreDataStack) -> Void)?
     

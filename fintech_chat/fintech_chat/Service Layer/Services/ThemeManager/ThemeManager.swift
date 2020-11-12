@@ -14,6 +14,7 @@ class ThemeManager: IThemeManager {
         guard let instance = self.instance else {
             let themeForApply = AppTheme(rawValue: UserDefaults.standard.integer(forKey: "SelectedTheme")) ?? .classic
             let newInstance = ThemeManager(defaultTheme: themeForApply)
+            newInstance.apply(for: UIApplication.shared)
             self.instance = newInstance
             return newInstance
         }
@@ -23,6 +24,11 @@ class ThemeManager: IThemeManager {
     private init(defaultTheme: AppTheme) {
         self.theme = defaultTheme
     }
+    
+//    init() {
+//        let themeForApply = AppTheme(rawValue: UserDefaults.standard.integer(forKey: "SelectedTheme")) ?? .classic
+//        self.theme = themeForApply
+//    }
     
     // MARK: - Public properties
     
@@ -43,7 +49,7 @@ class ThemeManager: IThemeManager {
 
     // MARK: - Private methods
     
-    func apply(for application: UIApplication) {
+    private func apply(for application: UIApplication) {
         if #available(iOS 13.0, *) {
             let appearance = UINavigationBarAppearance()
             appearance.backgroundColor = theme.settings.secondaryBackgroundColor
