@@ -12,6 +12,7 @@ class ChannelViewController: UIViewController {
                 self.tableView.reloadData()
                 self.scrollTableToBottom()
             }
+            saveMessagesToCoreData()
         }
     }
 
@@ -20,7 +21,7 @@ class ChannelViewController: UIViewController {
     private var keyboardHeight: CGFloat = 0
 
     private var sendMessageButton: UIButton?
-    
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
@@ -99,6 +100,24 @@ class ChannelViewController: UIViewController {
     }
 
     // MARK: - Private functions
+    private func saveMessagesToCoreData() {
+        guard let channelFromDb = CoreDataStack.shared.getChannel(with: self.channelId) else { return }
+    
+        CoreDataStack.shared.performSave { [weak self] (context) in
+            guard let safeSelf = self,
+                let safeChannel = try? context.existingObject(with: channelFromDb.objectID) as? ChannelDb else {return}
+            
+            //            guard let safeSelf = self,
+            //                let safeChannel = CoreDataStack.shared.getChannel(with: safeSelf.channelId, in: context) else {return}
+            
+            let messagesForAdd = safeSelf.messages.map {
+                MessageDb(message: $0, in: context)
+            }
+            let setMessagesForAdd = NSSet(array: messagesForAdd)
+            safeChannel.addToMessages(setMessagesForAdd)
+        }
+    }
+    
     private func scrollTableToBottom() {
         if !self.messages.isEmpty {
             self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
@@ -292,7 +311,6 @@ extension ChannelViewController {
         }, completion: nil
         )
     }
-
 }
 
 // MARK: - Table view data source
@@ -406,8 +424,23 @@ extension ChannelViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let currentText = textView.text ?? ""
         let newText = currentText + text
-        self.sendMessageButton?.isEnabled = !newText.isBlank
+        var canSend = false
+
+        // удаляем что-то
+        if text == "" {
+            if newText != "",
+                let stringRange = Range(range, in: currentText) {
+                let newString = currentText.replacingCharacters(in: stringRange, with: text)
+                if !newString.isBlank {
+                    canSend = true
+                }
+            }
+        } else {
+            canSend = !newText.isBlank
+        }
         
+        self.sendMessageButton?.isEnabled = canSend
+    
         return true
     }
 }
