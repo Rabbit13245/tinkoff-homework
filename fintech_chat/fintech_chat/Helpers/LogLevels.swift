@@ -1,8 +1,8 @@
 import Foundation
 
-enum LogLevels : Int {
-    case Debug = 0
-    case Info
-    case Warning
-    case Error
+enum LogLevels: Int {
+    case debug = 0
+    case info
+    case warning
+    case error
 }

@@ -6,24 +6,24 @@ protocol Theme {
     var textWrapperBackgroundColor: UIColor {get}
     var separatorColor: UIColor { get }
     var textFieldBackgroundColor: UIColor { get }
-    
+
     var inputMessageBackgroundColor: UIColor { get }
     var outputMessageBackgroundColor: UIColor { get }
-    
+
     var inputMessageTextColor: UIColor { get }
     var outputMessageTextColor: UIColor { get }
-    
+
     var labelColor: UIColor { get }
-    
+
     var indicatorStyle: UIScrollView.IndicatorStyle { get }
 }
 
-enum AppTheme: Int{
+enum AppTheme: Int {
     case classic
     case day
     case night
-    var settings: Theme{
-        switch self{
+    var settings: Theme {
+        switch self {
         case .classic:
             return ClassicTheme()
         case .day:
@@ -34,6 +34,6 @@ enum AppTheme: Int{
     }
 }
 
-protocol ThemesPickerDelegate{
+protocol ThemesPickerDelegate: class {
     func changeTheme(_ theme: AppTheme)
 }

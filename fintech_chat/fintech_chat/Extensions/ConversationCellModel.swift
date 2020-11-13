@@ -6,6 +6,6 @@ struct ConversationCellModel {
     let date: Date
     let isOnline: Bool
     let hasUnreadMessages: Bool
-    
+
     var avatar: UIImage?
 }

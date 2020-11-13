@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		361C73FA47BC0D665FFE6891 /* Pods_fintech_chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13ED8F5E70A4440D9D21147E /* Pods_fintech_chat.framework */; };
 		8428027A2534641B0078723A /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842802792534641B0078723A /* UITextView.swift */; };
 		8428027D25347D9B0078723A /* DataManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428027C25347D9B0078723A /* DataManagerProtocol.swift */; };
 		8428027F25347F2E0078723A /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428027E25347F2E0078723A /* GCDDataManager.swift */; };
@@ -31,15 +32,20 @@
 		8467A617250FAED500E36BEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467A616250FAED500E36BEE /* Assets.xcassets */; };
 		8467A61A250FAED500E36BEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8467A618250FAED500E36BEE /* LaunchScreen.storyboard */; };
 		847E600025232496008B8C27 /* ConfigurableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847E5FFF25232496008B8C27 /* ConfigurableView.swift */; };
-		849444E0251DE86000946D9F /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444DF251DE86000946D9F /* ConversationsListViewController.swift */; };
+		849444E0251DE86000946D9F /* ChannelsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444DF251DE86000946D9F /* ChannelsListViewController.swift */; };
 		849444E3251DF3C800946D9F /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E1251DF3C800946D9F /* ConversationTableViewCell.swift */; };
 		849444E4251DF3C800946D9F /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849444E2251DF3C800946D9F /* ConversationTableViewCell.xib */; };
-		849444E6251E21AF00946D9F /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E5251E21AF00946D9F /* ConversationViewController.swift */; };
+		849444E6251E21AF00946D9F /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849444E5251E21AF00946D9F /* ChannelViewController.swift */; };
 		F10D4E022520F03E00B8CDD0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E012520F03E00B8CDD0 /* Date.swift */; };
 		F10D4E04252111A900B8CDD0 /* ConversationCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */; };
 		F10D4E062521123D00B8CDD0 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */; };
 		F10D4E092521165B00B8CDD0 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E072521165B00B8CDD0 /* MessageTableViewCell.swift */; };
-		F10D4E0C252118D400B8CDD0 /* FakeDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E0B252118D400B8CDD0 /* FakeDataGenerator.swift */; };
+		F10FF08D253CBBD100A0996B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F10FF08C253CBBD100A0996B /* GoogleService-Info.plist */; };
+		F10FF08F253CC3EC00A0996B /* DbManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10FF08E253CC3EC00A0996B /* DbManager.swift */; };
+		F10FF091253CD74C00A0996B /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10FF090253CD74C00A0996B /* Channel.swift */; };
+		F10FF093253CD76400A0996B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10FF092253CD76400A0996B /* Message.swift */; };
+		F10FF095253E260D00A0996B /* UIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10FF094253E260D00A0996B /* UIActivityIndicatorView.swift */; };
+		F133F05F253F4BA500337D95 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F133F05E253F4BA500337D95 /* UITextField.swift */; };
 		F136EF952517EDE400F0818C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF942517EDE400F0818C /* ProfileViewController.swift */; };
 		F136EF992517F10400F0818C /* LogLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F136EF982517F10400F0818C /* LogLevels.swift */; };
 		F1391DA025290D17007FC97D /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1391D9F25290D17007FC97D /* ThemesViewController.swift */; };
@@ -52,9 +58,12 @@
 		F13AC6C62534CC2600693985 /* DataManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AC6C52534CC2600693985 /* DataManagerFactory.swift */; };
 		F13AC6C82534CCD400693985 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AC6C72534CCD400693985 /* OperationDataManager.swift */; };
 		F1D84D4C251E9804000A69AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D84D4B251E9804000A69AF /* UIColor.swift */; };
+		F1E25BD82540CCD700009F45 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E25BD72540CCD700009F45 /* String.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		003A6B1D703D46FB93FFCD33 /* Pods-fintech_chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat.debug.xcconfig"; path = "Target Support Files/Pods-fintech_chat/Pods-fintech_chat.debug.xcconfig"; sourceTree = "<group>"; };
+		13ED8F5E70A4440D9D21147E /* Pods_fintech_chat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fintech_chat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		842802792534641B0078723A /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		8428027C25347D9B0078723A /* DataManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerProtocol.swift; sourceTree = "<group>"; };
 		8428027E25347F2E0078723A /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
@@ -81,15 +90,21 @@
 		8467A619250FAED500E36BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8467A61B250FAED500E36BEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		847E5FFF25232496008B8C27 /* ConfigurableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableView.swift; sourceTree = "<group>"; };
-		849444DF251DE86000946D9F /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
+		849444DF251DE86000946D9F /* ChannelsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsListViewController.swift; sourceTree = "<group>"; };
 		849444E1251DF3C800946D9F /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		849444E2251DF3C800946D9F /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
-		849444E5251E21AF00946D9F /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
+		849444E5251E21AF00946D9F /* ChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
+		9953A7A4C1B56AF4D0C3C4F3 /* Pods-fintech_chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat/Pods-fintech_chat.release.xcconfig"; sourceTree = "<group>"; };
 		F10D4E012520F03E00B8CDD0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConversationCellModel.swift; path = fintech_chat/Extensions/ConversationCellModel.swift; sourceTree = SOURCE_ROOT; };
 		F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessageCellModel.swift; path = fintech_chat/Extensions/MessageCellModel.swift; sourceTree = SOURCE_ROOT; };
 		F10D4E072521165B00B8CDD0 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
-		F10D4E0B252118D400B8CDD0 /* FakeDataGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FakeDataGenerator.swift; path = fintech_chat/View/FakeDataGenerator.swift; sourceTree = SOURCE_ROOT; };
+		F10FF08C253CBBD100A0996B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		F10FF08E253CC3EC00A0996B /* DbManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbManager.swift; sourceTree = "<group>"; };
+		F10FF090253CD74C00A0996B /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		F10FF092253CD76400A0996B /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		F10FF094253E260D00A0996B /* UIActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityIndicatorView.swift; sourceTree = "<group>"; };
+		F133F05E253F4BA500337D95 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		F136EF942517EDE400F0818C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F136EF982517F10400F0818C /* LogLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogLevels.swift; sourceTree = "<group>"; };
 		F1391D9F25290D17007FC97D /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +117,7 @@
 		F13AC6C52534CC2600693985 /* DataManagerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerFactory.swift; sourceTree = "<group>"; };
 		F13AC6C72534CCD400693985 /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
 		F1D84D4B251E9804000A69AF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		F1E25BD72540CCD700009F45 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,12 +125,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				361C73FA47BC0D665FFE6891 /* Pods_fintech_chat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6044A1D41939EDA02002E18D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				13ED8F5E70A4440D9D21147E /* Pods_fintech_chat.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8428027B25347D750078723A /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +160,9 @@
 				F1391DAC252BB387007FC97D /* UIWindow.swift */,
 				84489B75252C6E5500F3C80D /* UIAlertController.swift */,
 				842802792534641B0078723A /* UITextView.swift */,
+				F10FF094253E260D00A0996B /* UIActivityIndicatorView.swift */,
+				F133F05E253F4BA500337D95 /* UITextField.swift */,
+				F1E25BD72540CCD700009F45 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -185,6 +213,8 @@
 			children = (
 				8467A60C250FAED400E36BEE /* fintech_chat */,
 				8467A60B250FAED400E36BEE /* Products */,
+				9B50D5890130E137450028D6 /* Pods */,
+				6044A1D41939EDA02002E18D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -199,15 +229,14 @@
 		8467A60C250FAED400E36BEE /* fintech_chat */ = {
 			isa = PBXGroup;
 			children = (
+				F10FF08C253CBBD100A0996B /* GoogleService-Info.plist */,
+				F10FF08A253CBAB400A0996B /* Resources */,
 				F1391DA1252BA3C2007FC97D /* Style */,
 				849444DE251DE81300946D9F /* Helpers */,
 				849444DB251DE7DB00946D9F /* Model */,
 				849444DD251DE7E900946D9F /* Controller */,
 				849444DC251DE7E500946D9F /* View */,
 				8442D3CB251B434D00F01A1C /* Extensions */,
-				8467A60D250FAED400E36BEE /* AppDelegate.swift */,
-				8467A616250FAED500E36BEE /* Assets.xcassets */,
-				8467A618250FAED500E36BEE /* LaunchScreen.storyboard */,
 				8467A61B250FAED500E36BEE /* Info.plist */,
 			);
 			path = fintech_chat;
@@ -216,12 +245,12 @@
 		849444DB251DE7DB00946D9F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8428027B25347D750078723A /* DataManager */,
 				847E5FFF25232496008B8C27 /* ConfigurableView.swift */,
 				F10D4E03252111A900B8CDD0 /* ConversationCellModel.swift */,
 				F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */,
-				F10D4E0B252118D400B8CDD0 /* FakeDataGenerator.swift */,
 				8451E4A32536F454003E95BA /* User.swift */,
+				F10FF090253CD74C00A0996B /* Channel.swift */,
+				F10FF092253CD76400A0996B /* Message.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -229,10 +258,11 @@
 		849444DC251DE7E500946D9F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				8467A613250FAED400E36BEE /* Main.storyboard */,
+				F10FF08B253CBAC200A0996B /* Storyboard */,
 				849444E1251DF3C800946D9F /* ConversationTableViewCell.swift */,
 				849444E2251DF3C800946D9F /* ConversationTableViewCell.xib */,
 				F10D4E072521165B00B8CDD0 /* MessageTableViewCell.swift */,
+				8467A616250FAED500E36BEE /* Assets.xcassets */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -242,8 +272,8 @@
 			children = (
 				8467A611250FAED400E36BEE /* BaseViewController.swift */,
 				F136EF942517EDE400F0818C /* ProfileViewController.swift */,
-				849444DF251DE86000946D9F /* ConversationsListViewController.swift */,
-				849444E5251E21AF00946D9F /* ConversationViewController.swift */,
+				849444DF251DE86000946D9F /* ChannelsListViewController.swift */,
+				849444E5251E21AF00946D9F /* ChannelViewController.swift */,
 				F1391D9F25290D17007FC97D /* ThemesViewController.swift */,
 			);
 			path = Controller;
@@ -257,6 +287,34 @@
 				8463B54D252369B800D1D358 /* Helper.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		9B50D5890130E137450028D6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				003A6B1D703D46FB93FFCD33 /* Pods-fintech_chat.debug.xcconfig */,
+				9953A7A4C1B56AF4D0C3C4F3 /* Pods-fintech_chat.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		F10FF08A253CBAB400A0996B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8428027B25347D750078723A /* DataManager */,
+				8467A60D250FAED400E36BEE /* AppDelegate.swift */,
+				F10FF08E253CC3EC00A0996B /* DbManager.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F10FF08B253CBAC200A0996B /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				8467A613250FAED400E36BEE /* Main.storyboard */,
+				8467A618250FAED500E36BEE /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		F1391DA1252BA3C2007FC97D /* Style */ = {
@@ -279,9 +337,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8467A61E250FAED500E36BEE /* Build configuration list for PBXNativeTarget "fintech_chat" */;
 			buildPhases = (
+				65D94586C2C5AE31E5A0B9A0 /* [CP] Check Pods Manifest.lock */,
 				8467A606250FAED400E36BEE /* Sources */,
 				8467A607250FAED400E36BEE /* Frameworks */,
 				8467A608250FAED400E36BEE /* Resources */,
+				3774B9F5694D80CF31BE1EE7 /* [CP] Embed Pods Frameworks */,
+				F133F060253F836B00337D95 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -332,12 +393,72 @@
 			files = (
 				8467A61A250FAED500E36BEE /* LaunchScreen.storyboard in Resources */,
 				8467A617250FAED500E36BEE /* Assets.xcassets in Resources */,
+				F10FF08D253CBBD100A0996B /* GoogleService-Info.plist in Resources */,
 				8467A615250FAED400E36BEE /* Main.storyboard in Resources */,
 				849444E4251DF3C800946D9F /* ConversationTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3774B9F5694D80CF31BE1EE7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-fintech_chat/Pods-fintech_chat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-fintech_chat/Pods-fintech_chat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-fintech_chat/Pods-fintech_chat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		65D94586C2C5AE31E5A0B9A0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-fintech_chat-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F133F060253F836B00337D95 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8467A606250FAED400E36BEE /* Sources */ = {
@@ -346,14 +467,16 @@
 			files = (
 				F13AC6C62534CC2600693985 /* DataManagerFactory.swift in Sources */,
 				8448DF7F252C9EFE00314A95 /* AppView.swift in Sources */,
+				F1E25BD82540CCD700009F45 /* String.swift in Sources */,
 				8467A612250FAED400E36BEE /* BaseViewController.swift in Sources */,
 				844EB08D2510DF5600AF0216 /* Logger.swift in Sources */,
 				F10D4E04252111A900B8CDD0 /* ConversationCellModel.swift in Sources */,
-				849444E6251E21AF00946D9F /* ConversationViewController.swift in Sources */,
+				849444E6251E21AF00946D9F /* ChannelViewController.swift in Sources */,
 				8451E49F2536F1BB003E95BA /* LoadImageOperation.swift in Sources */,
 				F1391DA9252BA956007FC97D /* DayTheme.swift in Sources */,
 				F1391DA025290D17007FC97D /* ThemesViewController.swift in Sources */,
 				8451E4A22536F374003E95BA /* AppTextView.swift in Sources */,
+				F10FF095253E260D00A0996B /* UIActivityIndicatorView.swift in Sources */,
 				8451E49B2536F159003E95BA /* LoadDataOperation.swift in Sources */,
 				8428027A2534641B0078723A /* UITextView.swift in Sources */,
 				8428027F25347F2E0078723A /* GCDDataManager.swift in Sources */,
@@ -361,11 +484,15 @@
 				F136EF992517F10400F0818C /* LogLevels.swift in Sources */,
 				8442D3CA251B434600F01A1C /* UILabel.swift in Sources */,
 				84569933252DB45A001C10B1 /* AppLabel.swift in Sources */,
+				F10FF093253CD76400A0996B /* Message.swift in Sources */,
 				F13AC6C82534CCD400693985 /* OperationDataManager.swift in Sources */,
 				8451E4A42536F454003E95BA /* User.swift in Sources */,
 				F10D4E092521165B00B8CDD0 /* MessageTableViewCell.swift in Sources */,
+				F10FF091253CD74C00A0996B /* Channel.swift in Sources */,
 				8463B54E252369B800D1D358 /* Helper.swift in Sources */,
-				849444E0251DE86000946D9F /* ConversationsListViewController.swift in Sources */,
+				F10FF08F253CC3EC00A0996B /* DbManager.swift in Sources */,
+				F133F05F253F4BA500337D95 /* UITextField.swift in Sources */,
+				849444E0251DE86000946D9F /* ChannelsListViewController.swift in Sources */,
 				8451E4952536EED7003E95BA /* SaveDataOperation.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
 				F1391DAB252BA9B3007FC97D /* NightTheme.swift in Sources */,
@@ -382,7 +509,6 @@
 				F1391DA3252BA679007FC97D /* ThemeManager.swift in Sources */,
 				847E600025232496008B8C27 /* ConfigurableView.swift in Sources */,
 				F1391DA5252BA6F4007FC97D /* Theme.swift in Sources */,
-				F10D4E0C252118D400B8CDD0 /* FakeDataGenerator.swift in Sources */,
 				F1D84D4C251E9804000A69AF /* UIColor.swift in Sources */,
 				8428027D25347D9B0078723A /* DataManagerProtocol.swift in Sources */,
 			);
@@ -526,6 +652,7 @@
 		};
 		8467A61F250FAED500E36BEE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 003A6B1D703D46FB93FFCD33 /* Pods-fintech_chat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -537,7 +664,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOG_LEVEL = INFO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Dmitriy.fintech-chat";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = "Финтех чат";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -546,6 +673,7 @@
 		};
 		8467A620250FAED500E36BEE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9953A7A4C1B56AF4D0C3C4F3 /* Pods-fintech_chat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -557,7 +685,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOG_LEVEL = INFO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.Dmitriy.fintech-chat";
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = "Финтех чат";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

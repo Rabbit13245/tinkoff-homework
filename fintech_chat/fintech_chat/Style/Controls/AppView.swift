@@ -1,9 +1,9 @@
 import UIKit
 
-class AppView: UIView{}
+class AppView: UIView {}
 
-class AppSeparator: UIView{}
+class AppSeparator: UIView {}
 
-class AppTextWrapperView: UIView{}
+class AppTextWrapperView: UIView {}
 
-class AppThemesView: UIView{}
+class AppThemesView: UIView {}

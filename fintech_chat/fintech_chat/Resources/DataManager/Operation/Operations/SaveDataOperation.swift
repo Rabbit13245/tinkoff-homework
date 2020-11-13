@@ -1,13 +1,11 @@
 import Foundation
 
-class SaveDataOperation: Operation{
+class SaveDataOperation: Operation {
     var url: URL
-    
+
     var globalError = false
-    
-    init(url: URL){
+
+    init(url: URL) {
         self.url = url
     }
 }
-
-

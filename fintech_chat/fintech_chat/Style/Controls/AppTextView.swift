@@ -1,3 +1,3 @@
 import UIKit
 
-class AppChatTextView: UITextView{}
+class AppChatTextView: UITextView {}
