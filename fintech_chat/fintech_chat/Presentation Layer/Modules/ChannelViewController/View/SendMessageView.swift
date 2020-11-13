@@ -27,7 +27,7 @@ class SendMessageView: AppTextWrapperView {
         let buttonSend = UIButton(type: .roundedRect)
         buttonSend.setTitle("Send", for: .normal)
         
-        //buttonSend.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
+        //buttonSend
         
         buttonSend.isEnabled = false
         

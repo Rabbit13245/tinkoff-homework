@@ -31,6 +31,7 @@ class ChannelViewController: UIViewController {
     private lazy var messageInputView: SendMessageView = {
         let view = SendMessageView()
         view.inputTextView.delegate = self
+        view.buttonSend.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
