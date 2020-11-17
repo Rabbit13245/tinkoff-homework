@@ -6,7 +6,7 @@ struct MessageCellModel {
 
     init(message: Message) {
         self.message = message
-        if self.message.senderId == DbManager.shared.myId {
+        if self.message.senderId == FirebaseManager.shared.myId {
             self.direction = .output
         } else {
             self.direction = .input

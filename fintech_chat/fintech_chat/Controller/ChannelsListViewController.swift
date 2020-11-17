@@ -1,41 +1,46 @@
 import UIKit
 import Firebase
+import CoreData
 
 class ChannelsListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-
+    
     private var userName = ""
 
     private let chatName = "Channels"
-
-    private var firstShow = true
     
-    private var channels = [Channel]() {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-            saveChannelsToCoreData()
-        }
-    }
-
     private var createChannelAction: UIAlertAction?
 
+    /// Флаг первого запроса к firebase для актуализации данных
+    private var firstRequest = true
+    
+    private lazy var fetchedResultController: NSFetchedResultsController<ChannelDb> = {
+        let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
+        
+        request.sortDescriptors = [.init(key: "lastActivity", ascending: false),
+                                   .init(key: "name", ascending: true)]
+        request.fetchBatchSize = 30
+        
+        let frc = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: CoreDataStack.shared.mainContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        frc.delegate = self
+        
+        return frc
+    }()
+    
     private lazy var dataManagerFactory: DataManagerFactory = {
         let dataManagerFactory = DataManagerFactory()
         return dataManagerFactory
     }()
 
-    private lazy var mainStoryboard: UIStoryboard? = {
-        let storyboard = self.navigationController?.storyboard
-        return storyboard
-    }()
-
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.style = .whiteLarge
-        activityIndicator.isHidden = true
+        activityIndicator.isHidden = false
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
 
         return activityIndicator
@@ -92,7 +97,22 @@ class ChannelsListViewController: UIViewController {
 
         setupUI()
         setupTable()
-        getChannels()
+        getCacheChannels()
+        
+        if firstRequest {
+            FirebaseManager.shared.getAllChannelsFirstTime { [weak self] (result) in
+                switch result {
+                case .success(let channels):
+                    CoreDataStack.shared.removeOldChannels(channels)
+                case .failure:
+                    self?.presentMessage("Error first time getting channels from firebase")
+                }
+                self?.subscribeChannelsFromFirebase()
+                self?.firstRequest = false
+            }
+        } else {
+            subscribeChannelsFromFirebase()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -110,17 +130,6 @@ class ChannelsListViewController: UIViewController {
     }
 
     // MARK: - Private functions
-    private func saveChannelsToCoreData() {
-        CoreDataStack.shared.performSave { [weak self] (context) in
-            guard let safeSelf = self else {return}
-            
-            //_ = ChannelDb(channel: safeSelf.channels.first!, in: context)
-            
-            safeSelf.channels.forEach { (singleChannel) in
-                _ = ChannelDb(channel: singleChannel, in: context)
-            }
-        }
-    }
     
     private func setupTable() {
         tableView.delegate = self
@@ -134,27 +143,44 @@ class ChannelsListViewController: UIViewController {
         self.tableView.tableFooterView = AppView()
     }
 
-    private func getChannels() {
-        self.activityIndicator.startAnimating()
-        
-        DbManager.shared.getAllChannels { [weak self] (result) in
-            self?.activityIndicator.stopAnimating()
-            
+    private func getCacheChannels() {
+        do {
+            self.activityIndicator.startAnimating()
+            try fetchedResultController.performFetch()
+            self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+        } catch {
+            Logger.app.logMessage("FRC channels error: \(error.localizedDescription)", logLevel: .error)
+        }
+    }
+    
+    private func subscribeChannelsFromFirebase() {
+        FirebaseManager.shared.getAllChannels { [weak self] (result) in
             switch result {
-            case .success(let channels):
+            case .success(let documentChanges):
+                var modified = [Channel]()
+                var added = [Channel]()
+                var removed = [Channel]()
                 
-                guard !channels.isEmpty else {
-                    self?.tableView.isHidden = true
-                    self?.noChannelsLabel.isHidden = false
-                    return
+                for change in documentChanges {
+                    guard let channel = Channel(change.document) else { continue }
+                    switch change.type {
+                    case .added:
+                        added.append(channel)
+                    case .removed:
+                        removed.append(channel)
+                    case .modified:
+                        modified.append(channel)
+                    }
                 }
-                self?.tableView.isHidden = false
-                self?.noChannelsLabel.isHidden = true
-                self?.channels = channels
-            
+                
+                CoreDataStack.shared.addNewChannels(added)
+                CoreDataStack.shared.removeChannels(removed)
+                CoreDataStack.shared.modifyChannels(modified)
+                
             case .failure:
-                self?.tableView.isHidden = true
-                self?.noChannelsLabel.isHidden = false
+                self?.presentMessage("Error getting channels from firebase")
             }
         }
     }
@@ -244,7 +270,7 @@ extension ChannelsListViewController {
             channelName.count > 0 else { return }
 
             self?.addChannelBarButton.isEnabled = false
-            DbManager.shared.createChannel(with: channelName) { [weak self] (error) in
+            FirebaseManager.shared.createChannel(with: channelName) { [weak self] (error) in
                 self?.addChannelBarButton.isEnabled = true
                 guard error != nil else {return}
                 self?.presentMessage("Error creating channel")
@@ -268,7 +294,13 @@ extension ChannelsListViewController {
         alertController.applyTheme()
 
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        present(alertController, animated: true)
+        if presentedViewController == nil {
+            present(alertController, animated: true)
+        } else {
+            dismiss(animated: true) {
+                self.present(alertController, animated: true)
+            }
+        }
     }
 }
 
@@ -276,11 +308,12 @@ extension ChannelsListViewController {
 extension ChannelsListViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return fetchedResultController.sections?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return channels.count
+        guard let sectionInfo = fetchedResultController.sections?[section] else { return 0 }
+        return sectionInfo.numberOfObjects
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -289,11 +322,24 @@ extension ChannelsListViewController: UITableViewDataSource {
             withIdentifier: String(describing: ConversationTableViewCell.self),
             for: indexPath) as? ConversationTableViewCell else {return UITableViewCell()}
 
-        let cellData = self.channels[indexPath.row]
-
+        //let cellData = self.channels[indexPath.row]
+        let channelDb = fetchedResultController.object(at: indexPath)
+        let cellData = Channel(channelDb)
+        
         cell.configure(with: cellData)
 
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let channelForRemove = fetchedResultController.object(at: indexPath)
+                        
+            FirebaseManager.shared.removeChannel(with: channelForRemove.identifier) { [weak self] (error) in
+                guard error != nil else {return}
+                self?.presentMessage("Error removing channel")
+            }
+        }
     }
 }
 
@@ -304,28 +350,65 @@ extension ChannelsListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        let controller = ChannelViewController(channelName: channels[indexPath.row].name, channelId: channels[indexPath.row].identifier)
+        let channelDb = fetchedResultController.object(at: indexPath)
+        let controller = ChannelViewController(channel: channelDb)
 
         self.navigationController?.pushViewController(controller, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
+}
 
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = AppSeparator()
-//        let label = AppLabel()
-//        label.font = UIFont.systemFont(ofSize: 28)
-//        label.text =  "Channels"
-//        view.addSubview(label)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-//            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-//        ])
-//        return view
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 35
-//    }
+// MARK: - NSFetchedResultsControllerDelegate
+extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
+    /// Начало изменения
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        // Убрал, иначе мы не получим изменения каналов, пока будем на другом экране
+//        guard self.isViewLoaded,
+//                self.view.window != nil else { return }
+        tableView.beginUpdates()
+    }
+    
+    /// Изменение объекта
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?) {
+//        guard self.isViewLoaded,
+//            self.view.window != nil else { return }
+        switch type {
+        case .insert:
+            if let newIndexPath = newIndexPath {
+                Logger.app.logMessage("ChannelList Insert \(newIndexPath)", logLevel: .debug)
+                tableView.insertRows(at: [newIndexPath], with: .fade)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                Logger.app.logMessage("ChannelList Delete \(indexPath)", logLevel: .debug)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        case .move:
+            if let newIndexPath = newIndexPath,
+                let oldIndexPath = indexPath {
+                Logger.app.logMessage("ChannelList Move", logLevel: .debug)
+                tableView.deleteRows(at: [oldIndexPath], with: .fade)
+                tableView.insertRows(at: [newIndexPath], with: .fade)
+            }
+        case .update:
+            if let indexPath = indexPath {
+                Logger.app.logMessage("ChannelList Update \(indexPath)", logLevel: .debug)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        default:
+            break
+        }
+    }
+    
+    /// Конец изменения
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        guard self.isViewLoaded,
+//            self.view.window != nil else { return }
+        tableView.endUpdates()
+    }
 }

@@ -24,7 +24,7 @@ class CoreDataStack {
         }
         
         let documentUrl = documentsUrl.appendingPathComponent("Chats.sqlite")
-        //print(documentUrl)
+        print(documentUrl)
         return documentUrl
     }()
     
@@ -85,6 +85,11 @@ class CoreDataStack {
         context.perform {
             block(context)
             if context.hasChanges {
+                do {
+                    try context.obtainPermanentIDs(for: Array(context.insertedObjects))
+                } catch {
+                    assertionFailure(error.localizedDescription)
+                }
                 self.performSave(in: context)
             }
         }
@@ -93,7 +98,6 @@ class CoreDataStack {
     private func performSave(in context: NSManagedObjectContext) {
         context.perform {
             do {
-                //print("is main thread: \(Thread.isMainThread)")
                 try context.save()
                 if let parent = context.parent {
                     self.performSave(in: parent)
@@ -102,10 +106,12 @@ class CoreDataStack {
                 assertionFailure(error.localizedDescription)
             }
         }
-        
     }
-    
-    // MARK: - Requests
+}
+
+// MARK: - Channels work
+extension CoreDataStack {
+    /// Получить канал по id
     func getChannel(with id: String, in context: NSManagedObjectContext? = nil) -> ChannelDb? {
         do {
             let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
@@ -122,6 +128,64 @@ class CoreDataStack {
             return nil
         }
     }
+    
+    /// Добавить новые каналы
+    func addNewChannels(_ channels: [Channel]) {
+        performSave { (context) in
+            channels.forEach { (singleChannel) in
+                _ = ChannelDb(channel: singleChannel, in: context)
+            }
+        }
+    }
+    
+    /// Обновить существующие каналы
+    func modifyChannels(_ channels: [Channel]) {
+        performSave { (context) in
+            channels.forEach { (singleChannel) in
+                guard let existChannel = self.getChannel(with: singleChannel.identifier, in: context) else { return }
+                existChannel.setValue(singleChannel.lastActivity, forKey: "lastActivity")
+                existChannel.setValue(singleChannel.lastMessage, forKey: "lastMessage")
+                existChannel.setValue(singleChannel.name, forKey: "name")
+            }
+        }
+    }
+    
+    /// Удалить каналы
+    func removeChannels(_ channels: [Channel]) {
+        performSave { (context) in
+            channels.forEach { (singleChannel) in
+                guard let channelForRemove = self.getChannel(with: singleChannel.identifier, in: context) else { return }
+                context.delete(channelForRemove)
+            }
+        }
+    }
+    
+    func removeOldChannels(_ channels: [Channel]) {
+        let ids = channels.map { $0.identifier }
+        let request: NSFetchRequest<ChannelDb> = ChannelDb.fetchRequest()
+        request.predicate = NSPredicate(format: "NOT identifier IN %@", ids)
+        
+        performSave { (context) in
+            if let channelsToRemove = try? context.fetch(request),
+               channelsToRemove.count > 0 {
+                channelsToRemove.forEach {
+                    context.delete($0)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Messages work
+extension CoreDataStack {
+    func addNewMessages(_ messages: [Message], for channelId: NSManagedObjectID) {
+        performSave { (context) in
+            guard let channelToAdd = context.object(with: channelId) as? ChannelDb else { return }
+            let messagesDbToAdd = messages.map { MessageDb(message: $0, in: context) }
+            let setMessages = NSSet(array: messagesDbToAdd)
+            channelToAdd.addToMessages(setMessages)
+        }
+    }
 }
 
 // MARK: - Core Data Logs
@@ -136,10 +200,10 @@ extension CoreDataStack {
                 let countMessages = try self.mainContext.count(for: MessageDb.fetchRequest())
                 Logger.app.logMessage("✉️: \(countMessages) messages", logLevel: .info)
                 
-                let array = try self.mainContext.fetch(ChannelDb.fetchRequest()) as? [ChannelDb] ?? []
-                array.forEach {
-                    Logger.app.logMessage($0.statistic, logLevel: .info)
-                }
+//                let array = try self.mainContext.fetch(ChannelDb.fetchRequest()) as? [ChannelDb] ?? []
+//                array.forEach {
+//                    Logger.app.logMessage($0.statistic, logLevel: .info)
+//                }
             } catch {
                 fatalError(error.localizedDescription)
             }

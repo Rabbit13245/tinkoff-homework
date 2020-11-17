@@ -1,21 +1,11 @@
 import UIKit
+import CoreData
 
 class ChannelViewController: UIViewController {
-
-    private var channelName: String
-
-    private var channelId: String
-
-    private var messages = [Message]() {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.scrollTableToBottom()
-            }
-            saveMessagesToCoreData()
-        }
-    }
-
+    
+    /// Канал, по которому будем выводить сообщения
+    private var channel: ChannelDb
+    
     private let cellIdentifier = String(describing: MessageTableViewCell.self)
 
     private var keyboardHeight: CGFloat = 0
@@ -27,11 +17,11 @@ class ChannelViewController: UIViewController {
         tableView.register(MessageTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
-
+        
         return tableView
     }()
 
-    private lazy var inputTextView: AppChatTextView = {
+    internal lazy var inputTextView: AppChatTextView = {
         let textView = AppChatTextView()
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.text = "Your message here..."
@@ -57,7 +47,7 @@ class ChannelViewController: UIViewController {
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.style = .whiteLarge
-        activityIndicator.isHidden = true
+        activityIndicator.isHidden = false
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
 
         return activityIndicator
@@ -71,10 +61,28 @@ class ChannelViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    internal lazy var fetchedResultController: NSFetchedResultsController<MessageDb> = {
+        let request: NSFetchRequest<MessageDb> = MessageDb.fetchRequest()
+        let sort = NSSortDescriptor(key: "created", ascending: true)
+        request.sortDescriptors = [sort]
 
-    init(channelName: String, channelId: String) {
-        self.channelName = channelName
-        self.channelId = channelId
+        let predicate = NSPredicate(format: "channel.identifier == %@", self.channel.identifier)
+        request.predicate = predicate
+        
+        let frc = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: CoreDataStack.shared.mainContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        frc.delegate = self
+        
+        return frc
+    }()
+
+    init(channel: ChannelDb) {
+        self.channel = channel
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -82,10 +90,14 @@ class ChannelViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        getCachedMessages()
+        
+        loadMessagesFromFirebase()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -94,65 +106,65 @@ class ChannelViewController: UIViewController {
         unsubscribeKeyboardNotifications()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        loadMessages()
-    }
-
     // MARK: - Private functions
-    private func saveMessagesToCoreData() {
-        guard let channelFromDb = CoreDataStack.shared.getChannel(with: self.channelId) else { return }
-    
-        CoreDataStack.shared.performSave { [weak self] (context) in
-            guard let safeSelf = self,
-                let safeChannel = try? context.existingObject(with: channelFromDb.objectID) as? ChannelDb else {return}
-            
-            //            guard let safeSelf = self,
-            //                let safeChannel = CoreDataStack.shared.getChannel(with: safeSelf.channelId, in: context) else {return}
-            
-            let messagesForAdd = safeSelf.messages.map {
-                MessageDb(message: $0, in: context)
-            }
-            let setMessagesForAdd = NSSet(array: messagesForAdd)
-            safeChannel.addToMessages(setMessagesForAdd)
-        }
-    }
-    
     private func scrollTableToBottom() {
-        if !self.messages.isEmpty {
-            self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+        guard let sectionNumber = fetchedResultController.sections?.count,
+            sectionNumber > 0,
+            let elementsNumber = fetchedResultController.sections?[sectionNumber - 1].numberOfObjects,
+            elementsNumber > 0 else { return }
+        
+        self.tableView.scrollToRow(at: IndexPath(row: elementsNumber - 1, section: sectionNumber - 1), at: .bottom, animated: true)
+    }
+    
+    private func getCachedMessages() {
+        do {
+            self.activityIndicator.startAnimating()
+            try fetchedResultController.performFetch()
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+            self.tableView.reloadData()
+        } catch {
+            Logger.app.logMessage("FRC messages error: \(error.localizedDescription)", logLevel: .error)
         }
     }
     
-    private func loadMessages() {
-        self.activityIndicator.startAnimating()
-
-        DbManager.shared.getAllMessages(from: self.channelId) {[weak self] (result) in
+    private func loadMessagesFromFirebase() {
+        FirebaseManager.shared.getAllMessages(from: self.channel.identifier) {[weak self] (result) in
             guard let safeSelf = self else { return }
-            safeSelf.activityIndicator.stopAnimating()
-            
             switch result {
-            case .success(let messages):
-                guard !messages.isEmpty else {
-                    safeSelf.tableView.isHidden = true
-                    safeSelf.noMessagesLabel.isHidden = false
-                    return
+            case .success(let documentChanges):
+                var modified = [Message]()
+                var added = [Message]()
+                var removed = [Message]()
+                
+                for change in documentChanges {
+                    guard let channel = Message(change.document) else { continue }
+                    switch change.type {
+                    case .added:
+                        added.append(channel)
+                    case .removed:
+                        removed.append(channel)
+                    case .modified:
+                        modified.append(channel)
+                    }
                 }
-                safeSelf.tableView.isHidden = false
-                safeSelf.noMessagesLabel.isHidden = true
-
-                safeSelf.messages = messages
-
+                
+                CoreDataStack.shared.addNewMessages(added, for: safeSelf.channel.objectID)
             case .failure:
-                safeSelf.tableView.isHidden = true
-                safeSelf.noMessagesLabel.isHidden = false
+                safeSelf.presentMessage("Error getting messages from firebase")
             }
         }
     }
 
+    fileprivate func setupView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeybord))
+        view.addGestureRecognizer(tap)
+    }
+    
     private func setupUI() {
         self.view = AppView()
 
+        setupView()
         setupNavTitle()
         setupTableView()
         setupInputView()
@@ -177,7 +189,7 @@ class ChannelViewController: UIViewController {
     private func setupTableView() {
         self.tableView.tableFooterView = AppView()
         self.tableView.separatorStyle = .none
-
+        
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -228,7 +240,7 @@ class ChannelViewController: UIViewController {
         self.navigationItem.largeTitleDisplayMode = .never
 
         let label = AppLabel()
-        label.text = channelName
+        label.text = channel.name
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textAlignment = .center
 
@@ -252,7 +264,13 @@ class ChannelViewController: UIViewController {
         alertController.applyTheme()
 
         alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        present(alertController, animated: true)
+        if presentedViewController == nil {
+            present(alertController, animated: true)
+        } else {
+            dismiss(animated: true) {
+                self.present(alertController, animated: true)
+            }
+        }
     }
 }
 
@@ -264,7 +282,7 @@ extension ChannelViewController {
     
     @objc private func sendButtonPressed() {
         self.sendMessageButton?.isEnabled = false
-        DbManager.shared.sendMessage(self.inputTextView.text, to: self.channelId) { [weak self] error in
+        FirebaseManager.shared.sendMessage(self.inputTextView.text, to: self.channel.identifier) { [weak self] error in
             guard let safeSelf = self else { return }
             safeSelf.sendMessageButton?.isEnabled = true
             
@@ -274,6 +292,10 @@ extension ChannelViewController {
                 safeSelf.inputTextView.text = ""
             }
         }
+    }
+    
+    @objc private func dismissKeybord() {
+        inputTextView.endEditing(true)
     }
 }
 
@@ -313,98 +335,6 @@ extension ChannelViewController {
     }
 }
 
-// MARK: - Table view data source
-extension ChannelViewController: UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier:
-            String(describing: MessageTableViewCell.self),
-                                                       for: indexPath)
-            as? MessageTableViewCell else { return UITableViewCell() }
-
-        let messageCellModel = MessageCellModel(message: self.messages[indexPath.row])
-
-        cell.configure(with: messageCellModel)
-
-        let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-
-        let estimatedFrameMessage = NSString(
-            string: messageCellModel.message.content).boundingRect(with: size,
-                                                           options: options,
-                                                           attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)],
-                                                           context: nil)
-        let estimatedFrameUserName = NSString(
-            string: messageCellModel.message.senderName).boundingRect(
-                with: size,
-                options: options,
-                attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)],
-                context: nil)
-
-        let maxWidth = estimatedFrameMessage.width > estimatedFrameUserName.width ? estimatedFrameMessage.width : estimatedFrameUserName.width
-
-        if messageCellModel.direction == .input {
-            let senderNameHeight = cell.senderNameLabel.font.pointSize
-            cell.senderNameLabel.text = messageCellModel.message.senderName
-            cell.senderNameLabel.isHidden = false
-            cell.senderNameLabel.frame = CGRect(x: 16, y: 10, width: maxWidth, height: senderNameHeight)
-            cell.messageTextLabel.frame = CGRect(x: 16, y: 10 + senderNameHeight + 2, width: maxWidth, height: estimatedFrameMessage.height)
-            cell.bubbleView.frame = CGRect(x: 8, y: 0, width: maxWidth + 8 + 8, height: estimatedFrameMessage.height + 20 + senderNameHeight + 2)
-
-        } else {
-            cell.messageTextLabel.frame = CGRect(
-                x: self.view.frame.width - estimatedFrameMessage.width - 16,
-                y: 10,
-                width: estimatedFrameMessage.width,
-                height: estimatedFrameMessage.height)
-            cell.bubbleView.frame = CGRect(
-                x: self.view.frame.width - estimatedFrameMessage.width - 24,
-                y: 0,
-                width: estimatedFrameMessage.width + 16,
-                height: estimatedFrameMessage.height + 20)
-            cell.senderNameLabel.isHidden = true
-        }
-
-        return cell
-    }
-}
-
-// MARK: - Table view delegate
-extension ChannelViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        let messageCellModel = MessageCellModel(message: self.messages[indexPath.row])
-
-        let size = CGSize(width: self.view.frame.width * 0.75 - 16, height: 1000)
-        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-
-        let estimatedFrame = NSString(
-            string: messageCellModel.message.content).boundingRect(
-                with: size,
-                options: options,
-                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)],
-                context: nil)
-
-        if messageCellModel.direction == .input {
-            return estimatedFrame.height + 20 + 6 + 14
-        } else {
-            return estimatedFrame.height + 20 + 6
-        }
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        inputTextView.endEditing(true)
-    }
-}
-
 // MARK: - Text view delegate
 extension ChannelViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -421,26 +351,61 @@ extension ChannelViewController: UITextViewDelegate {
         }
     }
     
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let currentText = textView.text ?? ""
-        let newText = currentText + text
-        var canSend = false
+    func textViewDidChange(_ textView: UITextView) {
+        self.sendMessageButton?.isEnabled = !textView.text.isBlank
+    }
+}
 
-        // удаляем что-то
-        if text == "" {
-            if newText != "",
-                let stringRange = Range(range, in: currentText) {
-                let newString = currentText.replacingCharacters(in: stringRange, with: text)
-                if !newString.isBlank {
-                    canSend = true
-                }
-            }
-        } else {
-            canSend = !newText.isBlank
-        }
-        
-        self.sendMessageButton?.isEnabled = canSend
+// MARK: - NSFetchedResultsControllerDelegate
+extension ChannelViewController: NSFetchedResultsControllerDelegate {
+    /// Начало изменения
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
     
-        return true
+    /// Изменение объекта
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            if let newIndexPath = newIndexPath {
+                Logger.app.logMessage("Insert", logLevel: .debug)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                Logger.app.logMessage("Delete", logLevel: .debug)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+        case .move:
+            if let newIndexPath = newIndexPath,
+                let oldIndexPath = indexPath {
+                Logger.app.logMessage("Move", logLevel: .debug)
+                tableView.deleteRows(at: [oldIndexPath], with: .automatic)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
+        case .update:
+            if let indexPath = indexPath,
+                let cell = tableView.cellForRow(at: indexPath) as? MessageTableViewCell {
+                Logger.app.logMessage("Update", logLevel: .debug)
+                let messageDb = fetchedResultController.object(at: indexPath)
+                let message = Message(messageDb)
+                let messageCellModel = MessageCellModel(message: message)
+                cell.configure(with: messageCellModel)
+            }
+        default:
+            break
+        }
+    }
+    
+    /// Конец изменения
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+        scrollTableToBottom()
     }
 }

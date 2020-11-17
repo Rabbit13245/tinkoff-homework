@@ -25,4 +25,11 @@ struct Channel {
         self.lastMessage = receiedLastMessage
         self.lastActivity = receivedLastActivity?.dateValue()
     }
+    
+    init(_ data: ChannelDb) {
+        self.identifier = data.identifier
+        self.name = data.name
+        self.lastMessage = data.lastMessage
+        self.lastActivity = data.lastActivity
+    }
 }
