@@ -61,7 +61,6 @@ class ChannelsListViewController: UIViewController {
         barButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileButtonPressed)))
         
         guard let manager = dataManagerFactory?.createDataManager(.GCD) else { return barButton }
-
         manager.loadName {(name, error) in
             if !error {
                 self.userName = name
@@ -116,6 +115,8 @@ class ChannelsListViewController: UIViewController {
                 self?.presentMessage("Error subscribing channels")
             }
         })
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(onChangeUserData(_:)), name: .didChangedUserData, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -131,7 +132,7 @@ class ChannelsListViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.navigationItem.title = ""
     }
-
+    
     // MARK: - Private functions
     
     private func setupTable() {
@@ -158,18 +159,8 @@ class ChannelsListViewController: UIViewController {
             Logger.app.logMessage("FRC channels error: \(error.localizedDescription)", logLevel: .error)
         }
     }
-}
-
-// MARK: - UISetup
-
-extension ChannelsListViewController {
-    private func setupNavigationController() {
-        navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = chatName
-
-        self.navigationItem.leftBarButtonItem = self.settingsBarButton
-        self.navigationItem.rightBarButtonItems = [self.profileBarButton, self.addChannelBarButton]
-
+    
+    private func loadUserAvatar() {
         guard let manager = dataManagerFactory?.createDataManager(.GCD) else { return }
         manager.loadImage { (image, error) in
             if !error {
@@ -186,6 +177,38 @@ extension ChannelsListViewController {
                 self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: customView), self.addChannelBarButton]
             }
         }
+    }
+    
+    private func loadUserInitials() {
+        guard let button = profileBarButton.customView as? UIButton else { return }
+        
+        guard let manager = dataManagerFactory?.createDataManager(.GCD) else { return }
+        manager.loadName {(name, error) in
+            if !error {
+                self.userName = name
+            }
+            button.setTitle(Helper.app.getInitials(from: self.userName), for: .normal)
+        }
+    }
+    
+    // MARK: - NotificationCenter
+    @objc func onChangeUserData(_ notification: Notification) {
+        loadUserInitials()
+        loadUserAvatar()
+    }
+}
+
+// MARK: - UISetup
+
+extension ChannelsListViewController {
+    private func setupNavigationController() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.title = chatName
+
+        self.navigationItem.leftBarButtonItem = self.settingsBarButton
+        self.navigationItem.rightBarButtonItems = [self.profileBarButton, self.addChannelBarButton]
+
+        loadUserAvatar()
     }
 
     private func setupUI() {

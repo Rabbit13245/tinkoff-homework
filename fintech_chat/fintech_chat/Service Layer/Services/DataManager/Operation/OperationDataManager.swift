@@ -1,7 +1,7 @@
 import UIKit
 
-class OperationDataManager {
-
+class OperationDataManager: IDataManager {
+    
     let nameFile = FileManager.default.urls(
         for: .documentDirectory,
         in: .userDomainMask)[0].appendingPathComponent("Name.txt")
@@ -20,7 +20,7 @@ class OperationDataManager {
     }()
 }
 
-extension OperationDataManager: IDataManager {
+extension OperationDataManager {
     func loadName(completion: ((_ name: String, _ error: Bool) -> Void)?) {
         let loadNameOperation = LoadStringOperation(url: self.nameFile)
         loadNameOperation.completionBlock = {
@@ -87,16 +87,14 @@ extension OperationDataManager: IDataManager {
         var saveImageOperation: SaveDataOperation?
 
         var response = Response(nameError: false, descriptionError: false, imageError: false)
-
+        
         if let name = name {
-
             let saveNameOperationTemp = SaveStringOperation(url: self.nameFile, stringData: name)
             saveNameOperation = saveNameOperationTemp
             self.dataQueue.addOperation(saveNameOperationTemp)
         }
 
         if let description = description {
-
             let saveDescriptionOperationTemp = SaveStringOperation(url: self.descriptionFile, stringData: description)
             saveDescriptionOperation = saveDescriptionOperationTemp
             self.dataQueue.addOperation(saveDescriptionOperationTemp)
@@ -104,10 +102,8 @@ extension OperationDataManager: IDataManager {
 
         if let oldImage = oldImage,
             let newImage = newImage {
-
             let equalImages = oldImage.pngData() == newImage.pngData()
             if !equalImages {
-
                 let saveImageOperationTemp = SaveImageOperation(url: self.imageFile, imageData: newImage)
                 saveImageOperation = saveImageOperationTemp
                 self.dataQueue.addOperation(saveImageOperationTemp)
@@ -116,7 +112,6 @@ extension OperationDataManager: IDataManager {
         
         if let newImage = newImage,
             oldImage == nil {
-            
             let saveImageOperationTemp = SaveImageOperation(url: self.imageFile, imageData: newImage)
             saveImageOperation = saveImageOperationTemp
             self.dataQueue.addOperation(saveImageOperationTemp)
@@ -133,6 +128,7 @@ extension OperationDataManager: IDataManager {
 
             OperationQueue.main.addOperation {
                 completion?(response, error)
+                NotificationCenter.default.post(name: .didChangedUserData, object: nil)
             }
         }
     }

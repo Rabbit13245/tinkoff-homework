@@ -397,18 +397,30 @@ class ProfileViewController: LoggedViewController {
 
     private func succesSaveData(title: String) {
         let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        alertController.applyTheme()
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alertController, animated: true)
     }
 
     private func failedSaveData( completion: @escaping (() -> Void)) {
-        let alertController = UIAlertController(title: "Eroor", message: "Failed to save data", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Error", message: "Failed to save data", preferredStyle: .alert)
+        alertController.applyTheme()
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         let repeatAction = UIAlertAction(title: "Repeat", style: .default) { (_) in
             completion()
         }
         alertController.addAction(repeatAction)
         self.present(alertController, animated: true)
+    }
+    
+    private func setupAvatar(image: UIImage) {
+        profilePhotoView.image = image
+        defaultPhotoView.backgroundColor = .none
+        initialsLabel.isHidden = true
+
+        self.wasChange = true
+        self.gcdSaveButton.isEnabled = self.wasChange
+        self.operationSaveButton.isEnabled = self.wasChange
     }
 }
 
@@ -426,17 +438,8 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-
         guard let image = info[.editedImage] as? UIImage else {return}
-
-        profilePhotoView.image = image
-        defaultPhotoView.backgroundColor = .none
-        initialsLabel.isHidden = true
-
-        self.wasChange = true
-        self.gcdSaveButton.isEnabled = self.wasChange
-        self.operationSaveButton.isEnabled = self.wasChange
-
+        setupAvatar(image: image)
         dismiss(animated: true)
     }
 }
@@ -451,12 +454,6 @@ extension ProfileViewController: UITextViewDelegate {
 
 extension ProfileViewController: AvatarSelectDelegate {
     func setupImage(image: UIImage) {
-        profilePhotoView.image = image
-        defaultPhotoView.backgroundColor = .none
-        initialsLabel.isHidden = true
-
-        self.wasChange = true
-        self.gcdSaveButton.isEnabled = self.wasChange
-        self.operationSaveButton.isEnabled = self.wasChange
+        setupAvatar(image: image)
     }
 }

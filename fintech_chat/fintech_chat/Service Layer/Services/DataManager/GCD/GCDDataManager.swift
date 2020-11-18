@@ -1,6 +1,6 @@
 import UIKit
 
-class GCDDataManager {
+class GCDDataManager: IDataManager {
 
     lazy var fileQueue: DispatchQueue = {
         let queue = DispatchQueue(label: "fileQueue", qos: .utility)
@@ -13,7 +13,7 @@ class GCDDataManager {
                                                    in: .userDomainMask)[0].appendingPathComponent("Description.txt")
     let imageFile = FileManager.default.urls(for: .documentDirectory,
                                              in: .userDomainMask)[0].appendingPathComponent("Image.png")
-
+    
     private func loadDataFrom(url: URL, completion: ((_ name: String, _ error: Bool) -> Void)?) {
         //fileQueue.asyncAfter(deadline: .now() + 5){
         fileQueue.async {
@@ -78,9 +78,10 @@ class GCDDataManager {
     }
 }
 
-// MARK: - DataManagerProtocol
+// MARK: - IDataManager
 
-extension GCDDataManager: IDataManager {
+extension GCDDataManager {
+    
     func loadName(completion: ((_ name: String, _ error: Bool) -> Void)?) {
         loadDataFrom(url: self.nameFile, completion: completion)
     }
@@ -230,6 +231,7 @@ extension GCDDataManager: IDataManager {
                     completion?(response, true)
                 } else {
                     completion?(response, false)
+                    NotificationCenter.default.post(name: .didChangedUserData, object: nil)
                 }
             }
         }

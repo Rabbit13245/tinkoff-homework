@@ -6,8 +6,8 @@ class AvatarCollectionVIewCell: UICollectionViewCell {
     
     private lazy var imageView: UIImageView = {
         let iv = UIImageView(image: #imageLiteral(resourceName: "avatar_placeholder"))
-        //iv.contentMode = .scaleToFill
-        //iv.layer.masksToBounds = true
+        iv.contentMode = .scaleAspectFill
+        iv.layer.masksToBounds = true
         
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv

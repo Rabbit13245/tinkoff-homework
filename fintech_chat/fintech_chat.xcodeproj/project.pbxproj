@@ -24,6 +24,7 @@
 		842016F5256562630001A7D9 /* PixabayConcreteImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016F4256562630001A7D9 /* PixabayConcreteImageRequest.swift */; };
 		842016F8256563020001A7D9 /* PixabayConcreteImageParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016F7256563020001A7D9 /* PixabayConcreteImageParser.swift */; };
 		842016FB256590C40001A7D9 /* UIAlertController+ConstraintFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016FA256590C40001A7D9 /* UIAlertController+ConstraintFix.swift */; };
+		842016FF2565D0030001A7D9 /* NorificationName+Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016FE2565D0030001A7D9 /* NorificationName+Profile.swift */; };
 		8428027A2534641B0078723A /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842802792534641B0078723A /* UITextView.swift */; };
 		8428027D25347D9B0078723A /* IDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428027C25347D9B0078723A /* IDataManager.swift */; };
 		8428027F25347F2E0078723A /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428027E25347F2E0078723A /* GCDDataManager.swift */; };
@@ -124,6 +125,7 @@
 		842016F4256562630001A7D9 /* PixabayConcreteImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayConcreteImageRequest.swift; sourceTree = "<group>"; };
 		842016F7256563020001A7D9 /* PixabayConcreteImageParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayConcreteImageParser.swift; sourceTree = "<group>"; };
 		842016FA256590C40001A7D9 /* UIAlertController+ConstraintFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConstraintFix.swift"; sourceTree = "<group>"; };
+		842016FE2565D0030001A7D9 /* NorificationName+Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NorificationName+Profile.swift"; sourceTree = "<group>"; };
 		842802792534641B0078723A /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		8428027C25347D9B0078723A /* IDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDataManager.swift; sourceTree = "<group>"; };
 		8428027E25347F2E0078723A /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
@@ -429,8 +431,8 @@
 		846EA93B255BA9AE00776D49 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				84A114CD256419D100C83AD9 /* AvatarLoadViewController */,
 				847E5FFF25232496008B8C27 /* ConfigurableView.swift */,
+				84A114CD256419D100C83AD9 /* AvatarLoadViewController */,
 				846EA93C255BA9D600776D49 /* ChannelsListViewController */,
 				846EA940255BAAED00776D49 /* ChannelViewController */,
 				846EA93F255BAA6F00776D49 /* LoggedViewController */,
@@ -628,6 +630,7 @@
 			isa = PBXGroup;
 			children = (
 				8451E4A32536F454003E95BA /* UserModel.swift */,
+				842016FE2565D0030001A7D9 /* NorificationName+Profile.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -983,6 +986,7 @@
 				84B401AA255C9A6700F2D9DB /* IChannelManager.swift in Sources */,
 				849D39F5255D7AC200B0A111 /* ServicesAssembly.swift in Sources */,
 				84B854E1255DE2590052293E /* SendMessageView.swift in Sources */,
+				842016FF2565D0030001A7D9 /* NorificationName+Profile.swift in Sources */,
 				842016D525645DA00001A7D9 /* RequestSender.swift in Sources */,
 				847E600025232496008B8C27 /* ConfigurableView.swift in Sources */,
 				84B40192255C903B00F2D9DB /* UIViewController+Alert.swift in Sources */,
