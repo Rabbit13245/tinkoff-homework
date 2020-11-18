@@ -37,6 +37,7 @@ class ProfileViewController: LoggedViewController {
 
     @IBAction func editTouch(_ sender: UIButton) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.pruneNegativeWidthConstraints()
         actionSheet.applyTheme()
 
         let galery = UIAlertAction(title: "Photo Library", style: .default) {(_) in
@@ -62,9 +63,19 @@ class ProfileViewController: LoggedViewController {
         camera.setValue(cameraIcon, forKey: "image")
         camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
+        let load = UIAlertAction(title: "Load", style: .default) { [weak self] (_) in
+            guard let safeSelf = self else { return }
+            guard let avatarLoadVC = self?.presentationAssembly?.avatarLoadViewController(delegate: safeSelf) else { return }
+            self?.present(avatarLoadVC, animated: true, completion: nil)
+        }
+        let loadIcon = #imageLiteral(resourceName: "download")
+        load.setValue(loadIcon, forKey: "image")
+        load.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+        
         let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         actionSheet.addAction(galery)
         actionSheet.addAction(camera)
+        actionSheet.addAction(load)
         actionSheet.addAction(cancel)
 
         present(actionSheet, animated: true)
@@ -106,12 +117,16 @@ class ProfileViewController: LoggedViewController {
     
     // MARK: - Dependencies
     
+    private var presentationAssembly: IPresentationAssembly?
     private var dataManagerFactory: IDataManagerFactory?
     private var cameraManager: ICameraManager?
     
-    public func setupDependencies(cameraManager: ICameraManager, dataManagerFactory: IDataManagerFactory) {
+    public func setupDependencies(cameraManager: ICameraManager,
+                                  dataManagerFactory: IDataManagerFactory,
+                                  presentationAssembly: IPresentationAssembly) {
         self.cameraManager = cameraManager
         self.dataManagerFactory = dataManagerFactory
+        self.presentationAssembly = presentationAssembly
     }
     
     // MARK: - Private properties
@@ -428,6 +443,18 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 
 extension ProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
+        self.wasChange = true
+        self.gcdSaveButton.isEnabled = self.wasChange
+        self.operationSaveButton.isEnabled = self.wasChange
+    }
+}
+
+extension ProfileViewController: AvatarSelectDelegate {
+    func setupImage(image: UIImage) {
+        profilePhotoView.image = image
+        defaultPhotoView.backgroundColor = .none
+        initialsLabel.isHidden = true
+
         self.wasChange = true
         self.gcdSaveButton.isEnabled = self.wasChange
         self.operationSaveButton.isEnabled = self.wasChange
