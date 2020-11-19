@@ -15,7 +15,8 @@ class ProfileViewController: LoggedViewController {
     @IBOutlet weak var editBarButton: UIBarButtonItem!
     @IBOutlet weak var gcdSaveButton: AppBackgroundButton!
     @IBOutlet weak var operationSaveButton: AppBackgroundButton!
-
+    @IBOutlet weak var avatarButton: UIButton!
+    
     @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var safeAreaButtonsConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -89,6 +90,7 @@ class ProfileViewController: LoggedViewController {
         self.editingMode = !self.editingMode
         
         self.editButton.isEnabled = self.editingMode
+        self.avatarButton.isEnabled = self.editingMode
         self.descriptionTextView.isEditable = self.editingMode
         self.nameTextView.isEditable = self.editingMode
 
@@ -197,7 +199,8 @@ class ProfileViewController: LoggedViewController {
         descriptionTextView.font = UIFont.systemFont(ofSize: 16)
 
         editButton.isEnabled = self.editingMode
-
+        avatarButton.isEnabled = self.editingMode
+        
         guard profilePhotoView.image == nil else { return }
 
         defaultPhotoView.layer.cornerRadius = defaultPhotoView.bounds.width / 2
