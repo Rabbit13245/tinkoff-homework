@@ -1148,7 +1148,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOG_LEVEL = INFO;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat1;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = "Финтех чат";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1169,7 +1169,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOG_LEVEL = INFO;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat1;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
 				PRODUCT_NAME = "Финтех чат";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
