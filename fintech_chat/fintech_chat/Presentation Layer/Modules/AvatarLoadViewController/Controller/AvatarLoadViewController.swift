@@ -12,7 +12,6 @@ class AvatarLoadViewController: UIViewController {
     
     // MARK: - Dependencies
     
-    private lazy var collectionViewDataSurce = AvatarLoadDataSource(cellId: cellId)
     private lazy var collectionViewDelegate = AvatarLoadDelegate(padding: padding,
                                                                  viewController: self,
                                                                  delegate: self.delegate)
@@ -132,6 +131,8 @@ class AvatarLoadViewController: UIViewController {
 
 }
 
+// MARK: - UICollectionViewDataSource
+
 extension AvatarLoadViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId,
@@ -142,10 +143,10 @@ extension AvatarLoadViewController: UICollectionViewDataSource {
         if avatar.avatar == nil {
             imageManager.loadConcreteImage(url: avatar.imageUrl) { (model) in
                 guard let model = model else { return }
-                avatar.avatar = model.image
                 DispatchQueue.main.async {[weak self] in
+                    avatar.avatar = model.image
                     cell.configure(with: avatar)
-                    self?.avatars[indexPath.row].avatar = avatar.avatar
+                    self?.avatars[indexPath.row].avatar = model.image
                 }
             }
         }

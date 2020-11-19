@@ -13,6 +13,11 @@ class AvatarCollectionVIewCell: UICollectionViewCell {
         return iv
     }()
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = #imageLiteral(resourceName: "avatar_placeholder")
+    }
+    
     // MARK: - Initializers
     
     override init(frame: CGRect) {

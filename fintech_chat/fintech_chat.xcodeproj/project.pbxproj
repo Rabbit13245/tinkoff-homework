@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		361C73FA47BC0D665FFE6891 /* Pods_fintech_chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13ED8F5E70A4440D9D21147E /* Pods_fintech_chat.framework */; };
-		842016BE256424D70001A7D9 /* AvatarLoadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016BD256424D70001A7D9 /* AvatarLoadDataSource.swift */; };
 		842016C1256424E20001A7D9 /* AvatarLoadDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016C0256424E10001A7D9 /* AvatarLoadDelegate.swift */; };
 		842016CB256459520001A7D9 /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016CA256459520001A7D9 /* IRequest.swift */; };
 		842016CE256459A20001A7D9 /* PixabayImagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016CD256459A20001A7D9 /* PixabayImagesRequest.swift */; };
@@ -109,7 +108,6 @@
 /* Begin PBXFileReference section */
 		003A6B1D703D46FB93FFCD33 /* Pods-fintech_chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat.debug.xcconfig"; path = "Target Support Files/Pods-fintech_chat/Pods-fintech_chat.debug.xcconfig"; sourceTree = "<group>"; };
 		13ED8F5E70A4440D9D21147E /* Pods_fintech_chat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fintech_chat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		842016BD256424D70001A7D9 /* AvatarLoadDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarLoadDataSource.swift; sourceTree = "<group>"; };
 		842016C0256424E10001A7D9 /* AvatarLoadDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarLoadDelegate.swift; sourceTree = "<group>"; };
 		842016CA256459520001A7D9 /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
 		842016CD256459A20001A7D9 /* PixabayImagesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayImagesRequest.swift; sourceTree = "<group>"; };
@@ -283,7 +281,6 @@
 			isa = PBXGroup;
 			children = (
 				84A114CE256419FB00C83AD9 /* AvatarLoadViewController.swift */,
-				842016BD256424D70001A7D9 /* AvatarLoadDataSource.swift */,
 				842016C0256424E10001A7D9 /* AvatarLoadDelegate.swift */,
 			);
 			path = Controller;
@@ -974,7 +971,6 @@
 				84D2135925535BC20083BA7F /* ChannelViewControllerDelegate.swift in Sources */,
 				849444E3251DF3C800946D9F /* ConversationTableViewCell.swift in Sources */,
 				842016FB256590C40001A7D9 /* UIAlertController+ConstraintFix.swift in Sources */,
-				842016BE256424D70001A7D9 /* AvatarLoadDataSource.swift in Sources */,
 				F1391DA7252BA8AD007FC97D /* ClassicTheme.swift in Sources */,
 				F1391DA3252BA679007FC97D /* ThemeManager.swift in Sources */,
 				8448F53B254832D1009F7983 /* MessageDb+CoreDataClass.swift in Sources */,
