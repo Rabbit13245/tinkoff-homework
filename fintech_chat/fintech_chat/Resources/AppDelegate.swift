@@ -8,6 +8,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var previousState: UIApplication.State = .inactive
     
+    private let rootAssembly = RootAssembly()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         previousState = application.applicationState
        
@@ -17,6 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         setupApp(application)
 
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let navVC = rootAssembly.presentationAssembly.mainNavigationController()
+        self.window?.rootViewController = navVC
+        self.window?.makeKeyAndVisible()
+        
         return true
     }
 
@@ -47,13 +54,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate {
     private func setupApp(_ application: UIApplication) {
-        ThemeManager.shared.apply(for: application)
         FirebaseApp.configure()
-        
-        CoreDataStack.shared.didUpdateDataBase = { stack in
-            stack.printStatistic()
-        }
-        
         CoreDataStack.shared.enableObservers()
+        
+//        CoreDataStack.shared.didUpdateDataBase = { stack in
+//            stack.printStatistic()
+//        }
     }
 }
