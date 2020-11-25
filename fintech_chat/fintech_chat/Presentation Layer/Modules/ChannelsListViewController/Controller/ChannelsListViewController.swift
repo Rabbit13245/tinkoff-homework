@@ -49,7 +49,7 @@ class ChannelsListViewController: LoggedViewController {
         return barButton
     }()
 
-    private lazy var profileBarButton: UIBarButtonItem = {
+    lazy var profileBarButton: UIBarButtonItem = {
         // Для ios 12 получается только так
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.AppColors.yellowLogo
@@ -182,7 +182,8 @@ class ChannelsListViewController: LoggedViewController {
                 customView.addSubview(uiImageView)
                 let barButtonItem = UIBarButtonItem(customView: customView)
                 barButtonItem.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profileButtonPressed)))
-                self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: customView), self.addChannelBarButton]
+                self.profileBarButton = UIBarButtonItem(customView: customView)
+                self.navigationItem.rightBarButtonItems = [self.profileBarButton, self.addChannelBarButton]
             }
         }
     }
