@@ -12,7 +12,6 @@ class ProfileViewController: LoggedViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var profilePhotoView: UIImageView!
     @IBOutlet weak var editButton: UIButton!
-    @IBOutlet weak var editBarButton: UIBarButtonItem!
     @IBOutlet weak var gcdSaveButton: AppBackgroundButton!
     @IBOutlet weak var operationSaveButton: AppBackgroundButton!
     @IBOutlet weak var avatarButton: UIButton!
@@ -23,7 +22,15 @@ class ProfileViewController: LoggedViewController {
     @IBOutlet weak var defaultPhotoConstraint: NSLayoutConstraint!
     @IBOutlet weak var profilePhotoConstant: NSLayoutConstraint!
 
-    lazy var initialsLabel: UILabel = {
+    private lazy var editButtonForBarButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Edit profile", for: .normal)
+        button.addTarget(self, action: #selector(editBarButtonPressed), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private lazy var initialsLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 120)
@@ -83,27 +90,34 @@ class ProfileViewController: LoggedViewController {
     }
 
     @IBAction func closeButtonPressed(_ sender: UIButton) {
+        animator?.stopShake(editButtonForBarButton)
         dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func editBarButtonPressed(_ sender: UIBarButtonItem) {
+    @IBAction func editBarButtonPressed(_ sender: UIButton) {
         self.editingMode = !self.editingMode
         
         self.editButton.isEnabled = self.editingMode
         self.avatarButton.isEnabled = self.editingMode
         self.descriptionTextView.isEditable = self.editingMode
         self.nameTextView.isEditable = self.editingMode
-
+        descriptionTextView.isUserInteractionEnabled = self.editingMode
+        nameTextView.isUserInteractionEnabled = self.editingMode
+        
         if self.editingMode {
-            sender.title = "Done"
+            // sender.title = "Done"
             self.descriptionTextView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
             self.nameTextView.backgroundColor = ThemeManager.shared.theme.settings.secondaryBackgroundColor
+            
+            animator?.startShake(sender)
         } else {
-            sender.title = "Edit profile"
+            // sender.title = "Edit profile"
             self.nameTextView.endEditing(true)
             self.descriptionTextView.endEditing(true)
             self.descriptionTextView.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
             self.nameTextView.backgroundColor = ThemeManager.shared.theme.settings.backgroundColor
+            
+            animator?.stopShake(sender)
         }
     }
 
@@ -122,13 +136,16 @@ class ProfileViewController: LoggedViewController {
     private var presentationAssembly: IPresentationAssembly?
     private var dataManagerFactory: IDataManagerFactory?
     private var cameraManager: ICameraManager?
+    private var animator: IAnimator?
     
     public func setupDependencies(cameraManager: ICameraManager,
                                   dataManagerFactory: IDataManagerFactory,
-                                  presentationAssembly: IPresentationAssembly) {
+                                  presentationAssembly: IPresentationAssembly,
+                                  animator: IAnimator) {
         self.cameraManager = cameraManager
         self.dataManagerFactory = dataManagerFactory
         self.presentationAssembly = presentationAssembly
+        self.animator = animator
     }
     
     // MARK: - Private properties
@@ -146,9 +163,11 @@ class ProfileViewController: LoggedViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         subscribeKeyboardNotifications()
         setupUI()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButtonForBarButton)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -201,6 +220,9 @@ class ProfileViewController: LoggedViewController {
         editButton.isEnabled = self.editingMode
         avatarButton.isEnabled = self.editingMode
         
+        descriptionTextView.isUserInteractionEnabled = self.editingMode
+        nameTextView.isUserInteractionEnabled = self.editingMode
+        
         guard profilePhotoView.image == nil else { return }
 
         defaultPhotoView.layer.cornerRadius = defaultPhotoView.bounds.width / 2
@@ -222,7 +244,7 @@ class ProfileViewController: LoggedViewController {
         //guard let dataManagerOperations = dataManagerFactory?.createDataManager(.operation) else { return }
         //readData(dataManagerOperations)
 
-        self.editBarButton.isEnabled = false
+        self.editButtonForBarButton.isEnabled = false
     }
 
     private func readData(_ dataManager: IDataManager) {
@@ -251,7 +273,7 @@ class ProfileViewController: LoggedViewController {
 
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.isHidden = true
-                self.editBarButton.isEnabled = true
+                self.editButtonForBarButton.isEnabled = true
             }
         }
     }
@@ -293,7 +315,7 @@ class ProfileViewController: LoggedViewController {
     private func internalSaveData(_ dataManager: IDataManager) {
         // если нажали в режиме редактирования, то выходим из него
         if self.editingMode {
-            self.editBarButtonPressed(self.editBarButton)
+            self.editBarButtonPressed(self.editButtonForBarButton)
         }
         self.modifyUIForSaveData(false)
         self.initialsLabel.text = Helper.app.getInitials(from: self.nameTextView.text)
@@ -395,7 +417,7 @@ class ProfileViewController: LoggedViewController {
         }
         self.gcdSaveButton.isEnabled = false
         self.operationSaveButton.isEnabled = false
-        self.editBarButton.isEnabled = enabled
+        self.editButtonForBarButton.isEnabled = enabled
     }
 
     private func succesSaveData(title: String) {

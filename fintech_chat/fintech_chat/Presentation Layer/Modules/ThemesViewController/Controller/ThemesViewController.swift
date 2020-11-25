@@ -1,6 +1,6 @@
 import UIKit
 
-class ThemesViewController: UIViewController {
+class ThemesViewController: LoggedViewController {
 
     // MARK: - Public properties
     

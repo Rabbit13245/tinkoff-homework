@@ -81,6 +81,11 @@
 		84B854E1255DE2590052293E /* SendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B854E0255DE2590052293E /* SendMessageView.swift */; };
 		84B854E5255DF3B30052293E /* ChannelViewControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B854E4255DF3B30052293E /* ChannelViewControllerDataSource.swift */; };
 		84D2135925535BC20083BA7F /* ChannelViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2135825535BC20083BA7F /* ChannelViewControllerDelegate.swift */; };
+		84D9E440256E5FD8004B7FD4 /* GestureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E43F256E5FD7004B7FD4 /* GestureDelegate.swift */; };
+		84D9E44B256EA3BE004B7FD4 /* IAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E44A256EA3BE004B7FD4 /* IAnimator.swift */; };
+		84D9E44F256EA3F1004B7FD4 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E44E256EA3F1004B7FD4 /* Animator.swift */; };
+		84D9E455256EB00E004B7FD4 /* TransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E453256EB00E004B7FD4 /* TransitionDelegate.swift */; };
+		84D9E456256EB00E004B7FD4 /* AnimatorTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E454256EB00E004B7FD4 /* AnimatorTransitioning.swift */; };
 		F10D4E022520F03E00B8CDD0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E012520F03E00B8CDD0 /* Date.swift */; };
 		F10D4E04252111A900B8CDD0 /* ChannelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E03252111A900B8CDD0 /* ChannelCellModel.swift */; };
 		F10D4E062521123D00B8CDD0 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */; };
@@ -183,6 +188,11 @@
 		84B854E0255DE2590052293E /* SendMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageView.swift; sourceTree = "<group>"; };
 		84B854E4255DF3B30052293E /* ChannelViewControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewControllerDataSource.swift; sourceTree = "<group>"; };
 		84D2135825535BC20083BA7F /* ChannelViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewControllerDelegate.swift; sourceTree = "<group>"; };
+		84D9E43F256E5FD7004B7FD4 /* GestureDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureDelegate.swift; sourceTree = "<group>"; };
+		84D9E44A256EA3BE004B7FD4 /* IAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAnimator.swift; sourceTree = "<group>"; };
+		84D9E44E256EA3F1004B7FD4 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
+		84D9E453256EB00E004B7FD4 /* TransitionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionDelegate.swift; sourceTree = "<group>"; };
+		84D9E454256EB00E004B7FD4 /* AnimatorTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatorTransitioning.swift; sourceTree = "<group>"; };
 		9953A7A4C1B56AF4D0C3C4F3 /* Pods-fintech_chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat/Pods-fintech_chat.release.xcconfig"; sourceTree = "<group>"; };
 		F10D4E012520F03E00B8CDD0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		F10D4E03252111A900B8CDD0 /* ChannelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelCellModel.swift; path = "fintech_chat/Presentation Layer/Modules/ChannelsListViewController/Model/ChannelCellModel.swift"; sourceTree = SOURCE_ROOT; };
@@ -428,6 +438,9 @@
 		846EA93B255BA9AE00776D49 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				84D9E452256EAFE6004B7FD4 /* Transition */,
+				84D9E449256EA3B1004B7FD4 /* Animator */,
+				84D9E43E256E5FC8004B7FD4 /* GestureDelegate */,
 				847E5FFF25232496008B8C27 /* ConfigurableView.swift */,
 				84A114CD256419D100C83AD9 /* AvatarLoadViewController */,
 				846EA93C255BA9D600776D49 /* ChannelsListViewController */,
@@ -736,6 +749,32 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		84D9E43E256E5FC8004B7FD4 /* GestureDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				84D9E43F256E5FD7004B7FD4 /* GestureDelegate.swift */,
+			);
+			path = GestureDelegate;
+			sourceTree = "<group>";
+		};
+		84D9E449256EA3B1004B7FD4 /* Animator */ = {
+			isa = PBXGroup;
+			children = (
+				84D9E44A256EA3BE004B7FD4 /* IAnimator.swift */,
+				84D9E44E256EA3F1004B7FD4 /* Animator.swift */,
+			);
+			path = Animator;
+			sourceTree = "<group>";
+		};
+		84D9E452256EAFE6004B7FD4 /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				84D9E454256EB00E004B7FD4 /* AnimatorTransitioning.swift */,
+				84D9E453256EB00E004B7FD4 /* TransitionDelegate.swift */,
+			);
+			path = Transition;
+			sourceTree = "<group>";
+		};
 		9B50D5890130E137450028D6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -910,11 +949,13 @@
 				844EB08D2510DF5600AF0216 /* Logger.swift in Sources */,
 				849D39CA255D52D200B0A111 /* IFirebaseCleint.swift in Sources */,
 				842016F22565507A0001A7D9 /* AvatarModel.swift in Sources */,
+				84D9E44F256EA3F1004B7FD4 /* Animator.swift in Sources */,
 				846EA96B255C48D200776D49 /* CameraManager.swift in Sources */,
 				F10D4E04252111A900B8CDD0 /* ChannelCellModel.swift in Sources */,
 				849444E6251E21AF00946D9F /* ChannelViewController.swift in Sources */,
 				846EA94B255BF50D00776D49 /* ThemeView.swift in Sources */,
 				842016CE256459A20001A7D9 /* PixabayImagesRequest.swift in Sources */,
+				84D9E455256EB00E004B7FD4 /* TransitionDelegate.swift in Sources */,
 				8451E49F2536F1BB003E95BA /* LoadImageOperation.swift in Sources */,
 				F1391DA9252BA956007FC97D /* DayTheme.swift in Sources */,
 				F1391DA025290D17007FC97D /* ThemesViewController.swift in Sources */,
@@ -948,12 +989,14 @@
 				8463B54E252369B800D1D358 /* Helper.swift in Sources */,
 				F133F05F253F4BA500337D95 /* UITextField.swift in Sources */,
 				849444E0251DE86000946D9F /* ChannelsListViewController.swift in Sources */,
+				84D9E456256EB00E004B7FD4 /* AnimatorTransitioning.swift in Sources */,
 				8448F53C254832D1009F7983 /* MessageDb+CoreDataProperties.swift in Sources */,
 				842016DE256463810001A7D9 /* ImageManager.swift in Sources */,
 				8451E4952536EED7003E95BA /* SaveDataOperation.swift in Sources */,
 				84B401AF255C9AC800F2D9DB /* ChannelManager.swift in Sources */,
 				849D39F1255D7A4E00B0A111 /* CoreAssembly.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
+				84D9E440256E5FD8004B7FD4 /* GestureDelegate.swift in Sources */,
 				F1391DAB252BA9B3007FC97D /* NightTheme.swift in Sources */,
 				846EA944255BE31B00776D49 /* ThemeElement.swift in Sources */,
 				8451E4972536EF0D003E95BA /* SaveStringOperation.swift in Sources */,
@@ -984,6 +1027,7 @@
 				84B854E1255DE2590052293E /* SendMessageView.swift in Sources */,
 				842016FF2565D0030001A7D9 /* NorificationName+Profile.swift in Sources */,
 				842016D525645DA00001A7D9 /* RequestSender.swift in Sources */,
+				84D9E44B256EA3BE004B7FD4 /* IAnimator.swift in Sources */,
 				847E600025232496008B8C27 /* ConfigurableView.swift in Sources */,
 				84B40192255C903B00F2D9DB /* UIViewController+Alert.swift in Sources */,
 				84B401B2255C9AE300F2D9DB /* IMessageManager.swift in Sources */,

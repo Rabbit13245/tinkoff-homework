@@ -3,7 +3,7 @@ import UIKit
 import Firebase
 import CoreData
 
-class ChannelsListViewController: UIViewController {
+class ChannelsListViewController: LoggedViewController {
 
     // MARK: - Private properties
     
@@ -89,15 +89,21 @@ class ChannelsListViewController: UIViewController {
     private var presentationAssembly: IPresentationAssembly?
     private var channelManager: IChannelManager?
     private var dataManagerFactory: IDataManagerFactory?
+    private var gestureDelegate: UIGestureRecognizerDelegate?
+    private var transitionDelegate: UIViewControllerTransitioningDelegate?
     
     // MARK: - Setup dependencies
     
     func setupDependencies(channelManager: IChannelManager,
                            dataManagerFactory: IDataManagerFactory,
-                           presentationAssembly: IPresentationAssembly) {
+                           presentationAssembly: IPresentationAssembly,
+                           gestureDelegate: UIGestureRecognizerDelegate,
+                           transitioningDelegate: UIViewControllerTransitioningDelegate) {
         self.channelManager = channelManager
         self.dataManagerFactory = dataManagerFactory
         self.presentationAssembly = presentationAssembly
+        self.gestureDelegate = gestureDelegate
+        self.transitionDelegate = transitioningDelegate
     }
     
     // MARK: - Lifecycle methods
@@ -117,14 +123,16 @@ class ChannelsListViewController: UIViewController {
         })
         
         NotificationCenter.default.addObserver(self, selector: #selector(onChangeUserData(_:)), name: .didChangedUserData, object: nil)
+        
+        guard let gestureDelegate = gestureDelegate else { return }
+        addGestureDelegates(delegate: gestureDelegate)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         settingsBarButton.tintColor = ThemeManager.shared.theme.settings.labelColor
         addChannelBarButton.tintColor = ThemeManager.shared.theme.settings.labelColor
-
         self.navigationItem.title = chatName
-
+        
         super.viewWillAppear(animated)
     }
 
@@ -231,6 +239,8 @@ extension ChannelsListViewController {
 extension ChannelsListViewController {
     @objc private func profileButtonPressed() {
         guard let profileVC = presentationAssembly?.profileViewController() else { return }
+        profileVC.transitioningDelegate = transitionDelegate
+        profileVC.modalPresentationStyle = .custom
         self.present(profileVC, animated: true, completion: nil)
     }
 
