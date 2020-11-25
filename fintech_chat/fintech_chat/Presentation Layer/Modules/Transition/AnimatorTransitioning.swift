@@ -39,6 +39,7 @@ class AnimatorTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
         }
         if isPresenting {
             guard let fromVC = fromNavVC.viewControllers.first as? ChannelsListViewController,
+                  let toVc = toNavVC.viewControllers.first as? ProfileViewController,
                   let image = fromVC.profileBarButton.customView
             else {
                 transitionContext.completeTransition(true)
@@ -55,6 +56,12 @@ class AnimatorTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
             toNavVC.view.transform = CGAffineTransform(scaleX: scale, y: scale)
             toNavVC.view.alpha = 0
             
+            let hideTransform = CGAffineTransform(translationX: toVc.view.bounds.width, y: 0)
+            toVc.gcdSaveButton.transform = hideTransform
+            toVc.operationSaveButton.transform = hideTransform
+            toVc.nameTextView.transform = hideTransform
+            toVc.descriptionTextView.transform = hideTransform
+            
             UIView.animateKeyframes(withDuration: duration,
                                     delay: 0,
                                     options: [.calculationModeLinear]) {
@@ -66,7 +73,18 @@ class AnimatorTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
                     toNavVC.view.transform = CGAffineTransform(scaleX: 1, y: 1)
                 }
             } completion: { (finished) in
-                transitionContext.completeTransition(finished)
+                if finished {
+                    UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.calculationModeLinear]) {
+                        toVc.gcdSaveButton.transform = .identity
+                        toVc.operationSaveButton.transform = .identity
+                        toVc.nameTextView.transform = .identity
+                        toVc.descriptionTextView.transform = .identity
+                    } completion: { (finish) in
+                        transitionContext.completeTransition(finish)
+                    }
+                } else {
+                    transitionContext.completeTransition(false)
+                }
             }
         } else {
             guard let toVC = toNavVC.viewControllers.first as? ChannelsListViewController,
