@@ -18,7 +18,6 @@ class Animator: IAnimator {
         
         let rotateAnimation = CAKeyframeAnimation(keyPath: rotationKeyPath)
         rotateAnimation.values = [0, rotationAngle, 0, -rotationAngle, 0]
-        rotateAnimation.beginTime = animateTime / 7
         rotateAnimation.keyTimes = [0, 0.25, 0.5, 0.75, 1]
         rotateAnimation.isAdditive = true
 
@@ -28,7 +27,7 @@ class Animator: IAnimator {
         upDownAnimation.isAdditive = true
 
         let lefRightAnimation = CAKeyframeAnimation(keyPath: positionXKeyPath)
-        lefRightAnimation.values = [0, -changePosition, 0, changePosition, 0]
+        lefRightAnimation.values = [0, changePosition, 0, -changePosition, 0]
         lefRightAnimation.keyTimes = [0, 0.25, 0.5, 0.75, 1]
         lefRightAnimation.isAdditive = true
 

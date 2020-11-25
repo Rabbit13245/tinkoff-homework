@@ -17,7 +17,7 @@ class LoggedViewController: UIViewController {
         cell.scale = 0.08
         cell.scaleRange = 0.2
         cell.emissionRange = 2 * .pi
-        cell.lifetime = 0.6
+        cell.lifetime = 0.5
         cell.birthRate = 10
         cell.velocity = 50
         cell.velocityRange = 300
@@ -126,14 +126,13 @@ class LoggedViewController: UIViewController {
                 if gesturesCount < 2 {
                     navigationController?.view.addGestureRecognizer(tapGesture)
                     navigationController?.view.addGestureRecognizer(longPressGesture)
-                    //navigationController?.view.addGestureRecognizer(swipeGesture)
+                    navigationController?.view.addGestureRecognizer(swipeGesture)
                 }
             } else {
                 navigationController?.view.addGestureRecognizer(tapGesture)
                 navigationController?.view.addGestureRecognizer(longPressGesture)
-                //navigationController?.view.addGestureRecognizer(swipeGesture)
+                navigationController?.view.addGestureRecognizer(swipeGesture)
             }
-            
         } else {
             view.addGestureRecognizer(tapGesture)
             view.addGestureRecognizer(longPressGesture)
@@ -147,7 +146,7 @@ class LoggedViewController: UIViewController {
         switch gestureRecognizer.state {
         case .ended:
             logoShow(from: gestureRecognizer.location(in: navigationController?.view ?? view))
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 self.logoRemove()
             }
         default:
