@@ -80,8 +80,8 @@
 		84B854C1255DAC630052293E /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B854C0255DAC630052293E /* RootAssembly.swift */; };
 		84B854E1255DE2590052293E /* SendMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B854E0255DE2590052293E /* SendMessageView.swift */; };
 		84B854E5255DF3B30052293E /* ChannelViewControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B854E4255DF3B30052293E /* ChannelViewControllerDataSource.swift */; };
+		84BD36F4256FEC44009876F5 /* AppWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BD36F3256FEC44009876F5 /* AppWindow.swift */; };
 		84D2135925535BC20083BA7F /* ChannelViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2135825535BC20083BA7F /* ChannelViewControllerDelegate.swift */; };
-		84D9E440256E5FD8004B7FD4 /* GestureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E43F256E5FD7004B7FD4 /* GestureDelegate.swift */; };
 		84D9E44B256EA3BE004B7FD4 /* IAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E44A256EA3BE004B7FD4 /* IAnimator.swift */; };
 		84D9E44F256EA3F1004B7FD4 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E44E256EA3F1004B7FD4 /* Animator.swift */; };
 		84D9E455256EB00E004B7FD4 /* TransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E453256EB00E004B7FD4 /* TransitionDelegate.swift */; };
@@ -187,8 +187,8 @@
 		84B854C0255DAC630052293E /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		84B854E0255DE2590052293E /* SendMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageView.swift; sourceTree = "<group>"; };
 		84B854E4255DF3B30052293E /* ChannelViewControllerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewControllerDataSource.swift; sourceTree = "<group>"; };
+		84BD36F3256FEC44009876F5 /* AppWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWindow.swift; sourceTree = "<group>"; };
 		84D2135825535BC20083BA7F /* ChannelViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewControllerDelegate.swift; sourceTree = "<group>"; };
-		84D9E43F256E5FD7004B7FD4 /* GestureDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureDelegate.swift; sourceTree = "<group>"; };
 		84D9E44A256EA3BE004B7FD4 /* IAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAnimator.swift; sourceTree = "<group>"; };
 		84D9E44E256EA3F1004B7FD4 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		84D9E453256EB00E004B7FD4 /* TransitionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionDelegate.swift; sourceTree = "<group>"; };
@@ -440,7 +440,6 @@
 			children = (
 				84D9E452256EAFE6004B7FD4 /* Transition */,
 				84D9E449256EA3B1004B7FD4 /* Animator */,
-				84D9E43E256E5FC8004B7FD4 /* GestureDelegate */,
 				847E5FFF25232496008B8C27 /* ConfigurableView.swift */,
 				84A114CD256419D100C83AD9 /* AvatarLoadViewController */,
 				846EA93C255BA9D600776D49 /* ChannelsListViewController */,
@@ -749,14 +748,6 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		84D9E43E256E5FC8004B7FD4 /* GestureDelegate */ = {
-			isa = PBXGroup;
-			children = (
-				84D9E43F256E5FD7004B7FD4 /* GestureDelegate.swift */,
-			);
-			path = GestureDelegate;
-			sourceTree = "<group>";
-		};
 		84D9E449256EA3B1004B7FD4 /* Animator */ = {
 			isa = PBXGroup;
 			children = (
@@ -792,6 +783,7 @@
 				F10FF08C253CBBD100A0996B /* GoogleService-Info.plist */,
 				8467A616250FAED500E36BEE /* Assets.xcassets */,
 				84B854C0255DAC630052293E /* RootAssembly.swift */,
+				84BD36F3256FEC44009876F5 /* AppWindow.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -996,7 +988,6 @@
 				84B401AF255C9AC800F2D9DB /* ChannelManager.swift in Sources */,
 				849D39F1255D7A4E00B0A111 /* CoreAssembly.swift in Sources */,
 				8467A60E250FAED400E36BEE /* AppDelegate.swift in Sources */,
-				84D9E440256E5FD8004B7FD4 /* GestureDelegate.swift in Sources */,
 				F1391DAB252BA9B3007FC97D /* NightTheme.swift in Sources */,
 				846EA944255BE31B00776D49 /* ThemeElement.swift in Sources */,
 				8451E4972536EF0D003E95BA /* SaveStringOperation.swift in Sources */,
@@ -1007,6 +998,7 @@
 				F1391DAD252BB387007FC97D /* UIWindow.swift in Sources */,
 				84B401A2255C98B100F2D9DB /* CoreDataClient.swift in Sources */,
 				84569935252DB478001C10B1 /* AppButton.swift in Sources */,
+				84BD36F4256FEC44009876F5 /* AppWindow.swift in Sources */,
 				842016DA2564636A0001A7D9 /* IImageManager.swift in Sources */,
 				842016E225647F3B0001A7D9 /* IParser.swift in Sources */,
 				846EA951255C43C400776D49 /* IThemeManager.swift in Sources */,

@@ -89,7 +89,6 @@ class ChannelsListViewController: LoggedViewController {
     private var presentationAssembly: IPresentationAssembly?
     private var channelManager: IChannelManager?
     private var dataManagerFactory: IDataManagerFactory?
-    private var gestureDelegate: UIGestureRecognizerDelegate?
     private var transitionDelegate: UIViewControllerTransitioningDelegate?
     
     // MARK: - Setup dependencies
@@ -97,12 +96,10 @@ class ChannelsListViewController: LoggedViewController {
     func setupDependencies(channelManager: IChannelManager,
                            dataManagerFactory: IDataManagerFactory,
                            presentationAssembly: IPresentationAssembly,
-                           gestureDelegate: UIGestureRecognizerDelegate,
                            transitioningDelegate: UIViewControllerTransitioningDelegate) {
         self.channelManager = channelManager
         self.dataManagerFactory = dataManagerFactory
         self.presentationAssembly = presentationAssembly
-        self.gestureDelegate = gestureDelegate
         self.transitionDelegate = transitioningDelegate
     }
     
@@ -123,9 +120,6 @@ class ChannelsListViewController: LoggedViewController {
         })
         
         NotificationCenter.default.addObserver(self, selector: #selector(onChangeUserData(_:)), name: .didChangedUserData, object: nil)
-        
-        guard let gestureDelegate = gestureDelegate else { return }
-        addGestureDelegates(delegate: gestureDelegate)
     }
 
     override func viewWillAppear(_ animated: Bool) {

@@ -8,9 +8,6 @@ protocol IPresentationAssembly {
     /// Создает аниматора
     func animator() -> IAnimator
     
-    /// Создает делегата для жестов
-    func gestureDelegate() -> UIGestureRecognizerDelegate
-    
     /// Создает нав контроллер
     func mainNavigationController() -> UINavigationController
     
@@ -47,12 +44,7 @@ class PresentationAssembly: IPresentationAssembly {
     func animator() -> IAnimator {
         return Animator()
     }
-    
-    // MARK: - UIGestureRecognizerDelegate
-    func gestureDelegate() -> UIGestureRecognizerDelegate {
-        return GestureDelegate()
-    }
-    
+
     // MARK: - NavigationColtroller
     func mainNavigationController() -> UINavigationController {
         let navVC = UINavigationController(rootViewController: channelsListViewController())
@@ -69,7 +61,6 @@ class PresentationAssembly: IPresentationAssembly {
         channelsListVc.setupDependencies(channelManager: serviceAssembly.channelManager,
                                          dataManagerFactory: serviceAssembly.dataManagerFactory,
                                          presentationAssembly: self,
-                                         gestureDelegate: self.gestureDelegate(),
                                          transitioningDelegate: self.transitioningDelegate())
         
         return channelsListVc
