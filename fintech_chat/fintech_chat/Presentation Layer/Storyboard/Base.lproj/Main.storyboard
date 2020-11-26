@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -96,6 +96,16 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="rk1-HD-3Rq">
                                 <rect key="frame" x="169" y="315" width="37" height="37"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v6n-hH-WbP">
+                                <rect key="frame" x="67.5" y="8" width="240" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="1IH-U5-6Rp"/>
+                                    <constraint firstAttribute="width" constant="240" id="SRO-9p-Wau"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="editTouch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wzu-Yv-qtC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -108,6 +118,7 @@
                             <constraint firstItem="zcl-wE-uK0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="Pon-F3-LsY"/>
                             <constraint firstItem="1Rr-UM-bDg" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="QQg-CM-Zu1"/>
                             <constraint firstItem="3Nn-Ph-yEC" firstAttribute="width" secondItem="3t5-3i-OcL" secondAttribute="width" id="T2f-51-9Yb"/>
+                            <constraint firstItem="v6n-hH-WbP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="Wqg-CC-T4S"/>
                             <constraint firstItem="3t5-3i-OcL" firstAttribute="top" secondItem="zcl-wE-uK0" secondAttribute="bottom" constant="16" id="Wug-ma-2zt"/>
                             <constraint firstItem="3t5-3i-OcL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZCb-Aw-9oP"/>
                             <constraint firstItem="3Nn-Ph-yEC" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ZHR-Hc-jKB"/>
@@ -115,6 +126,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bTw-gg-P5G" secondAttribute="trailing" constant="16" id="e3e-pb-LaG"/>
                             <constraint firstItem="bTw-gg-P5G" firstAttribute="top" secondItem="3Nn-Ph-yEC" secondAttribute="bottom" constant="30" id="ese-uQ-jIF"/>
                             <constraint firstItem="bTw-gg-P5G" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="fQZ-2t-7ZO"/>
+                            <constraint firstItem="v6n-hH-WbP" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="uBK-Mj-2H2"/>
                             <constraint firstItem="zcl-wE-uK0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="us9-bz-16j"/>
                         </constraints>
                     </view>
@@ -132,6 +144,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="rk1-HD-3Rq" id="xii-we-mUF"/>
+                        <outlet property="avatarButton" destination="v6n-hH-WbP" id="QBw-nY-qZm"/>
                         <outlet property="defaultPhotoConstraint" destination="Pon-F3-LsY" id="hMo-kj-Vc2"/>
                         <outlet property="defaultPhotoView" destination="zcl-wE-uK0" id="tdZ-aQ-feB"/>
                         <outlet property="descriptionTextView" destination="3Nn-Ph-yEC" id="spG-RM-Qvh"/>
@@ -148,7 +161,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="671" y="81"/>
+            <point key="canvasLocation" x="669.60000000000002" y="80.50974512743629"/>
         </scene>
         <!--Channels List View Controller-->
         <scene sceneID="Qho-kD-S8g">

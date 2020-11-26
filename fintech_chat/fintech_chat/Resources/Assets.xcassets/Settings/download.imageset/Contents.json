@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "stephen_wozniak.jpg",
+      "filename" : "download.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "stephen_wozniak@2x.jpg",
+      "filename" : "download@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "stephen_wozniak@3x.jpg",
+      "filename" : "download@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

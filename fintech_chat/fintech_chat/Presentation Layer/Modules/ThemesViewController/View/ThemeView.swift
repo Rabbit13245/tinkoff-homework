@@ -45,11 +45,13 @@ class ThemeView: AppThemesView {
             sv.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10),
             sv.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10),
             sv.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10)
-
         ])
+        
+        setupLayout()
     }
     
     private func setupLayout() {
+        
     }
 }
 

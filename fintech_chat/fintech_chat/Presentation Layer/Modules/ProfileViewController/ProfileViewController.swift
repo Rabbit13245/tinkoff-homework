@@ -15,7 +15,8 @@ class ProfileViewController: LoggedViewController {
     @IBOutlet weak var editBarButton: UIBarButtonItem!
     @IBOutlet weak var gcdSaveButton: AppBackgroundButton!
     @IBOutlet weak var operationSaveButton: AppBackgroundButton!
-
+    @IBOutlet weak var avatarButton: UIButton!
+    
     @IBOutlet weak var stackViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var safeAreaButtonsConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -37,6 +38,7 @@ class ProfileViewController: LoggedViewController {
 
     @IBAction func editTouch(_ sender: UIButton) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.pruneNegativeWidthConstraints()
         actionSheet.applyTheme()
 
         let galery = UIAlertAction(title: "Photo Library", style: .default) {(_) in
@@ -62,9 +64,19 @@ class ProfileViewController: LoggedViewController {
         camera.setValue(cameraIcon, forKey: "image")
         camera.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 
+        let load = UIAlertAction(title: "Load", style: .default) { [weak self] (_) in
+            guard let safeSelf = self else { return }
+            guard let avatarLoadVC = self?.presentationAssembly?.avatarLoadViewController(delegate: safeSelf) else { return }
+            self?.present(avatarLoadVC, animated: true, completion: nil)
+        }
+        let loadIcon = #imageLiteral(resourceName: "download")
+        load.setValue(loadIcon, forKey: "image")
+        load.setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
+        
         let cancel = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         actionSheet.addAction(galery)
         actionSheet.addAction(camera)
+        actionSheet.addAction(load)
         actionSheet.addAction(cancel)
 
         present(actionSheet, animated: true)
@@ -78,6 +90,7 @@ class ProfileViewController: LoggedViewController {
         self.editingMode = !self.editingMode
         
         self.editButton.isEnabled = self.editingMode
+        self.avatarButton.isEnabled = self.editingMode
         self.descriptionTextView.isEditable = self.editingMode
         self.nameTextView.isEditable = self.editingMode
 
@@ -106,12 +119,16 @@ class ProfileViewController: LoggedViewController {
     
     // MARK: - Dependencies
     
+    private var presentationAssembly: IPresentationAssembly?
     private var dataManagerFactory: IDataManagerFactory?
     private var cameraManager: ICameraManager?
     
-    public func setupDependencies(cameraManager: ICameraManager, dataManagerFactory: IDataManagerFactory) {
+    public func setupDependencies(cameraManager: ICameraManager,
+                                  dataManagerFactory: IDataManagerFactory,
+                                  presentationAssembly: IPresentationAssembly) {
         self.cameraManager = cameraManager
         self.dataManagerFactory = dataManagerFactory
+        self.presentationAssembly = presentationAssembly
     }
     
     // MARK: - Private properties
@@ -182,7 +199,8 @@ class ProfileViewController: LoggedViewController {
         descriptionTextView.font = UIFont.systemFont(ofSize: 16)
 
         editButton.isEnabled = self.editingMode
-
+        avatarButton.isEnabled = self.editingMode
+        
         guard profilePhotoView.image == nil else { return }
 
         defaultPhotoView.layer.cornerRadius = defaultPhotoView.bounds.width / 2
@@ -382,18 +400,30 @@ class ProfileViewController: LoggedViewController {
 
     private func succesSaveData(title: String) {
         let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        alertController.applyTheme()
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alertController, animated: true)
     }
 
     private func failedSaveData( completion: @escaping (() -> Void)) {
-        let alertController = UIAlertController(title: "Eroor", message: "Failed to save data", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Error", message: "Failed to save data", preferredStyle: .alert)
+        alertController.applyTheme()
         alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         let repeatAction = UIAlertAction(title: "Repeat", style: .default) { (_) in
             completion()
         }
         alertController.addAction(repeatAction)
         self.present(alertController, animated: true)
+    }
+    
+    private func setupAvatar(image: UIImage) {
+        profilePhotoView.image = image
+        defaultPhotoView.backgroundColor = .none
+        initialsLabel.isHidden = true
+
+        self.wasChange = true
+        self.gcdSaveButton.isEnabled = self.wasChange
+        self.operationSaveButton.isEnabled = self.wasChange
     }
 }
 
@@ -411,17 +441,8 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-
         guard let image = info[.editedImage] as? UIImage else {return}
-
-        profilePhotoView.image = image
-        defaultPhotoView.backgroundColor = .none
-        initialsLabel.isHidden = true
-
-        self.wasChange = true
-        self.gcdSaveButton.isEnabled = self.wasChange
-        self.operationSaveButton.isEnabled = self.wasChange
-
+        setupAvatar(image: image)
         dismiss(animated: true)
     }
 }
@@ -431,5 +452,11 @@ extension ProfileViewController: UITextViewDelegate {
         self.wasChange = true
         self.gcdSaveButton.isEnabled = self.wasChange
         self.operationSaveButton.isEnabled = self.wasChange
+    }
+}
+
+extension ProfileViewController: AvatarSelectDelegate {
+    func setupImage(image: UIImage) {
+        setupAvatar(image: image)
     }
 }

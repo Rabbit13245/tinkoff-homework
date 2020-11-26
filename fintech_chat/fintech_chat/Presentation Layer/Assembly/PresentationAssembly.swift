@@ -15,6 +15,9 @@ protocol IPresentationAssembly {
     
     /// Создает экран с выбором темы
     func themesViewController() -> ThemesViewController
+    
+    /// Создает экран с выбором изображения для аватара
+    func avatarLoadViewController(delegate: AvatarSelectDelegate?) -> UINavigationController
 }
 
 class PresentationAssembly: IPresentationAssembly {
@@ -61,7 +64,8 @@ class PresentationAssembly: IPresentationAssembly {
         }
         
         profileVC.setupDependencies(cameraManager: serviceAssembly.cameraManager,
-                                    dataManagerFactory: serviceAssembly.dataManagerFactory)
+                                    dataManagerFactory: serviceAssembly.dataManagerFactory,
+                                    presentationAssembly: self)
         
         let navVC = UINavigationController(rootViewController: profileVC)
         navVC.navigationBar.prefersLargeTitles = true
@@ -82,6 +86,17 @@ class PresentationAssembly: IPresentationAssembly {
         
         // themesVC.changeThemeClosure = themeManager.applyTheme
         return themesVC
+    }
+    
+    // MARK: - AvatarLoadViewController
+    
+    func avatarLoadViewController(delegate: AvatarSelectDelegate?) -> UINavigationController {
+        let avatarLoadVC = AvatarLoadViewController(imageManager: serviceAssembly.imageManager)
+        avatarLoadVC.delegate = delegate
+        let navVC = UINavigationController(rootViewController: avatarLoadVC)
+        navVC.navigationBar.prefersLargeTitles = true
+        
+        return navVC
     }
     
     private func loadVCFromStoryboard(storyboardName: String, vcIdentifier: String) -> UIViewController {

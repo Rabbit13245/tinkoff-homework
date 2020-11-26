@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "william_gates.jpeg",
+      "filename" : "avatar_placeholder.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "william_gates@2x.jpeg",
+      "filename" : "avatar_placeholder@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "william_gates@3x.jpeg",
+      "filename" : "avatar_placeholder@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -6,6 +6,7 @@ protocol IServicesAssembly {
     var dataManagerFactory: IDataManagerFactory { get }
     var themeManager: IThemeManager { get }
     var cameraManager: ICameraManager { get }
+    var imageManager: IImageManager { get }
 }
 
 class ServicesAssembly: IServicesAssembly {
@@ -28,4 +29,6 @@ class ServicesAssembly: IServicesAssembly {
     lazy var themeManager: IThemeManager = ThemeManager.shared
     
     lazy var cameraManager: ICameraManager = CameraManager()
+    
+    lazy var imageManager: IImageManager = ImageManager(requestSender: coreAssembly.requestSender)
 }
