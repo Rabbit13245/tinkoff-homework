@@ -21,8 +21,9 @@ class AppWindow: UIWindow {
     }()
     
     private func logoRemove(_ layer: CAEmitterLayer) {
-        layer.removeAllAnimations()
-        layer.removeFromSuperlayer()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            layer.removeFromSuperlayer()
+        }
     }
     
     private func topMostController() -> UIViewController? {
@@ -49,16 +50,14 @@ class AppWindow: UIWindow {
             layer.emitterSize = CGSize(width: 60, height: 60)
             layer.emitterShape = .point
             layer.beginTime = CACurrentMediaTime()
-            layer.timeOffset = CFTimeInterval(arc4random_uniform(3) + 1)
+            layer.timeOffset = CFTimeInterval(arc4random_uniform(10) + 1)
             layer.emitterCells = [logoCell]
             layer.renderMode = .additive
             layer.emitterPosition = point
             
             viewForAnimate?.layer.addSublayer(layer)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                self.logoRemove(layer)
-            }
+            self.logoRemove(layer)
         })
         super.sendEvent(event)
     }
