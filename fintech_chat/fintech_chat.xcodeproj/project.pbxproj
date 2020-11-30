@@ -330,6 +330,17 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		844771D5257535AD007FA44D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				846EA965255C48B700776D49 /* CameraManager */,
+				84B401A0255C988D00F2D9DB /* CoreDataClient */,
+				849D39C7255D529B00B0A111 /* FirebaseClient */,
+				842016C7256453590001A7D9 /* Networking */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		8448DF7D252C9EE300314A95 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -421,18 +432,18 @@
 			path = fintech_chat;
 			sourceTree = "<group>";
 		};
-		846EA93A255BA99000776D49 /* Services */ = {
+		846EA93A255BA99000776D49 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				842016D82564633E0001A7D9 /* ImageManager */,
 				8463B54D252369B800D1D358 /* Helper.swift */,
+				842016D82564633E0001A7D9 /* ImageManager */,
 				84B401B8255C9BFB00F2D9DB /* Models */,
 				84B401A8255C9A5600F2D9DB /* MessageManager */,
 				84B401A7255C9A4E00F2D9DB /* ChannelManager */,
 				84B40199255C93F300F2D9DB /* DataManager */,
 				846EA94E255C42BB00776D49 /* ThemeManager */,
 			);
-			path = Services;
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		846EA93B255BA9AE00776D49 /* Modules */ = {
@@ -530,7 +541,7 @@
 			isa = PBXGroup;
 			children = (
 				84778BFE255BA655009AE053 /* Assembly */,
-				846EA93A255BA99000776D49 /* Services */,
+				846EA93A255BA99000776D49 /* Managers */,
 			);
 			path = "Service Layer";
 			sourceTree = "<group>";
@@ -538,12 +549,9 @@
 		84778BFB255BA170009AE053 /* Core Layer */ = {
 			isa = PBXGroup;
 			children = (
-				842016C7256453590001A7D9 /* Networking */,
-				84B401B7255C9B5D00F2D9DB /* Models */,
 				84778BFD255BA64C009AE053 /* Assembly */,
-				849D39C7255D529B00B0A111 /* FirebaseClient */,
-				84B401A0255C988D00F2D9DB /* CoreDataClient */,
-				846EA965255C48B700776D49 /* CameraManager */,
+				84B401B7255C9B5D00F2D9DB /* Models */,
+				844771D5257535AD007FA44D /* Services */,
 			);
 			path = "Core Layer";
 			sourceTree = "<group>";
