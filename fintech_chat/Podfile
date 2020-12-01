@@ -9,4 +9,8 @@ target 'fintech_chat' do
   pod 'Firebase/Firestore'
   pod 'SwiftLint'
 
+  target 'fintech_chat Tests' do
+    inherit! :search_paths
+  end
+
 end

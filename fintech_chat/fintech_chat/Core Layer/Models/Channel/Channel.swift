@@ -32,4 +32,15 @@ struct Channel {
         self.lastMessage = data.lastMessage
         self.lastActivity = data.lastActivity
     }
+    
+    /// initializer по всем параметрам
+    init(identifier: String,
+         name: String,
+         lastMessage: String?,
+         lastActivity: Date?) {
+        self.identifier = identifier
+        self.name = name
+        self.lastMessage = lastMessage
+        self.lastActivity = lastActivity
+    }
 }

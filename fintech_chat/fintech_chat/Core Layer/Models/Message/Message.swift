@@ -30,4 +30,17 @@ struct Message {
         self.senderId = data.senderId
         self.senderName = data.senderName
     }
+    
+    /// Initializer по всем параметрам
+    init(id: String,
+         content: String,
+         created: Date,
+         senderId: String,
+         senderName: String) {
+        self.id = id
+        self.content = content
+        self.created = created
+        self.senderId = senderId
+        self.senderName = senderName
+    }
 }

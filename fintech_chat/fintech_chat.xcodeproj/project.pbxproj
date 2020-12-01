@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		361C73FA47BC0D665FFE6891 /* Pods_fintech_chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13ED8F5E70A4440D9D21147E /* Pods_fintech_chat.framework */; };
+		37D36512D16B5B11FCAC5409 /* Pods_fintech_chat_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A348083A3CCDEADA3F18C295 /* Pods_fintech_chat_Tests.framework */; };
 		842016C1256424E20001A7D9 /* AvatarLoadDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016C0256424E10001A7D9 /* AvatarLoadDelegate.swift */; };
 		842016CB256459520001A7D9 /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016CA256459520001A7D9 /* IRequest.swift */; };
 		842016CE256459A20001A7D9 /* PixabayImagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016CD256459A20001A7D9 /* PixabayImagesRequest.swift */; };
@@ -87,6 +88,7 @@
 		84D9E44F256EA3F1004B7FD4 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E44E256EA3F1004B7FD4 /* Animator.swift */; };
 		84D9E455256EB00E004B7FD4 /* TransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E453256EB00E004B7FD4 /* TransitionDelegate.swift */; };
 		84D9E456256EB00E004B7FD4 /* AnimatorTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E454256EB00E004B7FD4 /* AnimatorTransitioning.swift */; };
+		84E3A9322576D7C2003B41D6 /* CoreDataClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3A9312576D7C2003B41D6 /* CoreDataClientMock.swift */; };
 		F10D4E022520F03E00B8CDD0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E012520F03E00B8CDD0 /* Date.swift */; };
 		F10D4E04252111A900B8CDD0 /* ChannelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E03252111A900B8CDD0 /* ChannelCellModel.swift */; };
 		F10D4E062521123D00B8CDD0 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */; };
@@ -123,6 +125,7 @@
 
 /* Begin PBXFileReference section */
 		003A6B1D703D46FB93FFCD33 /* Pods-fintech_chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat.debug.xcconfig"; path = "Target Support Files/Pods-fintech_chat/Pods-fintech_chat.debug.xcconfig"; sourceTree = "<group>"; };
+		04C3E7D918C8E4D3B203F220 /* Pods-fintech_chat Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat Tests.debug.xcconfig"; path = "Target Support Files/Pods-fintech_chat Tests/Pods-fintech_chat Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		13ED8F5E70A4440D9D21147E /* Pods_fintech_chat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fintech_chat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		842016C0256424E10001A7D9 /* AvatarLoadDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarLoadDelegate.swift; sourceTree = "<group>"; };
 		842016CA256459520001A7D9 /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
@@ -207,7 +210,10 @@
 		84D9E44E256EA3F1004B7FD4 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		84D9E453256EB00E004B7FD4 /* TransitionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionDelegate.swift; sourceTree = "<group>"; };
 		84D9E454256EB00E004B7FD4 /* AnimatorTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatorTransitioning.swift; sourceTree = "<group>"; };
+		84E3A9312576D7C2003B41D6 /* CoreDataClientMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataClientMock.swift; sourceTree = "<group>"; };
 		9953A7A4C1B56AF4D0C3C4F3 /* Pods-fintech_chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat/Pods-fintech_chat.release.xcconfig"; sourceTree = "<group>"; };
+		A348083A3CCDEADA3F18C295 /* Pods_fintech_chat_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fintech_chat_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3FDF13023F66514490FB920 /* Pods-fintech_chat Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat Tests.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat Tests/Pods-fintech_chat Tests.release.xcconfig"; sourceTree = "<group>"; };
 		F10D4E012520F03E00B8CDD0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		F10D4E03252111A900B8CDD0 /* ChannelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelCellModel.swift; path = "fintech_chat/Presentation Layer/Modules/ChannelsListViewController/Model/ChannelCellModel.swift"; sourceTree = SOURCE_ROOT; };
 		F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessageCellModel.swift; path = "fintech_chat/Presentation Layer/Modules/ChannelViewController/Model/MessageCellModel.swift"; sourceTree = SOURCE_ROOT; };
@@ -237,6 +243,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37D36512D16B5B11FCAC5409 /* Pods_fintech_chat_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				13ED8F5E70A4440D9D21147E /* Pods_fintech_chat.framework */,
+				A348083A3CCDEADA3F18C295 /* Pods_fintech_chat_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -367,6 +375,7 @@
 			children = (
 				84488B492576860800604929 /* ThemeManagerTests.swift */,
 				84488B4B2576860800604929 /* Info.plist */,
+				84E3A9312576D7C2003B41D6 /* CoreDataClientMock.swift */,
 			);
 			path = "fintech_chat Tests";
 			sourceTree = "<group>";
@@ -811,6 +820,8 @@
 			children = (
 				003A6B1D703D46FB93FFCD33 /* Pods-fintech_chat.debug.xcconfig */,
 				9953A7A4C1B56AF4D0C3C4F3 /* Pods-fintech_chat.release.xcconfig */,
+				04C3E7D918C8E4D3B203F220 /* Pods-fintech_chat Tests.debug.xcconfig */,
+				B3FDF13023F66514490FB920 /* Pods-fintech_chat Tests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -844,6 +855,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84488B4E2576860800604929 /* Build configuration list for PBXNativeTarget "fintech_chat Tests" */;
 			buildPhases = (
+				999A18EA7D1E7D9DE0811986 /* [CP] Check Pods Manifest.lock */,
 				84488B432576860800604929 /* Sources */,
 				84488B442576860800604929 /* Frameworks */,
 				84488B452576860800604929 /* Resources */,
@@ -978,6 +990,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		999A18EA7D1E7D9DE0811986 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-fintech_chat Tests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F133F060253F836B00337D95 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1003,6 +1037,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84488B4A2576860800604929 /* ThemeManagerTests.swift in Sources */,
+				84E3A9322576D7C2003B41D6 /* CoreDataClientMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1113,6 +1148,7 @@
 /* Begin PBXTargetDependency section */
 		84488B4D2576860800604929 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 8467A609250FAED400E36BEE /* fintech_chat */;
 			targetProxy = 84488B4C2576860800604929 /* PBXContainerItemProxy */;
 		};
@@ -1140,6 +1176,7 @@
 /* Begin XCBuildConfiguration section */
 		84488B4F2576860800604929 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 04C3E7D918C8E4D3B203F220 /* Pods-fintech_chat Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -1162,6 +1199,7 @@
 		};
 		84488B502576860800604929 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B3FDF13023F66514490FB920 /* Pods-fintech_chat Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
@@ -1310,7 +1348,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOG_LEVEL = INFO;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.TinkoffChat1;
 				PRODUCT_NAME = "Финтех чат";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

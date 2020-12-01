@@ -1,11 +1,4 @@
-//
-//  fintech_chat_Tests.swift
-//  fintech_chat Tests
-//
-//  Created by Admin on 12/1/20.
-//  Copyright © 2020 Admin. All rights reserved.
-//
-
+@testable import Финтех_чат
 import XCTest
 
 class ThemeManagerTests: XCTestCase {
@@ -19,7 +12,17 @@ class ThemeManagerTests: XCTestCase {
     }
 
     func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let channel = Channel(identifier: "id1", name: "name1", lastMessage: nil, lastActivity: nil)
+        let message = Message(id: "idMessage1", content: "Hellow world", created: Date(), senderId: "senderId", senderName: "Dima")
+        
+        let coreDataClientMock = CoreDataClientMock()
+        coreDataClientMock.addNewChannels([channel])
+
+        coreDataClientMock.addNewMessages([message], for: "id1")
+        
+        print(coreDataClientMock.messages)
+        
+        XCTAssertEqual(coreDataClientMock.channels.count, 1)
+        XCTAssertEqual(coreDataClientMock.messages.count, 1)
     }
 }
