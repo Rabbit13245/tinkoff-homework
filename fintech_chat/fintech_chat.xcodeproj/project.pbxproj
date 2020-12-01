@@ -28,6 +28,7 @@
 		8428027D25347D9B0078723A /* IDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428027C25347D9B0078723A /* IDataManager.swift */; };
 		8428027F25347F2E0078723A /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428027E25347F2E0078723A /* GCDDataManager.swift */; };
 		8442D3CA251B434600F01A1C /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442D3C9251B434600F01A1C /* UILabel.swift */; };
+		84488B4A2576860800604929 /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84488B492576860800604929 /* ThemeManagerTests.swift */; };
 		84489B76252C6E5500F3C80D /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84489B75252C6E5500F3C80D /* UIAlertController.swift */; };
 		8448DF7F252C9EFE00314A95 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448DF7E252C9EFE00314A95 /* AppView.swift */; };
 		8448F528254822BA009F7983 /* Chats.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8448F526254822BA009F7983 /* Chats.xcdatamodeld */; };
@@ -110,6 +111,16 @@
 		F1E25BD82540CCD700009F45 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E25BD72540CCD700009F45 /* String.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		84488B4C2576860800604929 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8467A602250FAED300E36BEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8467A609250FAED400E36BEE;
+			remoteInfo = fintech_chat;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		003A6B1D703D46FB93FFCD33 /* Pods-fintech_chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat.debug.xcconfig"; path = "Target Support Files/Pods-fintech_chat/Pods-fintech_chat.debug.xcconfig"; sourceTree = "<group>"; };
 		13ED8F5E70A4440D9D21147E /* Pods_fintech_chat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fintech_chat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +144,9 @@
 		8428027C25347D9B0078723A /* IDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDataManager.swift; sourceTree = "<group>"; };
 		8428027E25347F2E0078723A /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
 		8442D3C9251B434600F01A1C /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		84488B472576860800604929 /* fintech_chat Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fintech_chat Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84488B492576860800604929 /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
+		84488B4B2576860800604929 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84489B75252C6E5500F3C80D /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		8448DF7E252C9EFE00314A95 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		8448F527254822BA009F7983 /* Chats.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Chats.xcdatamodel; sourceTree = "<group>"; };
@@ -219,6 +233,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		84488B442576860800604929 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8467A607250FAED400E36BEE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -341,6 +362,15 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		84488B482576860800604929 /* fintech_chat Tests */ = {
+			isa = PBXGroup;
+			children = (
+				84488B492576860800604929 /* ThemeManagerTests.swift */,
+				84488B4B2576860800604929 /* Info.plist */,
+			);
+			path = "fintech_chat Tests";
+			sourceTree = "<group>";
+		};
 		8448DF7D252C9EE300314A95 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,6 +436,7 @@
 			isa = PBXGroup;
 			children = (
 				8467A60C250FAED400E36BEE /* fintech_chat */,
+				84488B482576860800604929 /* fintech_chat Tests */,
 				8467A60B250FAED400E36BEE /* Products */,
 				9B50D5890130E137450028D6 /* Pods */,
 				6044A1D41939EDA02002E18D /* Frameworks */,
@@ -416,6 +447,7 @@
 			isa = PBXGroup;
 			children = (
 				8467A60A250FAED400E36BEE /* Финтех чат.app */,
+				84488B472576860800604929 /* fintech_chat Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -808,6 +840,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		84488B462576860800604929 /* fintech_chat Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84488B4E2576860800604929 /* Build configuration list for PBXNativeTarget "fintech_chat Tests" */;
+			buildPhases = (
+				84488B432576860800604929 /* Sources */,
+				84488B442576860800604929 /* Frameworks */,
+				84488B452576860800604929 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84488B4D2576860800604929 /* PBXTargetDependency */,
+			);
+			name = "fintech_chat Tests";
+			productName = "fintech_chat Tests";
+			productReference = 84488B472576860800604929 /* fintech_chat Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		8467A609250FAED400E36BEE /* fintech_chat */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8467A61E250FAED500E36BEE /* Build configuration list for PBXNativeTarget "fintech_chat" */;
@@ -834,10 +884,14 @@
 		8467A602250FAED300E36BEE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1150;
+				LastSwiftUpdateCheck = 1210;
 				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = Admin;
 				TargetAttributes = {
+					84488B462576860800604929 = {
+						CreatedOnToolsVersion = 12.1;
+						TestTargetID = 8467A609250FAED400E36BEE;
+					};
 					8467A609250FAED400E36BEE = {
 						CreatedOnToolsVersion = 11.5;
 					};
@@ -857,11 +911,19 @@
 			projectRoot = "";
 			targets = (
 				8467A609250FAED400E36BEE /* fintech_chat */,
+				84488B462576860800604929 /* fintech_chat Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		84488B452576860800604929 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8467A608250FAED400E36BEE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -936,6 +998,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		84488B432576860800604929 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84488B4A2576860800604929 /* ThemeManagerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8467A606250FAED400E36BEE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1040,6 +1110,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		84488B4D2576860800604929 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8467A609250FAED400E36BEE /* fintech_chat */;
+			targetProxy = 84488B4C2576860800604929 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		8467A613250FAED400E36BEE /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -1060,6 +1138,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		84488B4F2576860800604929 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = URTF63URRB;
+				INFOPLIST_FILE = "fintech_chat Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Dmitriy.fintech-chat-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Финтех чат.app/Финтех чат";
+			};
+			name = Debug;
+		};
+		84488B502576860800604929 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = URTF63URRB;
+				INFOPLIST_FILE = "fintech_chat Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Dmitriy.fintech-chat-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Финтех чат.app/Финтех чат";
+			};
+			name = Release;
+		};
 		8467A61C250FAED500E36BEE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1219,6 +1341,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		84488B4E2576860800604929 /* Build configuration list for PBXNativeTarget "fintech_chat Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84488B4F2576860800604929 /* Debug */,
+				84488B502576860800604929 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8467A605250FAED400E36BEE /* Build configuration list for PBXProject "fintech_chat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
