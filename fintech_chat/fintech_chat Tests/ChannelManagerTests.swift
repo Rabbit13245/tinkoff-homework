@@ -2,15 +2,6 @@
 import XCTest
 
 class ChannelManagerTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
     func testSubscribeChannels() throws {
         let channels = [
             Channel(identifier: "id1", name: "name1", lastMessage: nil, lastActivity: nil),

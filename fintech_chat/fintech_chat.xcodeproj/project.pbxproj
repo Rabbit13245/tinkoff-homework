@@ -28,6 +28,7 @@
 		8428027A2534641B0078723A /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842802792534641B0078723A /* UITextView.swift */; };
 		8428027D25347D9B0078723A /* IDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428027C25347D9B0078723A /* IDataManager.swift */; };
 		8428027F25347F2E0078723A /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428027E25347F2E0078723A /* GCDDataManager.swift */; };
+		8437B8FC257825C4000A96D4 /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8437B8FB257825C4000A96D4 /* ThemeManagerTests.swift */; };
 		8442D3CA251B434600F01A1C /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442D3C9251B434600F01A1C /* UILabel.swift */; };
 		8447F0412577C74300B8DEBF /* MessageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8447F0402577C74300B8DEBF /* MessageManagerTests.swift */; };
 		84488B4A2576860800604929 /* ChannelManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84488B492576860800604929 /* ChannelManagerTests.swift */; };
@@ -149,6 +150,7 @@
 		842802792534641B0078723A /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		8428027C25347D9B0078723A /* IDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDataManager.swift; sourceTree = "<group>"; };
 		8428027E25347F2E0078723A /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
+		8437B8FB257825C4000A96D4 /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
 		8442D3C9251B434600F01A1C /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		8447F0402577C74300B8DEBF /* MessageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManagerTests.swift; sourceTree = "<group>"; };
 		84488B472576860800604929 /* fintech_chat Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fintech_chat Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -384,6 +386,7 @@
 				84E3A9312576D7C2003B41D6 /* CoreDataClientMock.swift */,
 				84532EC92577591400F23C81 /* FirebaseClientMock.swift */,
 				8447F0402577C74300B8DEBF /* MessageManagerTests.swift */,
+				8437B8FB257825C4000A96D4 /* ThemeManagerTests.swift */,
 			);
 			path = "fintech_chat Tests";
 			sourceTree = "<group>";
@@ -1056,6 +1059,7 @@
 				84532ECA2577591400F23C81 /* FirebaseClientMock.swift in Sources */,
 				84488B4A2576860800604929 /* ChannelManagerTests.swift in Sources */,
 				84E3A9322576D7C2003B41D6 /* CoreDataClientMock.swift in Sources */,
+				8437B8FC257825C4000A96D4 /* ThemeManagerTests.swift in Sources */,
 				8447F0412577C74300B8DEBF /* MessageManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

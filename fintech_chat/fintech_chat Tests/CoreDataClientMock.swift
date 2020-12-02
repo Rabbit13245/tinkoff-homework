@@ -32,11 +32,14 @@ class CoreDataClientMock: ICoreDataClient {
     }
     
     func addNewMessages(_ messages: [Message], for channelId: String) {
-        let keyExist = self.messages[channelId] != nil
+        var keyExist = self.messages[channelId] != nil
+        
+        print(messages.count)
         
         messages.forEach {
             if !keyExist {
                 self.messages[channelId] = [Message]()
+                keyExist = true
             }
             self.messages[channelId]?.append($0)
         }
