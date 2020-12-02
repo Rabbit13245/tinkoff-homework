@@ -46,7 +46,7 @@ class FirebaseCleint: IFirebaseCleint {
     }
     
     /// Подписаться на обновления каналов
-    public func subscribeChannelsUpdates(completion: @escaping (Result<[DocumentChange], Error>) -> Void) {
+    public func subscribeChannelsUpdates(completion: @escaping (Result<FirebaseData<Channel>, Error>) -> Void) {
         channels.addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 Logger.app.logMessage("\(#function):: Error reading data: \(error.localizedDescription)",
@@ -54,8 +54,8 @@ class FirebaseCleint: IFirebaseCleint {
                 completion(.failure(DatabaseError.failedToRead))
             } else {
                 if let snapshot = querySnapshot {
-                    let documentChanges = snapshot.documentChanges
-                    completion(.success(documentChanges))
+                    let data = FirebaseData<Channel>(documentChanges: snapshot.documentChanges)
+                    completion(.success(data))
                 } else {
                     Logger.app.logMessage("\(#function):: Snapshot is nil", logLevel: .error)
                     completion(.failure(DatabaseError.failedToRead))
@@ -87,7 +87,7 @@ class FirebaseCleint: IFirebaseCleint {
     }
     
     /// Подписаться на обновления сообщений в канале
-    func subscribeMessagesUpdates(with channelId: String, completion: @escaping ((Result<[DocumentChange], Error>) -> Void)) {
+    public func subscribeMessagesUpdates(with channelId: String, completion: @escaping ((Result<FirebaseData<Message>, Error>) -> Void)) {
         channels.document(channelId).collection("messages").addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 Logger.app.logMessage("\(#function):: Error reading data: \(error.localizedDescription)",
@@ -95,8 +95,8 @@ class FirebaseCleint: IFirebaseCleint {
                 completion(.failure(DatabaseError.failedToRead))
             } else {
                 if let snapshot = querySnapshot {
-                    let documentChanges = snapshot.documentChanges
-                    completion(.success(documentChanges))
+                    let data = FirebaseData<Message>(documentChanges: snapshot.documentChanges)
+                    completion(.success(data))
                 } else {
                     Logger.app.logMessage("\(#function):: Snapshot is nil", logLevel: .error)
                     completion(.failure(DatabaseError.failedToRead))

@@ -22,24 +22,9 @@ class MessageManager: IMessageManager {
     public func subscribeOnChannelMessagesUpdates(channelId: String, completion: @escaping ((Error?) -> Void)) {
         firebaseClient.subscribeMessagesUpdates(with: channelId) { [weak self] (result) in
             switch result {
-            case .success(let documentChanges):
-                var modified = [Message]()
-                var added = [Message]()
-                var removed = [Message]()
+            case .success(let data):
+                self?.coreDataClient.addNewMessages(data.added, for: channelId)
                 
-                for change in documentChanges {
-                    guard let channel = Message(change.document) else { continue }
-                    switch change.type {
-                    case .added:
-                        added.append(channel)
-                    case .removed:
-                        removed.append(channel)
-                    case .modified:
-                        modified.append(channel)
-                    }
-                }
-                
-                self?.coreDataClient.addNewMessages(added, for: channelId)
             case .failure(let error):
                 completion(error)
             }

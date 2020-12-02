@@ -1,7 +1,7 @@
 import Foundation
 import Firebase
 
-struct Channel {
+struct Channel: IFirebaseInit {
     let identifier: String
     let name: String
     let lastMessage: String?

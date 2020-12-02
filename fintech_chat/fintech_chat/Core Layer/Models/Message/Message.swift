@@ -1,7 +1,7 @@
 import Foundation
 import Firebase
 
-struct Message {
+struct Message: IFirebaseInit {
     let id: String
     let content: String
     let created: Date

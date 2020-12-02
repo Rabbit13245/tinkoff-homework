@@ -57,26 +57,10 @@ class ChannelManager: IChannelManager {
     private func subscribeChannelsUpdates(completion: @escaping ((Error?) -> Void)) {
         firebaseClient.subscribeChannelsUpdates { [weak self] (result) in
             switch result {
-            case .success(let documentChanges):
-                var modified = [Channel]()
-                var added = [Channel]()
-                var removed = [Channel]()
-                
-                for change in documentChanges {
-                    guard let channel = Channel(change.document) else { continue }
-                    switch change.type {
-                    case .added:
-                        added.append(channel)
-                    case .removed:
-                        removed.append(channel)
-                    case .modified:
-                        modified.append(channel)
-                    }
-                }
-                
-                self?.coreDataClient.addNewChannels(added)
-                self?.coreDataClient.removeChannels(removed)
-                self?.coreDataClient.modifyChannels(modified)
+            case .success(let data):
+                self?.coreDataClient.addNewChannels(data.added)
+                self?.coreDataClient.removeChannels(data.removed)
+                self?.coreDataClient.modifyChannels(data.modified)
                 
             case .failure(let error):
                 completion(error)
