@@ -8,11 +8,11 @@ class FirebaseClientMock: IFirebaseCleint {
         completion(.success([]))
     }
     
-    var loadChannelsUpdateStub: (((Result<FirebaseData<Channel>, Error>) -> Void) -> Void)!
+    var loadChannelsUpdateStub: (((Result<FirebaseData<Channel>, Error>) -> Void) -> Void)?
     var subscribeChannelsUpdatesCallsCount = 0
     func subscribeChannelsUpdates(completion: @escaping (Result<FirebaseData<Channel>, Error>) -> Void) {
         subscribeChannelsUpdatesCallsCount += 1
-        loadChannelsUpdateStub(completion)
+        loadChannelsUpdateStub?(completion)
     }
     
     func createChannel(_ channelDocument: [String: Any], completion: @escaping ((Error?) -> Void)) {
@@ -23,14 +23,21 @@ class FirebaseClientMock: IFirebaseCleint {
         
     }
     
-    var loadMessagesUpdateStub: (((Result<FirebaseData<Message>, Error>) -> Void) -> Void)!
+    var loadMessagesUpdateStub: (((Result<FirebaseData<Message>, Error>) -> Void) -> Void)?
     var subscribeMessagesUpdatesCallsCount = 0
     func subscribeMessagesUpdates(with channelId: String, completion: @escaping ((Result<FirebaseData<Message>, Error>) -> Void)) {
         subscribeMessagesUpdatesCallsCount += 1
-        loadMessagesUpdateStub(completion)
+        loadMessagesUpdateStub?(completion)
     }
     
+    var messageContent: String?
+    var userId: String?
+    var channelId: String?
+    
     func sendMessage(_ text: String, from userId: String, to channelId: String, completion: @escaping (Error?) -> Void) {
-        
+        messageContent = text
+        self.userId = userId
+        self.channelId = channelId
+        completion(nil)
     }
 }

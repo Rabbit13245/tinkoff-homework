@@ -3,6 +3,7 @@ import XCTest
 
 class ChannelManagerTests: XCTestCase {
     func testSubscribeChannels() throws {
+        // given
         let channels = [
             Channel(identifier: "id1", name: "name1", lastMessage: nil, lastActivity: nil),
             Channel(identifier: "id2", name: "name2", lastMessage: "lastMessage2", lastActivity: Date())
@@ -18,11 +19,17 @@ class ChannelManagerTests: XCTestCase {
         
         let coreDataClientMock = CoreDataClientMock()
         
+        var blockError: Error?
+        
         let channelManager = ChannelManager(firebaseClient: firebaseClientMock, coreDataClient: coreDataClientMock)
+        
+        // when
         channelManager.subscribeChannels { (error) in
-            XCTAssertNil(error, "Error not nil!")
+            blockError = error
         }
         
+        // then
+        XCTAssertNil(blockError, "Error not nil!")
         XCTAssertEqual(coreDataClientMock.channels.count, channels.count)
         XCTAssertEqual(firebaseClientMock.subscribeChannelsUpdatesCallsCount, 1)
     }
