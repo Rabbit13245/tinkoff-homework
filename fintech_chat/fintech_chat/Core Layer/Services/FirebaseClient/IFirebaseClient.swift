@@ -2,7 +2,7 @@ import Foundation
 import Firebase
 
 /// Клиент для работы с firebase
-protocol IFirebaseCleint {
+protocol IFirebaseClient {
     /// Получить все каналы
     func getAllChannels(completion: @escaping ((Result<[Channel], Error>) -> Void))
     

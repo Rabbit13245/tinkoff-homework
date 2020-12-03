@@ -33,4 +33,38 @@ class ChannelManagerTests: XCTestCase {
         XCTAssertEqual(coreDataClientMock.channels.count, channels.count)
         XCTAssertEqual(firebaseClientMock.subscribeChannelsUpdatesCallsCount, 1)
     }
+    
+    func testCreateChannel() throws {
+        // given
+        let channelName = "channelName"
+        let firebaseClientMock = FirebaseClientMock()
+        let coreDataClientMock = CoreDataClientMock()
+        var blockError: Error?
+        let channelManager = ChannelManager(firebaseClient: firebaseClientMock, coreDataClient: coreDataClientMock)
+        
+        // when
+        channelManager.createChannel(with: channelName) { (error) in
+            blockError = error
+        }
+        
+        //then
+        XCTAssertNil(blockError, "Error not nil!")
+    }
+    
+    func testRemoveChannel() throws {
+        // given
+        let channelId = "channelId"
+        let firebaseClientMock = FirebaseClientMock()
+        let coreDataClientMock = CoreDataClientMock()
+        var blockError: Error?
+        let channelManager = ChannelManager(firebaseClient: firebaseClientMock, coreDataClient: coreDataClientMock)
+        
+        // when
+        channelManager.removeChannel(channelId) { (error) in
+            blockError = error
+        }
+        
+        //then
+        XCTAssertNil(blockError, "Error not nil!")
+    }
 }

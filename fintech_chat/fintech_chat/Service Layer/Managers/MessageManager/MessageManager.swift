@@ -8,12 +8,12 @@ class MessageManager: IMessageManager {
     
     // MARK: - Dependencies
     
-    private var firebaseClient: IFirebaseCleint
+    private var firebaseClient: IFirebaseClient
     private var coreDataClient: ICoreDataClient
     
     // MARK: - Initializers
     
-    init(firebaseClient: IFirebaseCleint, coreDataClient: ICoreDataClient) {
+    init(firebaseClient: IFirebaseClient, coreDataClient: ICoreDataClient) {
         self.firebaseClient = firebaseClient
         self.coreDataClient = coreDataClient
     }

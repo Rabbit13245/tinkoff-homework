@@ -274,11 +274,6 @@ PODS:
     - BoringSSL-GRPC (= 0.0.7)
     - gRPC-Core/Interface (= 1.28.2)
   - gRPC-Core/Interface (1.28.2)
-  - iOSSnapshotTestCase (6.2.0):
-    - iOSSnapshotTestCase/SwiftSupport (= 6.2.0)
-  - iOSSnapshotTestCase/Core (6.2.0)
-  - iOSSnapshotTestCase/SwiftSupport (6.2.0):
-    - iOSSnapshotTestCase/Core
   - leveldb-library (1.22)
   - nanopb (1.30906.0):
     - nanopb/decode (= 1.30906.0)
@@ -290,7 +285,6 @@ PODS:
 
 DEPENDENCIES:
   - Firebase/Firestore
-  - iOSSnapshotTestCase
   - SwiftLint
 
 SPEC REPOS:
@@ -305,7 +299,6 @@ SPEC REPOS:
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
-    - iOSSnapshotTestCase
     - leveldb-library
     - nanopb
     - PromisesObjC
@@ -322,12 +315,11 @@ SPEC CHECKSUMS:
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
-  iOSSnapshotTestCase: 9ab44cb5aa62b84d31847f40680112e15ec579a6
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
   SwiftLint: dfd554ff0dff17288ee574814ccdd5cea85d76f7
 
-PODFILE CHECKSUM: d7baec57b6058fababa7dad03169b3aa6fcd46ff
+PODFILE CHECKSUM: 860239fc0713ccae717c417d64588e7a1171764e
 
 COCOAPODS: 1.9.3

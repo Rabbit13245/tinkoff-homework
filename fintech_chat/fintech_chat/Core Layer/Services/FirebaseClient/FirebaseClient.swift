@@ -22,7 +22,7 @@ public enum DatabaseError: Error {
     }
 }
 
-class FirebaseCleint: IFirebaseCleint {
+class FirebaseClient: IFirebaseClient {
     // MARK: - Private properties
     
     /// Ссылка на коллекцию каналов
@@ -126,7 +126,7 @@ class FirebaseCleint: IFirebaseCleint {
     }
 }
 
-extension FirebaseCleint {
+extension FirebaseClient {
     private func parseChannels(_ documents: [QueryDocumentSnapshot]) -> [Channel] {
         let channels = documents.compactMap {Channel($0)}
         let sortedChannels = channels.sorted {

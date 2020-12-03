@@ -2,7 +2,7 @@
 @testable import Финтех_чат
 import Foundation
 
-class FirebaseClientMock: IFirebaseCleint {
+class FirebaseClientMock: IFirebaseClient {
     
     func getAllChannels(completion: @escaping ((Result<[Channel], Error>) -> Void)) {
         completion(.success([]))
