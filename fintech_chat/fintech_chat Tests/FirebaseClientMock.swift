@@ -15,8 +15,12 @@ class FirebaseClientMock: IFirebaseClient {
         loadChannelsUpdateStub?(completion)
     }
     
+    var createChannelCallsCount = 0
+    var channelName: String?
     func createChannel(_ channelDocument: [String: Any], completion: @escaping ((Error?) -> Void)) {
-        
+        channelName = channelDocument["name"] as? String
+        createChannelCallsCount += 1
+        completion(nil)
     }
     
     func removeChannel(with channelId: String, completion: @escaping ((Error?) -> Void)) {
@@ -33,8 +37,9 @@ class FirebaseClientMock: IFirebaseClient {
     var messageContent: String?
     var userId: String?
     var channelId: String?
-    
+    var sendMessageCallsCount = 0
     func sendMessage(_ text: String, from userId: String, to channelId: String, completion: @escaping (Error?) -> Void) {
+        sendMessageCallsCount += 1
         messageContent = text
         self.userId = userId
         self.channelId = channelId

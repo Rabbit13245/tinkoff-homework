@@ -40,6 +40,8 @@ class ChannelManager: IChannelManager {
     
     /// Создать канал
     public func createChannel(with name: String, completion: @escaping ((Error?) -> Void)) {
+        
+        
         let channelDocument: [String: Any] = [
             "name": name
         ]

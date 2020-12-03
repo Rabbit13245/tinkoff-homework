@@ -1,5 +1,4 @@
 @testable import Финтех_чат
-import FBSnapshotTestCase
 import XCTest
 
 class ProfileViewUITests: XCTestCase {

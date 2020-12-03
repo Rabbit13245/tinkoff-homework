@@ -58,5 +58,6 @@ class MessageManagerTests: XCTestCase {
         XCTAssertEqual(firebaseClientMock.messageContent, messageText)
         XCTAssertEqual(firebaseClientMock.channelId, channeId)
         XCTAssertNotNil(firebaseClientMock.userId)
+        XCTAssertEqual(firebaseClientMock.sendMessageCallsCount, 1)
     }
 }
