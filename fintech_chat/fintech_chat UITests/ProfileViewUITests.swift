@@ -4,7 +4,13 @@ import XCTest
 
 class ProfileViewUITests: XCTestCase {
 
-    func testExample() throws {
+    override func setUp() {
+        super.setUp()
+        
+        continueAfterFailure = false
+    }
+    
+    func testProfileVC() throws {
         let app = XCUIApplication()
         app.launch()
         
