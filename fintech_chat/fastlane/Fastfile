@@ -1,0 +1,11 @@
+desc "Hello"
+lane :hello do
+    puts "Hello, world"
+end
+
+desc "Build for testing"
+lane :build_for_testing do
+  cocoapods
+  scan(derived_data_path: "DerivedData", build_for_testing: true)
+end
+
