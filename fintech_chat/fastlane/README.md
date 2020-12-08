@@ -15,6 +15,11 @@ Install _fastlane_ using
 or alternatively using `brew install fastlane`
 
 # Available Actions
+### discord
+```
+fastlane discord
+```
+Discord notification
 ### build_for_testing
 ```
 fastlane build_for_testing
@@ -30,6 +35,11 @@ Run tests
 fastlane build_and_test
 ```
 Build and run tests
+### olo
+```
+fastlane olo
+```
+
 
 ----
 
