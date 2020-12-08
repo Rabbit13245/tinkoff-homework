@@ -93,7 +93,6 @@
 		84D9E455256EB00E004B7FD4 /* TransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E453256EB00E004B7FD4 /* TransitionDelegate.swift */; };
 		84D9E456256EB00E004B7FD4 /* AnimatorTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E454256EB00E004B7FD4 /* AnimatorTransitioning.swift */; };
 		84E3A9322576D7C2003B41D6 /* CoreDataClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3A9312576D7C2003B41D6 /* CoreDataClientMock.swift */; };
-		A5E73989A8D335F597934B97 /* Pods_fintech_chat_fintech_chat_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 590069F89A000C93E6B3E7AB /* Pods_fintech_chat_fintech_chat_UITests.framework */; };
 		BD25AA754D6309E6658ED347 /* libPods-fintech_chat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFB743C019B4C490BF56FB2A /* libPods-fintech_chat.a */; };
 		F10D4E022520F03E00B8CDD0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E012520F03E00B8CDD0 /* Date.swift */; };
 		F10D4E04252111A900B8CDD0 /* ChannelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E03252111A900B8CDD0 /* ChannelCellModel.swift */; };
@@ -117,6 +116,7 @@
 		F13AC6C82534CCD400693985 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AC6C72534CCD400693985 /* OperationDataManager.swift */; };
 		F1D84D4C251E9804000A69AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D84D4B251E9804000A69AF /* UIColor.swift */; };
 		F1E25BD82540CCD700009F45 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E25BD72540CCD700009F45 /* String.swift */; };
+		FD59841BBA1189D020EB968E /* libPods-fintech_chat UITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2DA86A38DDD6979F88B82DC /* libPods-fintech_chat UITests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,7 +142,6 @@
 		0A8B3D983E1837B4A6BEF50C /* Pods-fintech_chat-fintech_chat UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat-fintech_chat UITests.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat-fintech_chat UITests/Pods-fintech_chat-fintech_chat UITests.release.xcconfig"; sourceTree = "<group>"; };
 		4ADF32F00D33556B67C7FBBC /* Pods-fintech_chat-fintech_chat UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat-fintech_chat UITests.debug.xcconfig"; path = "Target Support Files/Pods-fintech_chat-fintech_chat UITests/Pods-fintech_chat-fintech_chat UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		50BE241558F35C0C6C94AA39 /* Pods-fintech_chat UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat UITests.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat UITests/Pods-fintech_chat UITests.release.xcconfig"; sourceTree = "<group>"; };
-		590069F89A000C93E6B3E7AB /* Pods_fintech_chat_fintech_chat_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fintech_chat_fintech_chat_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		842016C0256424E10001A7D9 /* AvatarLoadDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarLoadDelegate.swift; sourceTree = "<group>"; };
 		842016CA256459520001A7D9 /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
 		842016CD256459A20001A7D9 /* PixabayImagesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayImagesRequest.swift; sourceTree = "<group>"; };
@@ -237,6 +236,7 @@
 		9953A7A4C1B56AF4D0C3C4F3 /* Pods-fintech_chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat/Pods-fintech_chat.release.xcconfig"; sourceTree = "<group>"; };
 		A3137081FFAC9FB4FE08D37E /* Pods-fintech_chat UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat UITests.debug.xcconfig"; path = "Target Support Files/Pods-fintech_chat UITests/Pods-fintech_chat UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B3FDF13023F66514490FB920 /* Pods-fintech_chat Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat Tests.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat Tests/Pods-fintech_chat Tests.release.xcconfig"; sourceTree = "<group>"; };
+		D2DA86A38DDD6979F88B82DC /* libPods-fintech_chat UITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fintech_chat UITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFB743C019B4C490BF56FB2A /* libPods-fintech_chat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fintech_chat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F10D4E012520F03E00B8CDD0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		F10D4E03252111A900B8CDD0 /* ChannelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelCellModel.swift; path = "fintech_chat/Presentation Layer/Modules/ChannelsListViewController/Model/ChannelCellModel.swift"; sourceTree = SOURCE_ROOT; };
@@ -284,7 +284,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5E73989A8D335F597934B97 /* Pods_fintech_chat_fintech_chat_UITests.framework in Frameworks */,
+				FD59841BBA1189D020EB968E /* libPods-fintech_chat UITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,7 +296,7 @@
 			children = (
 				EFB743C019B4C490BF56FB2A /* libPods-fintech_chat.a */,
 				F20C45CB30E97B49DAAAAE67 /* libPods-fintech_chat Tests.a */,
-				590069F89A000C93E6B3E7AB /* Pods_fintech_chat_fintech_chat_UITests.framework */,
+				D2DA86A38DDD6979F88B82DC /* libPods-fintech_chat UITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -959,7 +959,6 @@
 				84A3ACD325783999003C9334 /* Sources */,
 				84A3ACD425783999003C9334 /* Frameworks */,
 				84A3ACD525783999003C9334 /* Resources */,
-				E633CAEBB4B2565AA17B621D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1059,7 +1058,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-fintech_chat-fintech_chat UITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-fintech_chat UITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1125,23 +1124,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E633CAEBB4B2565AA17B621D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-fintech_chat-fintech_chat UITests/Pods-fintech_chat-fintech_chat UITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-fintech_chat-fintech_chat UITests/Pods-fintech_chat-fintech_chat UITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-fintech_chat-fintech_chat UITests/Pods-fintech_chat-fintech_chat UITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F133F060253F836B00337D95 /* ShellScript */ = {
@@ -1531,7 +1513,7 @@
 		};
 		84A3ACDE25783999003C9334 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4ADF32F00D33556B67C7FBBC /* Pods-fintech_chat-fintech_chat UITests.debug.xcconfig */;
+			baseConfigurationReference = A3137081FFAC9FB4FE08D37E /* Pods-fintech_chat UITests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1552,7 +1534,7 @@
 		};
 		84A3ACDF25783999003C9334 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A8B3D983E1837B4A6BEF50C /* Pods-fintech_chat-fintech_chat UITests.release.xcconfig */;
+			baseConfigurationReference = 50BE241558F35C0C6C94AA39 /* Pods-fintech_chat UITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;

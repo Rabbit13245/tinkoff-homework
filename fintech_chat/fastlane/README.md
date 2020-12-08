@@ -15,16 +15,21 @@ Install _fastlane_ using
 or alternatively using `brew install fastlane`
 
 # Available Actions
-### hello
-```
-fastlane hello
-```
-Hello
 ### build_for_testing
 ```
 fastlane build_for_testing
 ```
 Build for testing
+### run_tests
+```
+fastlane run_tests
+```
+Run tests
+### build_and_test
+```
+fastlane build_and_test
+```
+Build and run tests
 
 ----
 

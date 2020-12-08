@@ -1,11 +1,16 @@
-desc "Hello"
-lane :hello do
-    puts "Hello, world"
-end
-
 desc "Build for testing"
 lane :build_for_testing do
   cocoapods
   scan(derived_data_path: "DerivedData", build_for_testing: true)
 end
 
+desc "Run tests"
+lane :run_tests do
+  scan(derived_data_path: "DerivedData", test_without_building: true)
+end
+
+desc "Build and run tests"
+lane :build_and_test do
+  build_for_testing
+  run_tests
+end

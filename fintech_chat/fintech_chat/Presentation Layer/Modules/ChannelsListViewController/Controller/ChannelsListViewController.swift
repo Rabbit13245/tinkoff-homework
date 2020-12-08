@@ -177,7 +177,7 @@ class ChannelsListViewController: LoggedViewController {
                 customView.addSubview(uiImageView)
                 let barButtonItem = UIBarButtonItem(customView: customView)
                 barButtonItem.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profileButtonPressed)))
-                self.profileBarButton = UIBarButtonItem(customView: customView)
+                self.profileBarButton.customView = customView
                 self.navigationItem.rightBarButtonItems = [self.profileBarButton, self.addChannelBarButton]
             }
         }
