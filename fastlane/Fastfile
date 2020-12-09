@@ -1,11 +1,13 @@
 desc "Discord notification"
-lane :discord do
+lane :discord do |values|
+  success = values[:success]
+  description = values[:description]
   discord_notifier(
     webhook_url: ENV["DISCORD_WEBHOOK"],
     title: "TFS homework",
-    description: "Success all test",
-    success: true,
-    thumbnail_url:"https://i.pinimg.com/originals/d7/8d/41/d78d41791cb125f6512c542dd0ee3837.gif",
+    description: description,
+    success: success,
+    thumbnail_url: "https://i.pinimg.com/originals/d7/8d/41/d78d41791cb125f6512c542dd0ee3837.gif",
     fields:[
       {
         name:"Created by", 
@@ -31,7 +33,9 @@ desc "Build and run tests"
 lane :build_and_test do
   build_for_testing
   run_tests
-  discord
+  discord(success: true, description: "Success all test")
+  rescue
+  discord(success: false, description: "Tests fail...")
 end
 
 

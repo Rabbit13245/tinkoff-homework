@@ -1415,7 +1415,6 @@
 		};
 		8467A61D250FAED500E36BEE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C0C336B52581427600BB321B /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1493,7 +1492,7 @@
 		};
 		8467A620250FAED500E36BEE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9953A7A4C1B56AF4D0C3C4F3 /* Pods-fintech_chat.release.xcconfig */;
+			baseConfigurationReference = C0C336B52581427600BB321B /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
