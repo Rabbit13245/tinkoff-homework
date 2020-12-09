@@ -143,3 +143,6 @@ iOSInjectionProject/
 
 # Local History for Visual Studio Code
 .history/
+
+# env
+.env
