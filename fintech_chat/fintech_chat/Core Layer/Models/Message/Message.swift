@@ -1,7 +1,7 @@
 import Foundation
 import Firebase
 
-struct Message {
+struct Message: IFirebaseInit {
     let id: String
     let content: String
     let created: Date
@@ -29,5 +29,18 @@ struct Message {
         self.created = data.created
         self.senderId = data.senderId
         self.senderName = data.senderName
+    }
+    
+    /// Initializer по всем параметрам
+    init(id: String,
+         content: String,
+         created: Date,
+         senderId: String,
+         senderName: String) {
+        self.id = id
+        self.content = content
+        self.created = created
+        self.senderId = senderId
+        self.senderName = senderName
     }
 }

@@ -168,6 +168,8 @@ class ProfileViewController: LoggedViewController {
         setupUI()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editButtonForBarButton)
+        
+        avatarButton.accessibilityIdentifier = "avatarButton"
     }
 
     override func viewDidDisappear(_ animated: Bool) {

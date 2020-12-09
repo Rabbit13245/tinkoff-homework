@@ -58,6 +58,7 @@ class ChannelsListViewController: LoggedViewController {
         button.layer.cornerRadius = button.frame.height / 2
         
         let barButton = UIBarButtonItem(customView: button)
+        barButton.accessibilityIdentifier = "OpenProfileVC"
         barButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(profileButtonPressed)))
         
         guard let manager = dataManagerFactory?.createDataManager(.GCD) else { return barButton }

@@ -1,7 +1,7 @@
 import Foundation
 import Firebase
 
-struct Channel {
+struct Channel: IFirebaseInit {
     let identifier: String
     let name: String
     let lastMessage: String?
@@ -31,5 +31,16 @@ struct Channel {
         self.name = data.name
         self.lastMessage = data.lastMessage
         self.lastActivity = data.lastActivity
+    }
+    
+    /// initializer по всем параметрам
+    init(identifier: String,
+         name: String,
+         lastMessage: String?,
+         lastActivity: Date?) {
+        self.identifier = identifier
+        self.name = name
+        self.lastMessage = lastMessage
+        self.lastActivity = lastActivity
     }
 }
