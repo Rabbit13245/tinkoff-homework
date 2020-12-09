@@ -28,6 +28,3 @@ lane :build_and_test do
   discord
 end
 
-lane :testLane do
-  puts("testLane")
-end
