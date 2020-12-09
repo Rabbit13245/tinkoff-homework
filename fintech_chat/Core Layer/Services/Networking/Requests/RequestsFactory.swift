@@ -4,7 +4,9 @@ struct RequestsFactory {
     
     struct PixabayImagesRequests {
         static func topImages() -> RequestConfig<PixabayImagesParser> {
-            let request = PixabayImagesRequest(apiKey: "19155253-e337d5aab4433cb5a9d3c26cc")
+            let apiKey = Bundle.main.infoDictionary?["PixabayApiKey"] as? String
+            
+            let request = PixabayImagesRequest(apiKey: apiKey)
             return RequestConfig<PixabayImagesParser>(request: request, parser: PixabayImagesParser())
         }
         

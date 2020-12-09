@@ -1,7 +1,5 @@
 import Foundation
 
-// https://pixabay.com/api/?key=19155253-e337d5aab4433cb5a9d3c26cc&q=yellow+flowers&image_type=photo&pretty=true&per_page=100
-
 class PixabayImagesRequest: IRequest {
     
     // MARK: - Private properties
@@ -33,7 +31,7 @@ class PixabayImagesRequest: IRequest {
     
     // MARK: - Initializers
     
-    init(apiKey: String) {
-        self.apiKey = apiKey
+    init(apiKey: String?) {
+        self.apiKey = apiKey ?? ""
     }
 }
