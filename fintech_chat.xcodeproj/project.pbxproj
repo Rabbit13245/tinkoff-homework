@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		14A3D5FD492DF17BF1F9E5E2 /* libPods-fintech_chat Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F20C45CB30E97B49DAAAAE67 /* libPods-fintech_chat Tests.a */; };
+		632131BC2A628B630D3F0517 /* libPods-fintech_chat UITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC70398D905F15D1F2B5C1D /* libPods-fintech_chat UITests.a */; };
 		842016C1256424E20001A7D9 /* AvatarLoadDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016C0256424E10001A7D9 /* AvatarLoadDelegate.swift */; };
 		842016CB256459520001A7D9 /* IRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016CA256459520001A7D9 /* IRequest.swift */; };
 		842016CE256459A20001A7D9 /* PixabayImagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842016CD256459A20001A7D9 /* PixabayImagesRequest.swift */; };
@@ -93,6 +94,7 @@
 		84D9E456256EB00E004B7FD4 /* AnimatorTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9E454256EB00E004B7FD4 /* AnimatorTransitioning.swift */; };
 		84E3A9322576D7C2003B41D6 /* CoreDataClientMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3A9312576D7C2003B41D6 /* CoreDataClientMock.swift */; };
 		BD25AA754D6309E6658ED347 /* libPods-fintech_chat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFB743C019B4C490BF56FB2A /* libPods-fintech_chat.a */; };
+		C0F8A700258135B700D64A72 /* fintech_chat_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F8A6FE258135B700D64A72 /* fintech_chat_UITests.swift */; };
 		F10D4E022520F03E00B8CDD0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E012520F03E00B8CDD0 /* Date.swift */; };
 		F10D4E04252111A900B8CDD0 /* ChannelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E03252111A900B8CDD0 /* ChannelCellModel.swift */; };
 		F10D4E062521123D00B8CDD0 /* MessageCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D4E052521123D00B8CDD0 /* MessageCellModel.swift */; };
@@ -125,6 +127,13 @@
 			remoteGlobalIDString = 8467A609250FAED400E36BEE;
 			remoteInfo = fintech_chat;
 		};
+		C0F8A6F6258135A000D64A72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8467A602250FAED300E36BEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8467A609250FAED400E36BEE;
+			remoteInfo = fintech_chat;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -133,6 +142,7 @@
 		0A8B3D983E1837B4A6BEF50C /* Pods-fintech_chat-fintech_chat UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat-fintech_chat UITests.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat-fintech_chat UITests/Pods-fintech_chat-fintech_chat UITests.release.xcconfig"; sourceTree = "<group>"; };
 		4ADF32F00D33556B67C7FBBC /* Pods-fintech_chat-fintech_chat UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat-fintech_chat UITests.debug.xcconfig"; path = "Target Support Files/Pods-fintech_chat-fintech_chat UITests/Pods-fintech_chat-fintech_chat UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		50BE241558F35C0C6C94AA39 /* Pods-fintech_chat UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat UITests.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat UITests/Pods-fintech_chat UITests.release.xcconfig"; sourceTree = "<group>"; };
+		6EC70398D905F15D1F2B5C1D /* libPods-fintech_chat UITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fintech_chat UITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		804710BA1CE186283C6B25E0 /* Pods_fintech_chat_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fintech_chat_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		842016C0256424E10001A7D9 /* AvatarLoadDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarLoadDelegate.swift; sourceTree = "<group>"; };
 		842016CA256459520001A7D9 /* IRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRequest.swift; sourceTree = "<group>"; };
@@ -154,7 +164,6 @@
 		8428027C25347D9B0078723A /* IDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDataManager.swift; sourceTree = "<group>"; };
 		8428027E25347F2E0078723A /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
 		8437B8FB257825C4000A96D4 /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
-		8437B91325782B47000A96D4 /* ProfileViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewUITests.swift; sourceTree = "<group>"; };
 		8442D3C9251B434600F01A1C /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		8447F0402577C74300B8DEBF /* MessageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageManagerTests.swift; sourceTree = "<group>"; };
 		84488B472576860800604929 /* fintech_chat Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fintech_chat Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,7 +214,6 @@
 		849D39F4255D7AC200B0A111 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
 		849D39F8255D7BC000B0A111 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
 		84A114CE256419FB00C83AD9 /* AvatarLoadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarLoadViewController.swift; sourceTree = "<group>"; };
-		84A3ACDB25783999003C9334 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84B40191255C903B00F2D9DB /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		84B4019C255C955D00F2D9DB /* IDataManagerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDataManagerFactory.swift; sourceTree = "<group>"; };
 		84B401A1255C98B100F2D9DB /* CoreDataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataClient.swift; sourceTree = "<group>"; };
@@ -227,6 +235,9 @@
 		9953A7A4C1B56AF4D0C3C4F3 /* Pods-fintech_chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat/Pods-fintech_chat.release.xcconfig"; sourceTree = "<group>"; };
 		A3137081FFAC9FB4FE08D37E /* Pods-fintech_chat UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat UITests.debug.xcconfig"; path = "Target Support Files/Pods-fintech_chat UITests/Pods-fintech_chat UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B3FDF13023F66514490FB920 /* Pods-fintech_chat Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fintech_chat Tests.release.xcconfig"; path = "Target Support Files/Pods-fintech_chat Tests/Pods-fintech_chat Tests.release.xcconfig"; sourceTree = "<group>"; };
+		C0F8A6F1258135A000D64A72 /* fintech_chat UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fintech_chat UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0F8A6FE258135B700D64A72 /* fintech_chat_UITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fintech_chat_UITests.swift; sourceTree = "<group>"; };
+		C0F8A6FF258135B700D64A72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFB743C019B4C490BF56FB2A /* libPods-fintech_chat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fintech_chat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F10D4E012520F03E00B8CDD0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		F10D4E03252111A900B8CDD0 /* ChannelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelCellModel.swift; path = "fintech_chat/Presentation Layer/Modules/ChannelsListViewController/Model/ChannelCellModel.swift"; sourceTree = SOURCE_ROOT; };
@@ -270,6 +281,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C0F8A6EE258135A000D64A72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				632131BC2A628B630D3F0517 /* libPods-fintech_chat UITests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -279,6 +298,7 @@
 				EFB743C019B4C490BF56FB2A /* libPods-fintech_chat.a */,
 				F20C45CB30E97B49DAAAAE67 /* libPods-fintech_chat Tests.a */,
 				804710BA1CE186283C6B25E0 /* Pods_fintech_chat_UITests.framework */,
+				6EC70398D905F15D1F2B5C1D /* libPods-fintech_chat UITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -473,7 +493,7 @@
 			children = (
 				8467A60C250FAED400E36BEE /* fintech_chat */,
 				84488B482576860800604929 /* fintech_chat Tests */,
-				84A3ACD825783999003C9334 /* fintech_chat UITests */,
+				C0F8A6F2258135A000D64A72 /* fintech_chat UITests */,
 				8467A60B250FAED400E36BEE /* Products */,
 				9B50D5890130E137450028D6 /* Pods */,
 				6044A1D41939EDA02002E18D /* Frameworks */,
@@ -485,6 +505,7 @@
 			children = (
 				8467A60A250FAED400E36BEE /* Финтех чат.app */,
 				84488B472576860800604929 /* fintech_chat Tests.xctest */,
+				C0F8A6F1258135A000D64A72 /* fintech_chat UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -731,15 +752,6 @@
 			path = AvatarLoadViewController;
 			sourceTree = "<group>";
 		};
-		84A3ACD825783999003C9334 /* fintech_chat UITests */ = {
-			isa = PBXGroup;
-			children = (
-				8437B91325782B47000A96D4 /* ProfileViewUITests.swift */,
-				84A3ACDB25783999003C9334 /* Info.plist */,
-			);
-			path = "fintech_chat UITests";
-			sourceTree = "<group>";
-		};
 		84B40199255C93F300F2D9DB /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -868,6 +880,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		C0F8A6F2258135A000D64A72 /* fintech_chat UITests */ = {
+			isa = PBXGroup;
+			children = (
+				C0F8A6FE258135B700D64A72 /* fintech_chat_UITests.swift */,
+				C0F8A6FF258135B700D64A72 /* Info.plist */,
+			);
+			path = "fintech_chat UITests";
+			sourceTree = "<group>";
+		};
 		F10FF08A253CBAB400A0996B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -932,6 +953,25 @@
 			productReference = 8467A60A250FAED400E36BEE /* Финтех чат.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C0F8A6F0258135A000D64A72 /* fintech_chat UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C0F8A6F8258135A000D64A72 /* Build configuration list for PBXNativeTarget "fintech_chat UITests" */;
+			buildPhases = (
+				46126E65096AB8B0F8E2FB0C /* [CP] Check Pods Manifest.lock */,
+				C0F8A6ED258135A000D64A72 /* Sources */,
+				C0F8A6EE258135A000D64A72 /* Frameworks */,
+				C0F8A6EF258135A000D64A72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C0F8A6F7258135A000D64A72 /* PBXTargetDependency */,
+			);
+			name = "fintech_chat UITests";
+			productName = "fintech_chat UITests";
+			productReference = C0F8A6F1258135A000D64A72 /* fintech_chat UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -948,6 +988,10 @@
 					};
 					8467A609250FAED400E36BEE = {
 						CreatedOnToolsVersion = 11.5;
+					};
+					C0F8A6F0258135A000D64A72 = {
+						CreatedOnToolsVersion = 12.2;
+						TestTargetID = 8467A609250FAED400E36BEE;
 					};
 				};
 			};
@@ -966,6 +1010,7 @@
 			targets = (
 				8467A609250FAED400E36BEE /* fintech_chat */,
 				84488B462576860800604929 /* fintech_chat Tests */,
+				C0F8A6F0258135A000D64A72 /* fintech_chat UITests */,
 			);
 		};
 /* End PBXProject section */
@@ -990,9 +1035,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C0F8A6EF258135A000D64A72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		46126E65096AB8B0F8E2FB0C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-fintech_chat UITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		653B9BDC3643B2FA4867C862 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1189,6 +1263,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C0F8A6ED258135A000D64A72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0F8A700258135B700D64A72 /* fintech_chat_UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1197,6 +1279,11 @@
 			platformFilter = ios;
 			target = 8467A609250FAED400E36BEE /* fintech_chat */;
 			targetProxy = 84488B4C2576860800604929 /* PBXContainerItemProxy */;
+		};
+		C0F8A6F7258135A000D64A72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8467A609250FAED400E36BEE /* fintech_chat */;
+			targetProxy = C0F8A6F6258135A000D64A72 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1425,6 +1512,50 @@
 			};
 			name = Release;
 		};
+		C0F8A6F9258135A000D64A72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3137081FFAC9FB4FE08D37E /* Pods-fintech_chat UITests.debug.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = URTF63URRB;
+				INFOPLIST_FILE = "fintech_chat UITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Rabbit13245.fintech-chat-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = fintech_chat;
+			};
+			name = Debug;
+		};
+		C0F8A6FA258135A000D64A72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50BE241558F35C0C6C94AA39 /* Pods-fintech_chat UITests.release.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = URTF63URRB;
+				INFOPLIST_FILE = "fintech_chat UITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Rabbit13245.fintech-chat-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = fintech_chat;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1451,6 +1582,15 @@
 			buildConfigurations = (
 				8467A61F250FAED500E36BEE /* Debug */,
 				8467A620250FAED500E36BEE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C0F8A6F8258135A000D64A72 /* Build configuration list for PBXNativeTarget "fintech_chat UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C0F8A6F9258135A000D64A72 /* Debug */,
+				C0F8A6FA258135A000D64A72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

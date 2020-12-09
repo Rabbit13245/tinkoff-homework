@@ -14,10 +14,10 @@ target 'fintech_chat' do
     inherit! :search_paths
   end
 
-  #target 'fintech_chat UITests' do
+  target 'fintech_chat UITests' do
    # use_frameworks!
-   # inherit! :search_paths
-  #end
+   inherit! :search_paths
+  end
 end
 
 
