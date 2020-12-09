@@ -28,6 +28,6 @@ lane :build_and_test do
   discord
 end
 
-lane :olo do
-  puts("OOO")
+lane :testLane do
+  puts("testLane")
 end

@@ -6,4 +6,4 @@ before_install:
 install:
   - bundle install
 script:
-  - bundle exec fastlane olo
+  - bundle exec fastlane testLane
