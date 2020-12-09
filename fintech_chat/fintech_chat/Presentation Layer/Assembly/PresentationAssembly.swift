@@ -1,6 +1,13 @@
 import UIKit
 
 protocol IPresentationAssembly {
+    
+    /// Создает делегата переходов
+    func transitioningDelegate() -> UIViewControllerTransitioningDelegate
+    
+    /// Создает аниматора
+    func animator() -> IAnimator
+    
     /// Создает нав контроллер
     func mainNavigationController() -> UINavigationController
     
@@ -28,6 +35,16 @@ class PresentationAssembly: IPresentationAssembly {
         self.serviceAssembly = serviceAssembly
     }
     
+    // MARK: - UIViewControllerTransitioningDelegate
+    func transitioningDelegate() -> UIViewControllerTransitioningDelegate {
+        return TransitioningDelegate()
+    }
+    
+    // MARK: - IAnimator
+    func animator() -> IAnimator {
+        return Animator()
+    }
+
     // MARK: - NavigationColtroller
     func mainNavigationController() -> UINavigationController {
         let navVC = UINavigationController(rootViewController: channelsListViewController())
@@ -43,7 +60,8 @@ class PresentationAssembly: IPresentationAssembly {
         
         channelsListVc.setupDependencies(channelManager: serviceAssembly.channelManager,
                                          dataManagerFactory: serviceAssembly.dataManagerFactory,
-                                         presentationAssembly: self)
+                                         presentationAssembly: self,
+                                         transitioningDelegate: self.transitioningDelegate())
         
         return channelsListVc
     }
@@ -65,7 +83,8 @@ class PresentationAssembly: IPresentationAssembly {
         
         profileVC.setupDependencies(cameraManager: serviceAssembly.cameraManager,
                                     dataManagerFactory: serviceAssembly.dataManagerFactory,
-                                    presentationAssembly: self)
+                                    presentationAssembly: self,
+                                    animator: self.animator())
         
         let navVC = UINavigationController(rootViewController: profileVC)
         navVC.navigationBar.prefersLargeTitles = true

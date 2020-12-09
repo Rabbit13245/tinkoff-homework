@@ -3,7 +3,7 @@ import UIKit
 import Firebase
 import CoreData
 
-class ChannelsListViewController: UIViewController {
+class ChannelsListViewController: LoggedViewController {
 
     // MARK: - Private properties
     
@@ -49,7 +49,7 @@ class ChannelsListViewController: UIViewController {
         return barButton
     }()
 
-    private lazy var profileBarButton: UIBarButtonItem = {
+    lazy var profileBarButton: UIBarButtonItem = {
         // Для ios 12 получается только так
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.AppColors.yellowLogo
@@ -89,15 +89,18 @@ class ChannelsListViewController: UIViewController {
     private var presentationAssembly: IPresentationAssembly?
     private var channelManager: IChannelManager?
     private var dataManagerFactory: IDataManagerFactory?
+    private var transitionDelegate: UIViewControllerTransitioningDelegate?
     
     // MARK: - Setup dependencies
     
     func setupDependencies(channelManager: IChannelManager,
                            dataManagerFactory: IDataManagerFactory,
-                           presentationAssembly: IPresentationAssembly) {
+                           presentationAssembly: IPresentationAssembly,
+                           transitioningDelegate: UIViewControllerTransitioningDelegate) {
         self.channelManager = channelManager
         self.dataManagerFactory = dataManagerFactory
         self.presentationAssembly = presentationAssembly
+        self.transitionDelegate = transitioningDelegate
     }
     
     // MARK: - Lifecycle methods
@@ -122,9 +125,8 @@ class ChannelsListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         settingsBarButton.tintColor = ThemeManager.shared.theme.settings.labelColor
         addChannelBarButton.tintColor = ThemeManager.shared.theme.settings.labelColor
-
         self.navigationItem.title = chatName
-
+        
         super.viewWillAppear(animated)
     }
 
@@ -174,7 +176,8 @@ class ChannelsListViewController: UIViewController {
                 customView.addSubview(uiImageView)
                 let barButtonItem = UIBarButtonItem(customView: customView)
                 barButtonItem.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.profileButtonPressed)))
-                self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: customView), self.addChannelBarButton]
+                self.profileBarButton = UIBarButtonItem(customView: customView)
+                self.navigationItem.rightBarButtonItems = [self.profileBarButton, self.addChannelBarButton]
             }
         }
     }
@@ -231,6 +234,8 @@ extension ChannelsListViewController {
 extension ChannelsListViewController {
     @objc private func profileButtonPressed() {
         guard let profileVC = presentationAssembly?.profileViewController() else { return }
+        profileVC.transitioningDelegate = transitionDelegate
+        profileVC.modalPresentationStyle = .custom
         self.present(profileVC, animated: true, completion: nil)
     }
 

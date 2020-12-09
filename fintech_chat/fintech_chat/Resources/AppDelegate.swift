@@ -4,7 +4,7 @@ import Firebase
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
+    var window: AppWindow?
 
     var previousState: UIApplication.State = .inactive
     
@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         setupApp(application)
 
-        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window = AppWindow(frame: UIScreen.main.bounds)
         let navVC = rootAssembly.presentationAssembly.mainNavigationController()
         self.window?.rootViewController = navVC
         self.window?.makeKeyAndVisible()

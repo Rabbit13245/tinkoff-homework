@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 
-class ChannelViewController: UIViewController {
+class ChannelViewController: LoggedViewController {
     
     // MARK: - Private properties
     
@@ -141,6 +141,7 @@ class ChannelViewController: UIViewController {
 
     fileprivate func setupView() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeybord))
+        tap.delegate = self
         view.addGestureRecognizer(tap)
     }
     
@@ -351,5 +352,12 @@ extension ChannelViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
         scrollTableToBottom()
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+extension ChannelViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

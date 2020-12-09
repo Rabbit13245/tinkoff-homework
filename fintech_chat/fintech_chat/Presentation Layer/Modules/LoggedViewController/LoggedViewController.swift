@@ -7,10 +7,14 @@ enum VCState {
     case disappeared
 }
 
-class LoggedViewController: UIViewController {
+class LoggedViewController: UIViewController {    
+    
+    // MARK: - Private properties
+    
+    private var currentState = VCState.disappeared
 
-    var currentState = VCState.disappeared
-
+    // MARK: - Lifecycle methods
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 

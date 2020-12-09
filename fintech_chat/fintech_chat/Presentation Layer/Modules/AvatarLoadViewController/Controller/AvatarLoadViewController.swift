@@ -4,7 +4,7 @@ protocol AvatarSelectDelegate: class {
     func setupImage(image: UIImage)
 }
 
-class AvatarLoadViewController: UIViewController {
+class AvatarLoadViewController: LoggedViewController {
     
     // MARK: - Public properties
     
