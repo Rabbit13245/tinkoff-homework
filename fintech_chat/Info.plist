@@ -22,6 +22,8 @@
 	<true/>
 	<key>LogLevel</key>
 	<string>$(LOG_LEVEL)</string>
+	<key>PixabayApiKey</key>
+	<string>$(PIXABAY_API_KEY)</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) uses the camera to take photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>

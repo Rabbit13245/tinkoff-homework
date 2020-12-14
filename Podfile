@@ -15,7 +15,8 @@ target 'fintech_chat' do
   end
 
   target 'fintech_chat UITests' do
-    use_frameworks!
+   # use_frameworks!
+   inherit! :search_paths
   end
 end
 

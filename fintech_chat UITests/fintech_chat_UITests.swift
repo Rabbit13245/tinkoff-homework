@@ -12,12 +12,12 @@ class ProfileViewUITests: XCTestCase {
     func testProfileVC() throws {
         let app = XCUIApplication()
         app.launch()
-        
+
         // Открываем экран профиля
         app.buttons["OpenProfileVC"].tap()
-        
+
         let textViewsCount = app.textViews.count
-        
+
         XCTAssertEqual(textViewsCount, 2)
     }
 }

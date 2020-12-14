@@ -1,0 +1,14 @@
+//
+//  Config.xcconfig
+//  fintech_chat
+//
+//  Created by Дмитрий Зайцев on 09.12.2020.
+//  Copyright © 2020 Admin. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Pods/Target Support Files/Pods-fintech_chat/Pods-fintech_chat.debug.xcconfig"
+
+PIXABAY_API_KEY = 12345
